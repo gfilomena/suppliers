@@ -1,0 +1,63 @@
+<div class="col-sm-12 col-sm-offset-5 col-md-12 col-md-offset-2 main">
+    <h2 class="page-header">Search Results</h2>
+    <!--div  class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+        <img src="http://fakeimg.pl/365x365/" class="img-responsive">
+    </div-->
+    <ul class="nav nav-tabs">
+    <li class="active"><a data-toggle="tab" href="#video">VIDEO</a></li>
+    <li><a data-toggle="tab" href="#audio">AUDIO</a></li>
+    <li><a data-toggle="tab" href="#image">IMAGE</a></li>
+    <li><a data-toggle="tab" href="#text">TEXT</a></li>
+  </ul>
+
+  <div class="tab-content">
+    <div id="video" class="tab-pane fade in active">
+      <h3>VIDEO</h3>
+      <div *ngFor="let sr of searchResult" class="media">
+    <div class="media-left media-top">
+      <img src="{{sr.thumbnail}}" class="media-object">
+    </div>
+    <div class="media-body">
+      <span class="label label-default">Title</span><h4 class="media-heading">{{sr.name}}</h4>
+      <span class="label label-default">Description</span><h5>{{sr.description}}</h5>
+      <span class="label label-default">Type</span><h5>{{sr.genre}}</h5>
+      <span class="label label-default">Source</span><h5>{{sr.source}}</h5>
+      <span class="label label-default">Date</span><h5>{{sr.date}}</h5>
+    </div>
+  </div>
+    </div>
+    <div id="audio" class="tab-pane fade">
+      <h3>AUDIO</h3>
+      <p>Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+    </div>
+    <div id="image" class="tab-pane fade">
+      <h3>IMAGE</h3>
+      <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium, totam rem aperiam.</p>
+    </div>
+    <div id="text" class="tab-pane fade">
+      <h3>TEXT</h3>
+      <p>Eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae dicta sunt explicabo.</p>
+    </div>
+  </div>
+    <!--div *ngFor="let sr of searchResult" class="media">
+    <div class="media-left media-top">
+      <img src="img_avatar1.png" class="media-object" style="width:80px">
+    </div>
+    <div class="media-body">
+      <span class="label label-default">Title</span><h4 class="media-heading">{{sr.name}}</h4>
+      <span class="label label-default">Description</span><h5>{{sr.name}}</h5>
+      <span class="label label-default">Type</span><h5>{{sr.genre}}</h5>
+      <span class="label label-default">Source</span><h5>{{sr.source}}</h5>
+    </div>
+  </div-->
+    <!--ol>
+    <li *ngFor="let sr of searchResult">
+        <ul>
+            <li>{{sr.genre}}</li>
+            <li>{{sr.name}}</li>
+            <li>{{sr.source}}</li>
+            <li>{{sr.uri}}</li>
+        </ul>
+    </li>
+</ol-->
+</div>

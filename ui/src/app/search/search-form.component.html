@@ -1,0 +1,38 @@
+<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    <h1 class="page-header">Search Multimedia Content</h1>
+    <form (ngSubmit)="onSubmit()" #qForm="ngForm">
+        {{diagnostic}}
+        <div class="form-group">
+            <label for="keywords">Keywords</label>
+            <input type="text" class="form-control" id="keywords" [(ngModel)]="searchForm.keyWords" name="keyWords" #spy>
+            <br>TODO: remove this: {{spy.className}}
+        </div>
+        <div class="form-group">
+            <label for="freeText">Free Text</label>
+            <textarea class="form-control" rows="5" id="freeText" [(ngModel)]="searchForm.freeText"
+                      name="freeText"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="semanticSearch">Semantic Search</label>
+            <input type="text" class="form-control" id="semanticSearch" [(ngModel)]="searchForm.semanticSearch"
+                   name="semanticSearch">
+        </div>
+        <div class="form-group">
+            <label for="type">Type</label>
+            <select class="form-control" id="type" [(ngModel)]="searchForm.type" name="type">
+                <option *ngFor="let t of types" [value]="t">{{t}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="InDate">Initial Date</label>
+            <input class="form-control" type="date" id="InDate" [(ngModel)]="searchForm.inDate"
+                   name="inDate">
+        </div>
+        <div class="form-group">
+            <label for="EndDate">End Date</label>
+            <input class="form-control" type="date" id="EndDate" [(ngModel)]="searchForm.endDate"
+                   name="endDate">
+        </div>
+        <button type="submit" class="btn btn-success" [disabled]="!qForm.form.valid">Search</button>
+    </form>
+</div>
