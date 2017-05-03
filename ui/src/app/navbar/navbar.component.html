@@ -1,30 +1,3 @@
-<!--nav *ngIf="checkPage()" class="navbar navbar-default navbar-fixed-top" role="navigation" style="margin-bottom: 0">
-	<div class="navbar-header">
-			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			</button>
-			<a class="navbar-brand nav-brand-pers" routerLink="/dashboard">
-										<b><span class="cou-txt"><img src='assets/images/beer.png'> </span><span class="spacer"></span><span class="cou-txt">OCD</span></b></a>
-			</div>
-			<ul class="nav navbar-top-links navbar-right">
-					<div *ngIf="isLoggedIn() || getLoggedUser()">
-								<div class="logout-info showhide">
-									<app-loggedin></app-loggedin>
-						</div>
-			</div>
-	</ul>
-	
-	<div class="navbar-default sidebar" role="navigation">
-			<div class="sidebar-nav navbar-collapse collapse" id="left-placeholder">
-						<div *ngIf="isLoggedIn() || getLoggedUser()">
-								<left-placeholder></left-placeholder>
-					</div>
-			</div>
-	</div>
-</nav-->
 <nav *ngIf="isLoggedIn()" class="navbar navbar-inverse navbar-fixed-top">
 	<div class="container-fluid">
 		<div class="navbar-header">
@@ -58,4 +31,4 @@
 		</div>
 	</div>
 </nav>
-<left-placeholder></left-placeholder>
+<app-sidebar></app-sidebar>

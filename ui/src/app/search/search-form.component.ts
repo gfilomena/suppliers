@@ -7,7 +7,7 @@ import { SearchService } from "./search.service";
 import { MultimediaContent } from "../_models/multimediaContent";
 
 @Component({
-  selector: 'search-form',
+  selector: 'app-search-form',
   providers: [SearchService],
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.css']

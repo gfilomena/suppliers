@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
 
 
   @Component({
-    selector: 'left-placeholder',
+    selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.css']
   })

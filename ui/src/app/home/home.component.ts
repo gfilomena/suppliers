@@ -4,7 +4,7 @@ import { User } from "../_models/user"
 import { UserService } from "../_services/index"
 
 @Component({
-    selector: "home-root",
+    selector: "app-home",
     templateUrl: "./home.component.html"
 })
 

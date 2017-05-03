@@ -54,7 +54,7 @@ public class YoutubeRepository implements Repository {
 
     @Override
     public List<MultimediaContent> transform( JsonNode clientResponse ) {
-        Logger.info("Youtube Response: "+clientResponse.toString());
+        //Logger.info("Youtube Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         //List<JsonNode> items=clientResponse.findValues("items");
         ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
@@ -81,7 +81,8 @@ public class YoutubeRepository implements Repository {
     private MultimediaContent getMultimediaContentFromItem( JsonNode i ) {
         //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
         MultimediaContent m = new MultimediaContent();
-        m.setGenre(i.path("id").get("kind").asText());
+        //m.setGenre(i.path("id").get("kind").asText());
+        m.setGenre("video");
         m.setURI(youtubeURLPrefix + i.path("id").get("videoId").asText());
         m.setName(i.get("snippet").get("title").asText());
         m.setDescription(i.get("snippet").get("description").asText());

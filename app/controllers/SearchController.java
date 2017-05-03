@@ -61,17 +61,17 @@ public class SearchController extends Controller {
         Repository i=new InternetArchiveRepository(wsclient);
         List<Repository> repositories=new ArrayList<Repository>();
         repositories.add(r);
-        //repositories.add(i);
+        repositories.add(i);
         List<CompletionStage<List<MultimediaContent>>> dispatched=searchManager.dispatch(repositories);
         CompletionStage<List<MultimediaContent>> aggregated=searchManager.aggregate(dispatched);
         CompletionStage<QueryResult> transformedQuery=aggregated.thenApply( l -> {
             QueryResult qr=new QueryResult();
             qr.setKeyWords(keywords);
             qr.setMultimediaContents(l);
-            qr.setUser(UserController.userDAO.findByUsername("ppanuccio"));
+            qr.setUser(UserController.userDAO.findByUsername("ppanuccio")); // TODO set connected user
             return  qr;
         });
-        transformedQuery.thenApply(p -> MongoDBService.getDatastore().save(p));
+            transformedQuery.thenApply(p -> MongoDBService.getDatastore().save(p));
         CompletionStage<Result> promiseOfResult = transformedQuery.thenApply(( p ) -> ok(p.asJson()));
         return promiseOfResult;
     }

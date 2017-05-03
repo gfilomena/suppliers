@@ -54,7 +54,7 @@ public class InternetArchiveRepository implements Repository {
 
     @Override
     public List<MultimediaContent> transform( JsonNode clientResponse ) {
-        Logger.info("Internet Archive Response: "+clientResponse.toString());
+        //Logger.info("Internet Archive Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         //List<JsonNode> items=clientResponse.findValues("items");
         ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
@@ -80,7 +80,8 @@ public class InternetArchiveRepository implements Repository {
     private MultimediaContent getMultimediaContentFromItem(JsonNode i){
         //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
         MultimediaContent m=new MultimediaContent();
-        m.setGenre(i.get("mediatype").asText());
+        //m.setGenre(i.get("mediatype").asText());
+        m.setGenre("video");
         m.setURI(internetArchiveURLPrefix+i.get("identifier").asText());
         m.setSource("internet Archive");
         m.setName(i.get("title").asText());
