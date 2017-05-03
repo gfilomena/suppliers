@@ -5,12 +5,14 @@ import { SearchFormComponent }    from './search-form.component';
 import { SearchResultComponent }  from './search-result.component';
 import { SearchService } from './search.service';
 import { SearchRoutingModule } from './search-routing.module';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    SearchRoutingModule
+    SearchRoutingModule,
+    NgxPaginationModule
   ],
   declarations: [
     SearchFormComponent,

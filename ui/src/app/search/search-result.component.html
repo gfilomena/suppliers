@@ -12,23 +12,22 @@
 
   <div class="tab-content">
     <div id="video" class="tab-pane fade in active">
-      <h3>VIDEO</h3>
-      <div *ngFor="let sr of searchVideoResult" class="media">
+      <h3>VIDEO >IO</h3>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+          <div *ngFor="let sr of searchVideoResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
     <div class="media-left media-top">
       <img src="{{sr.thumbnail}}" class="media-object">
     </div>
     <div class="media-body">
-      <span class="label label-default">Title</span><h4 class="media-heading">{{sr.name}}</h4>
-      <span class="label label-default">Description</span><h5>{{sr.description}}</h5>
-      <span class="label label-default">Type</span><h5>{{sr.genre}}</h5>
-      <span class="label label-default">Source</span><h5>{{sr.source}}</h5>
-      <span class="label label-default">Date</span><h5>{{sr.date}}</h5>
+      <span class="label label-default">Title</span><h5 class="media-heading">{{sr.name}}</h5>
+      <span class="label label-default">Description</span><h6>{{sr.description}}</h6>
+      <span class="label label-default">Type</span><h6>{{sr.genre}}</h6>
+      <span class="label label-default">Source</span><h6>{{sr.source}}</h6>
+      <span class="label label-default">Date</span><h6>{{sr.date}}</h6>
     </div>
   </div>
-  <!--ul>
-      <li *ngFor="let sr of searchVideoResult" | paginate: { itemsPerPage: 10, currentPage: p }"> {{sr.name}} </li>
-    </ul>
-  <pagination-controls (pageChange)="p = $event"></pagination-controls-->
+    <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
     </div>
     <div id="audio" class="tab-pane fade">
       <h3>AUDIO</h3>
