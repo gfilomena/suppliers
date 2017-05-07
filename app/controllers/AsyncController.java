@@ -81,7 +81,7 @@ public class AsyncController extends Controller {
 
     public CompletionStage<Result> test() {
         QueryResult qr=new QueryResult();
-        MultimediaContent mc=new MultimediaContent("video","mp4", "youtube/dsadaòjs432","2048","videotest1","description", "thumbnail","youtube", new Date());
+        MultimediaContent mc=new MultimediaContent("video","mp4", "youtube/dsadaòjs432","2048","videotest1","description", "thumbnail","downloadURI","youtube", "licenseType", new Date());
         qr.getMultimediaContents().add(mc);
         qr.getMultimediaContents().add(mc);
         qr.setDate(Date.from(Clock.systemDefaultZone().instant()));

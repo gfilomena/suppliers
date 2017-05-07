@@ -1,9 +1,9 @@
 <div class="col-sm-12 col-sm-offset-5 col-md-12 col-md-offset-2 main">
-    <h2 class="page-header">Search Results</h2>
-    <!--div  class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
+  <h2 class="page-header">Search Results</h2>
+  <!--div  class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
         <img src="http://fakeimg.pl/365x365/" class="img-responsive">
     </div-->
-    <ul class="nav nav-tabs">
+  <ul class="nav nav-tabs">
     <li class="active"><a data-toggle="tab" href="#video">VIDEO</a></li>
     <li><a data-toggle="tab" href="#audio">AUDIO</a></li>
     <li><a data-toggle="tab" href="#image">IMAGE</a></li>
@@ -12,67 +12,44 @@
 
   <div class="tab-content">
     <div id="video" class="tab-pane fade in active">
-      <h3>VIDEO >IO</h3>
+      <h3>VIDEO</h3>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
-          <div *ngFor="let sr of searchVideoResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
-    <div class="media-left media-top">
-      <img src="{{sr.thumbnail}}" class="media-object">
-    </div>
-    <div class="media-body">
-      <span class="label label-default">Title</span><h5 class="media-heading">{{sr.name}}</h5>
-      <span class="label label-default">Description</span><h6>{{sr.description}}</h6>
-      <span class="label label-default">Type</span><h6>{{sr.genre}}</h6>
-      <span class="label label-default">Source</span><h6>{{sr.source}}</h6>
-      <span class="label label-default">Date</span><h6>{{sr.date}}</h6>
-    </div>
-  </div>
-    <pagination-controls (pageChange)="p = $event"></pagination-controls>
-
+      <div *ngFor="let sr of searchVideoResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
+        <div class="panel-group">
+        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
     <div id="audio" class="tab-pane fade">
       <h3>AUDIO</h3>
-      <div *ngFor="let sr of searchAudioResult" class="media">
-    <div class="media-left media-top">
-      <img src="{{sr.thumbnail}}" class="media-object">
-    </div>
-    <div class="media-body">
-      <span class="label label-default">Title</span><h4 class="media-heading">{{sr.name}}</h4>
-      <span class="label label-default">Description</span><h5>{{sr.description}}</h5>
-      <span class="label label-default">Type</span><h5>{{sr.genre}}</h5>
-      <span class="label label-default">Source</span><h5>{{sr.source}}</h5>
-      <span class="label label-default">Date</span><h5>{{sr.date}}</h5>
-    </div>
-  </div>
+            <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <div *ngFor="let sr of searchAudioResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
+        <div class="panel-group">
+        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
     <div id="image" class="tab-pane fade">
       <h3>IMAGE</h3>
-      <div *ngFor="let sr of searchImageResult" class="media">
-    <div class="media-left media-top">
-      <img src="{{sr.thumbnail}}" class="media-object">
-    </div>
-    <div class="media-body">
-      <span class="label label-default">Title</span><h4 class="media-heading">{{sr.name}}</h4>
-      <span class="label label-default">Description</span><h5>{{sr.description}}</h5>
-      <span class="label label-default">Type</span><h5>{{sr.genre}}</h5>
-      <span class="label label-default">Source</span><h5>{{sr.source}}</h5>
-      <span class="label label-default">Date</span><h5>{{sr.date}}</h5>
-    </div>
-  </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <div *ngFor="let sr of searchImgResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
+        <div class="panel-group">
+        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
     <div id="text" class="tab-pane fade">
       <h3>TEXT</h3>
-      <div *ngFor="let sr of searchTextResult" class="media">
-    <div class="media-left media-top">
-      <img src="{{sr.thumbnail}}" class="media-object">
-    </div>
-    <div class="media-body">
-      <span class="label label-default">Title</span><h4 class="media-heading">{{sr.name}}</h4>
-      <span class="label label-default">Description</span><h5>{{sr.description}}</h5>
-      <span class="label label-default">Type</span><h5>{{sr.genre}}</h5>
-      <span class="label label-default">Source</span><h5>{{sr.source}}</h5>
-      <span class="label label-default">Date</span><h5>{{sr.date}}</h5>
-    </div>
-  </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <div *ngFor="let sr of searchTextResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
+        <div class="panel-group">
+        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
+        </div>
+      </div>
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>

@@ -13,6 +13,7 @@ import services.MongoDBService;
 import services.search.Manager;
 import services.search.SearchManager;
 import services.search.repositories.InternetArchiveRepository;
+import services.search.repositories.PexelsRepository;
 import services.search.repositories.Repository;
 import services.search.repositories.YoutubeRepository;
 
@@ -44,24 +45,16 @@ public class SearchController extends Controller {
         JsonNode jsonRequest = request().body().asJson();
         Logger.info("OCD search received: " + jsonRequest.toString());
         List<String> keywords=getKeyWords(jsonRequest);
-        /*CompletionStage<JsonNode> executedQuery = queryManager.getYoutubeRepository().executeQuery(keywords);
-        CompletionStage<QueryResult> transformedQuery=executedQuery.thenApply( ( JsonNode j ) -> {
-            YoutubeRepositoryResponseTransformer t=new YoutubeRepositoryResponseTransformer();
-            QueryResult qt=new QueryResult();
-            qt.setKeyWords(keywords);
-            qt.setMultimediaContents(t.tranform(j));
-            return qt;
-        });
-        transformedQuery.thenApply(p -> MongoDBService.getDatastore().save(p));
-        CompletionStage<Result> promiseOfResult = transformedQuery.thenApply(( p ) -> ok(p.asJson()));
-        return promiseOfResult;*/
         SearchManager searchManager=new SearchManager();
         searchManager.setKeyWords(keywords);
-        Repository r=new YoutubeRepository(wsclient);
-        Repository i=new InternetArchiveRepository(wsclient);
+        // TODO dinamically read repository
+        Repository youtube=new YoutubeRepository(wsclient);
+        Repository internetArchive=new InternetArchiveRepository(wsclient);
+        Repository pexels=new PexelsRepository(wsclient);
         List<Repository> repositories=new ArrayList<Repository>();
-        repositories.add(r);
-        repositories.add(i);
+        repositories.add(youtube);
+        repositories.add(internetArchive);
+        repositories.add(pexels);
         List<CompletionStage<List<MultimediaContent>>> dispatched=searchManager.dispatch(repositories);
         CompletionStage<List<MultimediaContent>> aggregated=searchManager.aggregate(dispatched);
         CompletionStage<QueryResult> transformedQuery=aggregated.thenApply( l -> {

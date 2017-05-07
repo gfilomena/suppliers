@@ -24,7 +24,7 @@ public class YoutubeRepository implements Repository {
     private final String url=ConfigFactory.load().getString("multimedia.sources.youtube.url");
     private WSClient ws;
 
-    private final String youtubeURLPrefix="https://www.youtube.com/watch?v=";
+    private final String youtubeURLPrefix="https://www.youtube.com/embed/";
 
 
     @Inject
@@ -90,6 +90,7 @@ public class YoutubeRepository implements Repository {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
         try {
             m.setDate(sdf.parse(i.get("snippet").get("publishedAt").asText()));
+            //Logger.debug("*********DATE:"+sdf.parse(i.get("snippet").get("publishedAt").asText()));
         } catch (ParseException e) {
             e.printStackTrace();
         }

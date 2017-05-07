@@ -1,0 +1,28 @@
+.login {
+  width: 40%;
+}
+
+@media (max-width: 767px) {
+	.img-login{
+		max-width: 100px;
+	}
+	
+	.panel-login {
+		margin-top: 0px !important;
+	}
+
+}
+
+@media (min-width: 768px) {
+	.img-login{
+		width: 200px;
+	}
+	
+	.panel-login {
+		margin-top: 100px !important;
+	}
+}
+
+.panel-heading{
+	text-align: center;
+}

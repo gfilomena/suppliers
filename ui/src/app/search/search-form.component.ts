@@ -27,7 +27,6 @@ export class SearchFormComponent {
     onSubmit() {
 
         this.submitted = true;
-        console.log('Submitted')
         //console.log(JSON.stringify(this.searchForm))
         localStorage.setItem("searchForm", JSON.stringify(this.searchForm))
         this.router.navigate(["/search"])

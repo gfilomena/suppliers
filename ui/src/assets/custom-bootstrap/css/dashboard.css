@@ -103,3 +103,7 @@ body {
   display: inline-block;
   border-radius: 50%;
 }
+
+.rotating {
+    -webkit-animation: rotating 2s linear infinite;
+}

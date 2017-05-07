@@ -23,7 +23,11 @@ public class MultimediaContent {
 
     private String thumbnail;
 
+    private String downloadURI;
+
     private String source;
+
+    private String licenseType;
 
     private Date date;
 
@@ -31,7 +35,7 @@ public class MultimediaContent {
 
     }
 
-    public MultimediaContent(String genre, String fileExtension, String URI, String length, String name, String description, String thumbnail, String source, Date date) {
+    public MultimediaContent(String genre, String fileExtension, String URI, String length, String name, String description, String thumbnail, String downloadURI, String source, String licenseType,  Date date) {
         this.genre = genre;
         this.fileExtension = fileExtension;
         this.URI = URI;
@@ -39,7 +43,9 @@ public class MultimediaContent {
         this.name = name;
         this.description=description;
         this.thumbnail=thumbnail;
+        this.downloadURI=downloadURI;
         this.source = source;
+        this.licenseType=licenseType;
         this.date=date;
     }
 
@@ -99,7 +105,13 @@ public class MultimediaContent {
         this.thumbnail = thumbnail;
     }
 
+    public String getDownloadURI() {
+        return downloadURI;
+    }
 
+    public void setDownloadURI( String downloadURI ) {
+        this.downloadURI = downloadURI;
+    }
 
     public String getSource() {
         return source;
@@ -107,6 +119,14 @@ public class MultimediaContent {
 
     public void setSource(String source) {
         this.source = source;
+    }
+
+    public String getLicenseType() {
+        return licenseType;
+    }
+
+    public void setLicenseType( String licenseType ) {
+        this.licenseType = licenseType;
     }
 
     public Date getDate() {
@@ -118,7 +138,7 @@ public class MultimediaContent {
     }
 
     @Override
-    public boolean equals(Object o) {
+    public boolean equals( Object o ) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
@@ -130,7 +150,11 @@ public class MultimediaContent {
         if (URI != null ? !URI.equals(that.URI) : that.URI != null) return false;
         if (length != null ? !length.equals(that.length) : that.length != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        return source != null ? source.equals(that.source) : that.source == null;
+        if (description != null ? !description.equals(that.description) : that.description != null) return false;
+        if (thumbnail != null ? !thumbnail.equals(that.thumbnail) : that.thumbnail != null) return false;
+        if (downloadURI != null ? !downloadURI.equals(that.downloadURI) : that.downloadURI != null) return false;
+        if (source != null ? !source.equals(that.source) : that.source != null) return false;
+        return date != null ? date.equals(that.date) : that.date == null;
     }
 
     @Override
@@ -140,7 +164,11 @@ public class MultimediaContent {
         result = 31 * result + (URI != null ? URI.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
+        result = 31 * result + (downloadURI != null ? downloadURI.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
     }
 

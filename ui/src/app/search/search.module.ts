@@ -5,6 +5,7 @@ import { SearchFormComponent }    from './search-form.component';
 import { SearchResultComponent }  from './search-result.component';
 import { SearchService } from './search.service';
 import { SearchRoutingModule } from './search-routing.module';
+import { MultimediaContentComponent } from '../multimedia-content/multimedia-content.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 @NgModule({
@@ -16,7 +17,8 @@ import {NgxPaginationModule} from 'ngx-pagination';
   ],
   declarations: [
     SearchFormComponent,
-    SearchResultComponent
+    SearchResultComponent,
+    MultimediaContentComponent
   ],
   providers: [ SearchService ]
 })
