@@ -2,13 +2,11 @@ import { Component, OnInit, Input } from '@angular/core';
 import {MultimediaContent} from '../_models/multimediaContent';
 import { DomSanitizer } from '@angular/platform-browser';
 
-import { ModalService } from '../_services/index';
-
 declare var $:any;
 
 @Component({
   selector: 'app-multimedia-content',
-  inputs: ['multimediaContent'],
+  inputs: ['multimediaContent', 'modalId'],
   templateUrl: './multimedia-content.component.html',
   styleUrls: ['./multimedia-content.component.css']
 })
@@ -16,12 +14,14 @@ declare var $:any;
 export class MultimediaContentComponent implements OnInit {
 
   multimediaContent: MultimediaContent;
+  modalId: string;
 
   constructor(public sanitizer: DomSanitizer) { 
 
   }
 
   ngOnInit() {
+    console.log('Modal ID: '+this.modalId);
   }
 
   getDate(date:string): string{
@@ -50,5 +50,9 @@ export class MultimediaContentComponent implements OnInit {
     var s=id.replace(/\//g, ''); // remove slashes 
     console.log('created modal with id: '+s);
     return '#'+s;
+  }
+
+  getModalId(){
+    return this.modalId;
   }
 }

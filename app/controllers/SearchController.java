@@ -2,7 +2,7 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.MultimediaContent;
-import models.QueryResult;
+import models.SearchResult;
 import play.Logger;
 import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.WSClient;
@@ -57,8 +57,8 @@ public class SearchController extends Controller {
         repositories.add(pexels);
         List<CompletionStage<List<MultimediaContent>>> dispatched=searchManager.dispatch(repositories);
         CompletionStage<List<MultimediaContent>> aggregated=searchManager.aggregate(dispatched);
-        CompletionStage<QueryResult> transformedQuery=aggregated.thenApply( l -> {
-            QueryResult qr=new QueryResult();
+        CompletionStage<SearchResult> transformedQuery=aggregated.thenApply(l -> {
+            SearchResult qr=new SearchResult();
             qr.setKeyWords(keywords);
             qr.setMultimediaContents(l);
             qr.setUser(UserController.userDAO.findByUsername("ppanuccio")); // TODO set connected user

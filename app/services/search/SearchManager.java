@@ -2,12 +2,10 @@ package services.search;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.MultimediaContent;
-import models.QueryResult;
+import models.SearchResult;
 import play.libs.concurrent.Futures;
 import services.search.repositories.Repository;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
@@ -19,12 +17,6 @@ import java.util.stream.Collectors;
 public class SearchManager implements Manager{
 
     private List<String> keyWords=new ArrayList<String>();
-    private Repository youtubeRepository;
-
-    @Inject
-    public SearchManager( @Named("youtube") Repository youtubeRepository ){
-        this.youtubeRepository = youtubeRepository;
-    }
 
     public SearchManager( ){
     }
@@ -37,15 +29,7 @@ public class SearchManager implements Manager{
         this.keyWords = keyWords;
     }
 
-    public Repository getYoutubeRepository() {
-        return youtubeRepository;
-    }
-
-    public void setYoutubeRepository( Repository youtubeRepository ) {
-        this.youtubeRepository = youtubeRepository;
-    }
-
-    public QueryResult getQueryResult(){
+    public SearchResult getQueryResult(){
         return null;
     }
 

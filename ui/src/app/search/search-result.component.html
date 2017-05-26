@@ -14,9 +14,9 @@
     <div id="video" class="tab-pane fade in active">
       <h3>VIDEO</h3>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      <div *ngFor="let sr of searchVideoResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
+      <div *ngFor="let sr of searchVideoResult | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" class="media">
         <div class="panel-group">
-        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
+        <app-multimedia-content [multimediaContent]="sr" [modalId]="'video'+i"></app-multimedia-content>
         </div>
       </div>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>

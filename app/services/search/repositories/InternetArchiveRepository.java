@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
+import models.MultimediaType;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -80,11 +81,12 @@ public class InternetArchiveRepository implements Repository {
     private MultimediaContent getMultimediaContentFromItem(JsonNode i){
         //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
         MultimediaContent m=new MultimediaContent();
-        //m.setGenre(i.get("mediatype").asText());
-        m.setGenre("video");
+        //m.setType(i.get("mediatype").asText());
+        m.setType(MultimediaType.video);
         m.setURI(internetArchiveURLPrefix+i.get("identifier").asText());
         m.setSource("internet Archive");
         m.setName(i.get("title").asText());
+        //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;
         //});
 

@@ -34,16 +34,25 @@ export class SearchResultComponent implements OnInit{
         this.searchService.search(this.searchForm)
         .subscribe(
                 res => {
-                    //console.log(JSON.stringify(res.json().multimediaContents));
+                    console.log(JSON.stringify(res.json().multimediaContents));
                     this.searchResult=res.json().multimediaContents;
+                    console.log('search result size: '+this.searchResult.length);
                     this.searchVideoResult= this.searchResult.filter(
-                      mc => mc.genre === 'video');
+                      mc => {console.log('mc type video='+mc.type) ;
+                      mc.type === 'video'});
+                      console.log('search video result size: '+this.searchVideoResult.length);
                     this.searchImgResult= this.searchResult.filter(
-                      mc => mc.genre === 'image');
+                      mc => { console.log('mc type image='+mc.type) ;
+                      mc.type === 'image'});
+                      console.log('search image result size: '+this.searchImgResult.length);
                     this.searchAudioResult= this.searchResult.filter(
-                      mc => mc.genre === 'audio');
+                      mc => { console.log('mc type audio='+mc.type) ;
+                      mc.type === 'audio'});
+                      console.log('search audio result size: '+this.searchAudioResult.length);
                     this.searchTextResult= this.searchResult.filter(
-                      mc => mc.genre === 'text');
+                      mc => {console.log('mc type text='+mc.type) ;
+                      mc.type === 'text'});
+                      console.log('search text result size: '+this.searchTextResult.length);
                     //console.log(this.searchResult);
 
                 },

@@ -4,9 +4,9 @@ import akka.actor.ActorSystem;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
-import models.QueryResult;
+import models.MultimediaType;
+import models.SearchResult;
 import models.User;
-import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
@@ -80,13 +80,13 @@ public class AsyncController extends Controller {
     }
 
     public CompletionStage<Result> test() {
-        QueryResult qr=new QueryResult();
-        MultimediaContent mc=new MultimediaContent("video","mp4", "youtube/dsadaòjs432","2048","videotest1","description", "thumbnail","downloadURI","youtube", "licenseType", new Date());
+        SearchResult qr=new SearchResult();
+        MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432","2048","videotest1","description", "thumbnail","downloadURI","youtube", "licenseType", new Date());
         qr.getMultimediaContents().add(mc);
         qr.getMultimediaContents().add(mc);
         qr.setDate(Date.from(Clock.systemDefaultZone().instant()));
         qr.setUser(new UserDAOImpl(User.class,MongoDBService.getDatastore()).findByUsername("ppanuccio"));
-        Key<QueryResult> key= MongoDBService.getDatastore().save(qr);
+        Key<SearchResult> key= MongoDBService.getDatastore().save(qr);
         System.out.println("Key returned: "+key.toString());
         System.out.println(key.getId().getClass());
         System.out.println(qr.toString());
@@ -95,8 +95,8 @@ public class AsyncController extends Controller {
     }
 
     public Result query(){
-        final Query<QueryResult> query= MongoDBService.getDatastore().createQuery(QueryResult.class);
-        final List<QueryResult> qrList=query.asList();
+        final Query<SearchResult> query= MongoDBService.getDatastore().createQuery(SearchResult.class);
+        final List<SearchResult> qrList=query.asList();
         JsonNode json = Json.toJson(qrList);
         return ok(json);
 

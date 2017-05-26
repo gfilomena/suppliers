@@ -1,5 +1,5 @@
 export class MultimediaContent {
-    genre: string
+    type: string
     fileExtension: string
     length: string
     name: string

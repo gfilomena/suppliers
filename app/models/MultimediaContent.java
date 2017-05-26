@@ -1,15 +1,13 @@
 package models;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import org.mongodb.morphia.annotations.Embedded;
-import play.libs.Json;
+import org.mongodb.morphia.annotations.Entity;
 
 import java.util.Date;
 
-@Embedded
-public class MultimediaContent {
+@Entity(value="MultimediaContent", noClassnameStored = true)
+public class MultimediaContent extends BaseEntity{
 
-    private String genre;
+    private MultimediaType type;
 
     private String fileExtension;
 
@@ -35,8 +33,8 @@ public class MultimediaContent {
 
     }
 
-    public MultimediaContent(String genre, String fileExtension, String URI, String length, String name, String description, String thumbnail, String downloadURI, String source, String licenseType,  Date date) {
-        this.genre = genre;
+    public MultimediaContent( MultimediaType type, String fileExtension, String URI, String length, String name, String description, String thumbnail, String downloadURI, String source, String licenseType, Date date) {
+        this.type = type;
         this.fileExtension = fileExtension;
         this.URI = URI;
         this.length = length;
@@ -49,12 +47,12 @@ public class MultimediaContent {
         this.date=date;
     }
 
-    public String getGenre() {
-        return genre;
+    public MultimediaType getType() {
+        return type;
     }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
+    public void setType( MultimediaType type ) {
+        this.type = type;
     }
 
     public String getFileExtension() {
@@ -144,7 +142,7 @@ public class MultimediaContent {
 
         MultimediaContent that = (MultimediaContent) o;
 
-        if (genre != null ? !genre.equals(that.genre) : that.genre != null) return false;
+        if (type != that.type) return false;
         if (fileExtension != null ? !fileExtension.equals(that.fileExtension) : that.fileExtension != null)
             return false;
         if (URI != null ? !URI.equals(that.URI) : that.URI != null) return false;
@@ -154,12 +152,13 @@ public class MultimediaContent {
         if (thumbnail != null ? !thumbnail.equals(that.thumbnail) : that.thumbnail != null) return false;
         if (downloadURI != null ? !downloadURI.equals(that.downloadURI) : that.downloadURI != null) return false;
         if (source != null ? !source.equals(that.source) : that.source != null) return false;
+        if (licenseType != null ? !licenseType.equals(that.licenseType) : that.licenseType != null) return false;
         return date != null ? date.equals(that.date) : that.date == null;
     }
 
     @Override
     public int hashCode() {
-        int result = genre != null ? genre.hashCode() : 0;
+        int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (fileExtension != null ? fileExtension.hashCode() : 0);
         result = 31 * result + (URI != null ? URI.hashCode() : 0);
         result = 31 * result + (length != null ? length.hashCode() : 0);
@@ -168,17 +167,8 @@ public class MultimediaContent {
         result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
         result = 31 * result + (downloadURI != null ? downloadURI.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
+        result = 31 * result + (licenseType != null ? licenseType.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        JsonNode json= Json.toJson(this);
-        return json.toString();
-    }
-
-    public JsonNode asJson(){
-        return Json.toJson(this);
     }
 }

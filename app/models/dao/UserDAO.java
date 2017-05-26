@@ -13,10 +13,6 @@ public interface UserDAO extends DAO<User, ObjectId>{
 
      User get(String id);
 
-    /**
-     * get a list of users by firstName
-     * @return
-     */
     List<User> findAll();
 
     User findByUsername(String username);

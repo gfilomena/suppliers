@@ -1,20 +1,13 @@
 package models;
 
-import com.fasterxml.jackson.databind.JsonNode;
-import org.bson.types.ObjectId;
 import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Id;
 import org.mongodb.morphia.annotations.Reference;
-import play.libs.Json;
 
 /**
  * Created by Pasquale on 19/04/2017.
  */
 @Entity(value="Registration", noClassnameStored = true)
-public class Registration {
-
-    @Id
-    private ObjectId id;
+public class Registration extends BaseEntity{
 
     @Reference
     private User user;
@@ -24,15 +17,8 @@ public class Registration {
 
     private String apiKey;
 
+
     public Registration() {}
-
-    public ObjectId getId() {
-        return id;
-    }
-
-    public void setId( ObjectId id ) {
-        this.id = id;
-    }
 
     public User getUser() {
         return user;
@@ -66,23 +52,15 @@ public class Registration {
         Registration that = (Registration) o;
 
         if (user != null ? !user.equals(that.user) : that.user != null) return false;
-        return repository != null ? repository.equals(that.repository) : that.repository == null;
+        if (repository != null ? !repository.equals(that.repository) : that.repository != null) return false;
+        return apiKey != null ? apiKey.equals(that.apiKey) : that.apiKey == null;
     }
 
     @Override
     public int hashCode() {
         int result = user != null ? user.hashCode() : 0;
         result = 31 * result + (repository != null ? repository.hashCode() : 0);
+        result = 31 * result + (apiKey != null ? apiKey.hashCode() : 0);
         return result;
-    }
-
-    @Override
-    public String toString() {
-        JsonNode json= Json.toJson(this);
-        return json.toString();
-    }
-
-    public JsonNode asJson(){
-        return Json.toJson(this);
     }
 }

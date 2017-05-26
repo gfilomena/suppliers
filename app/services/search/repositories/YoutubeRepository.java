@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
+import models.MultimediaType;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -13,6 +14,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.concurrent.CompletionStage;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -69,10 +71,12 @@ public class YoutubeRepository implements Repository {
         }
 
         return multimediaContents;*/
+        Function<JsonNode, MultimediaContent> convertToMultimediaContent=
+                jsonNode -> getMultimediaContentFromItem(jsonNode);
         if(!itemsList.isEmpty()) {
             stages = itemsList
                     .stream()
-                    .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
+                    .map(convertToMultimediaContent)
                     .collect(Collectors.toList());
         }
         return stages;
@@ -81,8 +85,8 @@ public class YoutubeRepository implements Repository {
     private MultimediaContent getMultimediaContentFromItem( JsonNode i ) {
         //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
         MultimediaContent m = new MultimediaContent();
-        //m.setGenre(i.path("id").get("kind").asText());
-        m.setGenre("video");
+        //m.setType(i.path("id").get("kind").asText());
+        m.setType(MultimediaType.video);
         m.setURI(youtubeURLPrefix + i.path("id").get("videoId").asText());
         m.setName(i.get("snippet").get("title").asText());
         m.setDescription(i.get("snippet").get("description").asText());
@@ -95,6 +99,7 @@ public class YoutubeRepository implements Repository {
             e.printStackTrace();
         }
         m.setSource("youtube");
+        //Logger.debug("Debug multimedia enum:"+m.toString());
         return m;
     }
 }
