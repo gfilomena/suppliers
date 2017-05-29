@@ -16,6 +16,7 @@ public class SearchResult extends BaseEntity{
     @Reference
     private List<MultimediaContent> multimediaContents=new ArrayList<MultimediaContent>();
 
+    @Reference
     private Set<Repository> repositories=new HashSet<>();
 
     @Reference
@@ -115,4 +116,6 @@ public class SearchResult extends BaseEntity{
         result = 31 * result + (endDate != null ? endDate.hashCode() : 0);
         return result;
     }
+
+
 }

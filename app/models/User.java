@@ -106,4 +106,6 @@ public class User extends BaseEntity{
         result = 31 * result + (token != null ? token.hashCode() : 0);
         return result;
     }
+
+
 }

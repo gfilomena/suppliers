@@ -1,6 +1,8 @@
 package models;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Reference;
 
 import java.util.Date;
 
@@ -13,7 +15,7 @@ public class MultimediaContent extends BaseEntity{
 
     private String URI;
 
-    private String length;
+    private long length;
 
     private String name;
 
@@ -23,17 +25,21 @@ public class MultimediaContent extends BaseEntity{
 
     private String downloadURI;
 
-    private String source;
+    @Reference
+    private Repository source;
 
-    private String licenseType;
+    @Reference
+    private License license;
 
     private Date date;
+
+    private JsonNode metadata;
 
     public MultimediaContent(){
 
     }
 
-    public MultimediaContent( MultimediaType type, String fileExtension, String URI, String length, String name, String description, String thumbnail, String downloadURI, String source, String licenseType, Date date) {
+    public MultimediaContent( MultimediaType type, String fileExtension, String URI, long length, String name, String description, String thumbnail, String downloadURI, Repository source, License license, Date date, JsonNode metadata) {
         this.type = type;
         this.fileExtension = fileExtension;
         this.URI = URI;
@@ -43,8 +49,9 @@ public class MultimediaContent extends BaseEntity{
         this.thumbnail=thumbnail;
         this.downloadURI=downloadURI;
         this.source = source;
-        this.licenseType=licenseType;
+        this.license=license;
         this.date=date;
+        this.metadata = this.metadata;
     }
 
     public MultimediaType getType() {
@@ -71,11 +78,11 @@ public class MultimediaContent extends BaseEntity{
         this.URI = URI;
     }
 
-    public String getLength() {
+    public long getLength() {
         return length;
     }
 
-    public void setLength(String length) {
+    public void setLength(long length) {
         this.length = length;
     }
 
@@ -111,20 +118,20 @@ public class MultimediaContent extends BaseEntity{
         this.downloadURI = downloadURI;
     }
 
-    public String getSource() {
+    public Repository getSource() {
         return source;
     }
 
-    public void setSource(String source) {
+    public void setSource(Repository source) {
         this.source = source;
     }
 
-    public String getLicenseType() {
-        return licenseType;
+    public License getLicenseType() {
+        return license;
     }
 
-    public void setLicenseType( String licenseType ) {
-        this.licenseType = licenseType;
+    public void setLicenseType( License license ) {
+        this.license = license;
     }
 
     public Date getDate() {
@@ -135,6 +142,22 @@ public class MultimediaContent extends BaseEntity{
         this.date = date;
     }
 
+    public License getLicense() {
+        return license;
+    }
+
+    public void setLicense( License license ) {
+        this.license = license;
+    }
+
+    public JsonNode getMetadata() {
+        return metadata;
+    }
+
+    public void setMetadata( JsonNode metadata ) {
+        this.metadata = metadata;
+    }
+
     @Override
     public boolean equals( Object o ) {
         if (this == o) return true;
@@ -142,18 +165,19 @@ public class MultimediaContent extends BaseEntity{
 
         MultimediaContent that = (MultimediaContent) o;
 
+        if (length != that.length) return false;
         if (type != that.type) return false;
         if (fileExtension != null ? !fileExtension.equals(that.fileExtension) : that.fileExtension != null)
             return false;
         if (URI != null ? !URI.equals(that.URI) : that.URI != null) return false;
-        if (length != null ? !length.equals(that.length) : that.length != null) return false;
         if (name != null ? !name.equals(that.name) : that.name != null) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
         if (thumbnail != null ? !thumbnail.equals(that.thumbnail) : that.thumbnail != null) return false;
         if (downloadURI != null ? !downloadURI.equals(that.downloadURI) : that.downloadURI != null) return false;
         if (source != null ? !source.equals(that.source) : that.source != null) return false;
-        if (licenseType != null ? !licenseType.equals(that.licenseType) : that.licenseType != null) return false;
-        return date != null ? date.equals(that.date) : that.date == null;
+        if (license != null ? !license.equals(that.license) : that.license != null) return false;
+        if (date != null ? !date.equals(that.date) : that.date != null) return false;
+        return metadata != null ? metadata.equals(that.metadata) : that.metadata == null;
     }
 
     @Override
@@ -161,14 +185,16 @@ public class MultimediaContent extends BaseEntity{
         int result = type != null ? type.hashCode() : 0;
         result = 31 * result + (fileExtension != null ? fileExtension.hashCode() : 0);
         result = 31 * result + (URI != null ? URI.hashCode() : 0);
-        result = 31 * result + (length != null ? length.hashCode() : 0);
+        result = 31 * result + (int) (length ^ (length >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (thumbnail != null ? thumbnail.hashCode() : 0);
         result = 31 * result + (downloadURI != null ? downloadURI.hashCode() : 0);
         result = 31 * result + (source != null ? source.hashCode() : 0);
-        result = 31 * result + (licenseType != null ? licenseType.hashCode() : 0);
+        result = 31 * result + (license != null ? license.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
+        result = 31 * result + (metadata != null ? metadata.hashCode() : 0);
         return result;
     }
+
 }

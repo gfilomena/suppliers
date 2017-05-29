@@ -49,4 +49,6 @@ public class Bookmark extends BaseEntity {
         result = 31 * result + (multimediaContent != null ? multimediaContent.hashCode() : 0);
         return result;
     }
+
+
 }

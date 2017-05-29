@@ -51,4 +51,6 @@ public class Repository extends BaseEntity{
         result = 31 * result + (apiKey != null ? apiKey.hashCode() : 0);
         return result;
     }
+
+
 }
