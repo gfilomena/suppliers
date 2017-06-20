@@ -18,9 +18,9 @@ POST   /users/authenticate          controllers.UserController.authenticate
 POST   /users/register              controllers.UserController.register
 POST   /users/logout                controllers.UserController.logout
 GET    /users                       controllers.UserController.getAll
-GET    /user/:id                    controllers.UserController.get(id: String)
-PUT    /user/:id                    controllers.UserController.update(id: String)
-DELETE /user/:username              controllers.UserController.delete(username: String)
+GET    /users/:id                    controllers.UserController.get(id: String)
+PUT    /users/:id                    controllers.UserController.update(id: String)
+DELETE /users/:username              controllers.UserController.delete(username: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)

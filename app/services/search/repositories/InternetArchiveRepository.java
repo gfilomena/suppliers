@@ -84,7 +84,8 @@ public class InternetArchiveRepository implements Repository {
         //m.setType(i.get("mediatype").asText());
         m.setType(MultimediaType.video);
         m.setURI(internetArchiveURLPrefix+i.get("identifier").asText());
-        m.setSource("internet Archive");
+        // TODO: Modify to find Repository from DB
+        m.setSource(new models.Repository());
         m.setName(i.get("title").asText());
         //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;

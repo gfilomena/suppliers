@@ -98,7 +98,8 @@ public class YoutubeRepository implements Repository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        m.setSource("youtube");
+        // TODO: Modify to find Repository from DB
+        m.setSource(new models.Repository());
         //Logger.debug("Debug multimedia enum:"+m.toString());
         return m;
     }

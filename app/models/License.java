@@ -1,15 +1,16 @@
 package models;
 
+import org.mongodb.morphia.annotations.Entity;
+
 /**
  * Created by Pasquale on 26/05/2017.
  */
-public class License {
+@Entity(value="License", noClassnameStored = true)
+public class License extends BaseEntity{
 
     private String name;
 
     private LicenseType type;
-
-    private String version;
 
     private String url;
 
@@ -32,14 +33,6 @@ public class License {
         this.type = type;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion( String version ) {
-        this.version = version;
-    }
-
     public String getUrl() {
         return url;
     }
@@ -57,7 +50,6 @@ public class License {
 
         if (name != null ? !name.equals(license.name) : license.name != null) return false;
         if (type != null ? !type.equals(license.type) : license.type != null) return false;
-        if (version != null ? !version.equals(license.version) : license.version != null) return false;
         return url != null ? url.equals(license.url) : license.url == null;
     }
 
@@ -65,7 +57,6 @@ public class License {
     public int hashCode() {
         int result = name != null ? name.hashCode() : 0;
         result = 31 * result + (type != null ? type.hashCode() : 0);
-        result = 31 * result + (version != null ? version.hashCode() : 0);
         result = 31 * result + (url != null ? url.hashCode() : 0);
         return result;
     }

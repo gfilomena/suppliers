@@ -72,7 +72,8 @@ public class PexelsRepository implements Repository{
         m.setURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
-        m.setSource("pexels");
+        // TODO: Modify to find Repository from DB
+        m.setSource(new models.Repository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());
         return m;
     }

@@ -3,10 +3,7 @@ package controllers;
 import akka.actor.ActorSystem;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
-import models.MultimediaContent;
-import models.MultimediaType;
-import models.SearchResult;
-import models.User;
+import models.*;
 import models.dao.UserDAOImpl;
 import org.mongodb.morphia.Key;
 import org.mongodb.morphia.query.Query;
@@ -81,7 +78,7 @@ public class AsyncController extends Controller {
 
     public CompletionStage<Result> test() {
         SearchResult qr=new SearchResult();
-        MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432","2048","videotest1","description", "thumbnail","downloadURI","youtube", "licenseType", new Date());
+        MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432",2048,"videotest1","description", "thumbnail","downloadURI",new Repository(), new License(), new Date(), Json.toJson("{ metadata: test }"));
         qr.getMultimediaContents().add(mc);
         qr.getMultimediaContents().add(mc);
         qr.setDate(Date.from(Clock.systemDefaultZone().instant()));
