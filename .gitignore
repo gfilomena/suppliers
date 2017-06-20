@@ -1,6 +1,6 @@
 logs
 target
-public
+public/ui
 /.idea
 /.idea_modules
 /.classpath
