@@ -4,10 +4,10 @@
         <img src="http://fakeimg.pl/365x365/" class="img-responsive">
     </div-->
   <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#video">VIDEO</a></li>
-    <li><a data-toggle="tab" href="#audio">AUDIO</a></li>
-    <li><a data-toggle="tab" href="#image">IMAGE</a></li>
-    <li><a data-toggle="tab" href="#text">TEXT</a></li>
+    <li class="active"><a data-toggle="tab" href="#video">VIDEO <span *ngIf="searchVideoResult?.length > 0">{{searchVideoResult?.length}}</span></a></li>
+    <li><a data-toggle="tab" href="#audio">AUDIO <span *ngIf="searchAudioResult?.length > 0">{{searchAudioResult?.length}}</span></a></li>
+    <li><a data-toggle="tab" href="#image">IMAGE <span *ngIf="searchImgResult?.length > 0">{{searchImgResult?.length}}</span></a></li>
+    <li><a data-toggle="tab" href="#text">TEXT<span *ngIf="searchTextResult?.length > 0">{{searchTextResult?.length}}</span></a></li>
   </ul>
 
   <div class="tab-content">
