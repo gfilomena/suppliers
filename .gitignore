@@ -1,6 +1,5 @@
 logs
 target
-public/ui
 /.idea
 /.idea_modules
 /.classpath
@@ -9,3 +8,15 @@ public/ui
 /RUNNING_PID
 node_modules
 npm-debug.log
+public/ui/styles.bundle.css.map
+public/ui/styles.bundle.css
+public/ui/polyfills.bundle.js.map
+public/ui/inline.bundle.js.map
+public/ui/inline.bundle.js
+public/ui/index.html
+public/ui/favicon.ico
+public/ui/vendor.bundle.js.map
+public/ui/vendor.bundle.js
+public/ui/polyfills.bundle.js
+public/ui/main.bundle.js.map
+public/ui/main.bundle.js
