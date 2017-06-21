@@ -38,20 +38,16 @@ export class SearchResultComponent implements OnInit{
                     this.searchResult=res.json().multimediaContents;
                     console.log('search result size: '+this.searchResult.length);
                     this.searchVideoResult= this.searchResult.filter(
-                      mc => {console.log('mc type video='+mc.type) ;
-                      mc.type === 'video'});
+                      mc => mc.type === 'video');
                       console.log('search video result size: '+this.searchVideoResult.length);
                     this.searchImgResult= this.searchResult.filter(
-                      mc => { console.log('mc type image='+mc.type) ;
-                      mc.type === 'image'});
+                       mc => mc.type === 'image');
                       console.log('search image result size: '+this.searchImgResult.length);
                     this.searchAudioResult= this.searchResult.filter(
-                      mc => { console.log('mc type audio='+mc.type) ;
-                      mc.type === 'audio'});
+                      mc => mc.type === 'audio');
                       console.log('search audio result size: '+this.searchAudioResult.length);
                     this.searchTextResult= this.searchResult.filter(
-                      mc => {console.log('mc type text='+mc.type) ;
-                      mc.type === 'text'});
+                      mc => mc.type === 'text');
                       console.log('search text result size: '+this.searchTextResult.length);
                     //console.log(this.searchResult);
 
