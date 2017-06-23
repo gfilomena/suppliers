@@ -1,3 +1,12 @@
-div.navbar-nav {
-    padding-left: 280px;
+.account{
+    text-align: right;
 }
+
+
+.flex-spacer{
+
+    -webkit-box-flex: 1;
+    -ms-flex-positive: 1;
+    flex-grow: 1;
+}
+

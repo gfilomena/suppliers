@@ -17,6 +17,9 @@ import { RegisterComponent } from "./register/index"
 import { SidebarComponent } from "./sidebar/index"
 import { NavbarComponent } from "./navbar/index"
 import { LoggedinComponent } from "./loggedin/index"
+import {NoopAnimationsModule} from "@angular/platform-browser/animations"
+import "hammerjs";
+import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats } from "@angular/material";
 
 @NgModule({
     imports: [
@@ -24,7 +27,11 @@ import { LoggedinComponent } from "./loggedin/index"
         FormsModule,
         HttpModule,
         SearchModule,
-        AppRoutingModule
+        AppRoutingModule,
+        NoopAnimationsModule,
+        MaterialModule,
+        MdDatepickerModule,
+        MdNativeDateModule
     ],
     declarations: [
         AppComponent,

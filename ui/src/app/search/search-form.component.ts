@@ -16,6 +16,11 @@ export class SearchFormComponent {
     submitted = false;
     currentUser: User;
     types = ['Audio', 'Video', 'Text', 'Image'];
+     tiles = [
+    {text: 'One', cols: 1, rows: 5, color: 'lightblue'},
+    {text: 'Two', cols: 3, rows: 5, color: 'lightgreen'},
+   
+  ];
     searchForm: SearchForm;
     searchResults: MultimediaContent[]=[];
 

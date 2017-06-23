@@ -1,17 +1,6 @@
-<div class="col-sm-12 col-sm-offset-5 col-md-12 col-md-offset-2 main">
-  <h2 class="page-header">Search Results</h2>
-  <!--div  class="gallery_product col-lg-4 col-md-4 col-sm-4 col-xs-6 filter hdpe">
-        <img src="http://fakeimg.pl/365x365/" class="img-responsive">
-    </div-->
-  <ul class="nav nav-tabs">
-    <li class="active"><a data-toggle="tab" href="#video">VIDEO <span *ngIf="searchVideoResult?.length > 0">{{searchVideoResult?.length}}</span></a></li>
-    <li><a data-toggle="tab" href="#audio">AUDIO <span *ngIf="searchAudioResult?.length > 0">{{searchAudioResult?.length}}</span></a></li>
-    <li><a data-toggle="tab" href="#image">IMAGE <span *ngIf="searchImgResult?.length > 0">{{searchImgResult?.length}}</span></a></li>
-    <li><a data-toggle="tab" href="#text">TEXT<span *ngIf="searchTextResult?.length > 0">{{searchTextResult?.length}}</span></a></li>
-  </ul>
-
-  <div class="tab-content">
-    <div id="video" class="tab-pane fade in active">
+<md-tab-group>
+  <md-tab label="Video {{searchVideoResult?.length}}">
+     <div id="video" class="tab-pane fade in active">
       <h3>VIDEO</h3>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
       <div *ngFor="let sr of searchVideoResult | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" class="media">
@@ -21,6 +10,8 @@
       </div>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
+  </md-tab>
+  <md-tab label="Audio {{searchAudioResult?.length}}">
     <div id="audio" class="tab-pane fade">
       <h3>AUDIO</h3>
             <pagination-controls (pageChange)="p = $event"></pagination-controls>
@@ -31,7 +22,9 @@
       </div>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
-    <div id="image" class="tab-pane fade">
+    </md-tab>
+  <md-tab label="Image {{searchImgResult?.length}}">
+ <div id="image" class="tab-pane fade">
       <h3>IMAGE</h3>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
       <div *ngFor="let sr of searchImgResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
@@ -41,7 +34,9 @@
       </div>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
-    <div id="text" class="tab-pane fade">
+  </md-tab>
+  <md-tab label="Text {{searchTextResult?.length}}">
+     <div id="text" class="tab-pane fade">
       <h3>TEXT</h3>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
       <div *ngFor="let sr of searchTextResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
@@ -51,5 +46,5 @@
       </div>
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
-  </div>
-</div>
+  </md-tab>
+</md-tab-group>
