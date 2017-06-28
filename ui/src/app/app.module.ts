@@ -19,7 +19,9 @@ import { NavbarComponent } from "./navbar/index"
 import { LoggedinComponent } from "./loggedin/index"
 import {NoopAnimationsModule} from "@angular/platform-browser/animations"
 import "hammerjs";
-import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats } from "@angular/material";
+import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdGridListModule } from "@angular/material";
+import { FlexLayoutModule } from "@angular/flex-layout";
+
 
 @NgModule({
     imports: [
@@ -30,8 +32,8 @@ import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModu
         AppRoutingModule,
         NoopAnimationsModule,
         MaterialModule,
-        MdDatepickerModule,
-        MdNativeDateModule
+        MdNativeDateModule,
+        FlexLayoutModule
     ],
     declarations: [
         AppComponent,

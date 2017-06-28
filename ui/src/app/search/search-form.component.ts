@@ -1,10 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router"
 
 import { SearchForm }    from '../_models/search-form';
 import { User } from "../_models/user";
 import { SearchService } from "./search.service";
 import { MultimediaContent } from "../_models/multimediaContent";
+import { MdDialog, MdDialogRef } from "@angular/material";
+import { DialogDetailComponent } from "../dialog-detail/dialog-detail.component";
 
 @Component({
   selector: 'app-search-form',
@@ -16,13 +18,15 @@ export class SearchFormComponent {
     submitted = false;
     currentUser: User;
     types = ['Audio', 'Video', 'Text', 'Image'];
-     tiles = [
-    {text: 'One', cols: 1, rows: 5, color: 'lightblue'},
-    {text: 'Two', cols: 3, rows: 5, color: 'lightgreen'},
-   
-  ];
     searchForm: SearchForm;
     searchResults: MultimediaContent[]=[];
+
+    searchResult: MultimediaContent[];
+    searchVideoResult: MultimediaContent[];
+    searchImgResult: MultimediaContent[];
+    searchAudioResult: MultimediaContent[];
+    searchTextResult: MultimediaContent[];
+   
 
     constructor(private searchService: SearchService, private router: Router){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
@@ -34,8 +38,41 @@ export class SearchFormComponent {
         this.submitted = true;
         //console.log(JSON.stringify(this.searchForm))
         localStorage.setItem("searchForm", JSON.stringify(this.searchForm))
-        this.router.navigate(["/search"])
+        this.search();
 }
+
+
+    search(){
+        this.searchService.search(this.searchForm)
+        .subscribe(
+                res => {
+                    console.log(JSON.stringify(res.json().multimediaContents));
+                    this.searchResult=res.json().multimediaContents;
+                    console.log('search result size: '+this.searchResult.length);
+                    this.searchVideoResult= this.searchResult.filter(
+                      mc => mc.type === 'video');
+                      console.log('search video result size: '+this.searchVideoResult.length);
+                    this.searchImgResult= this.searchResult.filter(
+                       mc => mc.type === 'image');
+                      console.log('search image result size: '+this.searchImgResult.length);
+                    this.searchAudioResult= this.searchResult.filter(
+                      mc => mc.type === 'audio');
+                      console.log('search audio result size: '+this.searchAudioResult.length);
+                    this.searchTextResult= this.searchResult.filter(
+                      mc => mc.type === 'text');
+                      console.log('search text result size: '+this.searchTextResult.length);
+                    //console.log(this.searchResult);
+
+                },
+                error => {
+                    console.log(error);
+                    //this.loading = false
+                }
+                )
+    }
+
     // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.searchForm); }
+    get diagnostic() { return JSON.stringify(this.searchResult); }
+
 }
+

@@ -1,75 +1,17 @@
-<div class="panel panel-default">
-  <div class="panel-heading"><b>{{multimediaContent.name}}</b></div>
-  <div class="panel-body">
-    <div class="media-left media-top">
-      <img [src]="multimediaContent.thumbnail" class="media-object" alt="Generic placeholder image">
-    </div>
-    <div class="media-body">
-      <!--span class="label label-default">Description</span>
-  <h6>{{multimediaContent.description}}</h6-->
-      <p>{{multimediaContent.description}}</p>
-      <div class="center-block">
-      <span class="label label-default">Type</span>
-      <h6>{{multimediaContent.type}}</h6>
-      <span class="label label-default">Source</span>
-      <h6>{{multimediaContent.source}}</h6>
-      <span class="label label-default">Date</span>
-      <h6>{{getDate(multimediaContent.date)}}</h6>
-      </div>
-    </div>
-  </div>
-  <div class="panel-footer">
-    <div class="btn-group" role="group">
-      <button type="button" class="btn btn-default">
-  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Star
-</button>
-      <button type="button" class="btn btn-default" data-toggle="modal" [attr.data-target]="'#' + modalId">
-  <span class="glyphicon glyphicon-star" aria-hidden="true"></span> Detail
-</button>
-    </div>
-  </div>
-</div>
+<md-card class="example-card">
+  <md-card-header>
+    <md-card-title>{{multimediaContent.name}}</md-card-title>
+    <md-card-subtitle>{{multimediaContent.description}}</md-card-subtitle>
+  </md-card-header>
+  <img md-card-image [src]="multimediaContent.thumbnail">
+  <md-card-content>
+     <span>Description</span>
+       <p>{{multimediaContent.description}}</p>
 
-<!-- Modal -->
-<div [id]="modalId" class="modal fade" role="dialog">
-  <div class="modal-dialog">
+  </md-card-content>
+  <md-card-actions>
+    <button md-button>Star</button>
+    <button md-button (click)="openDialog()">Detail</button>
+  </md-card-actions>
+</md-card>
 
-    <!-- Modal content-->
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal">&times;</button>
-        <h4 class="modal-title">Multimedia Content Detail</h4>
-      </div>
-      <div class="modal-body">
-        <span class="label label-primary">Title</span>
-        <h5 class="media-heading">{{multimediaContent.name}}</h5>
-        <span class="label label-success">Description</span>
-        <h6>{{multimediaContent.description}}</h6>
-        <span class="label label-default">Type</span>
-        <h6>{{multimediaContent.type}}</h6>
-        <span class="label label-default">Source</span>
-        <h6>{{multimediaContent.source}}</h6>
-        <span class="label label-default">Date</span>
-        <h6>{{getDate(multimediaContent.date)}}</h6>
-      </div>
-      <div [ngSwitch]="multimediaContent.type">
-      <!-- 16:9 aspect ratio -->
-      <div *ngSwitchCase="'video'" class="embed-responsive embed-responsive-16by9">
-        <iframe [src]="sanitizer.bypassSecurityTrustResourceUrl(multimediaContent.uri)" class="embed-responsive-item e2e-iframe-untrusted-src"></iframe>
-      </div>
-      <div *ngSwitchCase="'image'">
-        <img src="{{multimediaContent.thumbnail}}"/>
-      </div>
-      <div *ngSwitchCase="'text'">
-      </div>
-      <div *ngSwitchCase="'audio'">
-      </div>
-            </div >
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default pull-left">Send to MCSSR</button>
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-
-  </div>
-</div>

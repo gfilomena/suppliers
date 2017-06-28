@@ -1,0 +1,15 @@
+<md-card>
+  <md-card-header>
+    <md-card-title>{{data.name}}</md-card-title>
+  </md-card-header>
+  <img md-card-image [src]="data.thumbnail">
+  <md-card-content>
+     <span>Description</span>
+       <p>{{data.description}}</p>
+
+  </md-card-content>
+   <md-card-actions align="end">
+    <button md-button>Send</button>
+    <button md-button  [md-dialog-close]="true">Close</button>
+  </md-card-actions>
+</md-card>

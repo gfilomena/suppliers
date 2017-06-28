@@ -1,50 +1,61 @@
-<md-tab-group>
-  <md-tab label="Video {{searchVideoResult?.length}}">
-     <div id="video" class="tab-pane fade in active">
-      <h3>VIDEO</h3>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      <div *ngFor="let sr of searchVideoResult | paginate: { itemsPerPage: 5, currentPage: p }; let i=index" class="media">
-        <div class="panel-group">
-        <app-multimedia-content [multimediaContent]="sr" [modalId]="'video'+i"></app-multimedia-content>
-        </div>
-      </div>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
-  </md-tab>
-  <md-tab label="Audio {{searchAudioResult?.length}}">
-    <div id="audio" class="tab-pane fade">
-      <h3>AUDIO</h3>
-            <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      <div *ngFor="let sr of searchAudioResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
-        <div class="panel-group">
-        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
-        </div>
-      </div>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
-    </md-tab>
-  <md-tab label="Image {{searchImgResult?.length}}">
- <div id="image" class="tab-pane fade">
-      <h3>IMAGE</h3>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      <div *ngFor="let sr of searchImgResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
-        <div class="panel-group">
-        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
-        </div>
-      </div>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
-  </md-tab>
-  <md-tab label="Text {{searchTextResult?.length}}">
-     <div id="text" class="tab-pane fade">
-      <h3>TEXT</h3>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-      <div *ngFor="let sr of searchTextResult | paginate: { itemsPerPage: 5, currentPage: p }" class="media">
-        <div class="panel-group">
-        <app-multimedia-content [multimediaContent]="sr"></app-multimedia-content>
-        </div>
-      </div>
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
-    </div>
-  </md-tab>
-</md-tab-group>
+<md-grid-list cols="4"   gutterSize="20px"  fxLayoutAlign="start none">
+   <md-grid-tile  *ngFor="let sr of searchVideoResult"> 
+     <md-card 
+    [style.minHeight]="'100%'"
+    [style.minWidth]="'100%'">
+        <md-card-title >{{sr.name}}</md-card-title>
+         <img  [src]="sr.thumbnail">
+        <md-card-content> 
+         {{sr.description}}
+          </md-card-content> 
+           <md-card-actions>
+        <button md-button>Star</button>
+        <button md-button (click)="openDialog()">Detail</button>
+      </md-card-actions>
+      </md-card> 
+  </md-grid-tile> 
+</md-grid-list>
+
+
+
+<!--
+
+<md-grid-list cols="4"  fxlayout="row" fxlayout.xs="column" gutterSize="10px">
+<md-grid-tile *ngFor="let sr of searchVideoResult">
+<md-card 
+    [style.minHeight]="'100%'"
+    [style.minWidth]="'100%'">
+   <img md-card-image [src]="sr.thumbnail">
+   <md-card-title-group>
+     
+      <md-card-title>{{sr.name}}</md-card-title>
+      <md-card-subtitle>{{sr.description}}</md-card-subtitle>
+   </md-card-title-group>
+</md-card>
+</md-grid-tile>
+</md-grid-list>
+
+
+
+<md-grid-list cols="4"  fxlayout="row" fxlayout.xs="column" gutterSize="10px">
+<md-grid-tile *ngFor="let sr of searchVideoResult">
+    <md-card 
+    [style.minHeight]="'100%'"
+    [style.minWidth]="'100%'">
+      <md-card-header>
+      <md-card-title>{{sr.name}}</md-card-title>
+      </md-card-header>
+      <img md-card-image [src]="sr.thumbnail"> 
+      <md-card-content>
+          <p>{{sr.description}}</p>
+      </md-card-content>
+      <md-card-actions>
+        <button md-button>Star</button>
+        <button md-button (click)="openDialog()">Detail</button>
+      </md-card-actions>
+    </md-card>
+</md-grid-tile>
+</md-grid-list>
+
+
+  -->

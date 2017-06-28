@@ -9,7 +9,11 @@ import { MultimediaContentComponent } from '../multimedia-content/multimedia-con
 import {NgxPaginationModule} from 'ngx-pagination';
 import {NoopAnimationsModule} from "@angular/platform-browser/animations"
 import "hammerjs";
-import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats } from "@angular/material";
+import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdDialog, MdDialogRef } from "@angular/material";
+import { FlexLayoutModule } from '@angular/flex-layout';
+import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-detail.component";
+
+
 @NgModule({
   imports: [
     CommonModule,
@@ -18,14 +22,16 @@ import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModu
     NgxPaginationModule,
     NoopAnimationsModule,
     MaterialModule,
-    MdDatepickerModule,
-    MdNativeDateModule
+    FlexLayoutModule
   ],
   declarations: [
     SearchFormComponent,
     SearchResultComponent,
-    MultimediaContentComponent
+    MultimediaContentComponent,
+    DialogDetailComponent,
+    DialogDetail
   ],
+  entryComponents: [DialogDetail],
   providers: [ SearchService ]
 })
 export class SearchModule {}
