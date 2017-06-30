@@ -36,9 +36,7 @@ let dialogRef = this.dialog.open(DialogDetail, {
    
 }
 
- getDate(date:string): string{
-    return new Date(date).toString().slice(0,15);
-  }
+
 
 }
 
@@ -50,4 +48,8 @@ let dialogRef = this.dialog.open(DialogDetail, {
 })
 export class DialogDetail {
   constructor(public dialogRef: MdDialogRef<DialogDetail>,@Inject(MD_DIALOG_DATA) public data: any) {}
+
+   getDate(date:string):string{
+    return new Date(date).toString().slice(0,15);
+  }
 }

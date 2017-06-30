@@ -23,48 +23,41 @@
     <md-card-content>
   
   <form class="example-form" (ngSubmit)="onSubmit()" #qForm="ngForm">
-    <div fxLayout="row" fxLayoutAlign="start end" fxLayoutGap="5px" >
-        <md-input-container fxFlex="20%" fxFlexOffset="2">
-        <input mdInput placeholder="Keywords" value="1" id="keywords" [(ngModel)]="searchForm.keyWords" name="keyWords" #spy>
+    <div  fxLayoutAlign="start none" fxLayoutGap="5px" >
+       <md-input-container  > 
+        <input mdInput placeholder="Are you searching for" value="1" id="freetext" [(ngModel)]="searchForm.freetext" name="freetext" #spy>
         </md-input-container>
-        <md-input-container  fxFlexOffset="2">
-        <textarea  mdInput placeholder="Free Text" id="freeText" [(ngModel)]="searchForm.freeText"
-                          name="freeText"> 2 </textarea>
-        </md-input-container>
-            <md-input-container fxFlex="20%" fxFlexOffset="2">
-                <input mdInput placeholder="Semantic Search" id="semanticSearch" [(ngModel)]="searchForm.semanticSearch"
-                      name="semanticSearch">
-        </md-input-container>
-          </div>
+         
+    </div>
+    <div fxLayout="row">
+     <md-card>
+      <div fxLayoutAlign="end start"> 
 
-     <div fxLayout="row"  fxLayoutAlign="start center" fxLayoutGap="5px" >
-
-
-            <md-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex="20%" fxFlexOffset="2">
+          <md-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex="30%" fxFlexOffset="2">
               <md-option *ngFor="let type of types" [value]="type">
                 {{ type }}
               </md-option>
-            </md-select>
-
+          </md-select>
   
-          <md-input-container fxFlex="20%" fxFlexOffset="2">
+          <md-input-container fxFlex="30%" fxFlexOffset="2">
             <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate"
                    name="inDate">
             <button mdSuffix [mdDatepickerToggle]="startdate"></button>
           </md-input-container>
           <md-datepicker #startdate></md-datepicker>
-
-          <md-input-container fxFlex="20%" fxFlexOffset="2">
+    
+          <md-input-container fxFlex="30%" fxFlexOffset="2">
             <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate"
                    name="endDate">
             <button mdSuffix [mdDatepickerToggle]="enddate"></button>
           </md-input-container>
           <md-datepicker #enddate></md-datepicker>
 
-     
-
-  </div>
+      </div>
+  </md-card>
+    </div>
     
+    <br>
  <button md-raised-button  type="submit" [disabled]="!qForm.form.valid">Search</button> 
 </form>
 
