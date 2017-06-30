@@ -1,7 +1,7 @@
 .example-card {
-  display: inline-block;
-  width: 300px;
-  margin-bottom: 20%;
+
+    height: 200px;
+    margin: 0 50px 50px 0;
 
 }
 
@@ -11,22 +11,28 @@
 }
 
 .image-card {
-
-width: 300px;
-
+    height: 100px;
+     
 }
 
 .title-card {
 
-font-size: 100%;
+    font-size: 60%;
+    height: 10%;
+    /* position: initial; */
+    overflow: hidden;
+
 }
 
 
 .content-card {
+margin-top: 10px; 
+font-size: 80%;
 
 }
 
 .filter{
+  position: fixed;
   
 }
 

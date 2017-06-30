@@ -75,6 +75,35 @@ export class SearchFormComponent {
                 )
     }
 
+
+  getDate(date:string): string{
+    return new Date(date).toString().slice(0,15);
+  }
+
+
+    resultfilter() {
+
+
+console.log(this.videofilter);
+console.log(this.audiofilter);
+console.log(this.textfilter);
+console.log(this.imagefilter);
+this.searchResults = [];
+if (this.videofilter) {
+this.searchResults = this.searchResults.concat(this.searchVideoResult);
+}
+if (this.audiofilter) {
+this.searchResults = this.searchResults.concat(this.searchAudioResult);
+}
+if (this.imagefilter) {
+this.searchResults = this.searchResults.concat(this.searchImgResult);
+}
+if (this.textfilter) {
+this.searchResults = this.searchResults.concat(this.searchTextResult);
+}
+     console.log('searchResults',this.searchResults);
+    }
+
     // TODO: Remove this when we're done
     get diagnostic() { return JSON.stringify(this.searchResult); }
 

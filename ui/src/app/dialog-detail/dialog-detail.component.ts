@@ -29,11 +29,16 @@ export class DialogDetailComponent implements OnInit {
 let dialogRef = this.dialog.open(DialogDetail, {
   
   data: this.multimediaContent,
-  height: '50%',
-  width: 'auto',
+  height: 'auto',
+  width: '40%',
+  position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
 });
    
-      }
+}
+
+ getDate(date:string): string{
+    return new Date(date).toString().slice(0,15);
+  }
 
 }
 
@@ -41,6 +46,7 @@ let dialogRef = this.dialog.open(DialogDetail, {
 @Component({
   selector: 'dialog-detail-dialog',
   templateUrl: 'dialog-detail-dialog.html',
+  styleUrls: ['./dialog-detail.component.css']
 })
 export class DialogDetail {
   constructor(public dialogRef: MdDialogRef<DialogDetail>,@Inject(MD_DIALOG_DATA) public data: any) {}
