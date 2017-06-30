@@ -1,15 +1,22 @@
-<md-card>
+<md-card class='dialog-card'>
   <md-card-header>
     <md-card-title>{{data.name}}</md-card-title>
   </md-card-header>
-  <img md-card-image [src]="data.thumbnail">
+  <img class="image-card" [src]="data.thumbnail">
   <md-card-content>
-     <span>Description</span>
-       <p>{{data.description}}</p>
-
+        <span class="label label-primary">Title</span>
+        <h5 class="media-heading">{{data.name}}</h5>
+        <span>Description</span>
+        <h6>{{data.description}}</h6>
+        <span>Type</span>
+        <h6>{{data.type}}</h6>
+        <span>Source</span>
+        <h6>{{data.uri}}</h6>
+        <span>Date</span>
+        <h6>{{getDate(data.date)}}</h6>
   </md-card-content>
    <md-card-actions align="end">
-    <button md-button>Send</button>
+    <button md-button>Send to MCSSR</button>
     <button md-button  [md-dialog-close]="true">Close</button>
   </md-card-actions>
 </md-card>
