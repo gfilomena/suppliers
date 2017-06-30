@@ -1,83 +1,21 @@
 
-<!--
-<div class="demo-card-container">
-  <md-card>
-    Hello
-  </md-card>
-<md-grid-list cols="3"  gutterSize="10px"  fxLayoutAlign="start none">
-   <md-grid-tile> 
-  <md-card>
-    <md-card-title-group>
-        <md-card-title>Card with title</md-card-title>
-        <md-card-subtitle>Subtitle</md-card-subtitle>
-        <img md-card-md-image>
-    </md-card-title-group>
-  </md-card>
-   </md-grid-tile>
 
-    <md-grid-tile> 
-  <md-card>
-    <md-card-subtitle>Subtitle</md-card-subtitle>
-    <md-card-title>Card with title and footer</md-card-title>
-    <md-card-content>
-      <p>This is supporting text.</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </md-card-content>
-    <md-card-actions>
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
-    </md-card-actions>
-    <md-card-footer>
-      <md-progress-bar mode="indeterminate"></md-progress-bar>
-    </md-card-footer>
-  </md-card>
-    </md-grid-tile>
-     <md-grid-tile> 
-  <md-card>
-    <img md-card-image src="https://material.angularjs.org/latest/img/washedout.png">
-    <md-card-title>Content Title</md-card-title>
-    <md-card-content>
-      <p>Here is some content</p>
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-button>LIKE</button>
-      <button md-button>SHARE</button>
-    </md-card-actions>
-  </md-card>
-     </md-grid-tile>
- <md-grid-tile> 
-  <md-card>
-    <md-card-header>
-      <img md-card-avatar>
-      <md-card-title>Header title</md-card-title>
-      <md-card-subtitle>Header subtitle</md-card-subtitle>
-    </md-card-header>
-    <img md-card-image src="https://material.angularjs.org/latest/img/washedout.png">
-    <md-card-content>
-      <p>Here is some content</p>
-    </md-card-content>
-  </md-card>
- </md-grid-tile>
- <md-grid-tile> 
+<div class="container">
+  <div class="item item-1" fxLayoutAlign="start start" fxFlex="20%"fxflex>
 
-  <md-card class="demo-card-blue mat-card-flat">
-    <md-card-title>Easily customizable</md-card-title>
-    <md-card-actions>
-      <button md-button>First</button>
-      <button md-button>Second</button>
-    </md-card-actions>
-  </md-card>
- </md-grid-tile>
-</md-grid-list>
-</div>
-
--->
-
-<div class="container" fxLayoutAlign="start center">
-  <div class="item item-1" fxFlex="20%" flex>
-
+<md-card class="filter">
+  <md-card-content>
+    <h2 class="example-h2">Filter</h2>
+<md-list>
+  <md-list-item> <md-checkbox [checked]="videofilter" >Video</md-checkbox><p *ngIf="searchVideoResult">({{searchVideoResult.length}})</p></md-list-item>
+  <md-list-item><md-checkbox  [checked]="audiofilter" >Audio</md-checkbox><p *ngIf="searchAudioResult">({{searchAudioResult.length}})</p></md-list-item>
+  <md-list-item><md-checkbox  [checked]="textfilter" class="example-margin" >Text</md-checkbox><p *ngIf="searchTextResult"> ({{searchTextResult.length}})</p></md-list-item>
+  <md-list-item><md-checkbox  [checked]="imagefilter" class="example-margin" >Image</md-checkbox><p *ngIf="searchImgResult">({{searchImgResult.length}})</p></md-list-item>
+</md-list>   
+  </md-card-content>
+</md-card>
   </div>
-  <div class="item item-2" fxFlex="80%" flex>
+  <div class="item item-2"  fxFlex="80%">
   <md-card>
     <md-card-header>
       <md-card-title>Search Multimedia Content</md-card-title>
