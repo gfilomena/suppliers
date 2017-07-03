@@ -1,4 +1,4 @@
-﻿<div class="col-md-4 col-md-offset-4 panel-login">
+﻿<!--div class="col-md-4 col-md-offset-4 panel-login">
     <div class="login-panel panel panel-default">
         <div class="panel-heading">
             <img src="assets/images/logo_producer_511x103.jpg" class="img-login">
@@ -27,4 +27,27 @@
             </form>
         </div>
     </div>
+</div-->
+<div class="app-content">
+  <div class="group">
+
+    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
+      <md-input-container>
+        <input mdInput type="text" required name="username" [(ngModel)]="model.username" id="username">
+        <md-placeholder>
+          <i class="material-icons app-input-icon">face</i>Username
+        </md-placeholder>
+      </md-input-container><br><br>
+      <md-input-container>
+        <input mdInput type="password" required name="password" [(ngModel)]="model.password" id="password">
+        <md-placeholder >
+          <i class="material-icons app-input-icon">lock_open</i>Password
+        </md-placeholder>
+      </md-input-container><br><br>
+      <button md-raised-button color="warn" type="submit" name="login">LOGIN</button><br><br>
+      <span id="err"><small>{{errorMsg}}</small></span>
+      <md-slide-toggle color="primary"><small>Remember me!</small></md-slide-toggle>
+      <button md-raised-button color="warn" [routerLink]="['/register']" name="register">REGISTER</button><br><br>
+    </form >
+  </div>
 </div>
