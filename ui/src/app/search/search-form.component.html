@@ -23,13 +23,13 @@
     <md-card-content>
   
   <form class="example-form" (ngSubmit)="onSubmit()" #qForm="ngForm">
-    <div  fxLayoutAlign="start none" fxLayoutGap="5px" >
-       <md-input-container  > 
+    <div  fxLayoutAlign="center start" fxLayoutGap="5px" >
+       <md-input-container  fxFlex="50%"> 
         <input mdInput placeholder="Are you searching for" value="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText" #spy>
         </md-input-container>
          
     </div>
-  <div fxLayoutAlign="end start"> 
+  <div fxLayoutAlign="center start"> 
      <md-card>
      
 
