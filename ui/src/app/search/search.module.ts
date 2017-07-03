@@ -12,6 +12,10 @@ import "hammerjs";
 import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdDialog, MdDialogRef } from "@angular/material";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-detail.component";
+import {VgCoreModule} from 'videogular2/core';
+import {VgControlsModule} from 'videogular2/controls';
+import {VgOverlayPlayModule} from 'videogular2/overlay-play';
+import {VgBufferingModule} from 'videogular2/buffering';
 
 
 @NgModule({
@@ -22,7 +26,11 @@ import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-deta
     NgxPaginationModule,
     NoopAnimationsModule,
     MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    VgCoreModule,
+    VgControlsModule,
+    VgOverlayPlayModule,
+    VgBufferingModule
   ],
   declarations: [
     SearchFormComponent,

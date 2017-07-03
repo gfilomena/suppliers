@@ -25,13 +25,13 @@
   <form class="example-form" (ngSubmit)="onSubmit()" #qForm="ngForm">
     <div  fxLayoutAlign="start none" fxLayoutGap="5px" >
        <md-input-container  > 
-        <input mdInput placeholder="Are you searching for" value="1" id="freetext" [(ngModel)]="searchForm.freetext" name="freetext" #spy>
+        <input mdInput placeholder="Are you searching for" value="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText" #spy>
         </md-input-container>
          
     </div>
-    <div fxLayout="row">
+  <div fxLayoutAlign="end start"> 
      <md-card>
-      <div fxLayoutAlign="end start"> 
+     
 
           <md-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex="30%" fxFlexOffset="2">
               <md-option *ngFor="let type of types" [value]="type">
@@ -53,7 +53,7 @@
           </md-input-container>
           <md-datepicker #enddate></md-datepicker>
 
-      </div>
+    
   </md-card>
     </div>
     
@@ -63,10 +63,6 @@
 
   </md-card-content>
 </md-card>
-
-
-
-
 
 <md-card >
 <md-grid-list cols="5" gutterSize="1px"  fxLayoutAlign="start none"  >
