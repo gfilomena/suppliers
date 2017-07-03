@@ -42,15 +42,11 @@
 
 <md-toolbar *ngIf="isLoggedIn()" color="primary">
 
-   <button class="mat-icon-button" md-icon-button="">
-	<span class="mat-button-wrapper">
-      <md-icon role="img" class="material-icons mat-icon" aria-label="menu">menu</md-icon>
-    </span>
-   </button>
-   <button md-button> Home </button>
-   <button md-button> Search History </button>
-   <button md-button> Bookmarks </button>
-   <button md-button> Settings </button>
+   <img class="logo" src="../assets/images/logo_producer_511x103.jpg">
+   <button md-button [routerLink]="['/']"> Home </button>
+   <button md-button [routerLink]="['/search-history']"> Search History </button>
+   <button md-button [routerLink]="['/bookmarks']"> Bookmarks </button>
+   <button md-button [routerLink]="['/setting']"> Settings </button>
 	<div class="flex-spacer"></div> 
 
 	<button md-icon-button [mdMenuTriggerFor]="appMenu" >

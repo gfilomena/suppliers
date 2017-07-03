@@ -21,6 +21,9 @@ import {NoopAnimationsModule} from "@angular/platform-browser/animations"
 import "hammerjs";
 import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdGridListModule } from "@angular/material";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { BookmarksComponent } from './bookmarks/bookmarks.component';
+import { SettingComponent } from './setting/setting.component';
+import { SearchHistoryComponent } from './search-history/search-history.component';
 
 
 
@@ -44,7 +47,10 @@ import { FlexLayoutModule } from "@angular/flex-layout";
         RegisterComponent,
         SidebarComponent,
         NavbarComponent,
-        LoggedinComponent
+        LoggedinComponent,
+        BookmarksComponent,
+        SettingComponent,
+        SearchHistoryComponent
     ],
     providers: [
         AppConfig,
