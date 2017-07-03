@@ -23,40 +23,32 @@
     <md-card-content>
   
   <form class="example-form" (ngSubmit)="onSubmit()" #qForm="ngForm">
-    <div  fxLayoutAlign="center start" fxLayoutGap="5px" >
-       <md-input-container  fxFlex="50%"> 
+    <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
+      <md-card>
+       <md-input-container  fxFlex="90%"> 
         <input mdInput placeholder="Are you searching for" value="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText" #spy>
         </md-input-container>
-         
-    </div>
-  <div fxLayoutAlign="center start"> 
-     <md-card>
-     
-
-          <md-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex="30%" fxFlexOffset="2">
+    
+            <md-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex="30%" fxFlexOffset="2">
               <md-option *ngFor="let type of types" [value]="type">
                 {{ type }}
               </md-option>
           </md-select>
-  
+
           <md-input-container fxFlex="30%" fxFlexOffset="2">
             <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate"
                    name="inDate">
             <button mdSuffix [mdDatepickerToggle]="startdate"></button>
           </md-input-container>
           <md-datepicker #startdate></md-datepicker>
-    
           <md-input-container fxFlex="30%" fxFlexOffset="2">
             <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate"
                    name="endDate">
             <button mdSuffix [mdDatepickerToggle]="enddate"></button>
           </md-input-container>
           <md-datepicker #enddate></md-datepicker>
-
-    
-  </md-card>
+       </md-card>
     </div>
-    
     <br>
  <button md-raised-button  type="submit" [disabled]="!qForm.form.valid">Search</button> 
 </form>
