@@ -40,7 +40,7 @@
 
 
 
-<md-toolbar color="primary">
+<md-toolbar *ngIf="isLoggedIn()" color="primary">
 
    <button class="mat-icon-button" md-icon-button="">
 	<span class="mat-button-wrapper">
@@ -59,6 +59,7 @@
 	<md-menu #appMenu="mdMenu" >
 	<button md-menu-item> Profile </button>
 	<button md-menu-item> Settings </button>
+	<button md-menu-item [routerLink]="['/login']"> Logout </button>
 	</md-menu>
 
 
