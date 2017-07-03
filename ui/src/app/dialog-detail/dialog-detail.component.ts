@@ -4,6 +4,7 @@ import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
 import { DomSanitizer } from '@angular/platform-browser';
 
 
+
 @Component({
   selector: 'app-dialog-detail',
   inputs: ['multimediaContent'],
