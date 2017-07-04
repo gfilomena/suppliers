@@ -43,6 +43,7 @@ export class SearchFormComponent {
         //console.log(JSON.stringify(this.searchForm))
         localStorage.setItem("searchForm", JSON.stringify(this.searchForm))
         this.search();
+        
 }
 
 
@@ -66,6 +67,7 @@ export class SearchFormComponent {
                       mc => mc.type === 'text');
                       console.log('search text result size: '+this.searchTextResult.length);
                     //console.log(this.searchResult);
+                    this.submitted = false;
 
                 },
                 error => {
@@ -74,6 +76,7 @@ export class SearchFormComponent {
                 }
                 )
     }
+
 
 
   getDate(date:string): string{

@@ -55,7 +55,7 @@
 
   </md-card-content>
 </md-card>
-
+<div *ngIf="submitted"><md-spinner></md-spinner></div>
 <md-card >
 <md-grid-list cols="5" gutterSize="1px"  fxLayoutAlign="start none"  >
  <div *ngIf="videofilter">
