@@ -12,7 +12,7 @@ import models.dao.UserDAOImpl;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
-import services.MongoDBService;
+import services.db.MongoDBService;
 import views.html.index;
 
 import java.io.UnsupportedEncodingException;
@@ -115,7 +115,7 @@ public class UserController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result delete(String username){
         Logger.debug("delete user with username:"+username);
-        userDAO.deleteUser(userDAO.findByUsername(username));
+        userDAO.delete(userDAO.findByUsername(username));
         return ok();
     }
 

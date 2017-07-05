@@ -6,7 +6,7 @@ import org.mindrot.jbcrypt.BCrypt;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.dao.BasicDAO;
 import play.Logger;
-import services.MongoDBService;
+import services.db.MongoDBService;
 
 import java.util.List;
 
@@ -26,19 +26,13 @@ public class UserDAOImpl extends BasicDAO<User, ObjectId> implements UserDAO {
     }
 
     @Override
-    public List<models.User> findAll() {
+    public List<User> findAll() {
         return MongoDBService.getDatastore().createQuery(User.class).asList();
     }
 
     @Override
     public User findByUsername( String username ) {
-        User user = null;
-        List<User> list = MongoDBService.getDatastore().createQuery(User.class).filter("username = ", username).asList();
-        if (list.size() == 1) {
-            user = list.get(0);
-            return user;
-        } else
-            return null;
+        return this.findOne("username", username);
     }
 
     @Override
@@ -49,11 +43,5 @@ public class UserDAOImpl extends BasicDAO<User, ObjectId> implements UserDAO {
         } else {
             return null;
         }
-    }
-
-
-    @Override
-    public void deleteUser( User user ) {
-        MongoDBService.getDatastore().delete(user);
     }
 }

@@ -1,3 +1,5 @@
+import models.dao.SearchResultDAO;
+import models.dao.SearchResultDAOImpl;
 import services.search.repositories.Repository;
 import services.search.repositories.YoutubeRepository;
 import com.google.inject.AbstractModule;

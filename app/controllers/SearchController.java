@@ -3,13 +3,16 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.MultimediaContent;
 import models.SearchResult;
+import models.dao.SearchResultDAO;
+import models.dao.SearchResultDAOImpl;
 import play.Logger;
+import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.WSClient;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import services.MongoDBService;
+import services.db.MongoDBService;
 import services.search.Manager;
 import services.search.SearchManager;
 import services.search.repositories.InternetArchiveRepository;
@@ -20,6 +23,7 @@ import services.search.repositories.YoutubeRepository;
 import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -32,6 +36,8 @@ public class SearchController extends Controller {
     private HttpExecutionContext ec;
     private Manager queryManager;
     private WSClient wsclient;
+    //private SearchResultDAO searchResultDAO;
+    //public static SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
 
     @Inject
     public SearchController( HttpExecutionContext ec, Manager queryManager, WSClient wsClient){
@@ -64,9 +70,17 @@ public class SearchController extends Controller {
             qr.setUser(UserController.userDAO.findByUsername("ppanuccio")); // TODO set connected user
             return  qr;
         });
-            transformedQuery.thenApply(p -> MongoDBService.getDatastore().save(p));
+        //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
+        transformedQuery.thenApply(p -> MongoDBService.getDatastore().save(p));
         CompletionStage<Result> promiseOfResult = transformedQuery.thenApply(( p ) -> ok(p.asJson()));
         return promiseOfResult;
+    }
+
+    public CompletionStage<Result> getSearchResults(String username){
+        //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
+        CompletionStage<Result> results= CompletableFuture.supplyAsync( () -> MongoDBService.getDatastore().createQuery(SearchResult.class).filter("username", username).asList())
+                                                                    .thenApply( sr -> ok(Json.toJson(sr)));
+        return results;
     }
 
     private List<String> getKeyWords( JsonNode jsonRequest ) {
