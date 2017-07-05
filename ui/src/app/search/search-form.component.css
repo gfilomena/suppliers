@@ -1,5 +1,5 @@
 .card {
-    display:inline-block;
+    /*display:inline-block;*/
     width: 200px;
     height: 100%;
     margin: 0;
@@ -39,4 +39,8 @@
   flex-flow: row wrap;
   align-content: space-between;
   justify-content: space-between;
+}
+
+.typefield {
+    margin-top: 16px;
 }
