@@ -1,41 +1,42 @@
-.example-card {
-
-    height: 200px;
-    margin: 0 50px 50px 0;
-
+.card {
+    display:inline-block;
+    width: 200px;
+    height: 100%;
+    margin: 0;
+   /* vertical-align: top;
+    cursor: pointer;
+    overflow: visible; */
 }
 
-.grid-tile {
+
+
+
 
  
-}
 
 .image-card {
-    height: 100px;
-     
+    height:100px;
+    width:100%;
 }
 
 .title-card {
 
-    font-size: 60%;
-    height: 10%;
-    /* position: initial; */
-    overflow: hidden;
+    font-size: 100%;
 
 }
 
 
-.content-card {
-margin-top: 10px; 
-font-size: 80%;
 
-}
 
 .filter{
   position: fixed;
   
 }
 
-.filter-bar{
 
+.container-card {
+  display: flex;
+  flex-flow: row wrap;
+  align-content: space-between;
+  justify-content: space-between;
 }

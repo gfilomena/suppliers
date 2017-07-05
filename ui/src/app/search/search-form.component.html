@@ -18,7 +18,7 @@
   <div class="item item-2"  fxFlex="80%">
   <md-card>
     <md-card-header>
-      <md-card-title>Search Multimedia Content</md-card-title>
+      <md-card-title><h2>Search Multimedia Content</h2></md-card-title>
     </md-card-header>
     <md-card-content>
   
@@ -55,82 +55,72 @@
 
   </md-card-content>
 </md-card>
+
+<md-card>
 <div *ngIf="submitted"><md-spinner></md-spinner></div>
-<md-card >
-<md-grid-list cols="5" gutterSize="1px"  fxLayoutAlign="start none"  >
- <div *ngIf="videofilter">
-    <div *ngFor="let sr of searchVideoResult">
-      <md-grid-tile class="grid-tile" > 
-      <md-card class="example-card" >
-    <img class="image-card" [src]="sr.thumbnail">
-    <md-card-title class="title-card">{{sr.name}}</md-card-title>
-    <md-card-content class="content-card">
-      <span>type:{{sr.type}}</span>
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-button>STAR</button>
-      <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
-    </md-card-actions>
-  </md-card>
-  </md-grid-tile> 
-    </div>
- </div>
- <div *ngIf="audiofilter">
-  <div  *ngFor="let sr of searchAudioResult">
-   <md-grid-tile class="grid-tile" > 
-     <md-card class="example-card" >
-    <img class="image-card" [src]="sr.thumbnail">
-    <md-card-title class="title-card">{{sr.name}}</md-card-title>
-    <md-card-content class="content-card">
-      <span>type:{{sr.type}}</span>
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-button>STAR</button>
-      <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
-    </md-card-actions>
-  </md-card>
-  </md-grid-tile> 
-    </div>
+ <div class="container-card" *ngIf="videofilter">
+     <div  *ngFor="let sr of searchVideoResult">
+        <md-card class="card">
+          <img md-card-image [src]="sr.thumbnail">
+          <md-card-title class="title-card">{{sr.name}}</md-card-title>
+          <md-card-content class="content-card">
+              <md-icon>videocam</md-icon>
+          </md-card-content>
+          <md-card-actions align="end">
+            <button md-button>STAR</button>
+            <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
+          </md-card-actions>
+        </md-card>
+      </div>
   </div>
-
-   <div *ngIf="textfilter">
-  <div  *ngFor="let sr of searchtextResult">
-   <md-grid-tile class="grid-tile" > 
-     <md-card class="example-card" >
-    <img class="image-card" [src]="sr.thumbnail">
-    <md-card-title class="title-card">{{sr.name}}</md-card-title>
-    <md-card-content class="content-card">
-      <span>type:{{sr.type}}</span>
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-button>STAR</button>
-      <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
-    </md-card-actions>
-  </md-card>
-  </md-grid-tile> 
-    </div>
+   <div class="container-card" *ngIf="audiofilter">
+     <div  *ngFor="let sr of searchAudioResult">
+        <md-card class="card">
+          <img md-card-image [src]="sr.thumbnail">
+          <md-card-title>{{sr.name}}</md-card-title>
+          <md-card-content class="content-card">
+              <md-icon>audiotrack</md-icon>
+          </md-card-content>
+          <md-card-actions align="end">
+            <button md-button>STAR</button>
+            <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
+          </md-card-actions>
+        </md-card>
+      </div>
   </div>
-
- <div *ngIf="imagefilter">
-  <div  *ngFor="let sr of searchImgResult">
-   <md-grid-tile class="grid-tile" > 
-     <md-card class="example-card" >
-    <img class="image-card" [src]="sr.thumbnail">
-    <md-card-title class="title-card">{{sr.name}}</md-card-title>
-    <md-card-content class="content-card">
-      <span>type:{{sr.type}}</span>
-    </md-card-content>
-    <md-card-actions align="end">
-      <button md-button>STAR</button>
-      <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
-    </md-card-actions>
-  </md-card>
-  </md-grid-tile> 
-    </div>
+   <div class="container-card" *ngIf="textfilter">
+     <div  *ngFor="let sr of searchtextResult">
+        <md-card class="card">
+          <img md-card-image [src]="sr.thumbnail">
+          <md-card-title>{{sr.name}}</md-card-title>
+          <md-card-content class="content-card">
+              <md-icon>textsms</md-icon>
+          </md-card-content>
+          <md-card-actions align="end">
+            <button md-button>STAR</button>
+            <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
+          </md-card-actions>
+        </md-card>
+      </div>
+  </div>
+   <div class="container-card" *ngIf="imagefilter">
+     <div  *ngFor="let sr of searchImgResult">
+        <md-card class="card">
+          <img md-card-image [src]="sr.thumbnail">
+          <md-card-title>{{sr.name}}</md-card-title>
+          <md-card-content class="content-card">
+              <md-icon>photo</md-icon>
+          </md-card-content>
+          <md-card-actions align="end">
+            <button md-button>STAR</button>
+            <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
+          </md-card-actions>
+        </md-card>
+      </div>
   </div>
 
 
-</md-grid-list>
+
 </md-card>
   </div>
   

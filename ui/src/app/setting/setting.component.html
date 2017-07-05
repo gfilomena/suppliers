@@ -1,3 +1,40 @@
-<p>
-  setting works!
-</p>
+<div class="container">
+  <div class="item item-1" fxLayoutAlign="start start" fxFlex="20%" fxflex>
+
+<md-card class="filter">
+  <md-card-content>
+    <h2 class="example-h2">Filter</h2>
+<md-list>
+  <md-list-item> <md-checkbox [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox><p *ngIf="searchVideoResult">({{searchVideoResult.length}})</p></md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox><p *ngIf="searchAudioResult">({{searchAudioResult.length}})</p></md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox><p *ngIf="searchTextResult"> ({{searchTextResult.length}})</p></md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox><p *ngIf="searchImgResult">({{searchImgResult.length}})</p></md-list-item>
+</md-list>   
+  </md-card-content>
+</md-card>
+  </div>
+  <div class="item item-2"  fxFlex="80%">
+  <md-card>
+    <md-card-header>
+      <md-card-title><h2>Setting</h2></md-card-title>
+    </md-card-header>
+    <md-card-content>
+      <div fxLayout="row" fxLayoutAlign="start start" >
+          <md-card>
+            <div fxLayout="column" fxLayoutAlign="start start" >
+              <h3>Available Repositories</h3>
+                <md-slide-toggle>Youtube</md-slide-toggle>
+                <md-slide-toggle>Amazon Prime video</md-slide-toggle>
+                <md-slide-toggle>Internet Archive</md-slide-toggle>
+                <md-slide-toggle>Pexels</md-slide-toggle>
+                <md-slide-toggle>Wikipedia</md-slide-toggle>
+            </div>
+          </md-card>
+      </div>
+
+  </md-card-content>
+</md-card>
+
+  </div>
+  
+</div>
