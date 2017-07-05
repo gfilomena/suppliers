@@ -1,7 +1,8 @@
 
 .image-card {
-height: 60%;
-width: 70%;
+    height: 60%;
+    width: auto;
+    max-height: 270px;
 
 }
 
