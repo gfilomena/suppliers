@@ -9,9 +9,11 @@
     cursor: pointer;
     overflow: visible; */
 }
-
+.detail-card {
+    font-size: 70%;
+}
 .image-card {
-    max-height: 165px;
+    height: 150px;
 }
 
 .title-card {

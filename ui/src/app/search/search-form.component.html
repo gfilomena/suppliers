@@ -63,12 +63,24 @@
           <ng-template #defaultimg>
                 <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
           </ng-template>
-          <md-card-title class="title-card">{{sr.name}}</md-card-title>
+         
           <md-card-content class="content-card">
-              <md-icon>videocam</md-icon>
+             <div fxLayout="row">
+                <div fxflex="20" fxLayout="column">
+                    <button md-icon-button><md-icon>videocam</md-icon></button>
+                    <button md-icon-button><md-icon>star</md-icon></button>
+                    <button md-icon-button><md-icon>info</md-icon></button>
+                </div>
+                <div class="detail-card" fxflex="80" fxLayout="column">
+                  <p><b>Title:</b>{{sr.name}}</p>
+                  <span><b>Description:</b>{{sr.description}}</span>
+                  <p><b>Source:</b>{{sr.source}}</p>
+                  <p><b>Date:</b>{{getDate(sr.date)}}</p>
+                </div>
+            </div>
           </md-card-content>
           <md-card-actions align="end">
-            <button md-button>STAR</button>
+            <button md-raised-button>STAR</button>
             <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
           </md-card-actions>
         </md-card>
@@ -77,13 +89,30 @@
    <div class="container-card" *ngIf="audiofilter">
      <div  *ngFor="let sr of searchAudioResult" fxflex>
         <md-card class="card">
-          <img md-card-image class="image-card" [src]="sr.thumbnail">
-          <md-card-title>{{sr.name}}</md-card-title>
+           <div *ngIf="sr.thumbnail; else defaultimg">
+              <img md-card-image src="{{sr.thumbnail}}" >
+          </div>
+          <ng-template #defaultimg>
+                <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
+          </ng-template>
+         
           <md-card-content class="content-card">
-              <md-icon>audiotrack</md-icon>
+             <div fxLayout="row">
+                <div fxflex="20" fxLayout="column">
+                    <button md-icon-button><md-icon>audiotrack</md-icon></button>
+                    <button md-icon-button><md-icon>star</md-icon></button>
+                    <button md-icon-button><md-icon>info</md-icon></button>
+                </div>
+                <div class="detail-card" fxflex="80" fxLayout="column">
+                  <p><b>Title:</b>{{sr.name}}</p>
+                  <span><b>Description:</b>{{sr.description}}</span>
+                  <p><b>Source:</b>{{sr.source}}</p>
+                  <p><b>Date:</b>{{getDate(sr.date)}}</p>
+                </div>
+            </div>
           </md-card-content>
           <md-card-actions align="end">
-            <button md-button>STAR</button>
+            <button md-raised-button>STAR</button>
             <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
           </md-card-actions>
         </md-card>
@@ -91,14 +120,31 @@
   </div>
    <div class="container-card" *ngIf="textfilter">
      <div  *ngFor="let sr of searchtextResult" fxflex>
-        <md-card class="card">
-          <img md-card-image class="image-card" [src]="sr.thumbnail">
-          <md-card-title>{{sr.name}}</md-card-title>
+         <md-card class="card">
+           <div *ngIf="sr.thumbnail; else defaultimg">
+              <img md-card-image src="{{sr.thumbnail}}" >
+          </div>
+          <ng-template #defaultimg>
+                <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
+          </ng-template>
+         
           <md-card-content class="content-card">
-              <md-icon>textsms</md-icon>
+             <div fxLayout="row">
+                <div fxflex="20" fxLayout="column">
+                    <button md-icon-button><md-icon>textsms</md-icon></button>
+                    <button md-icon-button><md-icon>star</md-icon></button>
+                    <button md-icon-button><md-icon>info</md-icon></button>
+                </div>
+                <div class="detail-card" fxflex="80" fxLayout="column">
+                  <p><b>Title:</b>{{sr.name}}</p>
+                  <span><b>Description:</b>{{sr.description}}</span>
+                  <p><b>Source:</b>{{sr.source}}</p>
+                  <p><b>Date:</b>{{getDate(sr.date)}}</p>
+                </div>
+            </div>
           </md-card-content>
           <md-card-actions align="end">
-            <button md-button>STAR</button>
+            <button md-raised-button>STAR</button>
             <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
           </md-card-actions>
         </md-card>
@@ -107,13 +153,30 @@
    <div class="container-card" *ngIf="imagefilter" fxflex>
      <div  *ngFor="let sr of searchImgResult">
         <md-card class="card">
-          <img md-card-image class="image-card" [src]="sr.thumbnail">
-          <md-card-title>{{sr.name}}</md-card-title>
+           <div *ngIf="sr.thumbnail; else defaultimg">
+              <img md-card-image class="image-card" src="{{sr.thumbnail}}" >
+          </div>
+          <ng-template #defaultimg>
+                <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
+          </ng-template>
+         
           <md-card-content class="content-card">
-              <md-icon>photo</md-icon>
+             <div fxLayout="row">
+                <div fxflex="20" fxLayout="column">
+                    <button md-icon-button><md-icon>photo</md-icon></button>
+                    <button md-icon-button><md-icon>star</md-icon></button>
+                    <button md-icon-button><md-icon>info</md-icon></button>
+                </div>
+                <div class="detail-card" fxflex="80" fxLayout="column">
+                  <p><b>Title:</b>{{sr.name}}</p>
+                  <span><b>Description:</b>{{sr.description}}</span>
+                  <p><b>Source:</b>{{sr.source}}</p>
+                  <p><b>Date:</b>{{getDate(sr.date)}}</p>
+                </div>
+            </div>
           </md-card-content>
           <md-card-actions align="end">
-            <button md-button>STAR</button>
+            <button md-raised-button>STAR</button>
             <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
           </md-card-actions>
         </md-card>
