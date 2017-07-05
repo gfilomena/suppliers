@@ -12,6 +12,7 @@ export class LoginComponent implements OnInit {
     model: any = {}
     loading = false
     returnUrl: string
+    public errorMsg = '';
 
     constructor(
         private route: ActivatedRoute,
@@ -37,6 +38,7 @@ export class LoginComponent implements OnInit {
                 error => {
                     this.alertService.error(error._body)
                     this.loading = false
+                    this.errorMsg = 'Failed to login';
                 })
     }
 }
