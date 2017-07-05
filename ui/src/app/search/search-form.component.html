@@ -54,10 +54,15 @@
 </md-card>
 <md-card>
 <div *ngIf="submitted"><md-spinner></md-spinner></div>
- <div class="container-card" *ngIf="videofilter">
+ <div class="container-card" *ngIf="videofilter" fxflex>
      <div  *ngFor="let sr of searchVideoResult">
         <md-card class="card">
-          <img md-card-image [src]="sr.thumbnail">
+           <div *ngIf="sr.thumbnail; else defaultimg">
+              <img md-card-image src="{{sr.thumbnail}}" >
+          </div>
+          <ng-template #defaultimg>
+                <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
+          </ng-template>
           <md-card-title class="title-card">{{sr.name}}</md-card-title>
           <md-card-content class="content-card">
               <md-icon>videocam</md-icon>
@@ -70,9 +75,9 @@
       </div>
   </div>
    <div class="container-card" *ngIf="audiofilter">
-     <div  *ngFor="let sr of searchAudioResult">
+     <div  *ngFor="let sr of searchAudioResult" fxflex>
         <md-card class="card">
-          <img md-card-image [src]="sr.thumbnail">
+          <img md-card-image class="image-card" [src]="sr.thumbnail">
           <md-card-title>{{sr.name}}</md-card-title>
           <md-card-content class="content-card">
               <md-icon>audiotrack</md-icon>
@@ -85,9 +90,9 @@
       </div>
   </div>
    <div class="container-card" *ngIf="textfilter">
-     <div  *ngFor="let sr of searchtextResult">
+     <div  *ngFor="let sr of searchtextResult" fxflex>
         <md-card class="card">
-          <img md-card-image [src]="sr.thumbnail">
+          <img md-card-image class="image-card" [src]="sr.thumbnail">
           <md-card-title>{{sr.name}}</md-card-title>
           <md-card-content class="content-card">
               <md-icon>textsms</md-icon>
@@ -99,7 +104,7 @@
         </md-card>
       </div>
   </div>
-   <div class="container-card" *ngIf="imagefilter">
+   <div class="container-card" *ngIf="imagefilter" fxflex>
      <div  *ngFor="let sr of searchImgResult">
         <md-card class="card">
           <img md-card-image class="image-card" [src]="sr.thumbnail">

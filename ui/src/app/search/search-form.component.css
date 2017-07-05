@@ -1,9 +1,10 @@
 .card {
-    /*display:inline-block;*/
-    display: inline-table;
-    width: 180px;
+    /*display:inline-block;
+    display: inline-table;*/
+    display:flow-root;
+    width: 175px;
     height: 100%;
-    margin: 5px;
+    margin: 3px;
    /* vertical-align: top;
     cursor: pointer;
     overflow: visible; */
@@ -15,6 +16,7 @@
 
 .title-card {
     font-size: 100%;
+ 
 }
 
 
