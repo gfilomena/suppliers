@@ -4,7 +4,8 @@ import { Router } from "@angular/router"
 import { AlertService, UserService } from "../_services/index"
 
 @Component({
-    templateUrl: "./register.component.html"
+    templateUrl: "./register.component.html",
+     styles: ['.card { width:250px; }']
 })
 
 export class RegisterComponent {
