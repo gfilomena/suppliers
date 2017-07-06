@@ -1,20 +1,25 @@
 <div class="container">
-  <div class="item item-1" fxLayoutAlign="start start" fxFlex="20%" fxflex>
-<md-card class="filter">
-  <md-card-content>
-    <h2 class="example-h2">Filter</h2>
-<md-list>
-  <md-list-item> <md-checkbox [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox><p *ngIf="searchVideoResult">({{searchVideoResult.length}})</p></md-list-item>
+  <div class="container-sidebar">
+
+<md-card class="sidebar"  [style.left.px]="sidebar()">
+       <div class="filter_button" [style.left.px]="filter_button()">
+         <button md-icon-button (click)="showSidebar = !showSidebar;"><md-icon>tune</md-icon></button>
+       </div>
+       <div class="close_button">
+         <button md-icon-button	 (click)="showSidebar = !showSidebar;"><md-icon>close</md-icon></button>
+       </div>
+<h3 align="center">Filter</h3>
+<md-list> 
+  <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox><p *ngIf="searchVideoResult">({{searchVideoResult.length}})</p></md-list-item>
   <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox><p *ngIf="searchAudioResult">({{searchAudioResult.length}})</p></md-list-item>
   <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox><p *ngIf="searchTextResult"> ({{searchTextResult.length}})</p></md-list-item>
   <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox><p *ngIf="searchImgResult">({{searchImgResult.length}})</p></md-list-item>
 </md-list>   
-  </md-card-content>
 </md-card>
   </div>
-  <div class="item item-2"  fxFlex="80%">
+  <div  fxFlex>
   <md-card>
-  <form class="example-form" (ngSubmit)="onSubmit()" #qForm="ngForm">
+  <form (ngSubmit)="onSubmit()" #qForm="ngForm">
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
       <md-card>
         <div>
@@ -22,7 +27,7 @@
         <input mdInput placeholder="Are you searching for" value="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText" #spy>
         </md-input-container>
         <button md-icon-button><md-icon>create</md-icon></button>
-        <button md-icon-button><md-icon>star</md-icon></button>
+        <button md-icon-button><md-icon>star_border</md-icon></button>
         <button md-icon-button><md-icon>loop</md-icon></button>
         </div>
         <div>
@@ -46,16 +51,20 @@
           </md-input-container>
           <md-datepicker #enddate></md-datepicker>
         </div>
+        <div align="end">
+         <button md-raised-button  type="submit" >Search</button> 
+        </div>
        </md-card>
+      
     </div>
-    <br>
- <button md-raised-button  type="submit" [disabled]="!qForm.form.valid">Search</button> 
+    
+ 
 </form>
 </md-card>
 <md-card>
-<div *ngIf="submitted"><md-spinner></md-spinner></div>
+<div *ngIf="submitted" align="center"><md-spinner></md-spinner></div>
  <div class="container-card" *ngIf="videofilter" fxflex>
-     <div  *ngFor="let sr of searchVideoResult">
+     <div class="sub_container-card" *ngFor="let sr of searchVideoResult">
         <md-card class="card">
            <div *ngIf="sr.thumbnail; else defaultimg">
               <img md-card-image src="{{sr.thumbnail}}" >
@@ -63,7 +72,6 @@
           <ng-template #defaultimg>
                 <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
           </ng-template>
-         
           <md-card-content class="content-card">
              <div fxLayout="row">
                 <div fxLayout="column">
@@ -87,7 +95,7 @@
       </div>
   </div>
    <div class="container-card" *ngIf="audiofilter">
-     <div  *ngFor="let sr of searchAudioResult" fxflex>
+     <div class="sub_container-card" *ngFor="let sr of searchAudioResult" fxflex>
         <md-card class="card">
            <div *ngIf="sr.thumbnail; else defaultimg">
               <img md-card-image src="{{sr.thumbnail}}" >
@@ -119,7 +127,7 @@
       </div>
   </div>
    <div class="container-card" *ngIf="textfilter">
-     <div  *ngFor="let sr of searchtextResult" fxflex>
+     <div class="sub_container-card"  *ngFor="let sr of searchtextResult" fxflex>
          <md-card class="card">
            <div *ngIf="sr.thumbnail; else defaultimg">
               <img md-card-image src="{{sr.thumbnail}}" >
@@ -151,7 +159,7 @@
       </div>
   </div>
    <div class="container-card" *ngIf="imagefilter" fxflex>
-     <div  *ngFor="let sr of searchImgResult">
+     <div class="sub_container-card" *ngFor="let sr of searchImgResult">
         <md-card class="card">
            <div *ngIf="sr.thumbnail; else defaultimg">
               <img md-card-image class="image-card" src="{{sr.thumbnail}}" >

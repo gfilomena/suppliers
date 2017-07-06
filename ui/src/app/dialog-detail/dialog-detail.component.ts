@@ -51,16 +51,11 @@ export class DialogDetail {
   constructor(public dialogRef: MdDialogRef<DialogDetail>,@Inject(MD_DIALOG_DATA) public data: any,public sanitizer: DomSanitizer) {}
 
   getVideoSource(URI:string):any {
-        let youtube = "/youtube.com/"; 
 
-      if (URI.search(youtube) == -1 ) { 
-              console.log('YOUTUBE',URI);
-             let link =  this.sanitizer.bypassSecurityTrustResourceUrl(URI);
+        let link =  this.sanitizer.bypassSecurityTrustResourceUrl(URI);
         return link;
-      }
-      return 'https://www.youtube.com/embed/nrgMQ88jHj0';
-
 }
+
 
    getDate(date:string):string{
     return new Date(date).toString().slice(0,15);

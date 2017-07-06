@@ -32,6 +32,9 @@ export class SearchFormComponent {
    textfilter: Boolean = true;
    imagefilter: Boolean = true;
 
+   filterbar:boolean = true;
+   showSidebar: boolean = true;
+
     constructor(private searchService: SearchService, private router: Router){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         this.searchForm=new SearchForm('1','2','3',new Date(),new Date(),'6','7')
@@ -77,7 +80,21 @@ export class SearchFormComponent {
                 )
     }
 
+sidebar():number {
+  if(this.showSidebar){
+       return 0;
+  }else{
+      return -150;
+  }
+}
 
+filter_button():number {
+  if(this.showSidebar){
+       return 0;
+  }else{
+      return 150;
+  }
+}
 
   getDate(date:string): string{
     return new Date(date).toString().slice(0,15);

@@ -12,7 +12,7 @@ export class LoginComponent implements OnInit {
     model: any = {}
     loading = false
     returnUrl: string
-    public errorMsg = '';
+    errorMsg = '';
 
     constructor(
         private route: ActivatedRoute,

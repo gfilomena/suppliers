@@ -5,7 +5,9 @@
     <md-card-title></md-card-title>
   </md-card-header>
 <div *ngIf="data.type == 'video'"  class="video-iframe">
-<iframe width="100%" height="250px" [src]="getVideoSource(data.uri)" frameborder="0" allowfullscreen></iframe>
+<video width="100%" height="250px" autoplay controls>
+  <source src="https://archive.org/download/AboutBan1935/AboutBan1935.mp4" type="video/mp4">
+</video>
 </div>
 <div *ngIf="data.type == 'image'" >
   <img [src]="data.uri" class="image-card">
