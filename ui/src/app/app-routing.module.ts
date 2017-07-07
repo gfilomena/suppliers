@@ -13,7 +13,7 @@ import { ProfileComponent } from "./profile/index"
 
 const appRoutes: Routes = [
     { path: "", component: SearchFormComponent,
-    children: [
+  /*  children: [
       {
         path: "bookmarks",
         component: BookmarksComponent,
@@ -29,7 +29,7 @@ const appRoutes: Routes = [
         }
       }
 
-    ], 
+    ], */
      canActivate: [AuthGuard], data: { breadcrumb: 'home' }},
     { path: "login", component: LoginComponent , data: { breadcrumb: 'login' }},
     { path: "register", component: RegisterComponent, data: { breadcrumb: 'register' }},
