@@ -6,13 +6,14 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
+import models.RoleType;
 import models.User;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
 import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
-import services.MongoDBService;
+import services.db.MongoDBService;
 import views.html.index;
 
 import java.io.UnsupportedEncodingException;
@@ -83,14 +84,14 @@ public class UserController extends Controller {
             if (userDAO.findByUsername(username) != null) {
                 return badRequest("Username already taken.");
             } else {
-                User user=new User(json.findPath("username").textValue(),json.findPath("password").textValue(),json.findPath("firstName").textValue(),json.findPath("lastName").textValue(),json.findPath("email").textValue());
+                User user=new User(json.findPath("username").textValue(),json.findPath("password").textValue(),json.findPath("firstName").textValue(),json.findPath("lastName").textValue(),json.findPath("email").textValue(), RoleType.USER );
                 userDAO.save(user);
                 return created();
             }
         }
     }
 
-    @Security.Authenticated(Secured.class)
+    //@Security.Authenticated(Secured.class)
     public Result getAll(){
         return ok(Json.toJson(userDAO.findAll()));
     }
@@ -115,7 +116,7 @@ public class UserController extends Controller {
     @Security.Authenticated(Secured.class)
     public Result delete(String username){
         Logger.debug("delete user with username:"+username);
-        userDAO.deleteUser(userDAO.findByUsername(username));
+        userDAO.delete(userDAO.findByUsername(username));
         return ok();
     }
 

@@ -21,16 +21,19 @@ public class User extends BaseEntity{
 
     private String token;
 
+    private RoleType role;
+
     public User(){
 
     }
 
-    public User(String username, String password, String firstName, String lastName, String email) {
+    public User(String username, String password, String firstName, String lastName, String email, RoleType role) {
         this.username = username;
         this.hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.role=role;
     }
 
     public String getUsername() {
@@ -79,6 +82,14 @@ public class User extends BaseEntity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public RoleType getRole() {
+        return role;
+    }
+
+    public void setRole(RoleType role) {
+        this.role = role;
     }
 
     @Override

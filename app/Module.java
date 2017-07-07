@@ -1,5 +1,5 @@
-import services.search.repositories.Repository;
-import services.search.repositories.YoutubeRepository;
+import services.search.repositories.SearchRepository;
+import services.search.repositories.YoutubeSearchRepository;
 import com.google.inject.AbstractModule;
 import com.google.inject.name.Names;
 import services.search.Manager;
@@ -31,7 +31,7 @@ public class Module extends AbstractModule {
         bind(ApplicationTimer.class).asEagerSingleton();
         // Set AtomicCounter as the implementation for Counter.
         bind(Counter.class).to(AtomicCounter.class);
-        bind(Repository.class).annotatedWith(Names.named("youtube")).to(YoutubeRepository.class);
+        bind(SearchRepository.class).annotatedWith(Names.named("youtube")).to(YoutubeSearchRepository.class);
         bind(Manager.class).to(SearchManager.class);
     }
 

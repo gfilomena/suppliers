@@ -13,7 +13,7 @@ import play.libs.Json;
 public abstract class BaseEntity {
 
     @Id
-    @Property("id")
+    //@Property("id")
     protected ObjectId id;
 
     @Version

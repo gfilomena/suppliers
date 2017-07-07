@@ -19,6 +19,4 @@ public interface UserDAO extends DAO<User, ObjectId>{
 
     User authenticate(String username, String password);
 
-    void deleteUser(User user);
-
 }

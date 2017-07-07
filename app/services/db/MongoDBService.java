@@ -1,4 +1,4 @@
-package services;
+package services.db;
 
 import com.mongodb.MongoClient;
 import com.mongodb.MongoClientURI;
