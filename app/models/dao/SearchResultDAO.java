@@ -17,4 +17,6 @@ public interface SearchResultDAO extends DAO<SearchResult, ObjectId> {
 
     List<SearchResult> findByKeywords(String keywords);
 
+    void saveAll(List<SearchResult> searchResults);
+
 }

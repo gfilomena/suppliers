@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.MultimediaContent;
 import models.SearchResult;
 import play.libs.concurrent.Futures;
-import services.search.repositories.Repository;
+import services.search.repositories.SearchRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,7 +33,7 @@ public class SearchManager implements Manager{
         return null;
     }
 
-    public List<CompletionStage<List<MultimediaContent>>> dispatch(List<Repository> repositories){
+    public List<CompletionStage<List<MultimediaContent>>> dispatch(List<SearchRepository> repositories){
         List<CompletionStage<List<MultimediaContent>>> s;
         s = repositories
                 .stream()

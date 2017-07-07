@@ -15,10 +15,9 @@ import play.mvc.Security;
 import services.db.MongoDBService;
 import services.search.Manager;
 import services.search.SearchManager;
-import services.search.repositories.InternetArchiveRepository;
-import services.search.repositories.PexelsRepository;
-import services.search.repositories.Repository;
-import services.search.repositories.YoutubeRepository;
+import services.search.repositories.*;
+import services.search.repositories.InternetArchiveSearchRepository;
+import services.search.repositories.SearchRepository;
 
 import javax.inject.Inject;
 import java.util.ArrayList;
@@ -37,7 +36,7 @@ public class SearchController extends Controller {
     private Manager queryManager;
     private WSClient wsclient;
     //private SearchResultDAO searchResultDAO;
-    //public static SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
+    public static SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
 
     @Inject
     public SearchController( HttpExecutionContext ec, Manager queryManager, WSClient wsClient){
@@ -54,11 +53,15 @@ public class SearchController extends Controller {
         SearchManager searchManager=new SearchManager();
         searchManager.setKeyWords(keywords);
         // TODO dinamically read repository
-        Repository youtube=new YoutubeRepository(wsclient);
-        Repository internetArchive=new InternetArchiveRepository(wsclient);
-        Repository pexels=new PexelsRepository(wsclient);
-        List<Repository> repositories=new ArrayList<Repository>();
-        repositories.add(youtube);
+        SearchRepository youtube=new YoutubeSearchRepository(wsclient);
+        SearchRepository internetArchive=new InternetArchiveSearchRepository(wsclient);
+        SearchRepository pexels=new PexelsSearchRepository(wsclient);
+        SearchRepositoryFactory srf=new SearchRepositoryFactory();
+        Class[] params={WSClient.class};
+        Object[] values={wsclient};
+        SearchRepository y=srf.newInstance("Youtube", params, values);
+        List<SearchRepository> repositories=new ArrayList<SearchRepository>();
+        repositories.add(y);
         repositories.add(internetArchive);
         repositories.add(pexels);
         List<CompletionStage<List<MultimediaContent>>> dispatched=searchManager.dispatch(repositories);
@@ -71,14 +74,14 @@ public class SearchController extends Controller {
             return  qr;
         });
         //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
-        transformedQuery.thenApply(p -> MongoDBService.getDatastore().save(p));
+        transformedQuery.thenApply(p -> searchResultDAO.save(p));
         CompletionStage<Result> promiseOfResult = transformedQuery.thenApply(( p ) -> ok(p.asJson()));
         return promiseOfResult;
     }
 
     public CompletionStage<Result> getSearchResults(String username){
         //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
-        CompletionStage<Result> results= CompletableFuture.supplyAsync( () -> MongoDBService.getDatastore().createQuery(SearchResult.class).filter("username", username).asList())
+        CompletionStage<Result> results= CompletableFuture.supplyAsync( () -> searchResultDAO.findByUsername(username))
                                                                     .thenApply( sr -> ok(Json.toJson(sr)));
         return results;
     }

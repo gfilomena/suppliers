@@ -8,6 +8,8 @@ import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
 import services.db.MongoDBService;
 
+import java.util.List;
+
 /**
  * Created by Pasquale on 07/06/2017.
  */
@@ -19,7 +21,17 @@ public class RepositoryDAOImpl extends BasicDAO<Repository,ObjectId> implements 
 
     @Override
     public Repository get( String id ) {
-        return MongoDBService.getDatastore().createQuery(Repository.class).filter("name = ", id).asList().get(0);
+        return this.get(new ObjectId(id));
+    }
+
+    @Override
+    public Repository findByName(String name) {
+        return this.findOne("name",name);
+    }
+
+    @Override
+    public List<Repository> findAll() {
+        return this.find().asList();
     }
 
 }

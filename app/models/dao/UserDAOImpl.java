@@ -22,12 +22,12 @@ public class UserDAOImpl extends BasicDAO<User, ObjectId> implements UserDAO {
     @Override
     public User get( String id ) {
         Logger.info("User Id to remove:" + id);
-        return MongoDBService.getDatastore().createQuery(User.class).filter("id = ", id).asList().get(0);
+        return this.get(new ObjectId(id));
     }
 
     @Override
     public List<User> findAll() {
-        return MongoDBService.getDatastore().createQuery(User.class).asList();
+        return this.find().asList();
     }
 
     @Override

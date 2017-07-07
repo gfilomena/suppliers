@@ -13,4 +13,8 @@ public interface RepositoryDAO extends DAO<Repository, ObjectId> {
 
     Repository get(String id);
 
+    Repository findByName(String name);
+
+    List<Repository> findAll();
+
 }

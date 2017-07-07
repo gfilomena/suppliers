@@ -6,6 +6,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.ConfigFactory;
+import models.RoleType;
 import models.User;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
@@ -83,14 +84,14 @@ public class UserController extends Controller {
             if (userDAO.findByUsername(username) != null) {
                 return badRequest("Username already taken.");
             } else {
-                User user=new User(json.findPath("username").textValue(),json.findPath("password").textValue(),json.findPath("firstName").textValue(),json.findPath("lastName").textValue(),json.findPath("email").textValue());
+                User user=new User(json.findPath("username").textValue(),json.findPath("password").textValue(),json.findPath("firstName").textValue(),json.findPath("lastName").textValue(),json.findPath("email").textValue(), RoleType.USER );
                 userDAO.save(user);
                 return created();
             }
         }
     }
 
-    @Security.Authenticated(Secured.class)
+    //@Security.Authenticated(Secured.class)
     public Result getAll(){
         return ok(Json.toJson(userDAO.findAll()));
     }

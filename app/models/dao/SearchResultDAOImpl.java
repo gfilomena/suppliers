@@ -25,12 +25,12 @@ public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> impleme
     @Override
     public SearchResult get(String id) {
         Logger.info("Search result Id:" + id);
-        return MongoDBService.getDatastore().createQuery(SearchResult.class).filter("id = ", id).asList().get(0);
+        return this.get(new ObjectId(id));
     }
 
     @Override
     public List<SearchResult> findByUsername(String username) {
-        return MongoDBService.getDatastore().createQuery(SearchResult.class).filter("user = ", username).asList();
+        return MongoDBService.getDatastore().createQuery(SearchResult.class).filter("username = ", username).asList();
     }
 
     @Override
@@ -39,5 +39,10 @@ public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> impleme
                 .search("keywords")
                 .order("date")
                 .asList();
+    }
+
+    @Override
+    public void saveAll(List<SearchResult> searchResults) {
+        searchResults.stream().forEach( l -> MongoDBService.getDatastore().save(l));
     }
 }
