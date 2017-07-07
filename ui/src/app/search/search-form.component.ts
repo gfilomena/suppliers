@@ -37,7 +37,7 @@ export class SearchFormComponent {
 
     constructor(private searchService: SearchService, private router: Router){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
-        this.searchForm=new SearchForm('1','2','3',new Date(),new Date(),'6','7')
+        this.searchForm=new SearchForm('','','',new Date(),new Date(),'','')
     }
 
     onSubmit() {
