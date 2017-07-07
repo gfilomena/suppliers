@@ -1,7 +1,7 @@
 package models;
 
-import org.mongodb.morphia.annotations.Entity;
-import org.mongodb.morphia.annotations.Reference;
+import org.mongodb.morphia.annotations.*;
+import org.mongodb.morphia.utils.IndexType;
 
 import java.util.*;
 
@@ -9,6 +9,7 @@ import java.util.*;
  * Created by Pasquale on 15/03/2017.
  */
 @Entity(value="SearchResult", noClassnameStored = true)
+@Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
 public class SearchResult extends BaseEntity{
 
     private List<String> keyWords=new ArrayList<String>();

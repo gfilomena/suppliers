@@ -9,7 +9,7 @@ import java.util.concurrent.CompletionStage;
 /**
  * Created by Pasquale on 15/03/2017.
  */
-public interface Repository {
+public interface SearchRepository {
 
     CompletionStage<JsonNode> executeQuery( List<String> keyWords);
 

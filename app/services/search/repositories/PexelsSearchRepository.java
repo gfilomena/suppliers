@@ -19,14 +19,14 @@ import java.util.stream.Collectors;
 /**
  * Created by Pasquale on 04/05/2017.
  */
-public class PexelsRepository implements Repository{
+public class PexelsSearchRepository implements SearchRepository {
 
     private final String key= ConfigFactory.load().getString("multimedia.sources.pexels.api.key");
     private final String url=ConfigFactory.load().getString("multimedia.sources.pexels.url");
     private WSClient ws;
 
     @Inject
-    public PexelsRepository( WSClient ws){
+    public PexelsSearchRepository(WSClient ws){
         this.ws=ws;
     }
 
@@ -72,7 +72,7 @@ public class PexelsRepository implements Repository{
         m.setURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
-        // TODO: Modify to find Repository from DB
+        // TODO: Modify to find SearchRepository from DB
         m.setSource(new models.Repository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());
         return m;

@@ -10,53 +10,52 @@ import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 
 import javax.inject.Inject;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * Created by Pasquale on 15/03/2017.
+ * Created by Pasquale on 24/04/2017.
  */
-public class YoutubeRepository implements Repository {
+public class InternetArchiveSearchRepository implements SearchRepository {
 
-    private final String key=ConfigFactory.load().getString("multimedia.sources.youtube.api.key");
-    private final String url=ConfigFactory.load().getString("multimedia.sources.youtube.url");
+    private final String url=ConfigFactory.load().getString("multimedia.sources.internetArchive.url");
     private WSClient ws;
 
-    private final String youtubeURLPrefix="https://www.youtube.com/embed/";
-
+    private final String internetArchiveURLPrefix="https://archive.org/details/";
 
     @Inject
-    public YoutubeRepository( WSClient ws){
+    public InternetArchiveSearchRepository(WSClient ws){
         this.ws=ws;
     }
 
     @Override
-    public CompletionStage<JsonNode> executeQuery( List<String> keyWords){
+    public CompletionStage<JsonNode> executeQuery( List<String> keyWords ) {
         String query="";
         for(String s : keyWords){
             query+=s;
             query+="+";
         }
-        Logger.info("Youtube search: "+query);
+        Logger.info("InternetArchive search: "+query);
         CompletionStage<JsonNode> jsonPromise;
         jsonPromise = ws.url(url).
-                setQueryParameter("part", "snippet").
+                setQueryParameter("debug", "false").
+                setQueryParameter("xvar", "production").
+                setQueryParameter("total_only", "false").
+                setQueryParameter("count", "100").
+                setQueryParameter("fields", "title,description,downloads,identifier,source,type,mediatype,external-identifier,licenseurl,format,bith,collection").
                 setQueryParameter("q", query).
-                setQueryParameter("key", key).
-                setQueryParameter("type", "video").
+                setQueryParameter("sorts", "downloads desc").
                 get().
                 thenApply(WSResponse::asJson);
         return jsonPromise;
     }
 
-
     @Override
     public List<MultimediaContent> transform( JsonNode clientResponse ) {
-        //Logger.info("Youtube Response: "+clientResponse.toString());
+        Logger.info("Internet Archive Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         //List<JsonNode> items=clientResponse.findValues("items");
         ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
@@ -71,36 +70,27 @@ public class YoutubeRepository implements Repository {
         }
 
         return multimediaContents;*/
-        Function<JsonNode, MultimediaContent> convertToMultimediaContent=
-                jsonNode -> getMultimediaContentFromItem(jsonNode);
         if(!itemsList.isEmpty()) {
             stages = itemsList
                     .stream()
-                    .map(convertToMultimediaContent)
+                    .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
                     .collect(Collectors.toList());
         }
         return stages;
     }
-
-    private MultimediaContent getMultimediaContentFromItem( JsonNode i ) {
+    private MultimediaContent getMultimediaContentFromItem(JsonNode i){
         //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
-        MultimediaContent m = new MultimediaContent();
-        //m.setType(i.path("id").get("kind").asText());
+        MultimediaContent m=new MultimediaContent();
+        //m.setType(i.get("mediatype").asText());
         m.setType(MultimediaType.video);
-        m.setURI(youtubeURLPrefix + i.path("id").get("videoId").asText());
-        m.setName(i.get("snippet").get("title").asText());
-        m.setDescription(i.get("snippet").get("description").asText());
-        m.setThumbnail(i.get("snippet").get("thumbnails").get("default").get("url").asText());
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-        try {
-            m.setDate(sdf.parse(i.get("snippet").get("publishedAt").asText()));
-            //Logger.debug("*********DATE:"+sdf.parse(i.get("snippet").get("publishedAt").asText()));
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        // TODO: Modify to find Repository from DB
+        m.setURI(internetArchiveURLPrefix+i.get("identifier").asText());
+        // TODO: Modify to find SearchRepository from DB
         m.setSource(new models.Repository());
-        //Logger.debug("Debug multimedia enum:"+m.toString());
+        m.setName(i.get("title").asText());
+        //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;
+        //});
+
+        //return multimediaContent;
     }
 }

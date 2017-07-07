@@ -12,7 +12,7 @@ import models.dao.UserDAOImpl;
 import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Security;
-import services.MongoDBService;
+import services.db.MongoDBService;
 
 import java.io.UnsupportedEncodingException;
 

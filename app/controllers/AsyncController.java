@@ -15,7 +15,7 @@ import play.mvc.Result;
 import play.mvc.Results;
 import scala.concurrent.ExecutionContextExecutor;
 import scala.concurrent.duration.Duration;
-import services.MongoDBService;
+import services.db.MongoDBService;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -78,7 +78,12 @@ public class AsyncController extends Controller {
 
     public CompletionStage<Result> test() {
         SearchResult qr=new SearchResult();
-        MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432",2048,"videotest1","description", "thumbnail","downloadURI",new Repository(), new License(), new Date(), Json.toJson("{ metadata: test }"));
+        Repository r=new Repository();
+        MongoDBService.getDatastore().save(r);
+        License l=new License();
+        MongoDBService.getDatastore().save(l);
+        MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432",2048,"videotest1","description", "thumbnail","downloadURI",r, l, new Date(), Json.toJson("{ metadata: test }"));
+        MongoDBService.getDatastore().save(mc);
         qr.getMultimediaContents().add(mc);
         qr.getMultimediaContents().add(mc);
         qr.setDate(Date.from(Clock.systemDefaultZone().instant()));
@@ -88,7 +93,8 @@ public class AsyncController extends Controller {
         System.out.println(key.getId().getClass());
         System.out.println(qr.toString());
 
-        return testApi().thenApply(Results::ok);
+        //return testApi().thenApply(Results::ok);
+        return CompletableFuture.supplyAsync(() -> ok());
     }
 
     public Result query(){
