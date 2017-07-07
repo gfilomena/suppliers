@@ -12,8 +12,8 @@ import "hammerjs";
 import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdDialog, MdDialogRef } from "@angular/material";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-detail.component";
-
-
+import { DialogRepositoryComponent, DialogRepositoryDetail } from '../profile/dialog-repository/dialog-repository.component'
+import { ProfileComponent } from '../profile/profile.component';
 
 @NgModule({
   imports: [
@@ -30,9 +30,13 @@ import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-deta
     SearchResultComponent,
     MultimediaContentComponent,
     DialogDetailComponent,
-    DialogDetail
+    DialogDetail,
+    ProfileComponent,
+    DialogRepositoryComponent,
+    DialogRepositoryDetail
   ],
-  entryComponents: [DialogDetail],
+  // entryComponents declare Components created manually
+  entryComponents: [DialogDetail,DialogRepositoryDetail],  
   providers: [ SearchService ]
 })
 export class SearchModule {}

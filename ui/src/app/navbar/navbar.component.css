@@ -14,3 +14,7 @@
 .logo{
     width: 80px;
 }
+
+md-toolbar,md-toolbar-row{
+        display: contents;
+}

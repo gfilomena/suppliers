@@ -42,23 +42,37 @@
 
 <md-toolbar *ngIf="isLoggedIn()" color="primary">
 
-   <img class="logo" src="../assets/images/logo_producer_511x103.jpg">
-   <div align="center">
-   <button md-button [routerLink]="['/']"> Home </button>
-   <button md-button [routerLink]="['/search-history']"> Search History </button>
-   <button md-button [routerLink]="['/bookmarks']"> Bookmarks </button>
-   <button md-button [routerLink]="['/setting']"> Settings </button>
-   </div>
-	<div class="flex-spacer"></div> 
 
-	<button md-icon-button [mdMenuTriggerFor]="appMenu" >
-	<md-icon>account_circle</md-icon>
-	</button>
-	<md-menu #appMenu="mdMenu" >
-	<button md-menu-item> Profile </button>
-	<button md-menu-item> Settings </button>
-	<button md-menu-item [routerLink]="['/login']"> Logout </button>
-	</md-menu>
+
+
+
+ 
+    <span>
+		        <img class="logo" src="../assets/images/logo_producer_511x103.jpg">
+				<button md-button [routerLink]="['/']"> Home </button>
+				<button md-button [routerLink]="['/search-history']"> Search History </button>
+				<button md-button [routerLink]="['/bookmarks']"> Bookmarks </button>
+				<button md-button [routerLink]="['/setting']"> Settings </button>
+
+    </span>
+    <span class="example-spacer"></span>
+	<span>
+		<md-icon>account_circle</md-icon>
+			</span>
+                <button md-icon-button [mdMenuTriggerFor]="appMenu" >
+				</button>
+				<md-menu #appMenu="mdMenu" >
+				<button md-menu-item  [routerLink]="['/profile']"> Profile </button>
+				<button md-menu-item [routerLink]="['/login']"> Logout </button>
+				</md-menu>
+
+
+
+ <md-toolbar-row>
+    <span>breadcrumb</span>
+ </md-toolbar-row>
+
+
 
 
 </md-toolbar>

@@ -17,13 +17,16 @@ import { RegisterComponent } from "./register/index"
 import { SidebarComponent } from "./sidebar/index"
 import { NavbarComponent } from "./navbar/index"
 import { LoggedinComponent } from "./loggedin/index"
-import {NoopAnimationsModule} from "@angular/platform-browser/animations"
-import "hammerjs";
-import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdGridListModule } from "@angular/material";
-import { FlexLayoutModule } from "@angular/flex-layout";
-import { BookmarksComponent } from './bookmarks/bookmarks.component';
-import { SettingComponent } from './setting/setting.component';
-import { SearchHistoryComponent } from './search-history/search-history.component';
+import { NoopAnimationsModule } from "@angular/platform-browser/animations"
+import "hammerjs"
+import { MaterialModule,  MdNativeDateModule} from "@angular/material"
+import { FlexLayoutModule } from "@angular/flex-layout"
+import { BookmarksComponent } from './bookmarks/bookmarks.component'
+import { SettingComponent } from './setting/setting.component'
+import { SearchHistoryComponent } from './search-history/search-history.component'
+import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component'
+
+
 
 
 
@@ -50,7 +53,9 @@ import { SearchHistoryComponent } from './search-history/search-history.componen
         LoggedinComponent,
         BookmarksComponent,
         SettingComponent,
-        SearchHistoryComponent
+        SearchHistoryComponent,
+        BreadcrumbComponent,
+
     ],
     providers: [
         AppConfig,
@@ -60,6 +65,7 @@ import { SearchHistoryComponent } from './search-history/search-history.componen
         UserService
         //PagerService
     ],
+   
     bootstrap: [AppComponent]
 })
 
