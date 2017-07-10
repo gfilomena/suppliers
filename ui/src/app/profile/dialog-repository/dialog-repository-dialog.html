@@ -5,28 +5,30 @@
     <md-card-title></md-card-title>
   </md-card-header>
 
-
+<form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
   <md-card-content>
        
-   <form name="form" (ngSubmit)="f.form.valid" #f="ngForm" novalidate>
+   
       
           <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
                 <h3>Register Repository</h3>
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="Name" value="" id="name" name="name" required >
+                <input mdInput placeholder="Name" value="" id="name" name="name" required  [(ngModel)]="model.name">
                 </md-input-container>
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="URI" value="" id="uri" name="uri"  required >
+                <input mdInput placeholder="URI" value="" id="uri" name="uri"  required [(ngModel)]="model.uri">
                 </md-input-container>
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="Prefix" value="" id="prefix" name="prefix"  required >
+                <input mdInput placeholder="urlPrefix" value="" id="urlPrefix" name="urlPrefix" [(ngModel)]="model.urlPrefix">
                 </md-input-container>
        </div>
-    </form>
+  
   </md-card-content>
    <md-card-actions align="end">
     <button md-button type="submit">ADD</button>
     <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
     <button md-button  [md-dialog-close]="true">Cancel</button>
+    <button md-menu-item  [routerLink]="['/profile']"> Profile </button>
   </md-card-actions>
+    </form>
 </md-card>

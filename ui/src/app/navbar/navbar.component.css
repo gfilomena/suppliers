@@ -25,3 +25,11 @@
 md-toolbar,md-toolbar-row{
         display: contents;
 }
+
+.breadcrumbs{
+   display: flex;
+    box-sizing: border-box;
+    flex-direction: row;
+    -webkit-box-orient: horizontal;
+    -webkit-box-direction: normal;
+  } 

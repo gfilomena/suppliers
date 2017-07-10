@@ -1,5 +1,5 @@
 
 
-<div fxLayout="row" *ngFor="let breadcrumb of breadcrumbs">
-            <div><button md-button [routerLink]="[breadcrumb.url]"> {{ breadcrumb.label }}<md-icon>navigate next</md-icon></button></div>        
+<div *ngFor="let breadcrumb of breadcrumbs">
+            <button md-button [routerLink]="[breadcrumb.url]"> {{ breadcrumb.label }}<md-icon>navigate next</md-icon></button>       
 </div>

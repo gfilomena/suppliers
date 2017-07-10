@@ -1,33 +1,28 @@
 
 <div align="center">
   <md-card>
-
-      <h3>Repository</h3>
-
+      <h3>Repositories</h3>
           <table>
-            <tr>
-              <td> Youtube</td>
-              <td> <button md-icon-button><md-icon>create</md-icon></button></td>
-              <td><button md-icon-button><md-icon>delete</md-icon></button></td>
+            <thead>
+               <tr>
+                <td class="name">Name</td>
+                <td class="uri">URI</td>
+                <td>Modify</td>
+                <td>Delete</td>
+               </tr>  
+            </thead>
+            <tr *ngFor="let rep of repositories">
+              <td class="name">{{rep.name}}</td>
+              <td class="uri">{{rep.uri}}</td>
+              <td><button md-icon-button ><md-icon>create</md-icon></button></td>
+              <td><button md-icon-button ><md-icon>delete</md-icon></button></td>
             </tr>  
             <tr>
-              <td> Amazon video</td>
-              <td> <button md-icon-button><md-icon>create</md-icon></button></td>
-              <td><button md-icon-button><md-icon>delete</md-icon></button></td>
-            </tr>  
-            <tr>
-              <td> Archive</td>
-              <td> <button md-icon-button><md-icon>create</md-icon></button></td>
-              <td><button md-icon-button><md-icon>delete</md-icon></button></td>
-            </tr>  
-             <tr>
+              <td></td>
               <td></td>
               <td></td>
               <td><app-dialog-repository></app-dialog-repository></td>
             </tr>  
           </table>
-
-  
-
 </md-card>
 </div>
