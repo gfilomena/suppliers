@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
+import play.mvc.Security;
 import services.db.MongoDBService;
 
 import java.util.concurrent.CompletableFuture;
@@ -20,6 +21,7 @@ public class RepositoryController extends Controller {
 
     public static RepositoryDAO repoDAO=new RepositoryDAOImpl(Repository.class, MongoDBService.getDatastore());
 
+    @Security.Authenticated(Secured.class)
     public CompletionStage<Result> get(String id){
         if(repoDAO.get(id)!=null) {
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(repoDAO.get(id))));
@@ -29,10 +31,12 @@ public class RepositoryController extends Controller {
         }
     }
 
+    @Security.Authenticated(Secured.class)
     public CompletionStage<Result> getAll(){
         return CompletableFuture.supplyAsync( () -> ok(Json.toJson(repoDAO.findAll())));
     }
 
+    @Security.Authenticated(Secured.class)
     public CompletionStage<Result> create(){
         JsonNode json = request().body().asJson();
         if(json.findPath("name").isMissingNode() || json.findPath("uri").isMissingNode()){
@@ -53,6 +57,7 @@ public class RepositoryController extends Controller {
         }
     }
 
+    @Security.Authenticated(Secured.class)
     public CompletionStage<Result> update(String id){
         JsonNode json = request().body().asJson();
         if(repoDAO.get(id)!=null) {
@@ -68,9 +73,16 @@ public class RepositoryController extends Controller {
         }
     }
 
+<<<<<<< HEAD
     public CompletionStage<Result> delete(String name){
         if(repoDAO.get(name)!=null) {
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(repoDAO.deleteById(new ObjectId(name)))));
+=======
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> delete(String id){
+        if(repoDAO.get(id)!=null) {
+            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(repoDAO.deleteById(new ObjectId(id)))));
+>>>>>>> Data_Model_extension
         }
         else{
             return CompletableFuture.supplyAsync(() -> notFound("The Repository doesn't exists!"));
