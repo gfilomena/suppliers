@@ -21,12 +21,15 @@ loading:boolean = false;
       this.getAllRepositories();
   }
 
+  
+
   getAllRepositories(){
     this.RepositoryService.getAll()
             .subscribe(
                 data => {
                   console.log('data',data);
                     this.repositories = data;
+                    localStorage.setItem("repositories",JSON.stringify(this.repositories));
                    console.log(' this.repositories', this.repositories);
                 },
                 error => {

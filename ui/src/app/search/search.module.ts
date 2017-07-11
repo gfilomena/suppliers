@@ -12,7 +12,7 @@ import "hammerjs";
 import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdDialog, MdDialogRef } from "@angular/material";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-detail.component";
-import { DialogRepositoryComponent, DialogRepositoryDetail } from '../profile/dialog-repository/dialog-repository.component'
+import { DialogRepositoryComponent, DialogRepositoryDetail } from '../dialog-repository/dialog-repository.component'
 import { ProfileComponent } from '../profile/profile.component';
 
 @NgModule({

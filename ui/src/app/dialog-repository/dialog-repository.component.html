@@ -1,0 +1,34 @@
+
+
+
+
+
+
+
+<div align="center">
+  <md-card>
+      <h3>Repositories</h3>
+          <table>
+            <thead>
+               <tr>
+                <td class="name">Name</td>
+                <td class="uri">URI</td>
+                <td>Modify</td>
+                <td>Delete</td>
+               </tr>  
+            </thead>
+            <tr *ngFor="let rep of repositories">
+              <td class="name">{{rep.name}}</td>
+              <td class="uri">{{rep.uri}}</td>
+              <td><button md-icon-button ><md-icon>create</md-icon></button></td>
+              <td><button md-icon-button ><md-icon>delete</md-icon></button></td>
+            </tr>  
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td><button md-icon-button (click)="openDialog()"  ><md-icon>add circle</md-icon></button></td>
+            </tr>  
+          </table>
+</md-card>
+</div>
