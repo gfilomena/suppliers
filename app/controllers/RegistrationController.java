@@ -30,11 +30,11 @@ public class RegistrationController extends Controller{
         }
     }
 
-    @Security.Authenticated(Secured.class)
+    /*@Security.Authenticated(Secured.class)
     public CompletionStage<Result> create(){
         JsonNode json = request().body().asJson();
-        if(json.findPath("name").isMissingNode() || json.findPath("uri").isMissingNode()){
-            return  CompletableFuture.supplyAsync( () -> badRequest("Name and URI are mandatory!"));
+        if(json.findPath("username").isMissingNode() || json.findPath("repository").isMissingNode()){
+            return  CompletableFuture.supplyAsync( () -> badRequest("Username and repository are mandatory!"));
         }
         else if(repoDAO.findByName(json.findPath("name").textValue())==null) {
             CompletableFuture<JsonNode> cf=CompletableFuture.supplyAsync( () -> {Repository r = new Repository();
@@ -49,5 +49,5 @@ public class RegistrationController extends Controller{
         else{
             return CompletableFuture.supplyAsync( () -> badRequest("Repository already exists!"));
         }
-    }
+    }*/
 }
