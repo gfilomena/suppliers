@@ -1,6 +1,7 @@
 package models.dao;
 
 import models.Registration;
+import models.Repository;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.dao.DAO;
 
@@ -16,4 +17,6 @@ public interface RegistrationDAO extends DAO<Registration, ObjectId> {
     Registration findByName(String name);
 
     List<Registration> findAll();
+
+    boolean isPresent(String username, String repository);
 }
