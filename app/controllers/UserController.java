@@ -91,7 +91,7 @@ public class UserController extends Controller {
         }
     }
 
-    //@Security.Authenticated(Secured.class)
+    @Security.Authenticated(Secured.class)
     public Result getAll(){
         return ok(Json.toJson(userDAO.findAll()));
     }
