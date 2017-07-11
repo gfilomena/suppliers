@@ -73,16 +73,11 @@ public class RepositoryController extends Controller {
         }
     }
 
-<<<<<<< HEAD
-    public CompletionStage<Result> delete(String name){
-        if(repoDAO.get(name)!=null) {
-            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(repoDAO.deleteById(new ObjectId(name)))));
-=======
+
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String id){
         if(repoDAO.get(id)!=null) {
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(repoDAO.deleteById(new ObjectId(id)))));
->>>>>>> Data_Model_extension
         }
         else{
             return CompletableFuture.supplyAsync(() -> notFound("The Repository doesn't exists!"));
