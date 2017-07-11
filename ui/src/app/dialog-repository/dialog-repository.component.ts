@@ -29,9 +29,7 @@ loading:boolean = false;
       this.getAllRepositories();
   }
 
-  onChanges() {
-     this.getAllRepositories();
-  }
+
 
   getAllRepositories(){
     this.RepositoryService.getAll()
@@ -48,8 +46,7 @@ loading:boolean = false;
                 })
     }
 
-
-
+// parent component
 
 
    openDialog() {
@@ -60,6 +57,15 @@ let dialogRef = this.dialog.open(DialogRepositoryDetail, {
   height: 'auto',
   width: '40%',
   position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+});
+
+const sub = dialogRef.componentInstance.onAdd.subscribe(() => {
+  this.getAllRepositories();
+  console.log('onAdd.subscribe->run');
+});
+dialogRef.afterClosed().subscribe(() => {
+  // unsubscribe onAdd
+  console.log('onAdd.UNsubscribe->run');
 });
 
 
@@ -81,7 +87,7 @@ export class DialogRepositoryDetail {
     currentUser: User;
     model: any = {}
     loading:boolean = false;
-    @Output() onChanges = new EventEmitter<Repository>();
+    @Output() onAdd = new EventEmitter();
 
   constructor(
       public dialogRef: MdDialogRef<DialogRepositoryDetail>,
@@ -101,6 +107,7 @@ export class DialogRepositoryDetail {
 
 
 
+
 AddRepo() {
         this.loading = true
         console.log('this.model',this.model)
@@ -111,10 +118,9 @@ AddRepo() {
                      
                     let repository = new Repository(this.model.name,this.model.uri,this.model.urlPrefix);
                     console.log('new repository',repository);
+                    this.onAdd.emit();
+                    this.dialogRef.close();  
                     
-
-                    this.dialogRef.close();   
-                    this.onChanges.emit(repository);
                 },
                 error => {
                     this.alertService.error(error._body)
@@ -122,9 +128,6 @@ AddRepo() {
                 })
     }
       
-     
-
-  
    getDate(date:string):string{
     return new Date(date).toString().slice(0,15);
   }
