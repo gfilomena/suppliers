@@ -1,11 +1,14 @@
 package models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import models.serializer.RepositorySerializer;
 import org.mongodb.morphia.annotations.Entity;
 
 /**
  * Created by Pasquale on 19/04/2017.
  */
 @Entity(value="Repository", noClassnameStored = true)
+@JsonSerialize(using = RepositorySerializer.class)
 public class Repository extends BaseEntity{
 
     private String name;
