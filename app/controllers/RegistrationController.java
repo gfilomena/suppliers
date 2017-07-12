@@ -82,6 +82,12 @@ public class RegistrationController extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> findByUser(){
+        User user=Secured.getUser(ctx());
+        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findByUser(user))));
+    }
+
+    @Security.Authenticated(Secured.class)
     public CompletionStage<Result> update(String id){
         JsonNode json = request().body().asJson();
         if(registrationDAO.get(id)!=null) {

@@ -12,6 +12,7 @@ import org.mongodb.morphia.dao.BasicDAO;
 import services.db.MongoDBService;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Pasquale on 04/07/2017.
@@ -38,11 +39,21 @@ public class RegistrationDAOImpl extends BasicDAO<Registration,ObjectId> impleme
     }
 
     @Override
-    public boolean isPresent(User username, Repository repository) {
-        Registration reg=this.findOne(MongoDBService.getDatastore().createQuery(Registration.class).filter("user = ", username).filter("repository = ", repository));
+    public boolean isPresent(User user, Repository repository) {
+        Registration reg=this.findOne(MongoDBService.getDatastore().createQuery(Registration.class).filter("user = ", user).filter("repository = ", repository));
         if(reg!=null)
             return true;
         else
             return false;
     }
+
+    @Override
+    public List<Repository> findByUser(User user) {
+        return this.find(MongoDBService.getDatastore().createQuery(Registration.class).filter("user = ", user))
+                .asList()
+                .stream()
+                .map(r -> r.getRepository()).collect(Collectors.toList());
+    }
+
+
 }

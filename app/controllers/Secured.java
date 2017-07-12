@@ -18,13 +18,28 @@ import java.io.UnsupportedEncodingException;
 
 public class Secured extends Security.Authenticator {
 
-    public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
+    public static UserDAO userDAO = new UserDAOImpl(User.class, MongoDBService.getDatastore());
 
     @Override
     public String getUsername(Context ctx) {
+        User user = getUser(ctx);
+        if (user != null) {
+            return user.getUsername();
+        } else {
+            return null;
+        }
+    }
+
+    @Override
+    public Result onUnauthorized(Context ctx) {
+        return unauthorized();
+    }
+
+
+    public static User getUser(Context ctx) {
         String[] authTokenHeaderValues = ctx.request().headers().get(UserController.AUTH_TOKEN_HEADER);
         if ((authTokenHeaderValues != null) && (authTokenHeaderValues.length == 1) && (authTokenHeaderValues[0] != null)) {
-            String token=authTokenHeaderValues[0].split(" ")[1];
+            String token = authTokenHeaderValues[0].split(" ")[1];
             try {
                 Algorithm algorithm = Algorithm.HMAC256(ConfigFactory.load().getString("play.crypto.secret"));
                 JWTVerifier verifier = JWT.require(algorithm)
@@ -33,21 +48,15 @@ public class Secured extends Security.Authenticator {
                 String issuer = jwt.getIssuer();
                 User user = userDAO.findByUsername(issuer);
                 if (user != null) {
-                    return user.getUsername();
+                    return user;
                 }
-            } catch (UnsupportedEncodingException exception){
+            } catch (UnsupportedEncodingException exception) {
                 return null;
-            } catch (JWTVerificationException exception){
+            } catch (JWTVerificationException exception) {
                 return null;
             }
         }
         return null;
     }
-
-    @Override
-    public Result onUnauthorized(Context ctx) {
-        return unauthorized();
-    }
-
 
 }

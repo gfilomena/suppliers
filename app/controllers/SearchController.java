@@ -3,8 +3,11 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.MultimediaContent;
 import models.SearchResult;
+import models.User;
 import models.dao.SearchResultDAO;
 import models.dao.SearchResultDAOImpl;
+import models.dao.UserDAO;
+import models.dao.UserDAOImpl;
 import play.Logger;
 import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
@@ -37,6 +40,7 @@ public class SearchController extends Controller {
     private WSClient wsclient;
     //private SearchResultDAO searchResultDAO;
     public static SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
+    public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
 
     @Inject
     public SearchController( HttpExecutionContext ec, Manager queryManager, WSClient wsClient){
