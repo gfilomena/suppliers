@@ -19,15 +19,15 @@
             </thead>
             <tr *ngFor="let rep of repositories">
               <td class="name">{{rep.name}}</td>
-              <td class="uri">{{rep.uri}}</td>
-              <td><button md-icon-button ><md-icon>create</md-icon></button></td>
-              <td><button md-icon-button ><md-icon>delete</md-icon></button></td>
+              <td class="uri">{{rep.URI}}</td>
+              <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
+              <td><button md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
             </tr>  
             <tr>
               <td></td>
               <td></td>
               <td></td>
-              <td><button md-icon-button (click)="openDialog()"  ><md-icon>add circle</md-icon></button></td>
+              <td><button md-icon-button (click)="create()"  ><md-icon>add circle</md-icon></button></td>
             </tr>  
           </table>
 </md-card>

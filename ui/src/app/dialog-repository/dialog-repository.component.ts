@@ -1,4 +1,4 @@
-import { Repository } from '../_models/repository';
+import { Repository } from './../_models/repository';
 import { Component, OnInit, Input, Output,EventEmitter, Inject } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
@@ -46,33 +46,44 @@ loading:boolean = false;
                 })
     }
 
-// parent component
-
-
-   openDialog() {
-
-let dialogRef = this.dialog.open(DialogRepositoryDetail, {
-  
-  data: {repository: this.repository},
-  height: 'auto',
-  width: '40%',
-  position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
-});
-
-const sub = dialogRef.componentInstance.onAdd.subscribe(() => {
-  this.getAllRepositories();
-  console.log('onAdd.subscribe->run');
-});
-dialogRef.afterClosed().subscribe(() => {
-  // unsubscribe onAdd
-  console.log('onAdd.UNsubscribe->run');
-});
 
 
 
+delete(id:string) {
+   this.loading = true
+        console.log('id:',id)
+
+        this.RepositoryService.delete(id)
+            .subscribe(
+                data => {
+                    this.getAllRepositories();
+                },
+                error => {
+                    this.alertService.error(error._body)
+                    this.loading = false
+                })
 }
 
+  upsert() {
+    let repository = new Repository();
 
+    let dialogRef = this.dialog.open(DialogRepositoryDetail, {
+      data: {repository:repository},
+      height: 'auto',
+      width: '40%',
+      position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+    });
+
+    const sub = dialogRef.componentInstance.onChange.subscribe(() => {
+      this.getAllRepositories();
+      console.log('onChange.subscribe->run');
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      // unsubscribe onChange
+      console.log('onChange.UNsubscribe->run');
+    });
+
+  }
 
 }
 
@@ -85,9 +96,9 @@ dialogRef.afterClosed().subscribe(() => {
 export class DialogRepositoryDetail {
     submitted = false;
     currentUser: User;
-    model: any = {}
+    
     loading:boolean = false;
-    @Output() onAdd = new EventEmitter();
+    @Output() onChange = new EventEmitter();
 
   constructor(
       public dialogRef: MdDialogRef<DialogRepositoryDetail>,
@@ -101,26 +112,37 @@ export class DialogRepositoryDetail {
 
         this.submitted = true;
         //localStorage.setItem("repository", JSON.stringify(this.repository))
-        this.AddRepo();
         
 }
 
-
-
-
-AddRepo() {
+update(repository:Repository) {
         this.loading = true
-        console.log('this.model',this.model)
+        console.log('repository',repository)
 
-        this.RepositoryService.create(this.model)
+        this.RepositoryService.update(repository)
             .subscribe(
                 data => {
-                     
-                    let repository = new Repository(this.model.name,this.model.uri,this.model.urlPrefix);
+                    this.onChange.emit();
+                    this.dialogRef.close();     
+                },
+                error => {
+                    this.alertService.error(error._body)
+                    this.loading = false
+                })
+    }
+
+
+
+createupdate(repository:Repository) {
+
+  console.log('repository',repository);
+        this.loading = true
+        this.RepositoryService.create(repository)
+            .subscribe(
+                data => {                 
                     console.log('new repository',repository);
-                    this.onAdd.emit();
-                    this.dialogRef.close();  
-                    
+                    this.onChange.emit();
+                    this.dialogRef.close();     
                 },
                 error => {
                     this.alertService.error(error._body)

@@ -22,11 +22,11 @@ export class RepositoryService {
     }
 
     update(repository: Repository) {
-        return this.http.put(this.config.apiUrl + "/repository/" + repository.id, repository, this.jwt())
+        return this.http.put(this.config.apiUrl + "/repository/" + repository.id ,repository, this.jwt())
     }
 
-    delete(repository: Repository) {
-        return this.http.delete(this.config.apiUrl + "/repository/" + repository.id, this.jwt())
+    delete(id: string) {
+        return this.http.delete(this.config.apiUrl + "/repository/" + id, this.jwt())
     }
 
     // private helper methods
