@@ -18,9 +18,6 @@ public class SearchResult extends BaseEntity{
     private List<MultimediaContent> multimediaContents=new ArrayList<MultimediaContent>();
 
     @Reference
-    private Set<Repository> repositories=new HashSet<>();
-
-    @Reference
     private User user=new User();
 
     private Date date=new Date();
@@ -65,14 +62,6 @@ public class SearchResult extends BaseEntity{
         this.date = date;
     }
 
-    public Set<Repository> getRepositories() {
-        return repositories;
-    }
-
-    public void setRepositories( Set<Repository> repositories ) {
-        this.repositories = repositories;
-    }
-
     public Date getStartDate() {
         return startDate;
     }
@@ -99,7 +88,6 @@ public class SearchResult extends BaseEntity{
         if (keyWords != null ? !keyWords.equals(that.keyWords) : that.keyWords != null) return false;
         if (multimediaContents != null ? !multimediaContents.equals(that.multimediaContents) : that.multimediaContents != null)
             return false;
-        if (repositories != null ? !repositories.equals(that.repositories) : that.repositories != null) return false;
         if (user != null ? !user.equals(that.user) : that.user != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
@@ -110,7 +98,6 @@ public class SearchResult extends BaseEntity{
     public int hashCode() {
         int result = keyWords != null ? keyWords.hashCode() : 0;
         result = 31 * result + (multimediaContents != null ? multimediaContents.hashCode() : 0);
-        result = 31 * result + (repositories != null ? repositories.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);

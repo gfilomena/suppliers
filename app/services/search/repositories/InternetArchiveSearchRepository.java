@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
 import models.MultimediaType;
+import models.Registration;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -21,14 +22,17 @@ import java.util.stream.Collectors;
  */
 public class InternetArchiveSearchRepository implements SearchRepository {
 
-    private final String url=ConfigFactory.load().getString("multimedia.sources.internetArchive.url");
+    //private final String url=ConfigFactory.load().getString("multimedia.sources.internetArchive.url");
     private WSClient ws;
+    private Registration registration;
 
-    private final String internetArchiveURLPrefix="https://archive.org/details/";
+    //private final String internetArchiveURLPrefix="https://archive.org/details/";
 
     @Inject
-    public InternetArchiveSearchRepository(WSClient ws){
+    public InternetArchiveSearchRepository(WSClient ws, Registration registration){
+
         this.ws=ws;
+        this.registration=registration;
     }
 
     @Override
@@ -40,7 +44,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         }
         Logger.info("InternetArchive search: "+query);
         CompletionStage<JsonNode> jsonPromise;
-        jsonPromise = ws.url(url).
+        jsonPromise = ws.url(registration.getRepository().getURI()).
                 setQueryParameter("debug", "false").
                 setQueryParameter("xvar", "production").
                 setQueryParameter("total_only", "false").
@@ -83,9 +87,8 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         MultimediaContent m=new MultimediaContent();
         //m.setType(i.get("mediatype").asText());
         m.setType(MultimediaType.video);
-        m.setURI(internetArchiveURLPrefix+i.get("identifier").asText());
-        // TODO: Modify to find SearchRepository from DB
-        m.setSource(new models.Repository());
+        m.setURI(registration.getRepository().getUrlPrefix()+i.get("identifier").asText());
+        m.setSource(registration.getRepository());
         m.setName(i.get("title").asText());
         //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;

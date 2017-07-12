@@ -82,9 +82,15 @@ public class RegistrationController extends Controller{
     }
 
     @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> findRepositoriesByUser(){
+        User user=Secured.getUser(ctx());
+        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findRepositoriesByUser(user))));
+    }
+
+    @Security.Authenticated(Secured.class)
     public CompletionStage<Result> findByUser(){
         User user=Secured.getUser(ctx());
-        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findByUser(user))));
+        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findRegistrationByUser(user))));
     }
 
     @Security.Authenticated(Secured.class)

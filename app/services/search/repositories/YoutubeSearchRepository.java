@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
 import models.MultimediaType;
+import models.Registration;
+import models.Repository;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -22,16 +24,13 @@ import java.util.stream.Collectors;
  */
 public class YoutubeSearchRepository implements SearchRepository {
 
-    private final String key=ConfigFactory.load().getString("multimedia.sources.youtube.api.key");
-    private final String url=ConfigFactory.load().getString("multimedia.sources.youtube.url");
     private WSClient ws;
-
-    private final String youtubeURLPrefix="https://www.youtube.com/embed/";
-
+    private Registration reg;
 
     @Inject
-    public YoutubeSearchRepository(WSClient ws){
+    public YoutubeSearchRepository(WSClient ws, Registration registration){
         this.ws=ws;
+        this.reg=registration;
     }
 
     @Override
@@ -43,10 +42,10 @@ public class YoutubeSearchRepository implements SearchRepository {
         }
         Logger.info("Youtube search: "+query);
         CompletionStage<JsonNode> jsonPromise;
-        jsonPromise = ws.url(url).
+        jsonPromise = ws.url(reg.getRepository().getURI()).
                 setQueryParameter("part", "snippet").
                 setQueryParameter("q", query).
-                setQueryParameter("key", key).
+                setQueryParameter("key", reg.getApiKey()).
                 setQueryParameter("type", "video").
                 get().
                 thenApply(WSResponse::asJson);
@@ -87,7 +86,7 @@ public class YoutubeSearchRepository implements SearchRepository {
         MultimediaContent m = new MultimediaContent();
         //m.setType(i.path("id").get("kind").asText());
         m.setType(MultimediaType.video);
-        m.setURI(youtubeURLPrefix + i.path("id").get("videoId").asText());
+        m.setURI(reg.getRepository().getUrlPrefix() + i.path("id").get("videoId").asText());
         m.setName(i.get("snippet").get("title").asText());
         m.setDescription(i.get("snippet").get("description").asText());
         m.setThumbnail(i.get("snippet").get("thumbnails").get("default").get("url").asText());
@@ -99,7 +98,7 @@ public class YoutubeSearchRepository implements SearchRepository {
             e.printStackTrace();
         }
         // TODO: Modify to find SearchRepository from DB
-        m.setSource(new models.Repository());
+        m.setSource(reg.getRepository());
         //Logger.debug("Debug multimedia enum:"+m.toString());
         return m;
     }
