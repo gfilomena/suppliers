@@ -3,6 +3,8 @@ package models.dao;
 import com.mongodb.MongoClient;
 import com.mongodb.QueryBuilder;
 import models.Registration;
+import models.Repository;
+import models.User;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -36,7 +38,11 @@ public class RegistrationDAOImpl extends BasicDAO<Registration,ObjectId> impleme
     }
 
     @Override
-    public boolean isPresent(String username, String repository) {
-        return this.findOne(MongoDBService.getDatastore().createQuery(Registration.class).filter("username = ", username).filter("repository=", repository))!=null?true:false;
+    public boolean isPresent(User username, Repository repository) {
+        Registration reg=this.findOne(MongoDBService.getDatastore().createQuery(Registration.class).filter("user = ", username).filter("repository = ", repository));
+        if(reg!=null)
+            return true;
+        else
+            return false;
     }
 }

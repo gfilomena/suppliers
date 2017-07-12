@@ -2,8 +2,10 @@ package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Registration;
-import models.dao.RegistrationDAO;
-import models.dao.RegistrationDAOImpl;
+import models.Repository;
+import models.User;
+import models.dao.*;
+import org.bson.types.ObjectId;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -19,6 +21,8 @@ import java.util.concurrent.CompletionStage;
 public class RegistrationController extends Controller{
 
     public static RegistrationDAO registrationDAO=new RegistrationDAOImpl(Registration.class, MongoDBService.getDatastore());
+    public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
+    public static RepositoryDAO repoDAO=new RepositoryDAOImpl(Repository.class, MongoDBService.getDatastore());
 
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> get(String id){
@@ -30,24 +34,79 @@ public class RegistrationController extends Controller{
         }
     }
 
-    /*@Security.Authenticated(Secured.class)
-    public CompletionStage<Result> create(){
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> create() {
         JsonNode json = request().body().asJson();
-        if(json.findPath("username").isMissingNode() || json.findPath("repository").isMissingNode()){
-            return  CompletableFuture.supplyAsync( () -> badRequest("Username and repository are mandatory!"));
+        if (json.findPath("user").isMissingNode() || json.findPath("repository").isMissingNode()) {
+            return CompletableFuture.supplyAsync(() -> badRequest("User and Repository are mandatory!"));
+        } else {
+            String username = json.findPath("user").textValue();
+            String repository = json.findPath("repository").textValue();
+            Repository re = repoDAO.findByName(repository);
+            User us = userDAO.findByUsername(username);
+            if(re==null || us==null){
+                return CompletableFuture.supplyAsync(() -> badRequest("User or Repository not present!"));
+            }
+            else {
+                if (!registrationDAO.isPresent(us, re)) {
+                    CompletableFuture<JsonNode> cf = CompletableFuture.supplyAsync(() -> {
+                        Repository r = repoDAO.findByName(repository);
+                        User u = userDAO.findByUsername(username);
+                        Registration registration = new Registration();
+                        registration.setRepository(r);
+                        registration.setUser(u);
+                        if (!json.findPath("apiKey").isMissingNode())
+                            registration.setApiKey(json.findPath("apiKey").textValue());
+                        if (!json.findPath("username").isMissingNode())
+                            registration.setUsername(json.findPath("username").textValue());
+                        if (!json.findPath("password").isMissingNode())
+                            registration.setPassword(json.findPath("password").textValue());
+                        if (!json.findPath("token").isMissingNode())
+                            registration.setToken(json.findPath("token").textValue());
+                        if (!json.findPath("enabled").isMissingNode())
+                            registration.setEnabled(json.findPath("enabled").textValue().equals("true") ? true : false);
+                        registrationDAO.save(registration);
+                        return registration.asJson();
+                    });
+                    return cf.thenApply(l -> created());
+                } else {
+                    return CompletableFuture.supplyAsync(() -> badRequest("Registration already exists!"));
+                }
+            }
         }
-        else if(repoDAO.findByName(json.findPath("name").textValue())==null) {
-            CompletableFuture<JsonNode> cf=CompletableFuture.supplyAsync( () -> {Repository r = new Repository();
-                r.setName(json.findPath("name").textValue());
-                r.setURI(json.findPath("uri").textValue());
-                if(!json.findPath("urlPrefix").isMissingNode())
-                    r.setUrlPrefix(json.findPath("urlPrefix").textValue());
-                repoDAO.save(r);
-                return r.asJson();});
-            return cf.thenApply( l -> created());
+    }
+
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> getAll(){
+        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findAll())));
+    }
+
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> update(String id){
+        JsonNode json = request().body().asJson();
+        if(registrationDAO.get(id)!=null) {
+            Registration r=registrationDAO.get(id);
+            if(!json.findPath("apiKey").isMissingNode()) r.setApiKey(json.findPath("apiKey").textValue());
+            if(!json.findPath("username").isMissingNode()) r.setUsername(json.findPath("username").textValue());
+            if(!json.findPath("password").isMissingNode()) r.setPassword(json.findPath("password").textValue());
+            if(!json.findPath("token").isMissingNode()) r.setToken(json.findPath("token").textValue());
+            if(!json.findPath("enabled").isMissingNode()) r.setEnabled(json.findPath("enabled").textValue().equals("true")?true:false);
+            registrationDAO.save(r);
+            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(r)));
         }
         else{
-            return CompletableFuture.supplyAsync( () -> badRequest("Repository already exists!"));
+            return CompletableFuture.supplyAsync(() -> notFound("The Registration doesn't exists!"));
         }
-    }*/
+    }
+
+
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> delete(String id){
+        if(registrationDAO.get(id)!=null) {
+            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(registrationDAO.deleteById(new ObjectId(id)))));
+        }
+        else{
+            return CompletableFuture.supplyAsync(() -> notFound("The Registration doesn't exists!"));
+        }
+    }
 }
