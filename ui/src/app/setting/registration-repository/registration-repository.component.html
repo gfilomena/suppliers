@@ -5,9 +5,9 @@
 
 
 
-<div align="center">
+<div align="left">
   <md-card>
-      <h3>Repositories</h3>
+      <h3>Repositories Registration</h3>
           <table>
             <thead>
                <tr>
@@ -17,7 +17,7 @@
                 <td>Delete</td>
                </tr>  
             </thead>
-            <tr *ngFor="let rep of repositories">
+            <tr *ngFor="let rep of UserRepositories">
               <td class="name">{{rep.name}}</td>
               <td class="uri">{{rep.URI}}</td>
               <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>

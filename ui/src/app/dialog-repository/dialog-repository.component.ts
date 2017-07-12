@@ -14,7 +14,7 @@ import { Router } from "@angular/router"
 })
 export class DialogRepositoryComponent implements OnInit {
 
-repository: Repository;
+repository = new Repository();
 repositories:Repository[];
 loading:boolean = false;
 
@@ -64,8 +64,27 @@ delete(id:string) {
                 })
 }
 
-  upsert() {
+  create() {
     let repository = new Repository();
+    let dialogRef = this.dialog.open(DialogRepositoryDetail, {
+      data: {repository:repository},
+      height: 'auto',
+      width: '40%',
+      position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+    });
+
+    const sub = dialogRef.componentInstance.onChange.subscribe(() => {
+      this.getAllRepositories();
+      console.log('onChange.subscribe->run');
+    });
+    dialogRef.afterClosed().subscribe(() => {
+      // unsubscribe onChange
+      console.log('onChange.UNsubscribe->run');
+    });
+
+  }
+
+    update(repository:Repository) {
 
     let dialogRef = this.dialog.open(DialogRepositoryDetail, {
       data: {repository:repository},
@@ -115,11 +134,17 @@ export class DialogRepositoryDetail {
         
 }
 
-update(repository:Repository) {
-        this.loading = true
-        console.log('repository',repository)
 
-        this.RepositoryService.update(repository)
+
+
+
+upsert(repository:Repository) {
+      console.log('repository',repository);
+        this.loading = true
+
+if(repository.id) {
+
+    this.RepositoryService.update(repository)
             .subscribe(
                 data => {
                     this.onChange.emit();
@@ -129,15 +154,10 @@ update(repository:Repository) {
                     this.alertService.error(error._body)
                     this.loading = false
                 })
-    }
 
+}else{
 
-
-createupdate(repository:Repository) {
-
-  console.log('repository',repository);
-        this.loading = true
-        this.RepositoryService.create(repository)
+    this.RepositoryService.create(repository)
             .subscribe(
                 data => {                 
                     console.log('new repository',repository);
@@ -148,6 +168,11 @@ createupdate(repository:Repository) {
                     this.alertService.error(error._body)
                     this.loading = false
                 })
+
+}
+
+
+       
     }
       
    getDate(date:string):string{

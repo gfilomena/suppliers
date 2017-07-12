@@ -24,7 +24,8 @@ import { FlexLayoutModule } from "@angular/flex-layout"
 import { BookmarksComponent } from './bookmarks/bookmarks.component'
 import { SettingComponent } from './setting/setting.component'
 import { SearchHistoryComponent } from './search-history/search-history.component'
-import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component'
+import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
+
 
 
 
@@ -54,8 +55,7 @@ import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component'
         BookmarksComponent,
         SettingComponent,
         SearchHistoryComponent,
-        BreadcrumbComponent,
-
+        BreadcrumbComponent
     ],
     providers: [
         AppConfig,

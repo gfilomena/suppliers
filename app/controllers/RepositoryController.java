@@ -39,13 +39,13 @@ public class RepositoryController extends Controller {
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> create(){
         JsonNode json = request().body().asJson();
-        if(json.findPath("name").isMissingNode() || json.findPath("uri").isMissingNode()){
+        if(json.findPath("name").isMissingNode() || json.findPath("URI").isMissingNode()){
             return  CompletableFuture.supplyAsync( () -> badRequest("Name and URI are mandatory!"));
         }
         else if(repoDAO.findByName(json.findPath("name").textValue())==null) {
             CompletableFuture<JsonNode> cf=CompletableFuture.supplyAsync( () -> {Repository r = new Repository();
                 r.setName(json.findPath("name").textValue());
-                r.setURI(json.findPath("uri").textValue());
+                r.setURI(json.findPath("URI").textValue());
                 if(!json.findPath("urlPrefix").isMissingNode())
                     r.setUrlPrefix(json.findPath("urlPrefix").textValue());
                 repoDAO.save(r);
@@ -63,7 +63,7 @@ public class RepositoryController extends Controller {
         if(repoDAO.get(id)!=null) {
             Repository r=repoDAO.get(id);
             if(!json.findPath("name").isMissingNode()) r.setName(json.findPath("name").textValue());
-            if(!json.findPath("uri").isMissingNode()) r.setURI(json.findPath("uri").textValue());
+            if(!json.findPath("URI").isMissingNode()) r.setURI(json.findPath("URI").textValue());
             if(!json.findPath("urlPrefix").isMissingNode()) r.setUrlPrefix(json.findPath("urlPrefix").textValue());
             repoDAO.save(r);
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(r)));

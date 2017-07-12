@@ -10,27 +10,28 @@ import { SettingComponent } from "./setting/index"
 import { BookmarksComponent } from "./bookmarks/index"
 import { SearchHistoryComponent } from "./search-history/index"
 import { DialogRepositoryComponent } from "./dialog-repository/index"
+import {HashLocationStrategy, Location, LocationStrategy, APP_BASE_HREF} from '@angular/common';
 
 const appRoutes: Routes = [
-    { path: "", component: SearchFormComponent,
-   /* children: [
-     {
+    { path: "",
+      component: SearchFormComponent,
+      canActivate: [AuthGuard],
+      data: { breadcrumb: 'home' },
+  /* children: [
+      { path: '', redirectTo: 'bookmarks', pathMatch: 'full' },
+      {
         path: "bookmarks",
         component: BookmarksComponent,
-        data: {
-          breadcrumb: "bookmarks"
-        }
-      },
+        data: { breadcrumb: 'bookmarks' }
+       },
        {
         path: "setting",
         component: SettingComponent,
-        data: {
-          breadcrumb: "setting"
-        }
-      }
+        data: { breadcrumb: 'setting' }
+       }
 
-    ], */
-     canActivate: [AuthGuard], data: { breadcrumb: 'home' }},
+   ]*/
+  },
     { path: "login", component: LoginComponent , data: { breadcrumb: 'login' }},
     { path: "register", component: RegisterComponent, data: { breadcrumb: 'register' }},
     { path: "setting", component: SettingComponent , data: { breadcrumb: 'setting' }},
@@ -43,8 +44,12 @@ const appRoutes: Routes = [
 ]
 
 @NgModule({
-  imports: [ RouterModule.forRoot(appRoutes) ],
-  exports: [ RouterModule ]
+  imports: [ RouterModule.forRoot(appRoutes)  ],
+  exports: [ RouterModule ],
+  providers: [
+{ provide: LocationStrategy, useClass: HashLocationStrategy }, 
+{ provide: APP_BASE_HREF, useValue: '/' } // <--- this right here
+ ]
 })
 
 export class AppRoutingModule {}

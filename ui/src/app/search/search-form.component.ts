@@ -6,7 +6,7 @@ import { User } from "../_models/user";
 import { SearchService } from "./search.service";
 import { MultimediaContent } from "../_models/multimediaContent";
 import { MdDialog, MdDialogRef } from "@angular/material";
-import { DialogDetailComponent } from "../dialog-detail/dialog-detail.component";
+import { DialogDetailComponent } from "./dialog-detail/dialog-detail.component";
 
 @Component({
   selector: 'app-search-form',
