@@ -28,6 +28,7 @@ DELETE /users/:username             controllers.UserController.delete(username: 
 GET    /registration                  controllers.RegistrationController.getAll()
 GET    /registration/:id              controllers.RegistrationController.get(id: String)
 POST   /registration                  controllers.RegistrationController.create()
+GET    /registration/me/              controllers.RegistrationController.findByUser()
 PUT    /registration/:id              controllers.RegistrationController.update(id: String)
 DELETE /registration/:id              controllers.RegistrationController.delete(id: String)
 
