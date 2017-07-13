@@ -12,14 +12,12 @@
             <thead>
                <tr>
                 <td class="name">Name</td>
-                <td class="uri">URI</td>
                 <td>Modify</td>
                 <td>Delete</td>
                </tr>  
             </thead>
             <tr *ngFor="let rep of UserRepositories">
               <td class="name">{{rep.name}}</td>
-              <td class="uri">{{rep.URI}}</td>
               <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
               <td><button md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
             </tr>  

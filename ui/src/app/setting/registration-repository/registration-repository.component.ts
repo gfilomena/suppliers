@@ -4,76 +4,10 @@ import { Component, OnInit, Input, Output,EventEmitter, Inject } from '@angular/
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { User } from "../../_models/user";
-import { UserRepositoryService, AlertService } from "../../_services/index";
+import { UserRepositoryService, RepositoryService, AlertService } from "../../_services/index";
 import { Router } from "@angular/router"
 
-@Component({
-  selector: 'dialog-registration-repository',
-  templateUrl: 'dialog-registration-repository.html',
-  styleUrls: ['./registration-repository.component.css']
-})
-export class DialogRegistrationRepository {
 
-
-    submitted = false;
-    currentUser: User;
-    
-    loading:boolean = false;
-    @Output() onChange = new EventEmitter();
-
-  constructor(
-      public dialogRef: MdDialogRef<DialogRegistrationRepository>,
-      @Inject(MD_DIALOG_DATA) public data: any,
-      private router: Router,
-      private UserRepositoryService:UserRepositoryService,
-      private alertService: AlertService    ) {}
-  
-  
-  onSubmit() {
-        this.submitted = true;
-        //localStorage.setItem("repository", JSON.stringify(this.repository))   
-}
-
-
-upsert(UserRepository:UserRepository) {
-      console.log('repository',UserRepository);
-        this.loading = true
-
-if(UserRepository.id) {
-
-    this.UserRepositoryService.update(UserRepository)
-            .subscribe(
-                data => {
-                    this.onChange.emit();
-                    this.dialogRef.close();     
-                },
-                error => {
-                    this.alertService.error(error._body)
-                    this.loading = false
-                })
-
-}else{
-
-    this.UserRepositoryService.create(UserRepository)
-            .subscribe(
-                data => {                 
-                    console.log('new UserRepository',UserRepository);
-                    this.onChange.emit();
-                    this.dialogRef.close();     
-                },
-                error => {
-                    this.alertService.error(error._body)
-                    this.loading = false
-                })
-
-}
-
-}   
-      
-   getDate(date:string):string{
-    return new Date(date).toString().slice(0,15);
-  }
-}
 
 @Component({
   selector: 'app-registration-repository',
@@ -83,14 +17,20 @@ if(UserRepository.id) {
 export class RegistrationRepositoryComponent implements OnInit {
 
 repository = new Repository();
-UserRepositories:UserRepositories[];
+currentUser:User;
+userRepository:UserRepository;
+userRepositories:UserRepository[];
 loading:boolean = false;
+
 
   constructor(
     public dialog: MdDialog,
-    private UserRepositoryService:UserRepositoryService,
-    private alertService: AlertService ) {
+    private userRepositoryService:UserRepositoryService,
+    private alertService: AlertService) {
     //this.repository=new Repository('Youtube','www.youtube.com','prefix');
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    this.userRepository = new UserRepository();
+    this.userRepository.user  = this.currentUser.username;
    }
 
   ngOnInit() {
@@ -100,13 +40,13 @@ loading:boolean = false;
 
 
   getAllRepositories(){
-    this.UserRepositoryService.getAll()
+    this.userRepositoryService.getAll()
             .subscribe(
                 data => {
-                  console.log('data',data);
-                    this.UserRepositories = data;
-                    localStorage.setItem("repositories",JSON.stringify(this.UserRepositories));
-                   console.log(' this.repositories', this.UserRepositories);
+                    console.log('data',data);
+                    this.userRepositories = data;
+                    localStorage.setItem("repositories",JSON.stringify(this.userRepositories));
+                    console.log(' this.repositories', this.userRepositories);
                 },
                 error => {
                     this.alertService.error(error._body)
@@ -121,7 +61,7 @@ delete(id:string) {
    this.loading = true
         console.log('id:',id)
 
-        this.UserRepositoryService.delete(id)
+        this.userRepositoryService.delete(id)
             .subscribe(
                 data => {
                     this.getAllRepositories();
@@ -133,9 +73,9 @@ delete(id:string) {
 }
 
   create() {
-    let repository = new Repository();
+    
     let dialogRef = this.dialog.open(DialogRegistrationRepository, {
-      data: {repository:repository},
+      data: {userRepository:this.userRepository},
       height: 'auto',
       width: '40%',
       position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
@@ -174,3 +114,98 @@ delete(id:string) {
     }
 
 }
+
+
+
+
+@Component({
+  selector: 'dialog-registration-repository',
+  templateUrl: 'dialog-registration-repository.html',
+  styleUrls: ['./registration-repository.component.css']
+})
+export class DialogRegistrationRepository {
+
+
+    submitted = false;
+    currentUser: User;
+    repositories:Repository[];
+    loading:boolean = false;
+    @Output() onChange = new EventEmitter();
+
+  constructor(
+      public dialogRef: MdDialogRef<DialogRegistrationRepository>,
+      @Inject(MD_DIALOG_DATA) public data: any,
+      private router: Router,
+      private userRepositoryService:UserRepositoryService,
+      private RepositoryService:RepositoryService,
+      private alertService: AlertService    ) {}
+  
+  
+  ngOnInit() {
+      this.getAllRepositories();
+  }
+
+
+
+  getAllRepositories(){
+    this.RepositoryService.getAll()
+            .subscribe(
+                data => {
+                  console.log('data',data);
+                    this.repositories = data;
+                    localStorage.setItem("repositories",JSON.stringify(this.repositories));
+                   console.log(' this.repositories', this.repositories);
+                },
+                error => {
+                    this.alertService.error(error._body)
+                    this.loading = false
+                })
+    }
+
+
+  onSubmit() {
+        this.submitted = true;
+        //localStorage.setItem("repository", JSON.stringify(this.repository))   
+}
+
+
+upsert(userRepository:UserRepository) {
+      console.log('UserRepository::',userRepository);
+        this.loading = true
+
+if(userRepository.id) {
+
+    this.userRepositoryService.update(userRepository)
+            .subscribe(
+                data => {
+                    this.onChange.emit();
+                    this.dialogRef.close();     
+                },
+                error => {
+                    this.alertService.error(error._body)
+                    this.loading = false
+                })
+
+}else{
+
+    this.userRepositoryService.create(userRepository)
+            .subscribe(
+                data => {                 
+                    console.log('new UserRepository',userRepository);
+                    this.onChange.emit();
+                    this.dialogRef.close();     
+                },
+                error => {
+                    this.alertService.error(error._body)
+                    this.loading = false
+                })
+
+}
+
+}   
+      
+   getDate(date:string):string{
+    return new Date(date).toString().slice(0,15);
+  }
+}
+

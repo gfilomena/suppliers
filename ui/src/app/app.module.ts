@@ -10,7 +10,7 @@ import { AppConfig } from "./app.config"
 
 import { AlertComponent } from "./_directives/index"
 import { AuthGuard } from "./_guards/index"
-import { AlertService, AuthenticationService, UserService, RepositoryService /*PagerService*/ } from "./_services/index"
+import { AlertService, AuthenticationService, UserService, RepositoryService, UserRepositoryService /*PagerService*/ } from "./_services/index"
 import { HomeComponent } from "./home/index"
 import { LoginComponent } from "./login/index"
 import { RegisterComponent } from "./register/index"
@@ -25,7 +25,7 @@ import { BookmarksComponent } from './bookmarks/bookmarks.component'
 import { SettingComponent } from './setting/setting.component'
 import { SearchHistoryComponent } from './search-history/search-history.component'
 import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
-
+import { DialogRegistrationRepository, RegistrationRepositoryComponent } from './setting/registration-repository/registration-repository.component';
 
 
 
@@ -55,7 +55,9 @@ import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
         BookmarksComponent,
         SettingComponent,
         SearchHistoryComponent,
-        BreadcrumbComponent
+        BreadcrumbComponent,
+        DialogRegistrationRepository,
+        RegistrationRepositoryComponent
     ],
     providers: [
         AppConfig,
@@ -63,10 +65,11 @@ import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
         AlertService,
         AuthenticationService,
         UserService,
-        RepositoryService
+        RepositoryService,
+        UserRepositoryService
         //PagerService
     ],
-   
+    entryComponents: [RegistrationRepositoryComponent,DialogRegistrationRepository],  
     bootstrap: [AppComponent]
 })
 

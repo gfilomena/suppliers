@@ -11,13 +11,9 @@
     <md-card-content>
       <div fxLayout="row" fxLayoutAlign="start start" >
           <md-card>
-            <div fxLayout="column" fxLayoutAlign="start start" >
-              <h3>Available Repositories</h3>
-                <md-slide-toggle>Youtube</md-slide-toggle>
-                <md-slide-toggle>Amazon Prime video</md-slide-toggle>
-                <md-slide-toggle>Internet Archive</md-slide-toggle>
-                <md-slide-toggle>Pexels</md-slide-toggle>
-                <md-slide-toggle>Wikipedia</md-slide-toggle>
+            <h3>Available Repositories</h3>
+            <div fxLayout="column" fxLayoutAlign="start start"  *ngFor="let ur of userRepositories"   userRepositories>
+                <md-slide-toggle>{{ur.repository}}</md-slide-toggle>
             </div>
           </md-card>
       </div>

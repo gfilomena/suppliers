@@ -1,22 +1,31 @@
 
-
 <md-card>
   <md-card-header>
     <md-card-title></md-card-title>
   </md-card-header>
 
-<form name="form" (ngSubmit)="f.form.valid && upsert(data.repository)" #f="ngForm" novalidate>
+<form name="form" (ngSubmit)="f.form.valid && upsert(data.userRepository)" #f="ngForm" novalidate>
   <md-card-content>
-                <h3>Register Repository</h3>
+                <h3>Register Repository on User</h3>
             <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
+              <div>
+               <md-select placeholder="Repository"  id="repository"  [(ngModel)]="data.userRepository.repository" name="repository" required fxflex>
+                  <md-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
+                    {{ rep.name }}
+                  </md-option>
+                </md-select>
+              </div>  
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="Name" value=" " id="name" name="name" required  [(ngModel)]="data.repository.name">
+                <input mdInput placeholder="username" value=" " id="username" name="username"  required [(ngModel)]="data.userRepository.username">
                 </md-input-container>
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="URI" value=" " id="URI" name="URI"  required [(ngModel)]="data.repository.URI">
+                <input mdInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">
                 </md-input-container>
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="urlPrefix" value="" id="urlPrefix" name="urlPrefix" [(ngModel)]="data.repository.urlPrefix">
+                <input mdInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
+                </md-input-container>
+                <md-input-container  fxFlex> 
+                <input mdInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token">
                 </md-input-container>
             </div>      
   </md-card-content>
