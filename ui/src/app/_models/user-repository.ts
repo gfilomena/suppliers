@@ -1,7 +1,8 @@
 export class UserRepository {
     id: string
     user: string
-    repository:string
+    repositoryId:string
+    repositoryName:string
     username: string
     password: string
     apiKey: string
@@ -10,7 +11,8 @@ export class UserRepository {
 
     constructor(
         user:string = '',
-        repository:string = '',
+        repositoryId:string = '',
+        repositoryName:string = '',
         username:string= '',
         password:string= '',
         apiKey:string= '',
@@ -18,7 +20,8 @@ export class UserRepository {
         enabled:boolean = true){
             
         this.user = user;
-        this.repository = repository;
+        this.repositoryId = repositoryId;
+        this.repositoryName = repositoryName;
         this.username = username;
         this.password = password;
         this.apiKey = apiKey;
