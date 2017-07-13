@@ -29,7 +29,7 @@ public class SearchResultSerializer extends StdSerializer<SearchResult> {
         jgen.writeStartObject();
         jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeObjectField("keyWords", value.getKeyWords());
-        jgen.writeObjectField("multimediaContent", value.getMultimediaContents());
+        jgen.writeObjectField("multimediaContents", value.getMultimediaContents());
         jgen.writeEndObject();
     }
 
