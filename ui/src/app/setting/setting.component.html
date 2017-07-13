@@ -12,9 +12,13 @@
       <div fxLayout="row" fxLayoutAlign="start start" >
           <md-card>
             <h3>Available Repositories</h3>
-            <div fxLayout="column" fxLayoutAlign="start start"  *ngFor="let ur of userRepositories"   userRepositories>
-                <md-slide-toggle>{{ur.repository}}</md-slide-toggle>
-            </div>
+             <table > 
+              <tr *ngFor="let ur of userRepositories"> 
+                <td><md-slide-toggle>{{ur.repository}}</md-slide-toggle></td>
+                <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
+                <td><button md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
+              </tr>
+             </table>
           </md-card>
       </div>
 
