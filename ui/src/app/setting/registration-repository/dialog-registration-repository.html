@@ -10,13 +10,15 @@
             <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
               
                <md-select placeholder="Repository"  id="repository"  [(ngModel)]="data.userRepository.repository" name="repository" required fxflex>
-                  <md-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
+                 
+                
+                 <md-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
                     {{ rep.name }}
                   </md-option>
                 </md-select>
                 
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="username" value=" " id="username" name="username"  required [(ngModel)]="data.userRepository.username">
+                <input mdInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
                 </md-input-container>
                 <md-input-container  fxFlex> 
                 <input mdInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">

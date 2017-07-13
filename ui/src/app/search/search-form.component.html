@@ -39,13 +39,13 @@
             </md-select>
           </div>
           <md-input-container fxFlex fxFlexOffset="2">
-            <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate"
+            <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" disabled [(ngModel)]="searchForm.inDate"
                    name="inDate">
             <button mdSuffix [mdDatepickerToggle]="startdate"></button>
           </md-input-container>
           <md-datepicker #startdate></md-datepicker>
           <md-input-container fxFlex fxFlexOffset="2">
-            <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate"
+            <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" disabled [(ngModel)]="searchForm.endDate"
                    name="endDate">
             <button mdSuffix [mdDatepickerToggle]="enddate"></button>
           </md-input-container>
