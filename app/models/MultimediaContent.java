@@ -1,12 +1,15 @@
 package models;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import models.serializer.MultimediaContentSerializer;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
 import java.util.Date;
 
 @Entity(value="MultimediaContent", noClassnameStored = true)
+@JsonSerialize(using = MultimediaContentSerializer.class)
 public class MultimediaContent extends BaseEntity{
 
     private MultimediaType type;
@@ -124,14 +127,6 @@ public class MultimediaContent extends BaseEntity{
 
     public void setSource(Repository source) {
         this.source = source;
-    }
-
-    public License getLicenseType() {
-        return license;
-    }
-
-    public void setLicenseType( License license ) {
-        this.license = license;
     }
 
     public Date getDate() {

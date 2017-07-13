@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import models.serializer.BookmarkSerializer;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
@@ -7,6 +9,7 @@ import org.mongodb.morphia.annotations.Reference;
  * Created by Pasquale on 11/05/2017.
  */
 @Entity(value="Bookmark", noClassnameStored = true)
+@JsonSerialize(using = BookmarkSerializer.class)
 public class Bookmark extends BaseEntity {
 
     @Reference
