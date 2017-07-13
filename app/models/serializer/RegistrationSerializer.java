@@ -30,7 +30,7 @@ public class RegistrationSerializer extends StdSerializer<Registration> {
         jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeStringField("user", value.getUser().getId().toHexString());
         jgen.writeStringField("repositoryId", value.getRepository().getId().toHexString());
-        jgen.writeStringField("repositoryName", value.getRepository().getName());
+        jgen.writeStringField("repository", value.getRepository().getName());
         jgen.writeStringField("apiKey", value.getApiKey());
         jgen.writeStringField("username", value.getUsername());
         jgen.writeStringField("password", value.getPassword());
