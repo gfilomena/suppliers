@@ -18,8 +18,6 @@ export class SearchFormComponent {
     currentUser: User;
     types = ['Audio', 'Video', 'Text', 'Image'];
     searchForm: SearchForm;
-    searchResults: MultimediaContent[]=[];
-
     searchResult: MultimediaContent[];
     searchVideoResult: MultimediaContent[];
     searchImgResult: MultimediaContent[];
@@ -42,8 +40,8 @@ export class SearchFormComponent {
     onSubmit() {
 
         this.submitted = true;
-        //console.log(JSON.stringify(this.searchForm))
-        localStorage.setItem("searchForm", JSON.stringify(this.searchForm))
+        console.log('this.searchForm',this.searchForm);
+        localStorage.setItem("searchForm", JSON.stringify(this.searchForm));
         this.search();
         
 }
@@ -52,30 +50,28 @@ export class SearchFormComponent {
     search(){
         this.searchService.search(this.searchForm)
         .subscribe(
-                res => {
-                    console.log(JSON.stringify(res.json().multimediaContents));
-                    this.searchResult=res.json().multimediaContents;
-                    console.log('search result size: '+this.searchResult.length);
-                    this.searchVideoResult= this.searchResult.filter(
-                      mc => mc.type === 'video');
-                      console.log('search video result size: '+this.searchVideoResult.length);
-                    this.searchImgResult= this.searchResult.filter(
-                       mc => mc.type === 'image');
-                      console.log('search image result size: '+this.searchImgResult.length);
-                    this.searchAudioResult= this.searchResult.filter(
-                      mc => mc.type === 'audio');
-                      console.log('search audio result size: '+this.searchAudioResult.length);
-                    this.searchTextResult= this.searchResult.filter(
-                      mc => mc.type === 'text');
-                      console.log('search text result size: '+this.searchTextResult.length);
-                    //console.log(this.searchResult);
-                    this.submitted = false;
-
-                },
-                error => {
-                    console.log('search - subscribe - error:',error);
-                    //this.loading = false
-                }
+                  res => {
+                      this.searchResult=res.json().multimediaContents;
+                      console.log('this.searchResult: '+this.searchResult);
+                      this.searchVideoResult= this.searchResult.filter(
+                        mc => mc.type === 'video');
+                        console.log('search video result size: '+this.searchVideoResult.length);
+                      this.searchImgResult= this.searchResult.filter(
+                        mc => mc.type === 'image');
+                        console.log('search image result size: '+this.searchImgResult.length);
+                      this.searchAudioResult= this.searchResult.filter(
+                        mc => mc.type === 'audio');
+                        console.log('search audio result size: '+this.searchAudioResult.length);
+                      this.searchTextResult= this.searchResult.filter(
+                        mc => mc.type === 'text');
+                        console.log('search text result size: '+this.searchTextResult.length);
+                      //console.log(this.searchResult);
+                      this.submitted = false;
+                  },
+                  error => {
+                      console.log('search - subscribe - error:',error);
+                      this.submitted = false;
+                  }
                 )
     }
 
