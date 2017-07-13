@@ -17,7 +17,7 @@
                </tr>  
             </thead>
             <tr *ngFor="let rep of userRepositories">
-              <td class="name">{{rep.name}}</td>
+              <td><md-slide-toggle>{{rep.repositoryName}}</md-slide-toggle></td>
               <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
               <td><button md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
             </tr>  

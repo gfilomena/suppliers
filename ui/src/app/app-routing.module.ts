@@ -16,7 +16,7 @@ const appRoutes: Routes = [
     { path: "",
       component: SearchFormComponent,
       canActivate: [AuthGuard],
-      data: { breadcrumb: 'home' },
+      data: { breadcrumb: 'home' }
   /* children: [
       { path: '', redirectTo: 'bookmarks', pathMatch: 'full' },
       {
@@ -31,7 +31,7 @@ const appRoutes: Routes = [
        }
 
    ]*/
-  },
+    },
     { path: "login", component: LoginComponent , data: { breadcrumb: 'login' }},
     { path: "register", component: RegisterComponent, data: { breadcrumb: 'register' }},
     { path: "setting", component: SettingComponent , data: { breadcrumb: 'setting' }},

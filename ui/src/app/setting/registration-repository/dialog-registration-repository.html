@@ -8,13 +8,13 @@
   <md-card-content>
                 <h3>Register Repository on User</h3>
             <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
-              <div>
+              
                <md-select placeholder="Repository"  id="repository"  [(ngModel)]="data.userRepository.repository" name="repository" required fxflex>
                   <md-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
                     {{ rep.name }}
                   </md-option>
                 </md-select>
-              </div>  
+                
                 <md-input-container  fxFlex> 
                 <input mdInput placeholder="username" value=" " id="username" name="username"  required [(ngModel)]="data.userRepository.username">
                 </md-input-container>

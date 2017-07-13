@@ -92,10 +92,10 @@ delete(id:string) {
 
   }
 
-    update(repository:Repository) {
+    update(userRepository:UserRepository) {
 
     let dialogRef = this.dialog.open(DialogRegistrationRepository, {
-      data: {repository:repository},
+      data: {userRepository:userRepository},
       height: 'auto',
       width: '40%',
       position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
