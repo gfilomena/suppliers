@@ -64,7 +64,7 @@ public class RegistrationController extends Controller{
                         if (!json.findPath("token").isMissingNode())
                             registration.setToken(json.findPath("token").textValue());
                         if (!json.findPath("enabled").isMissingNode())
-                            registration.setEnabled(json.findPath("enabled").textValue().equals("true") ? true : false);
+                            registration.setEnabled(json.findPath("enabled").booleanValue());
                         registrationDAO.save(registration);
                         return registration.asJson();
                     });
@@ -102,7 +102,7 @@ public class RegistrationController extends Controller{
             if(!json.findPath("username").isMissingNode()) r.setUsername(json.findPath("username").textValue());
             if(!json.findPath("password").isMissingNode()) r.setPassword(json.findPath("password").textValue());
             if(!json.findPath("token").isMissingNode()) r.setToken(json.findPath("token").textValue());
-            if(!json.findPath("enabled").isMissingNode()) r.setEnabled(json.findPath("enabled").textValue().equals("true")?true:false);
+            if(!json.findPath("enabled").isMissingNode()) r.setEnabled(json.findPath("enabled").booleanValue());
             registrationDAO.save(r);
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(r)));
         }

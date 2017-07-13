@@ -34,7 +34,7 @@ public class RegistrationSerializer extends StdSerializer<Registration> {
         jgen.writeStringField("username", value.getUsername());
         jgen.writeStringField("password", value.getPassword());
         jgen.writeStringField("token", value.getToken());
-        jgen.writeStringField("enabled", value.isEnabled()?"true":"false");
+        jgen.writeBooleanField("enabled", value.isEnabled());
         jgen.writeEndObject();
     }
 }
