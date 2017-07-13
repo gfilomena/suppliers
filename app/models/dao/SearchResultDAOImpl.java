@@ -3,6 +3,7 @@ package models.dao;
 import com.google.inject.Inject;
 import com.mongodb.MongoClient;
 import models.SearchResult;
+import models.User;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
@@ -10,6 +11,7 @@ import org.mongodb.morphia.dao.BasicDAO;
 import play.Logger;
 import services.db.MongoDBService;
 
+import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
@@ -29,8 +31,8 @@ public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> impleme
     }
 
     @Override
-    public List<SearchResult> findByUsername(String username) {
-        return MongoDBService.getDatastore().createQuery(SearchResult.class).filter("username = ", username).asList();
+    public List<SearchResult> findByUser(User user) {
+        return MongoDBService.getDatastore().createQuery(SearchResult.class).filter("user = ", user).asList();
     }
 
     @Override

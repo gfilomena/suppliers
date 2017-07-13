@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import models.serializer.UserSerializer;
 import org.mindrot.jbcrypt.BCrypt;
 import org.mongodb.morphia.annotations.Entity;
 
@@ -7,6 +9,7 @@ import org.mongodb.morphia.annotations.Entity;
  * Created by Pasquale on 03/04/2017.
  */
 @Entity(value="User", noClassnameStored = true)
+@JsonSerialize(using = UserSerializer.class)
 public class User extends BaseEntity{
 
     private String username;

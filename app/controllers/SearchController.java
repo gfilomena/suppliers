@@ -1,13 +1,8 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.MultimediaContent;
-import models.SearchResult;
-import models.User;
-import models.dao.SearchResultDAO;
-import models.dao.SearchResultDAOImpl;
-import models.dao.UserDAO;
-import models.dao.UserDAOImpl;
+import models.*;
+import models.dao.*;
 import play.Logger;
 import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
@@ -19,7 +14,6 @@ import services.db.MongoDBService;
 import services.search.Manager;
 import services.search.SearchManager;
 import services.search.repositories.*;
-import services.search.repositories.InternetArchiveSearchRepository;
 import services.search.repositories.SearchRepository;
 
 import javax.inject.Inject;
@@ -38,9 +32,10 @@ public class SearchController extends Controller {
     private HttpExecutionContext ec;
     private Manager queryManager;
     private WSClient wsclient;
-    //private SearchResultDAO searchResultDAO;
     public static SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
     public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
+    public static RegistrationDAO registrationDAO=new RegistrationDAOImpl(Registration.class, MongoDBService.getDatastore());
+    public static MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class, MongoDBService.getDatastore());
 
     @Inject
     public SearchController( HttpExecutionContext ec, Manager queryManager, WSClient wsClient){
@@ -52,29 +47,27 @@ public class SearchController extends Controller {
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> search() {
         JsonNode jsonRequest = request().body().asJson();
+        User user=Secured.getUser(ctx());
         Logger.info("OCD search received: " + jsonRequest.toString());
         List<String> keywords=getKeyWords(jsonRequest);
         SearchManager searchManager=new SearchManager();
         searchManager.setKeyWords(keywords);
-        // TODO dinamically read repository
-        SearchRepository youtube=new YoutubeSearchRepository(wsclient);
-        SearchRepository internetArchive=new InternetArchiveSearchRepository(wsclient);
-        SearchRepository pexels=new PexelsSearchRepository(wsclient);
+        // TODO dinamically read repository that are enabled
         SearchRepositoryFactory srf=new SearchRepositoryFactory();
-        Class[] params={WSClient.class};
-        Object[] values={wsclient};
-        SearchRepository y=srf.newInstance("Youtube", params, values);
-        List<SearchRepository> repositories=new ArrayList<SearchRepository>();
-        repositories.add(y);
-        repositories.add(internetArchive);
-        repositories.add(pexels);
+        Stream<Registration> userRepositories=registrationDAO.findRegistrationByUser(Secured.getUser(ctx())).stream();
+        List<SearchRepository> repositories=userRepositories.map(r -> {
+            Class[] params={WSClient.class, Registration.class};
+            Object[] values={wsclient, r};
+            return srf.newInstance(r.getRepository().getName(), params,values);
+        }).collect(Collectors.toList());
         List<CompletionStage<List<MultimediaContent>>> dispatched=searchManager.dispatch(repositories);
         CompletionStage<List<MultimediaContent>> aggregated=searchManager.aggregate(dispatched);
         CompletionStage<SearchResult> transformedQuery=aggregated.thenApply(l -> {
             SearchResult qr=new SearchResult();
+            l.forEach(mc -> multimediaContentDAO.save(mc));
             qr.setKeyWords(keywords);
             qr.setMultimediaContents(l);
-            qr.setUser(UserController.userDAO.findByUsername("ppanuccio")); // TODO set connected user
+            qr.setUser(user);
             return  qr;
         });
         //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
@@ -84,8 +77,7 @@ public class SearchController extends Controller {
     }
 
     public CompletionStage<Result> getSearchResults(String username){
-        //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
-        CompletionStage<Result> results= CompletableFuture.supplyAsync( () -> searchResultDAO.findByUsername(username))
+        CompletionStage<Result> results= CompletableFuture.supplyAsync( () -> searchResultDAO.findByUser(userDAO.findByUsername(username)))
                                                                     .thenApply( sr -> ok(Json.toJson(sr)));
         return results;
     }
@@ -95,9 +87,10 @@ public class SearchController extends Controller {
         if(jsonRequest.get("keyWords").textValue()!=null && !jsonRequest.get("keyWords").textValue().isEmpty()) keyWords.addAll(Stream.of(jsonRequest.get("keyWords").textValue().split(" ")).collect(Collectors.toList()));
         if(jsonRequest.get("freeText").textValue()!=null && !jsonRequest.get("freeText").textValue().isEmpty()) keyWords.addAll(Stream.of(jsonRequest.get("freeText").textValue().split(" ")).collect(Collectors.toList()));
         if(jsonRequest.get("semanticSearch").textValue()!=null && !jsonRequest.get("semanticSearch").textValue().isEmpty()) keyWords.addAll(Stream.of(jsonRequest.get("semanticSearch").textValue().split(" ")).collect(Collectors.toList()));
-
         return keyWords;
     }
+
+
 
 }
 

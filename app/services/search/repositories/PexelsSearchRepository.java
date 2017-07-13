@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
 import models.MultimediaType;
+import models.Registration;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -21,13 +22,16 @@ import java.util.stream.Collectors;
  */
 public class PexelsSearchRepository implements SearchRepository {
 
-    private final String key= ConfigFactory.load().getString("multimedia.sources.pexels.api.key");
-    private final String url=ConfigFactory.load().getString("multimedia.sources.pexels.url");
+    //private final String key= ConfigFactory.load().getString("multimedia.sources.pexels.api.key");
+    //private final String url=ConfigFactory.load().getString("multimedia.sources.pexels.url");
     private WSClient ws;
+    private Registration registration;
 
     @Inject
-    public PexelsSearchRepository(WSClient ws){
+    public PexelsSearchRepository(WSClient ws, Registration registration){
+
         this.ws=ws;
+        this.registration=registration;
     }
 
     @Override
@@ -39,8 +43,8 @@ public class PexelsSearchRepository implements SearchRepository {
         }
         Logger.info("Pexels search: "+query);
         CompletionStage<JsonNode> jsonPromise;
-        jsonPromise = ws.url(url).
-                setHeader("Authorization", key).
+        jsonPromise = ws.url(registration.getRepository().getURI()).
+                setHeader("Authorization", registration.getApiKey()).
                 setQueryParameter("query", query).
                 get().
                 thenApply(WSResponse::asJson);
@@ -73,7 +77,7 @@ public class PexelsSearchRepository implements SearchRepository {
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
         // TODO: Modify to find SearchRepository from DB
-        m.setSource(new models.Repository());
+        m.setSource(registration.getRepository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());
         return m;
     }

@@ -21,5 +21,7 @@ public interface RegistrationDAO extends DAO<Registration, ObjectId> {
 
     boolean isPresent(User username, Repository repository);
 
-    List<Repository> findByUser(User user);
+    List<Repository> findRepositoriesByUser(User user);
+
+    List<Registration> findRegistrationByUser(User user);
 }
