@@ -1,11 +1,14 @@
 package models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import models.serializer.LicenseSerializer;
 import org.mongodb.morphia.annotations.Entity;
 
 /**
  * Created by Pasquale on 26/05/2017.
  */
 @Entity(value="License", noClassnameStored = true)
+@JsonSerialize(using = LicenseSerializer.class)
 public class License extends BaseEntity{
 
     private String name;
