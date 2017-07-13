@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import models.serializer.SearchResultSerializer;
 import org.mongodb.morphia.annotations.*;
 import org.mongodb.morphia.utils.IndexType;
 
@@ -10,6 +12,7 @@ import java.util.*;
  */
 @Entity(value="SearchResult", noClassnameStored = true)
 @Indexes(@Index(fields = @Field(value = "$**", type = IndexType.TEXT)))
+@JsonSerialize(using = SearchResultSerializer.class)
 public class SearchResult extends BaseEntity{
 
     private List<String> keyWords=new ArrayList<String>();
