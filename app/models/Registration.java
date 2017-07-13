@@ -1,5 +1,7 @@
 package models;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import models.serializer.RegistrationSerializer;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
@@ -7,6 +9,7 @@ import org.mongodb.morphia.annotations.Reference;
  * Created by Pasquale on 19/04/2017.
  */
 @Entity(value="Registration", noClassnameStored = true)
+@JsonSerialize(using = RegistrationSerializer.class)
 public class Registration extends BaseEntity{
 
     @Reference

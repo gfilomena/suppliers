@@ -1,6 +1,7 @@
 package models.dao;
 
 import models.SearchResult;
+import models.User;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.dao.DAO;
 
@@ -13,7 +14,7 @@ public interface SearchResultDAO extends DAO<SearchResult, ObjectId> {
 
     SearchResult get(String id);
 
-    List<SearchResult> findByUsername(String username);
+    List<SearchResult> findByUser(User user);
 
     List<SearchResult> findByKeywords(String keywords);
 

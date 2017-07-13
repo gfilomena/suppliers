@@ -48,11 +48,17 @@ public class RegistrationDAOImpl extends BasicDAO<Registration,ObjectId> impleme
     }
 
     @Override
-    public List<Repository> findByUser(User user) {
+    public List<Repository> findRepositoriesByUser(User user) {
         return this.find(MongoDBService.getDatastore().createQuery(Registration.class).filter("user = ", user))
                 .asList()
                 .stream()
                 .map(r -> r.getRepository()).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<Registration> findRegistrationByUser(User user) {
+        return this.find(MongoDBService.getDatastore().createQuery(Registration.class).filter("user = ", user))
+                .asList();
     }
 
 
