@@ -84,6 +84,7 @@ public class AsyncController extends Controller {
         MongoDBService.getDatastore().save(l);
         MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432",2048,"videotest1","description", "thumbnail","downloadURI",r, l, new Date(), Json.toJson("{ metadata: test }"));
         MongoDBService.getDatastore().save(mc);
+        qr.getMultimediaContents().add(mc);
         //qr.getMultimediaContents().add(mc);
         //qr.getMultimediaContents().add(mc);
         qr.setDate(Date.from(Clock.systemDefaultZone().instant()));

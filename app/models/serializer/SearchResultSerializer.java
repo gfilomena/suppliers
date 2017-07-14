@@ -32,6 +32,7 @@ public class SearchResultSerializer extends StdSerializer<SearchResult> {
         jgen.writeStartObject();
         jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeObjectField("keyWords", value.getKeyWords());
+        jgen.writeObjectField("multimediaContents", value.getMultimediaContents());
         jgen.writeObjectField("date", FORMATTER.format(value.getDate()));
         jgen.writeObjectField("startDate", FORMATTER.format(value.getStartDate()));
         jgen.writeObjectField("endDate", FORMATTER.format(value.getEndDate()));

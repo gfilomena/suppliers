@@ -66,12 +66,12 @@ public class SearchController extends Controller {
             SearchResult qr=new SearchResult();
             //l.forEach(mc -> multimediaContentDAO.save(mc));
             qr.setKeyWords(keywords);
-            qr.setnOfResults(l.size());
-            //qr.setMultimediaContents(l);
+            qr.setMultimediaContents(l);
             qr.setUser(user);
             return  qr;
         });
         //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
+        CompletionStage<JsonNode> jsonResult=transformedQuery.thenApply(p -> p.asJson());
         transformedQuery.thenApply(p -> searchResultDAO.save(p));
         CompletionStage<Result> promiseOfResult = transformedQuery.thenApply(( p ) -> ok(p.asJson()));
         return promiseOfResult;

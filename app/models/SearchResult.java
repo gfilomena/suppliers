@@ -17,6 +17,9 @@ public class SearchResult extends BaseEntity{
 
     private List<String> keyWords=new ArrayList<String>();
 
+    //@Reference
+    private List<MultimediaContent> multimediaContents=new ArrayList<MultimediaContent>();
+
     @Reference
     private User user=new User();
 
@@ -25,6 +28,8 @@ public class SearchResult extends BaseEntity{
     private Date startDate=new Date();
 
     private Date endDate=new Date();
+
+    private long nOfResults;
 
     public SearchResult(){
 
@@ -36,6 +41,14 @@ public class SearchResult extends BaseEntity{
 
     public void setKeyWords(List<String> keyWords) {
         this.keyWords = keyWords;
+    }
+
+    public List<MultimediaContent> getMultimediaContents() {
+        return multimediaContents;
+    }
+
+    public void setMultimediaContents(List<MultimediaContent> multimediaContents) {
+        this.multimediaContents = multimediaContents;
     }
 
     public User getUser() {
@@ -86,6 +99,8 @@ public class SearchResult extends BaseEntity{
         SearchResult that = (SearchResult) o;
 
         if (keyWords != null ? !keyWords.equals(that.keyWords) : that.keyWords != null) return false;
+        if (multimediaContents != null ? !multimediaContents.equals(that.multimediaContents) : that.multimediaContents != null)
+            return false;
         if (user != null ? !user.equals(that.user) : that.user != null) return false;
         if (date != null ? !date.equals(that.date) : that.date != null) return false;
         if (startDate != null ? !startDate.equals(that.startDate) : that.startDate != null) return false;
@@ -95,6 +110,7 @@ public class SearchResult extends BaseEntity{
     @Override
     public int hashCode() {
         int result = keyWords != null ? keyWords.hashCode() : 0;
+        result = 31 * result + (multimediaContents != null ? multimediaContents.hashCode() : 0);
         result = 31 * result + (user != null ? user.hashCode() : 0);
         result = 31 * result + (date != null ? date.hashCode() : 0);
         result = 31 * result + (startDate != null ? startDate.hashCode() : 0);
