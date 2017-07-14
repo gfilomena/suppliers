@@ -1,9 +1,7 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.Bookmark;
-import models.MultimediaContent;
-import models.User;
+import models.*;
 import models.dao.*;
 import org.bson.types.ObjectId;
 import play.libs.Json;
@@ -12,6 +10,7 @@ import play.mvc.Result;
 import play.mvc.Security;
 import services.db.MongoDBService;
 
+import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -23,6 +22,7 @@ public class BookmarkController extends Controller{
     public static BookmarkDAO bookmarkDAO=new BookmarkDAOImpl(Bookmark.class, MongoDBService.getDatastore());
     public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
     public static MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class, MongoDBService.getDatastore());
+    public static RepositoryDAO repoDAO=new RepositoryDAOImpl(Repository.class, MongoDBService.getDatastore());
 
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> get(String id){
@@ -50,10 +50,40 @@ public class BookmarkController extends Controller{
     public CompletionStage<Result> create() {
         JsonNode json = request().body().asJson();
         if (json.findPath("user").isMissingNode() || json.findPath("multimediaContent").isMissingNode()) {
-            return CompletableFuture.supplyAsync(() -> badRequest("Name and URI are mandatory!"));
+            return CompletableFuture.supplyAsync(() -> badRequest("User and MultimediaContent are mandatory!"));
         } else {
             User user = userDAO.findByUsername(json.findPath("user").textValue());
-            MultimediaContent mc = multimediaContentDAO.get(json.findPath("multimediaContent").textValue());
+            MultimediaContent mc=new MultimediaContent();
+            if(!json.findPath("type").isMissingNode()) mc.setType(MultimediaType.valueOf(json.findPath("type").textValue()));
+            if(!json.findPath("fileExtension").isMissingNode()) mc.setFileExtension(json.findPath("fileExtension").textValue());
+            if(!json.findPath("length").isMissingNode()) mc.setLength(json.findPath("length").longValue());
+            if(!json.findPath("name").isMissingNode()) mc.setName(json.findPath("name").textValue());
+            if(!json.findPath("description").isMissingNode()) mc.setDescription(json.findPath("description").textValue());
+            if(!json.findPath("thumbnail").isMissingNode()) mc.setThumbnail(json.findPath("thumbnail").textValue());
+            if(!json.findPath("downloadURI").isMissingNode()) mc.setDownloadURI(json.findPath("downloadURI").textValue());
+            if(json.findPath("source").isMissingNode()){
+                return CompletableFuture.supplyAsync(() -> badRequest("Source for MultimediaContent is mandatory!"));
+            }else{
+                mc.setSource(repoDAO.get(json.findPath("source").findPath("id").textValue()));
+            }
+            //if(!json.findPath("date").isMissingNode()) mc.setDate(json.findPath("date"));
+            if(!json.findPath("metadata").isMissingNode()) mc.setMetadata(json.findPath("metadata"));
+            if(!json.findPath("uri").isMissingNode()) mc.setURI(json.findPath("uri").textValue());
+            multimediaContentDAO.save(mc);
+            if (!bookmarkDAO.isPresent(user, mc)) {
+                CompletableFuture<JsonNode> cf = CompletableFuture.supplyAsync(() -> {
+                    Bookmark b = new Bookmark();
+                    b.setUser(user);
+                    b.setMultimediaContent(mc);
+                    b.setDate(new Date());
+                    bookmarkDAO.save(b);
+                    return b.asJson();
+                });
+                return cf.thenApply(l -> created());
+            } else {
+                return CompletableFuture.supplyAsync(() -> badRequest("Bookmark already exists!"));
+            }
+            /*MultimediaContent mc = multimediaContentDAO.get(json.findPath("multimediaContent").textValue());
             if (user == null || mc == null) {
                 return CompletableFuture.supplyAsync(() -> badRequest("User and Multimedia Content doesn't exists!"));
             } else if (!bookmarkDAO.isPresent(user, mc)) {
@@ -67,7 +97,7 @@ public class BookmarkController extends Controller{
                 return cf.thenApply(l -> created());
             } else {
                 return CompletableFuture.supplyAsync(() -> badRequest("Bookmark already exists!"));
-            }
+            }*/
         }
     }
 
@@ -75,6 +105,7 @@ public class BookmarkController extends Controller{
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String id){
         if(bookmarkDAO.get(id)!=null) {
+            // TODO also delete Multimedia Content related
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(bookmarkDAO.deleteById(new ObjectId(id)))));
         }
         else{

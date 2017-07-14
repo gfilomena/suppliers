@@ -30,6 +30,7 @@ public class BookmarkSerializer extends StdSerializer<Bookmark> {
         jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeObjectField("user", value.getUser());
         jgen.writeObjectField("multimediaContent", value.getMultimediaContent());
+        jgen.writeObjectField("date" , value.getDate());
         jgen.writeEndObject();
     }
 }
