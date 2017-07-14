@@ -13,7 +13,7 @@ export class RepositoryService {
         return this.http.get(this.config.apiUrl + "/repository", this.jwt()).map((response: Response) => response.json())
     }
 
-    getById(id: string) {
+    get(id: string) {
         return this.http.get(this.config.apiUrl + "/repository/" + id, this.jwt()).map((response: Response) => response.json())
     }
 
@@ -27,6 +27,10 @@ export class RepositoryService {
 
     delete(id: string) {
         return this.http.delete(this.config.apiUrl + "/repository/" + id, this.jwt())
+    }
+
+    findRepositoriesByUser() {
+        return this.http.get(this.config.apiUrl + "/repository/me/", this.jwt()).map((response: Response) => response.json())
     }
 
     // private helper methods

@@ -13,12 +13,16 @@ export class UserRepositoryService {
         return this.http.get(this.config.apiUrl + "/registration", this.jwt()).map((response: Response) => response.json())
     }
 
-    getById(id: string) {
+    get(id: string) {
         return this.http.get(this.config.apiUrl + "/registration/" + id, this.jwt()).map((response: Response) => response.json())
     }
 
     create(userRepository: UserRepository) {
         return this.http.post(this.config.apiUrl + "/registration", userRepository, this.jwt())
+    }
+
+    findByUser() {
+        return this.http.get(this.config.apiUrl + "/registration/me/", this.jwt()).map((response: Response) => response.json())
     }
 
     update(userRepository: UserRepository) {

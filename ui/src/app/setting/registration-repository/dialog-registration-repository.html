@@ -7,16 +7,19 @@
 <form name="form" (ngSubmit)="f.form.valid && upsert(data.userRepository)" #f="ngForm" novalidate>
   <md-card-content>
                 <h3>Register Repository on User</h3>
-            <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
-              
+            <div  fxLayout="column"  fxLayoutAlign="start" fxLayoutGap="5px">
+              <div  *ngIf="!data.userRepository.id" >
                <md-select placeholder="Repository"  id="repository"  [(ngModel)]="data.userRepository.repository" name="repository" required fxflex>
-                 
-                
-                 <md-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
+                  <md-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
                     {{ rep.name }}
                   </md-option>
                 </md-select>
-                
+              </div> 
+              <div  class="repository" *ngIf="data.userRepository.id" >
+              <md-input-container  fxFlex> 
+                <input mdInput placeholder="repository" value=" " id="repository" name="repository" [(ngModel)]="data.userRepository.repository" disabled>
+                </md-input-container>
+              </div> 
                 <md-input-container  fxFlex> 
                 <input mdInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
                 </md-input-container>

@@ -46,7 +46,7 @@ loading:boolean = false;
                     console.log('data',data);
                     this.userRepositories = data;
                     localStorage.setItem("repositories",JSON.stringify(this.userRepositories));
-                    console.log(' this.repositories', this.userRepositories);
+                    console.log(' this.userRepositories', this.userRepositories);
                 },
                 error => {
                     this.alertService.error(error._body)
@@ -97,7 +97,7 @@ delete(id:string) {
     let dialogRef = this.dialog.open(DialogRegistrationRepository, {
       data: {userRepository:userRepository},
       height: 'auto',
-      width: '40%',
+      width: '400px',
       position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
     });
 
@@ -162,6 +162,10 @@ export class DialogRegistrationRepository {
                 })
     }
 
+ private change(value: any) {
+   console.log('Selected value is: ', value);
+ }
+
 
   onSubmit() {
         this.submitted = true;
@@ -178,6 +182,7 @@ if(userRepository.id) {
     this.userRepositoryService.update(userRepository)
             .subscribe(
                 data => {
+                    console.log('respose update:',data);
                     this.onChange.emit();
                     this.dialogRef.close();     
                 },
