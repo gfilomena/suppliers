@@ -27,7 +27,7 @@ public class MultimediaContentSerializer extends StdSerializer<MultimediaContent
             throws IOException, JsonProcessingException {
 
         jgen.writeStartObject();
-        jgen.writeStringField("id", value.getId().toHexString());
+        //jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeStringField("type", value.getType().name());
         jgen.writeStringField("fileExtension", value.getFileExtension());
         jgen.writeNumberField("length", value.getLength());
