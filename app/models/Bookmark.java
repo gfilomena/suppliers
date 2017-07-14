@@ -5,6 +5,8 @@ import models.serializer.BookmarkSerializer;
 import org.mongodb.morphia.annotations.Entity;
 import org.mongodb.morphia.annotations.Reference;
 
+import java.util.Date;
+
 /**
  * Created by Pasquale on 11/05/2017.
  */
@@ -17,6 +19,8 @@ public class Bookmark extends BaseEntity {
 
     @Reference
     private MultimediaContent multimediaContent;
+
+    private Date date;
 
 
     public User getUser() {
@@ -33,6 +37,14 @@ public class Bookmark extends BaseEntity {
 
     public void setMultimediaContent( MultimediaContent multimediaContent ) {
         this.multimediaContent = multimediaContent;
+    }
+
+    public Date getDate() {
+        return date;
+    }
+
+    public void setDate(Date date) {
+        this.date = date;
     }
 
     @Override

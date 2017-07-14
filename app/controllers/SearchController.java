@@ -64,9 +64,10 @@ public class SearchController extends Controller {
         CompletionStage<List<MultimediaContent>> aggregated=searchManager.aggregate(dispatched);
         CompletionStage<SearchResult> transformedQuery=aggregated.thenApply(l -> {
             SearchResult qr=new SearchResult();
-            l.forEach(mc -> multimediaContentDAO.save(mc));
+            //l.forEach(mc -> multimediaContentDAO.save(mc));
             qr.setKeyWords(keywords);
-            qr.setMultimediaContents(l);
+            qr.setnOfResults(l.size());
+            //qr.setMultimediaContents(l);
             qr.setUser(user);
             return  qr;
         });
