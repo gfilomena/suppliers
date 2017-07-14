@@ -26,8 +26,6 @@ public class SearchResult extends BaseEntity{
 
     private Date endDate=new Date();
 
-    private long nOfResults;
-
     public SearchResult(){
 
     }
