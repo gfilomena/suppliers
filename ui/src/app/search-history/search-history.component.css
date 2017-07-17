@@ -93,3 +93,7 @@
 .board {
     align-content: flex-end;
 }
+
+.date{
+    font-size: x-small;
+}

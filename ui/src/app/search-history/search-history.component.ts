@@ -52,4 +52,28 @@ goToSearchForm(searchForm: SearchForm) {
     this.router.navigate(['/']);
   }
 
+
+isoDateToHtmlDate(isoDate){
+  let date = new Date(isoDate);
+  let years = date.getFullYear()
+  let dtString = ''
+  let monthString = ''
+  let hourString = date.getHours()
+  let minString = date.getMinutes()
+  let secString = date.getSeconds()
+  if (date.getDate() < 10) {
+    dtString = '0' + date.getDate();
+  } else {
+    dtString = String(date.getDate())
+  }
+  if (date.getMonth()+1 < 10) {
+    monthString = '0' + Number(date.getMonth()+1);
+  } else {
+    monthString = String(date.getMonth()+1);
+  }
+ 
+
+  return years+'-' + monthString + '-'+dtString+ ' '+hourString+':'+minString+':'+secString;
+}  
+
 }
