@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import models.dao.*;
 import play.Logger;
+import play.data.format.Formats;
 import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.WSClient;
@@ -17,6 +18,9 @@ import services.search.repositories.*;
 import services.search.repositories.SearchRepository;
 
 import javax.inject.Inject;
+import javax.xml.bind.DatatypeConverter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -36,6 +40,8 @@ public class SearchController extends Controller {
     public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
     public static RegistrationDAO registrationDAO=new RegistrationDAOImpl(Registration.class, MongoDBService.getDatastore());
     public static MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class, MongoDBService.getDatastore());
+    public static SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+
 
     @Inject
     public SearchController( HttpExecutionContext ec, Manager queryManager, WSClient wsClient){
@@ -49,6 +55,7 @@ public class SearchController extends Controller {
         JsonNode jsonRequest = request().body().asJson();
         User user=Secured.getUser(ctx());
         Logger.info("OCD search received: " + jsonRequest.toString());
+
         List<String> keywords=getKeyWords(jsonRequest);
         SearchManager searchManager=new SearchManager();
         searchManager.setKeyWords(keywords);
@@ -68,6 +75,12 @@ public class SearchController extends Controller {
             qr.setKeyWords(keywords);
             qr.setMultimediaContents(l);
             qr.setUser(user);
+            try {
+                qr.setStartDate(sdf.parse(jsonRequest.get("inDate").textValue()));
+                qr.setEndDate(sdf.parse(jsonRequest.get("endDate").textValue()));
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
             return  qr;
         });
         //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());

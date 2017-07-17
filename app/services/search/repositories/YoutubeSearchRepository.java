@@ -58,25 +58,27 @@ public class YoutubeSearchRepository implements SearchRepository {
         //Logger.info("Youtube Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         //List<JsonNode> items=clientResponse.findValues("items");
-        ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
-        Iterator<JsonNode> itemsIterator = itemsArray.elements();
-        List<JsonNode> itemsList=new ArrayList<JsonNode>();
-        while(itemsIterator.hasNext()){
-            itemsList.add(itemsIterator.next());
-        }
+        if(clientResponse.get("items")!=null) {
+            ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
+            Iterator<JsonNode> itemsIterator = itemsArray.elements();
+            List<JsonNode> itemsList = new ArrayList<JsonNode>();
+            while (itemsIterator.hasNext()) {
+                itemsList.add(itemsIterator.next());
+            }
         /*final List<MultimediaContent> multimediaContents = new ArrayList<MultimediaContent>();
         if(items.isArray()) {
             items.forEach(( JsonNode i ) -> multimediaContents.add(getMultimediaContentFromItem(i)));
         }
 
         return multimediaContents;*/
-        Function<JsonNode, MultimediaContent> convertToMultimediaContent=
-                jsonNode -> getMultimediaContentFromItem(jsonNode);
-        if(!itemsList.isEmpty()) {
-            stages = itemsList
-                    .stream()
-                    .map(convertToMultimediaContent)
-                    .collect(Collectors.toList());
+            Function<JsonNode, MultimediaContent> convertToMultimediaContent =
+                    jsonNode -> getMultimediaContentFromItem(jsonNode);
+            if (!itemsList.isEmpty()) {
+                stages = itemsList
+                        .stream()
+                        .map(convertToMultimediaContent)
+                        .collect(Collectors.toList());
+            }
         }
         return stages;
     }
