@@ -1,7 +1,7 @@
+import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
 import { Component, Inject } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router"
-import { SearchForm }    from '../_models/search-form';
 import { User } from "../_models/user";
 import { SearchService } from "./search.service";
 import { BookmarkService } from "../_services/bookmark.service";
@@ -13,7 +13,6 @@ import { NgSwitch } from '@angular/common';
 @Component({
   selector: 'app-search-form',
   providers: [SearchService],
-  inputs: ['keywords'],
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.css']
 })
@@ -22,7 +21,7 @@ export class SearchFormComponent {
     savestate = false;
     currentUser: User;
     types = ['Audio', 'Video', 'Text', 'Image'];
-    searchForm: SearchForm;
+    searchForm:SearchForm;
     searchResult: MultimediaContent[];
     searchVideoResult: MultimediaContent[];
     searchImgResult: MultimediaContent[];
@@ -33,28 +32,43 @@ export class SearchFormComponent {
    audiofilter: Boolean = true;
    textfilter: Boolean = true;
    imagefilter: Boolean = true;
-
+   
    filterbar:boolean = true;
    showSidebar: boolean = true;
-   keywords:string;
-   sub:any;
+   history:any;
+
     constructor(private searchService: SearchService, private route: ActivatedRoute,
                 private router: Router,private BookmarkService: BookmarkService){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
-        this.searchForm=new SearchForm('','','',new Date(),new Date(),'','')
+        let historyform = JSON.parse(localStorage.getItem("searchForm"))
+
+        if (localStorage["searchForm"]) {
+           this.searchForm= new SearchForm('',historyform.keywords,'',historyform.inDate,historyform.endDate,'','') 
+           console.log('localStorage["searchForm"]',localStorage["searchForm"])
+           localStorage.removeItem("searchForm")
+        }else{
+            console.log('NEW searchForm')
+            this.searchForm= new SearchForm('','','',new Date(),new Date(),'','')
+        }
+        
+        console.log('2this.searchForm',this.searchForm)
     }
 
     ngOnInit() {
+        /*
     this.sub = this.route
       .queryParams
       .subscribe(params => {
         // Defaults to 0 if no query param provided.
-        this.searchForm.freeText = params['keywords'] || '';
-      });
+        let result = params['history']
+        this.searchForm.freeText = result.keywords;
+        console.log('result',result)
+      });*/
   }
 
+
   ngOnDestroy() {
-    this.sub.unsubscribe();
+   // this.sub.unsubscribe();
   }
 
 

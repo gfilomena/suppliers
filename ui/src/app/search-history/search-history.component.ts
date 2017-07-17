@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { MultimediaContent } from "../_models/multimediaContent";
 import { HistorysearchService } from "../_services/historysearch.service";
 import { User } from "../_models/user";
+import { SearchForm }    from '../_models/search-form';
 @Component({
   selector: 'app-search-history',
   providers: [HistorysearchService],
@@ -45,8 +46,10 @@ arrToString(array:any[]) {
     return array
 }
 
-goToSearchForm(keywords:string) {
-    this.router.navigate(['/'], { queryParams: { keywords: keywords } });
+goToSearchForm(searchForm: SearchForm) {
+   console.log(searchForm)
+    localStorage.setItem("searchForm", JSON.stringify(searchForm));
+    this.router.navigate(['/']);
   }
 
 }

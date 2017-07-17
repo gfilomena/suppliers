@@ -22,7 +22,7 @@ export class DialogDetailComponent implements OnInit {
 
  
   ngOnInit() {
-    console.log('Modal ID: '+this.modalId);
+   // console.log('Modal ID: '+this.modalId);
   }
 
  openDialog() {
