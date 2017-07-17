@@ -30,9 +30,9 @@ public class SearchResultSerializer extends StdSerializer<SearchResult> {
             throws IOException, JsonProcessingException {
 
         jgen.writeStartObject();
-        jgen.writeStringField("id", value.getId().toHexString());
+        if(value.getId()!=null)  jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeObjectField("keyWords", value.getKeyWords());
-        jgen.writeObjectField("multimediaContents", value.getMultimediaContents());
+        if(value.getMultimediaContents()!=null)   jgen.writeObjectField("multimediaContents", value.getMultimediaContents());
         jgen.writeObjectField("date", FORMATTER.format(value.getDate()));
         jgen.writeObjectField("startDate", FORMATTER.format(value.getStartDate()));
         jgen.writeObjectField("endDate", FORMATTER.format(value.getEndDate()));
