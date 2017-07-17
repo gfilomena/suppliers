@@ -22,6 +22,7 @@ public class Bookmark extends BaseEntity {
 
     private Date date;
 
+    public Bookmark(){}
 
     public User getUser() {
         return user;

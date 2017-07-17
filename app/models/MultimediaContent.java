@@ -36,13 +36,13 @@ public class MultimediaContent extends BaseEntity{
 
     private Date date;
 
-    private JsonNode metadata;
+    private String metadata;
 
     public MultimediaContent(){
 
     }
 
-    public MultimediaContent( MultimediaType type, String fileExtension, String URI, long length, String name, String description, String thumbnail, String downloadURI, Repository source, License license, Date date, JsonNode metadata) {
+    public MultimediaContent( MultimediaType type, String fileExtension, String URI, long length, String name, String description, String thumbnail, String downloadURI, Repository source, License license, Date date, String metadata) {
         this.type = type;
         this.fileExtension = fileExtension;
         this.URI = URI;
@@ -54,7 +54,7 @@ public class MultimediaContent extends BaseEntity{
         this.source = source;
         this.license=license;
         this.date=date;
-        this.metadata = this.metadata;
+        this.metadata = metadata;
     }
 
     public MultimediaType getType() {
@@ -145,11 +145,11 @@ public class MultimediaContent extends BaseEntity{
         this.license = license;
     }
 
-    public JsonNode getMetadata() {
+    public String getMetadata() {
         return metadata;
     }
 
-    public void setMetadata( JsonNode metadata ) {
+    public void setMetadata( String metadata ) {
         this.metadata = metadata;
     }
 
