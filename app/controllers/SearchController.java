@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import models.dao.*;
 import play.Logger;
-import play.data.format.Formats;
 import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
 import play.libs.ws.WSClient;
@@ -18,7 +17,6 @@ import services.search.repositories.*;
 import services.search.repositories.SearchRepository;
 
 import javax.inject.Inject;
-import javax.xml.bind.DatatypeConverter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -76,7 +74,7 @@ public class SearchController extends Controller {
             qr.setMultimediaContents(l);
             qr.setUser(user);
             try {
-                qr.setStartDate(sdf.parse(jsonRequest.get("inDate").textValue()));
+                qr.setInDate(sdf.parse(jsonRequest.get("inDate").textValue()));
                 qr.setEndDate(sdf.parse(jsonRequest.get("endDate").textValue()));
             } catch (ParseException e) {
                 e.printStackTrace();
