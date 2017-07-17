@@ -72,8 +72,9 @@ public class SearchController extends Controller {
         });
         //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
         CompletionStage<JsonNode> jsonResult=transformedQuery.thenApply(p -> p.asJson());
-        transformedQuery.thenApply(p -> searchResultDAO.save(p));
-        CompletionStage<Result> promiseOfResult = transformedQuery.thenApply(( p ) -> ok(p.asJson()));
+        transformedQuery.thenApply(p -> {p.setMultimediaContents(null);
+        return searchResultDAO.save(p);});
+        CompletionStage<Result> promiseOfResult = jsonResult.thenApply(( p ) -> ok(p));
         return promiseOfResult;
     }
 
