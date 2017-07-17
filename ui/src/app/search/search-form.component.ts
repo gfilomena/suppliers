@@ -13,6 +13,7 @@ import { NgSwitch } from '@angular/common';
 @Component({
   selector: 'app-search-form',
   providers: [SearchService],
+  inputs: ['keywords'],
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.css']
 })
@@ -35,11 +36,27 @@ export class SearchFormComponent {
 
    filterbar:boolean = true;
    showSidebar: boolean = true;
-
-    constructor(private searchService: SearchService, private router: Router,private BookmarkService: BookmarkService){
+   keywords:string;
+   sub:any;
+    constructor(private searchService: SearchService, private route: ActivatedRoute,
+                private router: Router,private BookmarkService: BookmarkService){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         this.searchForm=new SearchForm('','','',new Date(),new Date(),'','')
     }
+
+    ngOnInit() {
+    this.sub = this.route
+      .queryParams
+      .subscribe(params => {
+        // Defaults to 0 if no query param provided.
+        this.searchForm.freeText = params['keywords'] || '';
+      });
+  }
+
+  ngOnDestroy() {
+    this.sub.unsubscribe();
+  }
+
 
     onSubmit() {
 
@@ -56,7 +73,6 @@ export class SearchFormComponent {
         .subscribe(
                   res => {
                       this.searchResult=res.json().multimediaContents;
-                      console.log('res: '+res.json().multimediaContents);
                       console.log('this.searchResult: '+this.searchResult);
                       this.searchVideoResult= this.searchResult.filter(
                         mc => mc.type === 'video');
@@ -78,6 +94,44 @@ export class SearchFormComponent {
                       this.submitted = false;
                   }
                 )
+    }
+
+    filter(type:string):any{
+     
+          switch(type) { 
+            case 'video': { 
+                if (this.videofilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            case 'audio': { 
+                if (this.audiofilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            case 'image': { 
+                if (this.imagefilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            case 'text': { 
+                if (this.textfilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            default: { 
+              return true;
+            } 
+          } 
+
     }
 
 

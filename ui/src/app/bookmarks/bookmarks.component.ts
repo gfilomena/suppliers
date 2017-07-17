@@ -40,7 +40,43 @@ export class BookmarksComponent implements OnInit {
                 })
     }
 
+    filter(type:string):any{
+     
+          switch(type) { 
+            case 'video': { 
+                if (this.videofilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            case 'audio': { 
+                if (this.audiofilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            case 'image': { 
+                if (this.imagefilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            case 'text': { 
+                if (this.textfilter){
+                        return true;
+                }else{
+                        return false
+                }
+            } 
+            default: { 
+              return true;
+            } 
+          } 
 
+    }
 
 
 sidebar(size:number):number {

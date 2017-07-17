@@ -10,7 +10,7 @@ import { AppConfig } from "./app.config"
 
 import { AlertComponent } from "./_directives/index"
 import { AuthGuard } from "./_guards/index"
-import { AlertService, AuthenticationService, UserService, RepositoryService, UserRepositoryService, BookmarkService /*PagerService*/ } from "./_services/index"
+import { AlertService, AuthenticationService, UserService, RepositoryService, UserRepositoryService, BookmarkService, HistorysearchService /*PagerService*/ } from "./_services/index"
 import { HomeComponent } from "./home/index"
 import { LoginComponent } from "./login/index"
 import { RegisterComponent } from "./register/index"
@@ -67,7 +67,8 @@ import { DialogRegistrationRepository, RegistrationRepositoryComponent } from '.
         UserService,
         RepositoryService,
         UserRepositoryService,
-        BookmarkService
+        BookmarkService,
+        HistorysearchService
         //PagerService
     ],
     entryComponents: [RegistrationRepositoryComponent,DialogRegistrationRepository],  

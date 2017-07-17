@@ -1,30 +1,25 @@
 <div class="container">
-  <div fxLayoutAlign="start start" fxFlex="20%" fxflex>
-
-
-  </div>
-  <div  fxFlex="80%">
+  <div  fxFlex>
   <md-card>
-    <md-card-header>
-      <md-card-title>Search History</md-card-title>
-    </md-card-header>
-    <md-card-content>
-      <div fxLayout="row" fxLayoutAlign="start start" >
-          <md-card>
-            <div fxLayout="row" fxLayoutAlign="start start" >
+    <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
+      <md-card>
+        <div *ngFor="let sr of searchResult">
+         <md-input-container  fxFlex> 
+        <span mdPrefix>Keywords:&nbsp;</span>
+        <input mdInput value="{{sr.keywords}}" id="keywords"  name="keywords" disabled>
+        </md-input-container>
+        <button md-icon-button (click)="goToSearchForm(sr.keywords)"><md-icon>navigate_next</md-icon></button>
+        </div>
+       </md-card>
+    </div>
+</md-card>
+<!--
 
                 <md-input-container  fxFlex> 
                 <span mdPrefix>Keywords:&nbsp;</span>
                 <input mdInput placeholder="Best Football Player" value="1" id="history" name="history" #spy>
                 <span mdSuffix><button md-icon-button><md-icon>navigate_next</md-icon></button></span>
                 </md-input-container>
-            </div>
-          </md-card>
-      </div>
-
-  </md-card-content>
-</md-card>
-
+-->
   </div>
-  
 </div>

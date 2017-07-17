@@ -1,15 +1,17 @@
 ﻿import { Injectable } from "@angular/core"
 import { Http, Headers, RequestOptions, Response } from "@angular/http"
-
 import { AppConfig } from "../app.config"
 
 
 @Injectable()
 export class HistorysearchService {
+    
     constructor(private http: Http, private config: AppConfig) { }
 
+    
+
     getSearchResults(username:string) {
-        return this.http.get(this.config.apiUrl + "/user/" + username + "/results", this.jwt()).map((response: Response) => response.json())
+        return this.http.get(this.config.apiUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response.json())
     }
 
     
