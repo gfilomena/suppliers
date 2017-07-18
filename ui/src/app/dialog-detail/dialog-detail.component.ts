@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
-import { MultimediaContent } from '../../_models/multimediaContent';
+import { MultimediaContent } from '../_models/multimediaContent';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 
@@ -12,7 +12,7 @@ import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
   styleUrls: ['./dialog-detail.component.css']
 })
 export class DialogDetailComponent implements OnInit {
-  multimediaContent: MultimediaContent;
+ multimediaContent: MultimediaContent;
   modalId: string;
 
   constructor(public dialog: MdDialog,public sanitizer: DomSanitizer) { }

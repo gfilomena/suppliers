@@ -7,7 +7,7 @@ import { SearchService } from "./search.service";
 import { BookmarkService } from "../_services/bookmark.service";
 import { MultimediaContent } from "../_models/multimediaContent";
 import { MdDialog, MdDialogRef } from "@angular/material";
-import { DialogDetailComponent } from "./dialog-detail/dialog-detail.component";
+import { DialogDetailComponent } from "../dialog-detail/dialog-detail.component";
 import { NgSwitch } from '@angular/common';
 
 @Component({
@@ -36,6 +36,7 @@ export class SearchFormComponent {
    filterbar:boolean = true;
    showSidebar: boolean = true;
    history:any;
+
 
     constructor(private searchService: SearchService, private route: ActivatedRoute,
                 private router: Router,private BookmarkService: BookmarkService){
@@ -67,6 +68,8 @@ export class SearchFormComponent {
   }
 
 
+
+
   ngOnDestroy() {
    // this.sub.unsubscribe();
   }
@@ -87,7 +90,7 @@ export class SearchFormComponent {
         .subscribe(
                   res => {
                       this.searchResult=res.json().multimediaContents;
-                      console.log('this.searchResult: '+this.searchResult);
+                      console.log('res: '+res);
                       this.searchVideoResult= this.searchResult.filter(
                         mc => mc.type === 'video');
                         console.log('search video result size: '+this.searchVideoResult.length);
@@ -152,16 +155,20 @@ export class SearchFormComponent {
 saveMC(mc:MultimediaContent){
  let bookmark = new Bookmark(this.currentUser.username,mc);
  console.log('bookmark:',bookmark);
+
+//let myCurrentContent:string = el.nativeElement.innerHTML; // get the content of your element
+//el.nativeElement.innerHTML = 'my new content'; // set content of your element
+
  this.BookmarkService.create(bookmark)
         .subscribe(
                   res => {
-                      console.log('saveMC - subscribe OK:',res.json());
-                      this.searchResult=res.json();
-                      this.savestate = false;
+                      console.log('saveMC - subscribe OK:',res);
+                      let element = document.getElementById(mc.uri);
+                          element.innerText = "star"
                   },
                   error => {
                       console.log('saveMC - subscribe - error:',error);
-                      this.savestate = false;
+                      
                   }
                 )
 }    

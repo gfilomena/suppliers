@@ -21,12 +21,10 @@ import { NoopAnimationsModule } from "@angular/platform-browser/animations"
 import "hammerjs"
 import { MaterialModule,  MdNativeDateModule} from "@angular/material"
 import { FlexLayoutModule } from "@angular/flex-layout"
-import { BookmarksComponent } from './bookmarks/bookmarks.component'
 import { SettingComponent } from './setting/setting.component'
 import { SearchHistoryComponent } from './search-history/search-history.component'
 import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
 import { DialogRegistrationRepository, RegistrationRepositoryComponent } from './setting/registration-repository/registration-repository.component';
-
 
 
 
@@ -52,7 +50,6 @@ import { DialogRegistrationRepository, RegistrationRepositoryComponent } from '.
         SidebarComponent,
         NavbarComponent,
         LoggedinComponent,
-        BookmarksComponent,
         SettingComponent,
         SearchHistoryComponent,
         BreadcrumbComponent,

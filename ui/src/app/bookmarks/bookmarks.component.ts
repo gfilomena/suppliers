@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Bookmark } from "../_models/bookmark";
 import { BookmarkService, AlertService } from "../_services/index";
-import { DialogDetailComponent } from '../search/dialog-detail/dialog-detail.component';
+
+
 @Component({
   selector: 'app-bookmarks',
   inputs: ['multimediaContent'],
@@ -30,10 +31,22 @@ export class BookmarksComponent implements OnInit {
     this.BookmarkService.getAll()
             .subscribe(
                 data => {
-                  console.log('data',data);
+                    console.log('data',data);
                     this.bookmarks = data;
                     localStorage.setItem("bookmarks",JSON.stringify(this.bookmarks));
-                   console.log(' this.bookmarks', this.bookmarks);
+                    console.log(' this.bookmarks', this.bookmarks);
+                },
+                error => {
+                    this.alertService.error(error._body)
+                })
+    }
+
+     removeBookmark(id:string){
+        this.BookmarkService.delete(id)
+            .subscribe(
+                data => {
+                     console.log('data',data);
+                     this.getAllBookmarks();
                 },
                 error => {
                     this.alertService.error(error._body)
@@ -86,6 +99,7 @@ sidebar(size:number):number {
       return size;
   }
 }
+
 
     getDate(date:string): string{
     return new Date(date).toString().slice(0,15);

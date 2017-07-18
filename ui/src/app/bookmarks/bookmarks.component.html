@@ -18,10 +18,10 @@
   </div>
   <div  fxFlex>
 <div class="container-card"  fxflex>
-     <div class="sub_container-card" *ngFor="let sr of bookmarks">
+     <div class="sub_container-card" *ngFor="let item of bookmarks">
         <md-card class="card">
-           <div *ngIf="sr.thumbnail; else defaultimg">
-              <img md-card-image src="{{sr.thumbnail}}" >
+           <div *ngIf="item.multimediaContent.thumbnail; else defaultimg">
+              <img md-card-image src="{{item.multimediaContent.thumbnail}}" >
           </div>
           <ng-template #defaultimg>
                 <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
@@ -29,26 +29,26 @@
           <md-card-content class="content-card">
              <div fxLayout="row">
                 <div fxLayout="column" >
-                     <div [ngSwitch]="sr.type">
+                     <div [ngSwitch]="item.multimediaContent.type">
                         <div *ngSwitchCase="'video'"><button md-icon-button><md-icon>videocam</md-icon></button></div>
                         <div *ngSwitchCase="'image'"><button md-icon-button><md-icon>photo</md-icon></button></div>
                         <div *ngSwitchCase="'audio'"><button md-icon-button><md-icon>audiotrack</md-icon></button></div>
                         <div *ngSwitchCase="'text'"><button md-icon-button><md-icon>textsms</md-icon></button></div>
                      </div>
-                        <button md-icon-button><md-icon>star_border</md-icon></button>
+                        <button md-icon-button (click)="removeBookmark(item.id)"><md-icon>star</md-icon></button>
                         <button md-icon-button><md-icon>info</md-icon></button>
                 </div>
                 <div class="detail-card" fxLayout="column">
-                  <p><b>Title:</b>{{sr.name}}</p>
-                  <p><b>Description:</b>{{sr.description}}</p>
-                  <p><b>Source:</b>{{sr.source.name}}</p>
-                  <p><b>Date:</b>{{getDate(sr.date)}}</p>
+                  <p><b>Title:</b>{{item.multimediaContent.name}}</p>
+                  <p><b>Description:</b>{{item.multimediaContent.description}}</p>
+                  <p><b>Source:</b>{{item.multimediaContent.source.name}}</p>
+                  <p><b>Date:</b>{{getDate(item.multimediaContent.date)}}</p>
                 </div>
             </div>
           </md-card-content>
           <md-card-actions align="end">
             <button md-raised-button>STAR</button>
-            <!--<app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>-->
+            <app-dialog-detail [multimediaContent]="item.multimediaContent"></app-dialog-detail>
           </md-card-actions>
         </md-card>
       </div>
