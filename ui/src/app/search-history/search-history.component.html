@@ -8,9 +8,9 @@
         
         <span mdPrefix>Keywords:&nbsp;</span>
         <input mdInput value="{{sr.keywords}}" id="keywords"  name="keywords" disabled>
-        
+        <span mdSuffix class="date" >{{isoDateToHtmlDate(sr.date)}}</span>
         </md-input-container>
-      <span mdPrefix class="date" >Date:{{isoDateToHtmlDate(sr.date)}}</span>
+      
         <button md-icon-button (click)="goToSearchForm(sr)"><md-icon>navigate_next</md-icon></button>
         </div>
        </md-card>
