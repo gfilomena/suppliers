@@ -27,6 +27,11 @@ export class SearchFormComponent {
     searchImgResult: MultimediaContent[];
     searchAudioResult: MultimediaContent[];
     searchTextResult: MultimediaContent[];
+
+    VideoResult: number = 0;
+    ImageResult: number = 0;
+    AudioResult: number = 0;
+    TextResult: number = 0;
     
    videofilter: Boolean = true;
    audiofilter: Boolean = true;
@@ -44,15 +49,14 @@ export class SearchFormComponent {
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
 
         if (localStorage["searchForm"]) {
-           this.searchForm= new SearchForm('',historyform.keywords,'',historyform.inDate,historyform.endDate,'','') 
-           console.log('localStorage["searchForm"]',localStorage["searchForm"])
+           this.searchForm= new SearchForm('',historyform.keywords,'',historyform.inDate,historyform.endDate,'') 
            localStorage.removeItem("searchForm")
         }else{
             console.log('NEW searchForm')
-            this.searchForm= new SearchForm('','','',new Date(),new Date(),'','')
+            let type :string[]
+            this.searchForm= new SearchForm('','','',new Date(),new Date(),'')
         }
         
-        console.log('2this.searchForm',this.searchForm)
     }
 
     ngOnInit() {
@@ -90,20 +94,8 @@ export class SearchFormComponent {
         .subscribe(
                   res => {
                       this.searchResult=res.json().multimediaContents;
-                      console.log('res: '+res);
-                      this.searchVideoResult= this.searchResult.filter(
-                        mc => mc.type === 'video');
-                        console.log('search video result size: '+this.searchVideoResult.length);
-                      this.searchImgResult= this.searchResult.filter(
-                        mc => mc.type === 'image');
-                        console.log('search image result size: '+this.searchImgResult.length);
-                      this.searchAudioResult= this.searchResult.filter(
-                        mc => mc.type === 'audio');
-                        console.log('search audio result size: '+this.searchAudioResult.length);
-                      this.searchTextResult= this.searchResult.filter(
-                        mc => mc.type === 'text');
-                        console.log('search text result size: '+this.searchTextResult.length);
-                      //console.log(this.searchResult);
+                      console.log('this.searchResult: '+this.searchResult);
+                      this.counter(this.searchResult)
                       this.submitted = false;
                   },
                   error => {
@@ -111,6 +103,40 @@ export class SearchFormComponent {
                       this.submitted = false;
                   }
                 )
+    }
+
+        counter(array) {
+    var i:number
+        for(i = 0;i<array.length;i++) { 
+         var type = array[i].type
+         //console.log('type::',type)
+          switch(type) { 
+            case 'video': { 
+                //console.log('video-array[i]',array[i])
+                this.VideoResult++;
+                break;
+            } 
+            case 'audio': { 
+                //console.log('audio-array[i]',array[i])
+               this.AudioResult++;
+               break;
+            } 
+            case 'image': { 
+                //console.log('image-array[i]',array[i])
+               this.ImageResult++;
+               break;
+            } 
+            case 'text': { 
+                //console.log('text-array[i]',array[i])
+               this.TextResult++;
+               break;
+            } 
+            default: { 
+              break;
+            } 
+          } 
+
+        }
     }
 
     filter(type:string):any{
@@ -156,9 +182,6 @@ saveMC(mc:MultimediaContent){
  let bookmark = new Bookmark(this.currentUser.username,mc);
  console.log('bookmark:',bookmark);
 
-//let myCurrentContent:string = el.nativeElement.innerHTML; // get the content of your element
-//el.nativeElement.innerHTML = 'my new content'; // set content of your element
-
  this.BookmarkService.create(bookmark)
         .subscribe(
                   res => {
@@ -168,7 +191,6 @@ saveMC(mc:MultimediaContent){
                   },
                   error => {
                       console.log('saveMC - subscribe - error:',error);
-                      
                   }
                 )
 }    

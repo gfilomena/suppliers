@@ -9,10 +9,10 @@
        </div>
 <h3 align="center">Filter</h3>
 <md-list> 
-  <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox><p *ngIf="searchVideoResult">({{searchVideoResult.length}})</p></md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox><p *ngIf="searchAudioResult">({{searchAudioResult.length}})</p></md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox><p *ngIf="searchTextResult"> ({{searchTextResult.length}})</p></md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox><p *ngIf="searchImgResult">({{searchImgResult.length}})</p></md-list-item>
+ <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox>({{VideoResult}})</md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox>({{AudioResult}})</md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox>({{TextResult}})</md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox>({{ImageResult}})</md-list-item>
 </md-list>   
 </md-card>
   </div>
@@ -30,13 +30,13 @@
         <button md-icon-button><md-icon>loop</md-icon></button>
         </div>
         <div>
-          <div class="typefield">
+          <!--<div class="typefield">
               <md-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex fxFlexOffset="2">
                 <md-option *ngFor="let type of types" [value]="type">
                   {{ type }}
                 </md-option>
             </md-select>
-          </div>
+          </div>-->
           <md-input-container fxFlex>
             <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" disabled [(ngModel)]="searchForm.inDate"
                    name="inDate">
@@ -60,7 +60,7 @@
  
 </form>
 </md-card>
-
+<md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
 <div class="container-card"  fxflex>
      <div class="sub_container-card" *ngFor="let sr of searchResult">
        <div *ngIf="filter(sr.type)">
@@ -92,7 +92,6 @@
             </div>
           </md-card-content>
           <md-card-actions align="end">
-            <button md-raised-button>STAR</button>
             <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
           </md-card-actions>
         </md-card>

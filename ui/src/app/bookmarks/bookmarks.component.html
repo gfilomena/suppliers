@@ -9,16 +9,18 @@
        </div>
 <h3 align="center">Filter</h3>
 <md-list> 
-  <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox><p *ngIf="searchVideoResult">({{searchVideoResult.length}})</p></md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox><p *ngIf="searchAudioResult">({{searchAudioResult.length}})</p></md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox><p *ngIf="searchTextResult"> ({{searchTextResult.length}})</p></md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox><p *ngIf="searchImgResult">({{searchImgResult.length}})</p></md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox>({{VideoResult}})</md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox>({{AudioResult}})</md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox>({{TextResult}})</md-list-item>
+  <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox>({{ImageResult}})</md-list-item>
 </md-list>   
 </md-card>
   </div>
+<md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
   <div  fxFlex>
 <div class="container-card"  fxflex>
      <div class="sub_container-card" *ngFor="let item of bookmarks">
+       <div *ngIf="filter(item.multimediaContent.type)">
         <md-card class="card">
            <div *ngIf="item.multimediaContent.thumbnail; else defaultimg">
               <img md-card-image src="{{item.multimediaContent.thumbnail}}" >
@@ -47,10 +49,10 @@
             </div>
           </md-card-content>
           <md-card-actions align="end">
-            <button md-raised-button>STAR</button>
             <app-dialog-detail [multimediaContent]="item.multimediaContent"></app-dialog-detail>
           </md-card-actions>
         </md-card>
+       </div>
       </div>
     </div>
   </div>
