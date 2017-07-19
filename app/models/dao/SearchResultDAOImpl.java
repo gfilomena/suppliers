@@ -8,6 +8,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
+import org.mongodb.morphia.query.Query;
 import play.Logger;
 import services.db.MongoDBService;
 
@@ -46,5 +47,11 @@ public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> impleme
     @Override
     public void saveAll(List<SearchResult> searchResults) {
         searchResults.stream().forEach( l -> MongoDBService.getDatastore().save(l));
+    }
+
+    @Override
+    public void deleteAllByUser(User user) {
+        Query<SearchResult> query=MongoDBService.getDatastore().createQuery(SearchResult.class).filter("user = ", user);
+        MongoDBService.getDatastore().delete(query);
     }
 }

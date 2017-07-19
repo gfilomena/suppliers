@@ -33,7 +33,8 @@ PUT    /registration/:id              controllers.RegistrationController.update(
 DELETE /registration/:id              controllers.RegistrationController.delete(id: String)
 
 # SEARCH RESULT
-GET    /user/:username/results      controllers.SearchController.getSearchResults(username: String)
+GET       /user/:username/results       controllers.SearchController.getSearchResults(username: String)
+DELETE    /user/:username/results       controllers.SearchController.delete(username: String)
 
 # REPOSITORY
 GET    /repository                  controllers.RepositoryController.getAll()

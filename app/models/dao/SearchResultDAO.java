@@ -20,4 +20,6 @@ public interface SearchResultDAO extends DAO<SearchResult, ObjectId> {
 
     void saveAll(List<SearchResult> searchResults);
 
+    void deleteAllByUser(User user);
+
 }

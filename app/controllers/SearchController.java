@@ -3,6 +3,7 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import models.dao.*;
+import org.bson.types.ObjectId;
 import play.Logger;
 import play.libs.Json;
 import play.libs.concurrent.HttpExecutionContext;
@@ -93,6 +94,18 @@ public class SearchController extends Controller {
         CompletionStage<Result> results= CompletableFuture.supplyAsync( () -> searchResultDAO.findByUser(userDAO.findByUsername(username)))
                                                                     .thenApply( sr -> ok(Json.toJson(sr)));
         return results;
+    }
+
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> delete(String username){
+        User user=userDAO.findByUsername(username);
+        if(user!=null) {
+            searchResultDAO.deleteAllByUser(user);
+            return CompletableFuture.supplyAsync(() -> ok());
+        }
+        else{
+            return CompletableFuture.supplyAsync(() -> notFound("The Username doesn't exists!"));
+        }
     }
 
     private List<String> getKeyWords( JsonNode jsonRequest ) {
