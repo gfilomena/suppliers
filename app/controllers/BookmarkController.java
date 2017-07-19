@@ -112,4 +112,16 @@ public class BookmarkController extends Controller{
             return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
         }
     }
+
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> deleteAllByUser(){
+        User user=Secured.getUser(ctx());
+        if(user!=null) {
+            bookmarkDAO.deleteAllByUser(user);
+            return CompletableFuture.supplyAsync(() -> ok());
+        }
+        else{
+            return CompletableFuture.supplyAsync(() -> notFound("The Username doesn't exists!"));
+        }
+    }
 }

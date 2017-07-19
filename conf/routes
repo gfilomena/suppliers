@@ -45,11 +45,12 @@ DELETE /repository/:id              controllers.RepositoryController.delete(id: 
 GET    /repository/me/              controllers.RegistrationController.findRepositoriesByUser()
 
 # BOOKMARK
-GET    /bookmark                  controllers.BookmarkController.getAll()
-GET    /bookmark/:id              controllers.BookmarkController.get(id: String)
-GET    /bookmark/me/              controllers.BookmarkController.findByUser()
-POST   /bookmark                  controllers.BookmarkController.create()
-DELETE /bookmark/:id              controllers.BookmarkController.delete(id: String)
+GET       /bookmark                  controllers.BookmarkController.getAll()
+GET       /bookmark/:id              controllers.BookmarkController.get(id: String)
+GET       /bookmark/me/              controllers.BookmarkController.findByUser()
+DELETE    /bookmark/me/              controllers.BookmarkController.deleteAllByUser()
+POST      /bookmark                  controllers.BookmarkController.create()
+DELETE    /bookmark/:id              controllers.BookmarkController.delete(id: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
