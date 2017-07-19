@@ -36,13 +36,13 @@ loading:boolean = false;
    }
 
   ngOnInit() {
-      this.getAllRepositories();
+      this.getUserRepositories();
   }
 
 
 
-  getAllRepositories(){
-    this.userRepositoryService.getAll()
+  getUserRepositories(){
+    this.userRepositoryService.findByUser()
             .subscribe(
                 data => {
                     console.log('data',data);
@@ -66,7 +66,7 @@ delete(id:string) {
         this.userRepositoryService.delete(id)
             .subscribe(
                 data => {
-                    this.getAllRepositories();
+                    this.getUserRepositories();
                 },
                 error => {
                     this.alertService.error(error._body)
@@ -84,7 +84,7 @@ delete(id:string) {
     });
 
     const sub = dialogRef.componentInstance.onChange.subscribe(() => {
-      this.getAllRepositories();
+      this.getUserRepositories();
       console.log('onChange.subscribe->run');
     });
     dialogRef.afterClosed().subscribe(() => {
@@ -131,7 +131,7 @@ delete(id:string) {
     });
 
     const sub = dialogRef.componentInstance.onChange.subscribe(() => {
-      this.getAllRepositories();
+      this.getUserRepositories();
       console.log('onChange.subscribe->run');
     });
     dialogRef.afterClosed().subscribe(() => {

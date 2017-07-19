@@ -93,3 +93,13 @@
 .board {
     align-content: flex-end;
 }
+
+
+.example-card {
+  width: 400px;
+}
+
+.example-header-image {
+  background-image: url('https://material.angular.io/assets/img/examples/shiba2.jpg');
+  background-size: cover;
+}
