@@ -7,7 +7,6 @@
        <div class="close_button">
          <button md-icon-button	 (click)="showSidebar = !showSidebar;"><md-icon>close</md-icon></button>
        </div>
-<h3 align="center">Filter</h3>
 <md-list> 
  <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox>({{VideoResult}})</md-list-item>
   <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox>({{AudioResult}})</md-list-item>
@@ -63,7 +62,7 @@
        <div *ngIf="filter(sr.type)">
         <md-card class="card">
            <div *ngIf="sr.thumbnail; else defaultimg">
-              <img md-card-image src="{{sr.thumbnail}}" >
+              <img md-card-image class="image-card" src="{{sr.thumbnail}}" >
           </div>
           <ng-template #defaultimg>
                 <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >

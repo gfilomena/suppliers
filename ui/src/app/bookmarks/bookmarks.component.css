@@ -12,6 +12,8 @@
 .detail-card {
     font-size: 70%;
     overflow-x: hidden;
+    overflow-y: hidden;
+    height: 200px;
 }
 .image-card {
     height: 150px;

@@ -40,7 +40,23 @@ export class SearchHistoryComponent implements OnInit {
                       }
                     )
 }
-                  
+/*
+deleteAll() {
+  this.loading = true;
+    this.historysearchService.
+            .subscribe(
+                      res => {
+                          console.log('delete all history - subscribe OK:',res)
+                          this.searchResult = [];
+                              this.loading = false;
+                      },
+                      error => {
+                          console.log('delete all history - subscribe - error:',error)
+                          this.loading = false;
+                      }
+                    )
+}
+    */              
 arrToString(array:any[]) {
     var i:number
         for(i = 0;i<array.length;i++) { 

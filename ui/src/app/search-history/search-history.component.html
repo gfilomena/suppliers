@@ -1,9 +1,11 @@
 <md-progress-bar  mode="indeterminate"  *ngIf="loading"></md-progress-bar>
+ 
 <div class="container">
   <div  fxFlex>
   <md-card>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
       <md-card>
+        <div *ngIf="searchResult.length > 0"><button md-icon-button ><md-icon>delete</md-icon></button>Delete Search History</div>
         <h2 *ngIf="searchResult.length == 0">No results found!</h2>
         <div *ngFor="let sr of searchResult">
          <md-input-container  fxFlex> 
