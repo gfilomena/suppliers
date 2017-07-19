@@ -1,6 +1,9 @@
+
 import { Component, OnInit } from '@angular/core';
 import { Repository } from '../_models/repository';
-import { RepositoryService, AlertService } from "../_services/index";
+import { User } from '../_models/user';
+import { UserService, AlertService } from "../_services/index";
+import {MdSnackBar} from '@angular/material';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -8,35 +11,46 @@ import { RepositoryService, AlertService } from "../_services/index";
 })
 export class ProfileComponent implements OnInit {
 
-repositories:Repository[];
-loading:boolean = false;
 
+submitted:boolean = false;
+user;
 
   constructor(     
-      private RepositoryService:RepositoryService,
-      private alertService: AlertService 
+      private UserService: UserService,
+      private alertService: AlertService,
+      public snackBar: MdSnackBar 
       ) { }
 
   ngOnInit() {
-      this.getAllRepositories();
+     this.user = JSON.parse(localStorage.getItem("currentUser"));
+     console.log('this.currentUser', this.user);
+     this.user.id = this.user._id;
   }
 
   
 
-  getAllRepositories(){
-    this.RepositoryService.getAll()
+  update(){
+    this.UserService.update(this.user)
             .subscribe(
                 data => {
                   console.log('data',data);
-                    this.repositories = data;
-                    localStorage.setItem("repositories",JSON.stringify(this.repositories));
-                   console.log(' this.repositories', this.repositories);
+                    localStorage.setItem("currentUser",JSON.stringify(this.user));
+                    this.openSnackBar('The User has been updated!','update')
+                    this.submitted = false
                 },
                 error => {
                     this.alertService.error(error._body)
-                    this.loading = false
+                    this.openSnackBar('The User has not been updated correctly!','error')
+                    this.submitted = false
                 })
     }
+
+   openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
+  }
+            
       
   }
 

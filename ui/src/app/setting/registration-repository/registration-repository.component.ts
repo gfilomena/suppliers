@@ -6,6 +6,7 @@ import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { User } from "../../_models/user";
 import { UserRepositoryService, RepositoryService, AlertService } from "../../_services/index";
 import { Router } from "@angular/router"
+import {MdSnackBar} from '@angular/material'
 
 
 
@@ -26,7 +27,8 @@ loading:boolean = false;
   constructor(
     public dialog: MdDialog,
     private userRepositoryService:UserRepositoryService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    public snackBar: MdSnackBar ) {
     //this.repository=new Repository('Youtube','www.youtube.com','prefix');
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
     this.userRepository = new UserRepository();
@@ -90,6 +92,33 @@ delete(id:string) {
       console.log('onChange.UNsubscribe->run');
     });
 
+  }
+
+  toggle(userRepository:UserRepository) {
+
+ console.log('1 userRepository', userRepository)
+ let enabled = !userRepository.enabled
+ console.log('1 enabled', enabled)
+ userRepository.enabled = enabled
+ console.log('2 userRepository', userRepository)
+ let name = userRepository.repository
+ this.userRepositoryService.update(userRepository)
+            .subscribe(
+                data => {
+                    console.log('respose update:',data);
+                    this.openSnackBar('The Repository '+ name +' has been switch '+enabled,'OK')
+                },
+                error => {
+                    this.alertService.error(error._body)
+                    this.openSnackBar('The Repository '+ name +' has not been switched '+enabled,'OK')
+                })
+
+  }
+
+     openSnackBar(message: string, action: string) {
+    this.snackBar.open(message, action, {
+      duration: 2000,
+    });
   }
 
     update(userRepository:UserRepository) {

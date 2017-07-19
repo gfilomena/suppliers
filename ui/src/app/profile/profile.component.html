@@ -1,28 +1,24 @@
-
 <div align="center">
-  <md-card>
-      <h3>Repositories</h3>
-          <table>
-            <thead>
-               <tr>
-                <td class="name">Name</td>
-                <td class="uri">URI</td>
-                <td>Modify</td>
-                <td>Delete</td>
-               </tr>  
-            </thead>
-            <tr *ngFor="let rep of repositories">
-              <td class="name">{{rep.name}}</td>
-              <td class="uri">{{rep.uri}}</td>
-              <td><button md-icon-button ><md-icon>create</md-icon></button></td>
-              <td><button md-icon-button ><md-icon>delete</md-icon></button></td>
-            </tr>  
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><app-dialog-repository></app-dialog-repository></td>
-            </tr>  
-          </table>
-</md-card>
+ <md-card class="card">
+  <form name="form" (ngSubmit)="f.form.valid && update()" #f="ngForm" novalidate>
+    <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
+                <h3>Edit Profile</h3>
+                <md-input-container  fxFlex> 
+                <input mdInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="user.firstName"  #firstName="ngModel" required >
+                </md-input-container>
+                <md-input-container  fxFlex> 
+                <input mdInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="user.lastName"  #lastName="ngModel" required >
+                </md-input-container>
+                <md-input-container  fxFlex> 
+                <input mdInput placeholder="email" value="" id="email" name="email" [(ngModel)]="user.email"  #email="ngModel">
+                </md-input-container>
+        <div align="end">
+         <button md-raised-button  type="submit" >Update</button>
+          <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
+         <button md-raised-button>Cancel</button>  
+        </div>
+      
+       </div>
+       </form>
+       </md-card>
 </div>

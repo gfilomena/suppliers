@@ -11,7 +11,7 @@ import { BookmarksComponent } from "./bookmarks/index"
 import { SearchHistoryComponent } from "./search-history/index"
 import { DialogRepositoryComponent } from "./dialog-repository/index"
 import {HashLocationStrategy, Location, LocationStrategy, APP_BASE_HREF} from '@angular/common';
-
+import { ProfileComponent } from "./profile/index"
 const appRoutes: Routes = [
     { path: "",
       component: SearchFormComponent,
@@ -38,7 +38,8 @@ const appRoutes: Routes = [
     { path: "bookmarks", component: BookmarksComponent , data: { breadcrumb: 'bookmarks' }},
     { path: "search-history", component: SearchHistoryComponent , data: { breadcrumb: 'search history' }},
     { path: "setting-rep", component: DialogRepositoryComponent , data: { breadcrumb: 'setting repository' }},
-
+    { path: "profile", component: ProfileComponent , data: { breadcrumb: 'profile' }},
+    
     // otherwise redirect to home
     { path: "**", redirectTo: "" }
 ]

@@ -15,6 +15,7 @@ export class SearchHistoryComponent implements OnInit {
 
   searchResult:any[]
   currentUser: User
+  loading:Boolean = false;
   constructor(private  historysearchService:   HistorysearchService,public router: Router, public http: Http, public route: ActivatedRoute) {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
    }
@@ -24,16 +25,18 @@ export class SearchHistoryComponent implements OnInit {
   }
 
   getHistoryResults(){
-
+    this.loading = true;
     this.historysearchService.getSearchResults(this.currentUser.username)
             .subscribe(
                       res => {
                           console.log('get all history - subscribe OK:',res)
                           this.searchResult=this.arrToString(res)
                           console.log('this.searchResult',this.searchResult)
+                              this.loading = false;
                       },
                       error => {
                           console.log('get all history - subscribe - error:',error)
+                          this.loading = false;
                       }
                     )
 }
