@@ -22,7 +22,7 @@
       <md-card>
         <div>
        <md-input-container  fxFlex> 
-        <input mdInput placeholder="Are you searching for" value="" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText" required>
+        <input mdInput placeholder="Are you searching for" value=""  minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText" required>
         </md-input-container>
         </div>
         <div>
@@ -79,11 +79,11 @@
                         <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="saveMC(sr)"><md-icon id="{{sr.uri}}">star_border</md-icon></button>
                         <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
                 </div>
-                <div class="detail-card" fxLayout="column" fxLayoutAlign="space-around stretch" fxFlexOffset="5">
-                  <div><b>Title:</b>{{sr.name}}</div>
-                  <div><b>Description:</b>{{sr.description}}</div>
-                  <div><b>Source:</b>{{sr.source.name}}</div>
-                  <div><b>Date:</b>{{getDate(sr.date)}}</div>
+                <div class="detail-card" fxLayout="column" >
+                  <div class="title-card"><b>Title:</b>{{sr.name}}</div>
+                  <div class="description"><b>Description:</b>{{sr.description}}</div>
+                  <div class="item-card"><b>Source:</b>{{sr.source.name}}</div>
+                  <div class="item-card"><b>Date:</b>{{getDate(sr.date)}}</div>
                 </div>
             </div>
           </md-card-content>
