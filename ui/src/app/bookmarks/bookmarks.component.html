@@ -37,8 +37,8 @@
                         <div *ngSwitchCase="'audio'"><button md-icon-button><md-icon>audiotrack</md-icon></button></div>
                         <div *ngSwitchCase="'text'"><button md-icon-button><md-icon>textsms</md-icon></button></div>
                      </div>
-                        <button md-icon-button (click)="removeBookmark(item.id)"><md-icon>star</md-icon></button>
-                        <button md-icon-button><md-icon>info</md-icon></button>
+                        <button md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>star</md-icon></button>
+                        <app-dialog-detail [multimediaContent]="item.multimediaContent"></app-dialog-detail>
                 </div>
                 <div class="detail-card" fxLayout="column">
                   <p><b>Title:</b>{{item.multimediaContent.name}}</p>
@@ -48,9 +48,6 @@
                 </div>
             </div>
           </md-card-content>
-          <md-card-actions align="end">
-            <app-dialog-detail [multimediaContent]="item.multimediaContent"></app-dialog-detail>
-          </md-card-actions>
         </md-card>
        </div>
       </div>

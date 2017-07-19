@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, Inject } from '@angular/core';
 import { MultimediaContent } from '../_models/multimediaContent';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdChipsModule } from "@angular/material";
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 
 

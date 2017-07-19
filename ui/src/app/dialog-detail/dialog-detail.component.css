@@ -39,3 +39,11 @@
         height: 409.5px;
     }
 }
+
+.detail-button {
+    width:45px;
+}
+
+md-chip {
+  max-width: 100px;
+}

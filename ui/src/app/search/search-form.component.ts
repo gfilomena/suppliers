@@ -41,7 +41,7 @@ export class SearchFormComponent {
    filterbar:boolean = true;
    showSidebar: boolean = true;
    history:any;
-
+   nOfResults:number;
 
     constructor(private searchService: SearchService, private route: ActivatedRoute,
                 private router: Router,private BookmarkService: BookmarkService){
@@ -96,6 +96,8 @@ export class SearchFormComponent {
                       this.searchResult=res.json().multimediaContents;
                       console.log('this.searchResult: '+this.searchResult);
                       this.counter(this.searchResult)
+                      this.nOfResults = this.searchResult.length;
+                      console.log('this.searchResult.length;',this.searchResult.length)
                       this.submitted = false;
                   },
                   error => {

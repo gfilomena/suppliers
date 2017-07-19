@@ -4,6 +4,7 @@
   <md-card>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
       <md-card>
+        <h2 *ngIf="searchResult.length == 0">No results found!</h2>
         <div *ngFor="let sr of searchResult">
          <md-input-container  fxFlex> 
         

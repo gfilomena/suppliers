@@ -22,16 +22,12 @@
   <img width="100%" height="250px" [src]="data.uri" class="image-card">
 </div>
   <md-card-content>
-        <span class="label label-primary">Title</span>
-        <h5 class="media-heading">{{data.name}}</h5>
-        <span>Description</span>
-        <h6>{{data.description}}</h6>
-        <span>Type</span>
-        <h6>{{data.type}}</h6>
-        <span>Source</span>
-        <h6>{{data.uri}}</h6>
-        <span>Date</span>
-        <h6>{{getDate(data.date)}}</h6>
+<div fxLayout="column" fxLayoutAlign="space-around none" fxFlexOffset="2">
+    <div><h2>{{data.name}}</h2></div>
+    <div><h5>Description:{{data.description}}</h5></div>
+    <div> <h6>Repository:{{data.source.name}} - Date:{{getDate(data.date)}}</h6></div>
+</div>
+
   </md-card-content>
    <md-card-actions align="end">
     <button md-button>Send to MCSSR</button>

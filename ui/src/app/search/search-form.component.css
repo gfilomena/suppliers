@@ -11,7 +11,8 @@
 }
 .detail-card {
     font-size: 70%;
-    overflow-x: hidden;
+    max-width: 90%;
+    /*overflow-x: hidden;*/
 }
 .image-card {
     height: 150px;
@@ -19,7 +20,12 @@
 
 .title-card {
     font-size: 100%;
- 
+    height: 20px;
+    
+}
+
+.description {
+    height: 50px;
 }
 
 
