@@ -14,6 +14,10 @@ export class HistorysearchService {
         return this.http.get(this.config.apiUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response.json())
     }
 
+    deleteAll(username:string) {
+        return this.http.delete(this.config.apiUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response)
+    }
+
     
     // private helper methods
 

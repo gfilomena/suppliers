@@ -38,7 +38,9 @@
   /*left: -130px;    hide*/
 }
 
-
+.subfilter_button{
+background-color: #fd9a7a;
+}
 
 .filter_button {
     width: auto;
@@ -48,6 +50,7 @@
     right: 0;
     position: absolute;
     /*left: 130px;  move button outside*/
+    
 }
 
 .close_button {

@@ -36,28 +36,19 @@
 <app-sidebar></app-sidebar>
 -->
 
-
-
-
-
 <md-toolbar *ngIf="isLoggedIn()" color="primary">
-
-
-
-
-
- 
-    <span>
-		        <img class="logo" src="../assets/images/logo_producer_511x103.jpg">
+            <span>
+				<div>
+					<img class="logo" src="../assets/images/logo_producer_511x103.jpg">
+						
+				</div>
 				<button md-button [routerLink]="['/']"> Home </button>
 				<button md-button [routerLink]="['/search-history']"> Search History </button>
 				<button md-button [routerLink]="['/bookmarks']"> Bookmarks </button>
 				<button md-button [routerLink]="['/setting']"> Settings </button>
-
-    </span>
-    <span class="example-spacer"></span>
-	<span>
-		
+			</span>
+					<span class="example-spacer"></span>
+			<span>
                 <button md-icon-button [mdMenuTriggerFor]="appMenu" >
 					<md-icon>account_circle</md-icon>
 				</button>
@@ -70,10 +61,6 @@
  <!--<md-toolbar-row>
     <span><breadcrumb class="breadcrumbs"></breadcrumb></span>
  </md-toolbar-row>-->
-
-
-
-
 </md-toolbar>
 
 

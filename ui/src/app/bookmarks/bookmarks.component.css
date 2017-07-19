@@ -24,6 +24,10 @@
  
 }
 
+.subfilter_button{
+background-color: #fd9a7a;
+}
+
 
 .sidebar{
   position: fixed;
