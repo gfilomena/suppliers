@@ -20,4 +20,6 @@ public interface BookmarkDAO extends DAO<Bookmark, ObjectId> {
     List<Bookmark> findAll();
 
     boolean isPresent(User user, MultimediaContent mc);
+
+    void deleteAllByUser(User user);
 }
