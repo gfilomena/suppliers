@@ -1,7 +1,7 @@
 package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.*;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
@@ -13,7 +13,9 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.CompletionStage;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
@@ -42,21 +44,28 @@ public class PixabaySearchRepository implements SearchRepository {
                 query+="+";
             }
             Logger.info("Pixabay search: "+query);
-            CompletionStage<JsonNode> jsonPromise;
-            jsonPromise = ws.url(registration.getRepository().getURI()).
+            /*CompletionStage<JsonNode> jsonPromiseImage= ws.url(registration.getRepository().getURI()).
+                    setQueryParameter("key", registration.getApiKey()).
+                    setQueryParameter("q", query).
+                    get().
+                    thenApply(WSResponse::asJson);*/
+            CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
                     setQueryParameter("key", registration.getApiKey()).
                     setQueryParameter("q", query).
                     get().
                     thenApply(WSResponse::asJson);
-            return jsonPromise;
+            /*CompletionStage<JsonNode> combined=jsonPromiseImage.thenApply(l -> jsonPromiseVideo.thenApply(m -> {l.
+            ;
+            return l;}));*/
+            return jsonPromiseVideo;
         }
 
         @Override
         public List<MultimediaContent> transform( JsonNode clientResponse ) {
-            Logger.info("Internet Archive Response: "+clientResponse.toString());
+            Logger.info("Pixabay Response: "+clientResponse.toString());
             List<MultimediaContent> stages=new ArrayList<>();
             //List<JsonNode> items=clientResponse.findValues("items");
-            ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
+            ArrayNode itemsArray = (ArrayNode) clientResponse.get("hits");
             Iterator<JsonNode> itemsIterator = itemsArray.elements();
             List<JsonNode> itemsList=new ArrayList<JsonNode>();
             while(itemsIterator.hasNext()){
@@ -68,11 +77,13 @@ public class PixabaySearchRepository implements SearchRepository {
         }
 
         return multimediaContents;*/
+            Function<JsonNode, MultimediaContent> convertToMultimediaContent =
+                    jsonNode -> getMultimediaContentFromItem(jsonNode);
             if(!itemsList.isEmpty()) {
                 stages = itemsList
                         .stream()
-                        .filter(i -> i.get("mediatype").asText().equals("movies"))
-                        .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
+                        //.filter(i -> i.get("mediatype").asText().equals("movies"))
+                        .map(convertToMultimediaContent)
                         .collect(Collectors.toList());
             }
             return stages;
@@ -85,11 +96,102 @@ public class PixabaySearchRepository implements SearchRepository {
         //Logger.debug("Type="+i.get("mediatype").asText());
         m.setType(MultimediaType.video);
         m.setFileExtension("video/mp4");
-        m.setDownloadURI("https://archive.org/download/"+i.get("identifier").asText()+"/"+i.get("identifier").asText()+".mp4");
-        m.setURI(registration.getRepository().getUrlPrefix()+i.get("identifier").asText());
+        if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null)))
+            m.setURI(i.get("videos").get("large").get("url").asText());
+        else if(!i.get("videos").get("medium").isMissingNode() && (!i.get("videos").get("medium").get("url").isMissingNode() || !(i.get("videos").get("medium").get("url").asText()==null)))
+            m.setURI(i.get("videos").get("medium").get("url").asText());
+        else if(!i.get("videos").get("small").isMissingNode() && (!i.get("videos").get("small").get("url").isMissingNode() || !(i.get("videos").get("small").get("url").asText()==null)))
+            m.setURI(i.get("videos").get("small").get("url").asText());
+        else if(!i.get("videos").get("tiny").isMissingNode() && (!i.get("videos").get("tiny").get("url").isMissingNode() || !(i.get("videos").get("tiny").get("url").asText()==null)))
+            m.setURI(i.get("videos").get("tiny").get("url").asText());
+
+        //m.setDownloadURI("https://archive.org/download/"+i.get("identifier").asText()+"/"+i.get("identifier").asText()+".mp4");
         m.setSource(registration.getRepository());
-        m.setName(i.get("title").asText());
+        //m.setName(i.get("title").asText());
+        m.setThumbnail(i.get("userImageURL").asText());
+        m.setMetadata(i.get("tags").asText());
+        m.setName(i.get("picture_id").asText());
         //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;
+    }
+
+    /**
+     * Merge two JSON tree into one i.e mergedInTo.
+     *
+     * @param toBeMerged
+     * @param mergedInTo
+     */
+    public static void merge(JsonNode toBeMerged, JsonNode mergedInTo) {
+        Iterator<Map.Entry<String, JsonNode>> incomingFieldsIterator = toBeMerged.fields();
+        Iterator<Map.Entry<String, JsonNode>> mergedIterator = mergedInTo.fields();
+
+        while (incomingFieldsIterator.hasNext()) {
+            Map.Entry<String, JsonNode> incomingEntry = incomingFieldsIterator.next();
+
+            JsonNode subNode = incomingEntry.getValue();
+
+            if (subNode.getNodeType().equals(JsonNodeType.OBJECT.OBJECT)) {
+                boolean isNewBlock = true;
+                mergedIterator = mergedInTo.fields();
+                while (mergedIterator.hasNext()) {
+                    Map.Entry<String, JsonNode> entry = mergedIterator.next();
+                    if (entry.getKey().equals(incomingEntry.getKey())) {
+                        merge(incomingEntry.getValue(), entry.getValue());
+                        isNewBlock = false;
+                    }
+                }
+                if (isNewBlock) {
+                    ((ObjectNode) mergedInTo).replace(incomingEntry.getKey(), incomingEntry.getValue());
+                }
+            } else if (subNode.getNodeType().equals(JsonNodeType.ARRAY)) {
+                boolean newEntry = true;
+                mergedIterator = mergedInTo.fields();
+                while (mergedIterator.hasNext()) {
+                    Map.Entry<String, JsonNode> entry = mergedIterator.next();
+                    if (entry.getKey().equals(incomingEntry.getKey())) {
+                        updateArray(incomingEntry.getValue(), entry);
+                        newEntry = false;
+                    }
+                }
+                if (newEntry) {
+                    ((ObjectNode) mergedInTo).replace(incomingEntry.getKey(), incomingEntry.getValue());
+                }
+            }
+            ValueNode valueNode = null;
+            JsonNode incomingValueNode = incomingEntry.getValue();
+            switch (subNode.getNodeType()) {
+                case STRING:
+                    valueNode = new TextNode(incomingValueNode.textValue());
+                    break;
+                case NUMBER:
+                    valueNode = new IntNode(incomingValueNode.intValue());
+                    break;
+                case BOOLEAN:
+                    valueNode = BooleanNode.valueOf(incomingValueNode.booleanValue());
+            }
+            if (valueNode != null) {
+                updateObject(mergedInTo, valueNode, incomingEntry);
+            }
+        }
+    }
+
+    private static void updateArray(JsonNode valueToBePlaced, Map.Entry<String, JsonNode> toBeMerged) {
+        toBeMerged.setValue(valueToBePlaced);
+    }
+
+    private static void updateObject(JsonNode mergeInTo, ValueNode valueToBePlaced,
+                                     Map.Entry<String, JsonNode> toBeMerged) {
+        boolean newEntry = true;
+        Iterator<Map.Entry<String, JsonNode>> mergedIterator = mergeInTo.fields();
+        while (mergedIterator.hasNext()) {
+            Map.Entry<String, JsonNode> entry = mergedIterator.next();
+            if (entry.getKey().equals(toBeMerged.getKey())) {
+                newEntry = false;
+                entry.setValue(valueToBePlaced);
+            }
+        }
+        if (newEntry) {
+            ((ObjectNode) mergeInTo).replace(toBeMerged.getKey(), toBeMerged.getValue());
+        }
     }
 }
