@@ -96,22 +96,27 @@ public class PixabaySearchRepository implements SearchRepository {
         //Logger.debug("Type="+i.get("mediatype").asText());
         m.setType(MultimediaType.video);
         m.setFileExtension("video/mp4");
-        if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null)))
+        if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null))) {
             m.setURI(i.get("videos").get("large").get("url").asText());
-        else if(!i.get("videos").get("medium").isMissingNode() && (!i.get("videos").get("medium").get("url").isMissingNode() || !(i.get("videos").get("medium").get("url").asText()==null)))
+            m.setDownloadURI(i.get("videos").get("large").get("url").asText());
+        }
+        else if(!i.get("videos").get("medium").isMissingNode() && (!i.get("videos").get("medium").get("url").isMissingNode() || !(i.get("videos").get("medium").get("url").asText()==null))) {
             m.setURI(i.get("videos").get("medium").get("url").asText());
-        else if(!i.get("videos").get("small").isMissingNode() && (!i.get("videos").get("small").get("url").isMissingNode() || !(i.get("videos").get("small").get("url").asText()==null)))
+            m.setDownloadURI(i.get("videos").get("medium").get("url").asText());
+        }
+        else if(!i.get("videos").get("small").isMissingNode() && (!i.get("videos").get("small").get("url").isMissingNode() || !(i.get("videos").get("small").get("url").asText()==null))) {
             m.setURI(i.get("videos").get("small").get("url").asText());
-        else if(!i.get("videos").get("tiny").isMissingNode() && (!i.get("videos").get("tiny").get("url").isMissingNode() || !(i.get("videos").get("tiny").get("url").asText()==null)))
+            m.setDownloadURI(i.get("videos").get("small").get("url").asText());
+        }
+        else if(!i.get("videos").get("tiny").isMissingNode() && (!i.get("videos").get("tiny").get("url").isMissingNode() || !(i.get("videos").get("tiny").get("url").asText()==null))) {
             m.setURI(i.get("videos").get("tiny").get("url").asText());
+            m.setDownloadURI(i.get("videos").get("tiny").get("url").asText());
+        }
 
-        //m.setDownloadURI("https://archive.org/download/"+i.get("identifier").asText()+"/"+i.get("identifier").asText()+".mp4");
         m.setSource(registration.getRepository());
-        //m.setName(i.get("title").asText());
         m.setThumbnail(i.get("userImageURL").asText());
         m.setMetadata(i.get("tags").asText());
         m.setName(i.get("picture_id").asText());
-        //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;
     }
 
