@@ -113,13 +113,10 @@ public class PixabaySearchRepository implements SearchRepository {
             m.setDownloadURI(i.get("videos").get("tiny").get("url").asText());
         }
 
-        //m.setDownloadURI("https://archive.org/download/"+i.get("identifier").asText()+"/"+i.get("identifier").asText()+".mp4");
         m.setSource(registration.getRepository());
-        //m.setName(i.get("title").asText());
         m.setThumbnail(i.get("userImageURL").asText());
         m.setMetadata(i.get("tags").asText());
         m.setName(i.get("picture_id").asText());
-        //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;
     }
 

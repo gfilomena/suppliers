@@ -61,7 +61,9 @@ public class SearchController extends Controller {
         // TODO dinamically read repository that are enabled
         SearchRepositoryFactory srf=new SearchRepositoryFactory();
         Stream<Registration> userRepositories=registrationDAO.findRegistrationByUser(Secured.getUser(ctx())).stream();
-        List<SearchRepository> repositories=userRepositories.map(r -> {
+        List<SearchRepository> repositories=userRepositories.
+                filter(sr -> sr.isEnabled()).
+                map(r -> {
             Class[] params={WSClient.class, Registration.class};
             Object[] values={wsclient, r};
             return srf.newInstance(r.getRepository().getName(), params,values);
