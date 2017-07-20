@@ -74,6 +74,7 @@ public class SearchController extends Controller {
             qr.setKeyWords(keywords);
             qr.setMultimediaContents(l);
             qr.setUser(user);
+            qr.setnOfResults(l.size());
             try {
                 qr.setInDate(sdf.parse(jsonRequest.get("inDate").textValue()));
                 qr.setEndDate(sdf.parse(jsonRequest.get("endDate").textValue()));
