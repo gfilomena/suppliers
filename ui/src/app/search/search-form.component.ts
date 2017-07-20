@@ -96,6 +96,7 @@ export class SearchFormComponent {
                       this.searchResult=res.json().multimediaContents;
                       console.log('this.searchResult: '+this.searchResult);
                       this.counter(this.searchResult)
+                      //this.validator(this.searchResult)
                       this.nOfResults = this.searchResult.length;
                       console.log('this.searchResult.length;',this.searchResult.length)
                       this.submitted = false;
@@ -106,6 +107,11 @@ export class SearchFormComponent {
                   }
                 )
     }
+
+
+
+
+
 
         counter(array) {
     var i:number

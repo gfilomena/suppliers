@@ -22,10 +22,11 @@ export class BookmarksComponent implements OnInit {
     ImageResult: number = 0;
     AudioResult: number = 0;
     TextResult: number = 0;
-
+    nResults: number;
    filterbar:boolean = true;
    showSidebar: boolean = true;
    submitted: boolean = false;
+
   constructor( private BookmarkService:BookmarkService,
     private alertService: AlertService ) { }
 
@@ -38,11 +39,10 @@ export class BookmarksComponent implements OnInit {
     this.BookmarkService.getAll()
             .subscribe(
                 data => {
-                    console.log('data',data);
-                    this.bookmarks = data;
+                    this.bookmarks = data
                     this.counter(data)
-                     this.submitted = false
-
+                    this.submitted = false
+                    this.nResults = data.length
                     localStorage.setItem("bookmarks",JSON.stringify(this.bookmarks));
                     console.log(' this.bookmarks', this.bookmarks);
                 },
@@ -96,6 +96,27 @@ export class BookmarksComponent implements OnInit {
                 error => {
                     this.alertService.error(error._body)
                 })
+    }
+
+    deleteAllByUser(){
+        this.submitted = true;
+        this.BookmarkService.deleteAllByUser()
+                .subscribe(
+                        res => {
+                            console.log('delete all Bookmarks - subscribe OK:',res)
+                            this.bookmarks.splice(0,this.bookmarks.length)
+                            this.nResults = this.bookmarks.length;
+                            this.VideoResult = 0;
+                            this.ImageResult = 0;
+                            this.AudioResult = 0;
+                            this.TextResult = 0;
+                            this.submitted = false;
+                        },
+                        error => {
+                            console.log('delete all Bookmarks - subscribe - error:',error)
+                            this.submitted = false;
+                        }
+                        )
     }
 
     filter(type:string):any{

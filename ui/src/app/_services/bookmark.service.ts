@@ -29,6 +29,10 @@ export class BookmarkService {
         return this.http.delete(this.config.apiUrl + "/bookmark/" + id, this.jwt())
     }
 
+    deleteAllByUser() {
+        return this.http.delete(this.config.apiUrl + "/bookmark/me/", this.jwt()).map((response: Response) => response)
+    }
+
     // private helper methods
 
     private jwt() {

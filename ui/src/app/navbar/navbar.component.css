@@ -26,6 +26,10 @@ md-toolbar,md-toolbar-row{
         display: contents;
 }
 
+.menu{
+  margin-left: 50%;
+}
+
 .breadcrumbs{
    display: flex;
     box-sizing: border-box;

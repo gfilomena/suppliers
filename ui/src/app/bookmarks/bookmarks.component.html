@@ -1,4 +1,9 @@
+<div align="center">
+ <div *ngIf="nResults > 0"><button md-icon-button (click)="deleteAllByUser()"><md-icon>delete</md-icon>Delete All Bookmarks</button></div>
+ <h3 *ngIf="nResults == 0">No bookmarks available.</h3>
+</div>
 <div class="container">
+
   <div class="container-sidebar">
 <md-card class="sidebar"  [style.left.px]="sidebar(-150)">
        <div class="filter_button" [style.left.px]="sidebar(150)">
@@ -15,7 +20,9 @@
 </md-list>   
 </md-card>
   </div>
+
 <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
+
   <div  fxFlex>
 <div class="container-card"  fxflex>
      <div class="sub_container-card" *ngFor="let item of bookmarks">
