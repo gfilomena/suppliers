@@ -89,6 +89,7 @@ public class YoutubeSearchRepository implements SearchRepository {
         //m.setType(i.path("id").get("kind").asText());
         m.setType(MultimediaType.video);
         m.setURI(reg.getRepository().getUrlPrefix() + i.path("id").get("videoId").asText());
+        m.setDownloadURI(reg.getRepository().getUrlPrefix() + i.path("id").get("videoId").asText());
         m.setName(i.get("snippet").get("title").asText());
         m.setDescription(i.get("snippet").get("description").asText());
         m.setThumbnail(i.get("snippet").get("thumbnails").get("default").get("url").asText());

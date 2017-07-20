@@ -74,6 +74,7 @@ public class PexelsSearchRepository implements SearchRepository {
         MultimediaContent m = new MultimediaContent();
         m.setType(MultimediaType.image);
         m.setURI(i.get("src").get("original").asText());
+        m.setDownloadURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
         // TODO: Modify to find SearchRepository from DB
