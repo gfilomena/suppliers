@@ -19,7 +19,7 @@
 }
 
 .logo{
-    width: 80px;
+    width: 128px;
 }
 
 md-toolbar,md-toolbar-row{
@@ -27,7 +27,12 @@ md-toolbar,md-toolbar-row{
 }
 
 .menu{
-  margin-left: 50%;
+  margin-left: 24%;
+}
+.menu button{
+      font-size: x-large;
+      font-size: 20px;
+      font-weight: 600;
 }
 
 .breadcrumbs{

@@ -33,10 +33,11 @@ user;
     this.UserService.update(this.user)
             .subscribe(
                 data => {
-                  console.log('data',data);
+                    console.log('data',data);
                     localStorage.setItem("currentUser",JSON.stringify(this.user));
                     this.openSnackBar('The User has been updated!','update')
                     this.submitted = false
+                    
                 },
                 error => {
                     this.alertService.error(error._body)

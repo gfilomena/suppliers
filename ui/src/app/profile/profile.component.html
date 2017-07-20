@@ -4,6 +4,9 @@
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
                 <h3>Edit Profile</h3>
                 <md-input-container  fxFlex> 
+                <input mdInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="user.username"  #username="ngModel" disabled >
+                </md-input-container>
+                <md-input-container  fxFlex> 
                 <input mdInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="user.firstName"  #firstName="ngModel" required >
                 </md-input-container>
                 <md-input-container  fxFlex> 

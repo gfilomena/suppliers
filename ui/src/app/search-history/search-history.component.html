@@ -4,18 +4,19 @@
   <div  fxFlex>
 
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
-      <md-card>
+      
         <div *ngIf="nResults > 0"><button md-icon-button (click)="deleteAll()"><md-icon>delete</md-icon>Delete All History</button></div>
         <h3 *ngIf="nResults == 0">No history available.</h3>
         <div *ngFor="let sr of searchResult">
-        <md-input-container  fxFlex> 
-        <span mdPrefix>Keywords:&nbsp;</span>
-        <input mdInput value="{{sr.keywords}}" id="keywords"  name="keywords" disabled>
-        <span mdSuffix class="date" >{{isoDateToHtmlDate(sr.date)}}</span>
-        </md-input-container>
-        <button md-icon-button (click)="goToSearchForm(sr)"><md-icon>navigate_next</md-icon></button>
+          <md-card (click)="goToSearchForm(sr)">
+              <md-input-container  fxFlex> 
+              <span mdPrefix>Keywords:&nbsp;</span>
+              <input mdInput value="{{sr.keywords}}" id="keywords"  name="keywords" disabled>
+              <span mdSuffix class="date" >{{isoDateToHtmlDate(sr.date)}}</span>
+              </md-input-container>
+         </md-card>
         </div>
-       </md-card>
+      
     </div>
 
 <!--
