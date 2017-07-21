@@ -1,6 +1,6 @@
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
-import { Component, Inject } from '@angular/core';
+import { Component, Inject, HostListener  } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router"
 import { User } from "../_models/user";
 import { SearchService } from "./search.service";
@@ -59,24 +59,26 @@ export class SearchFormComponent {
         
     }
 
-    ngOnInit() {
-        /*
-    this.sub = this.route
-      .queryParams
-      .subscribe(params => {
-        // Defaults to 0 if no query param provided.
-        let result = params['history']
-        this.searchForm.freeText = result.keywords;
-        console.log('result',result)
-      });*/
-  }
+@HostListener("window:scroll", ["$event"])
+onWindowScroll() {
 
+         let status = "not reached";
+         let windowHeight = "innerHeight" in window ? window.innerHeight
+             : document.documentElement.offsetHeight;
+         let body = document.body, html = document.documentElement;
+         let docHeight = Math.max(body.scrollHeight,
+             body.offsetHeight, html.clientHeight,
+             html.scrollHeight, html.offsetHeight);
+         let windowBottom = windowHeight + window.pageYOffset;
+         if (windowBottom + 1 >= docHeight) {
+          console.log('bottom reached');
+         }
 
-
-
-  ngOnDestroy() {
-   // this.sub.unsubscribe();
-  }
+        // console.log('windowBottom',windowBottom)
+        // console.log('windowHeight',windowHeight)
+        // console.log('docHeight',docHeight)
+         
+}
 
 
     onSubmit() {

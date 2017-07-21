@@ -11,24 +11,23 @@
           <table>
             <thead>
                <tr>
-                <td class="name">Name</td>
-                <td class="uri">URI</td>
-                <td>Modify</td>
-                <td>Delete</td>
+                <th class="name">Name</th>
+                <th class="uri">URI</th>
+                <th>Modify</th>
+                <th>Delete</th>
                </tr>  
             </thead>
-            <tr *ngFor="let rep of repositories">
-              <td class="name">{{rep.name}}</td>
-              <td class="uri">{{rep.URI}}</td>
-              <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
-              <td><button md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
-            </tr>  
-            <tr>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td><button md-icon-button (click)="create()"><md-icon>add circle</md-icon></button></td>
-            </tr>  
+              <tbody>
+                <tr *ngFor="let rep of repositories">
+                  <td class="name">{{rep.name}}</td>
+                  <td class="uri">{{rep.URI}}</td>
+                  <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
+                  <td><button md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
+                </tr>  
+                <tr>
+                  <td  align="right" colspan="4"><button md-icon-button (click)="create()"><md-icon>add circle</md-icon></button></td>
+                </tr>  
+              </tbody>
           </table>
 </md-card>
 </div>

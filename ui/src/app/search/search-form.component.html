@@ -62,7 +62,7 @@
        <div *ngIf="filter(sr.type)">
         <md-card class="card">
            <div *ngIf="sr.thumbnail; else defaultimg">
-              <img md-card-image class="image-card" src="{{sr.thumbnail}}" >
+                 <img md-card-image class="image-card" src="{{sr.thumbnail}}" >
           </div>
           <ng-template #defaultimg>
                 <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
