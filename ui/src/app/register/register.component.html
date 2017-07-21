@@ -11,7 +11,7 @@
                 <input mdInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="model.lastName" #lastName="ngModel" required >
                 </md-input-container>
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="model.email"  #email="ngModel" required>
+                <input mdInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="model.email"  #email="ngModel" [email]="true" required>
                 </md-input-container>
                 <md-input-container  fxFlex> 
                 <input mdInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="model.username" #username="ngModel" required>

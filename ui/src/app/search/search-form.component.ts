@@ -10,6 +10,7 @@ import { MdDialog, MdDialogRef } from "@angular/material";
 import { DialogDetailComponent } from "../dialog-detail/dialog-detail.component";
 import { NgSwitch } from '@angular/common';
 
+
 @Component({
   selector: 'app-search-form',
   providers: [SearchService],

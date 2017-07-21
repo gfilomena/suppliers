@@ -2,6 +2,7 @@
 import { Router } from "@angular/router"
 import { AlertService, UserService } from "../_services/index"
 import { MdSnackBar } from '@angular/material';
+import { Validators } from '@angular/forms';
 @Component({
     templateUrl: "./register.component.html",
      styles: ['.card { width:250px; }']
