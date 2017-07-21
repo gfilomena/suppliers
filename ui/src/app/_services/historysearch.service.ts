@@ -1,21 +1,21 @@
 ﻿import { Injectable } from "@angular/core"
 import { Http, Headers, RequestOptions, Response } from "@angular/http"
-import { AppConfig } from "../app.config"
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
 export class HistorysearchService {
     
-    constructor(private http: Http, private config: AppConfig) { }
+    constructor(private http: Http) { }
 
     
 
     getSearchResults(username:string) {
-        return this.http.get(this.config.apiUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response.json())
     }
 
     deleteAll(username:string) {
-        return this.http.delete(this.config.apiUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response)
+        return this.http.delete(environment.serviceUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response)
     }
 
     

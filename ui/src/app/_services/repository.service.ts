@@ -1,36 +1,35 @@
 ﻿import { Repository } from './../_models/repository';
 import { Injectable } from "@angular/core"
 import { Http, Headers, RequestOptions, Response } from "@angular/http"
-
-import { AppConfig } from "../app.config"
+import { environment } from '../../environments/environment';
 
 
 @Injectable()
 export class RepositoryService {
-    constructor(private http: Http, private config: AppConfig) { }
+    constructor(private http: Http) { }
 
     getAll() {
-        return this.http.get(this.config.apiUrl + "/repository", this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/repository", this.jwt()).map((response: Response) => response.json())
     }
 
     get(id: string) {
-        return this.http.get(this.config.apiUrl + "/repository/" + id, this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/repository/" + id, this.jwt()).map((response: Response) => response.json())
     }
 
     create(repository: Repository) {
-        return this.http.post(this.config.apiUrl + "/repository", repository, this.jwt())
+        return this.http.post(environment.serviceUrl + "/repository", repository, this.jwt())
     }
 
     update(repository: Repository) {
-        return this.http.put(this.config.apiUrl + "/repository/" + repository.id ,repository, this.jwt())
+        return this.http.put(environment.serviceUrl + "/repository/" + repository.id ,repository, this.jwt())
     }
 
     delete(id: string) {
-        return this.http.delete(this.config.apiUrl + "/repository/" + id, this.jwt())
+        return this.http.delete(environment.serviceUrl + "/repository/" + id, this.jwt())
     }
 
     findRepositoriesByUser() {
-        return this.http.get(this.config.apiUrl + "/repository/me/", this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/repository/me/", this.jwt()).map((response: Response) => response.json())
     }
 
     // private helper methods

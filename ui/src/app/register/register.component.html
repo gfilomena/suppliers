@@ -1,6 +1,6 @@
 ﻿<div align="center">
  <md-card class="card">
-  <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm" novalidate>
+  <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm">
       
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
                 <h3>Register</h3>
@@ -11,7 +11,7 @@
                 <input mdInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="model.lastName" #lastName="ngModel" required >
                 </md-input-container>
                 <md-input-container  fxFlex> 
-                <input mdInput placeholder="email" value="" id="email" name="email" [(ngModel)]="model.email"  #email="ngModel">
+                <input mdInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="model.email"  #email="ngModel" required>
                 </md-input-container>
                 <md-input-container  fxFlex> 
                 <input mdInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="model.username" #username="ngModel" required>
