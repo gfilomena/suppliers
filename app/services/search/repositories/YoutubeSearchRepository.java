@@ -2,11 +2,12 @@ package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
-import models.Repository;
+import models.response.RepositoryResponseMapping;
+import models.response.ResponseMapping;
+import models.response.YoutubeRepositoryResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -54,10 +55,14 @@ public class YoutubeSearchRepository implements SearchRepository {
 
 
     @Override
-    public List<MultimediaContent> transform( JsonNode clientResponse ) {
+    public RepositoryResponseMapping transform(JsonNode clientResponse ) {
         //Logger.info("Youtube Response: "+clientResponse.toString());
+        YoutubeRepositoryResponseMapping respMapping=new YoutubeRepositoryResponseMapping();
         List<MultimediaContent> stages=new ArrayList<>();
         //List<JsonNode> items=clientResponse.findValues("items");
+        if(clientResponse.get("nextPageToken")!=null){
+            respMapping.setNextPage(clientResponse.get("nextPageToken").textValue());
+        }
         if(clientResponse.get("items")!=null) {
             ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
             Iterator<JsonNode> itemsIterator = itemsArray.elements();
@@ -80,7 +85,8 @@ public class YoutubeSearchRepository implements SearchRepository {
                         .collect(Collectors.toList());
             }
         }
-        return stages;
+        respMapping.setMultimediaContents(stages);
+        return respMapping;
     }
 
     private MultimediaContent getMultimediaContentFromItem( JsonNode i ) {

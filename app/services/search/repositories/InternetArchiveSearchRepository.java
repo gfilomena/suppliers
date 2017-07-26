@@ -6,6 +6,9 @@ import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
+import models.response.InternetArchiveRepositoryResponseMapping;
+import models.response.RepositoryResponseMapping;
+import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -58,22 +61,24 @@ public class InternetArchiveSearchRepository implements SearchRepository {
     }
 
     @Override
-    public List<MultimediaContent> transform( JsonNode clientResponse ) {
+    public RepositoryResponseMapping transform(JsonNode clientResponse ) {
         Logger.info("Internet Archive Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
-        //List<JsonNode> items=clientResponse.findValues("items");
+        InternetArchiveRepositoryResponseMapping respMap=new InternetArchiveRepositoryResponseMapping();
+        if(clientResponse.get("count")!=null){
+            respMap.setnOfResults(clientResponse.get("count").asInt());
+        }
+        if(clientResponse.get("cursor")!=null){
+            respMap.setCursor(clientResponse.get("cursor").asText());
+        }
+
         ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
         Iterator<JsonNode> itemsIterator = itemsArray.elements();
         List<JsonNode> itemsList=new ArrayList<JsonNode>();
         while(itemsIterator.hasNext()){
             itemsList.add(itemsIterator.next());
         }
-        /*final List<MultimediaContent> multimediaContents = new ArrayList<MultimediaContent>();
-        if(items.isArray()) {
-            items.forEach(( JsonNode i ) -> multimediaContents.add(getMultimediaContentFromItem(i)));
-        }
 
-        return multimediaContents;*/
         if(!itemsList.isEmpty()) {
             stages = itemsList
                     .stream()
@@ -81,7 +86,8 @@ public class InternetArchiveSearchRepository implements SearchRepository {
                     .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
                     .collect(Collectors.toList());
         }
-        return stages;
+        respMap.setMultimediaContents(stages);
+        return respMap;
     }
     private MultimediaContent getMultimediaContentFromItem(JsonNode i){
         //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
@@ -96,8 +102,6 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         m.setName(i.get("title").asText());
         //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
         return m;
-        //});
 
-        //return multimediaContent;
     }
 }
