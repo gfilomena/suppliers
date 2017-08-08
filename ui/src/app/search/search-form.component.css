@@ -16,8 +16,24 @@
     height: 200px;
 }
 .image-card {
-    height: 150px;
+height: 150px;
+
+display: flex;
+justify-content: center; /* align horizontal */
+align-items: center; /* align vertical */
+/*    
+display: block;
+margin-left: auto;
+margin-right: auto; 
+justify-content: center;*/
 }
+
+.image-card img{
+
+    max-height: 150px;
+   
+}
+
 
 .title-card {
     overflow-x: hidden;
@@ -117,9 +133,6 @@ background-color: #fd9a7a;
 }
 
 
-.example-card {
-  width: 400px;
-}
 
 .example-header-image {
   background-image: url('https://material.angular.io/assets/img/examples/shiba2.jpg');

@@ -12,7 +12,8 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogRepositoryComponent, DialogRepositoryDetail } from '../dialog-repository/dialog-repository.component'
 import { ProfileComponent } from '../profile/profile.component';
 import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-detail.component";
-import { BookmarksComponent }    from '../bookmarks/bookmarks.component';
+import { BookmarksComponent } from '../bookmarks/bookmarks.component';
+
 
 @NgModule({
   imports: [
@@ -37,4 +38,6 @@ import { BookmarksComponent }    from '../bookmarks/bookmarks.component';
   entryComponents: [DialogDetail,DialogRepositoryDetail],  
   providers: [ SearchService ]
 })
-export class SearchModule {}
+export class SearchModule {
+
+}

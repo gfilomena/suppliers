@@ -6,14 +6,14 @@ import { User } from "../_models/user";
 import { SearchService } from "./search.service";
 import { BookmarkService } from "../_services/bookmark.service";
 import { MultimediaContent } from "../_models/multimediaContent";
-import { MdDialog, MdDialogRef } from "@angular/material";
+import { MdDialog, MdDialogRef,DateAdapter } from "@angular/material";
 import { DialogDetailComponent } from "../dialog-detail/dialog-detail.component";
 import { NgSwitch } from '@angular/common';
-
+import { CustomDateAdapter } from './custom-date-adapter'
 
 @Component({
   selector: 'app-search-form',
-  providers: [SearchService],
+  providers: [SearchService, {provide: DateAdapter, useClass: CustomDateAdapter } ],
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.css']
 })
@@ -45,10 +45,12 @@ export class SearchFormComponent {
    nOfResults:number;
 
     constructor(private searchService: SearchService, private route: ActivatedRoute,
-                private router: Router,private BookmarkService: BookmarkService){
+                private router: Router,private BookmarkService: BookmarkService,
+                private dateAdapter: DateAdapter<Date>){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
-
+        this.dateAdapter.setLocale('ll');
+        
         if (localStorage["searchForm"]) {
            this.searchForm= new SearchForm('',historyform.keywords,'',historyform.inDate,historyform.endDate,'') 
            localStorage.removeItem("searchForm")

@@ -34,14 +34,14 @@
             </md-select>
           </div>-->
           <md-input-container fxFlex>
-            <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" disabled [(ngModel)]="searchForm.inDate"
-                   name="inDate">
+            <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate"
+                   name="inDate" required>
             <button mdSuffix [mdDatepickerToggle]="startdate"></button>
           </md-input-container>
           <md-datepicker #startdate></md-datepicker>
           <md-input-container fxFlex fxFlexOffset="2">
-            <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" disabled [(ngModel)]="searchForm.endDate"
-                   name="endDate">
+            <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate"
+                   name="endDate" required>
             <button mdSuffix [mdDatepickerToggle]="enddate"></button>
           </md-input-container>
           <md-datepicker #enddate></md-datepicker>
@@ -61,11 +61,13 @@
        
        <div *ngIf="filter(sr.type)">
         <md-card class="card">
-           <div *ngIf="sr.thumbnail; else defaultimg">
-                 <img md-card-image class="image-card" src="{{sr.thumbnail}}" >
+           <div *ngIf="sr.thumbnail; else defaultimg" class="image-card">
+                 <img md-card-image  src="{{sr.thumbnail}}" >
           </div>
-          <ng-template #defaultimg>
-                <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
+          <ng-template #defaultimg >
+            <div class="image-card">
+                <img md-card-image  src="../assets/images/logo_producer_511x103.jpg" >
+            </div>
           </ng-template>
           <md-card-content class="content-card">
              <div fxLayout="row">
