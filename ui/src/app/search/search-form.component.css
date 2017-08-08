@@ -16,23 +16,18 @@
     height: 200px;
 }
 .image-card {
-height: 150px;
-
-display: flex;
-justify-content: center; /* align horizontal */
-align-items: center; /* align vertical */
-/*    
-display: block;
-margin-left: auto;
-margin-right: auto; 
-justify-content: center;*/
+    height: 150px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
 }
 
 .image-card img{
-
     max-height: 150px;
-   
+    -webkit-logical-width: inherit;
+    max-width: 220px;
 }
+
 
 
 .title-card {
