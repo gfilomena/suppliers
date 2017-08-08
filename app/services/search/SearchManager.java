@@ -3,6 +3,8 @@ package services.search;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.MultimediaContent;
 import models.SearchResult;
+import models.response.RepositoryResponseMapping;
+import models.response.ResponseMapping;
 import play.libs.concurrent.Futures;
 import services.search.repositories.SearchRepository;
 
@@ -33,27 +35,29 @@ public class SearchManager implements Manager{
         return null;
     }
 
-    public List<CompletionStage<List<MultimediaContent>>> dispatch(List<SearchRepository> repositories){
-        List<CompletionStage<List<MultimediaContent>>> s;
+    @Override
+    public List<CompletionStage<RepositoryResponseMapping>> dispatch(List<SearchRepository> repositories){
+        List<CompletionStage<RepositoryResponseMapping>> s;
         s = repositories
                 .stream()
                 .map( repository  -> {
                     CompletionStage<JsonNode> jsonRes=repository.executeQuery(this.getKeyWords());
-                    CompletionStage<List<MultimediaContent>> transformed=jsonRes.thenApply(j -> repository.transform(j));
+                    CompletionStage<RepositoryResponseMapping> transformed=jsonRes.thenApply(j -> repository.transform(j));
                     return transformed;
                 })
                 .collect(Collectors.toList());
         return s;
     }
 
-    public CompletionStage<List<MultimediaContent>> aggregate(List<CompletionStage<List<MultimediaContent>>> stages){
+    @Override
+    public CompletionStage<List<MultimediaContent>> aggregate(List<CompletionStage<RepositoryResponseMapping>> stages){
         return Futures
                 .sequence(stages)
                 .thenApply(responses -> {
                     List<MultimediaContent> mulcon=new ArrayList<MultimediaContent>();
                     responses
                             .stream()
-                            .forEach(mc -> mulcon.addAll(mc));
+                            .forEach(mc -> mulcon.addAll(mc.getMultimediaContents()));
                     return mulcon;
                 });
     }

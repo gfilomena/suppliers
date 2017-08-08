@@ -5,6 +5,9 @@ import com.fasterxml.jackson.databind.node.*;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
+import models.response.PixabayRepositoryResponseMapping;
+import models.response.RepositoryResponseMapping;
+import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -61,10 +64,14 @@ public class PixabaySearchRepository implements SearchRepository {
         }
 
         @Override
-        public List<MultimediaContent> transform( JsonNode clientResponse ) {
+        public RepositoryResponseMapping transform(JsonNode clientResponse ) {
             Logger.info("Pixabay Response: "+clientResponse.toString());
             List<MultimediaContent> stages=new ArrayList<>();
             //List<JsonNode> items=clientResponse.findValues("items");
+            PixabayRepositoryResponseMapping respMap=new PixabayRepositoryResponseMapping();
+            if(clientResponse.get("totalHits")!=null){
+                respMap.setnOfResults(clientResponse.get("totalHits").asInt());
+            }
             ArrayNode itemsArray = (ArrayNode) clientResponse.get("hits");
             Iterator<JsonNode> itemsIterator = itemsArray.elements();
             List<JsonNode> itemsList=new ArrayList<JsonNode>();
@@ -86,7 +93,8 @@ public class PixabaySearchRepository implements SearchRepository {
                         .map(convertToMultimediaContent)
                         .collect(Collectors.toList());
             }
-            return stages;
+            respMap.setMultimediaContents(stages);
+            return respMap;
         }
 
     private MultimediaContent getMultimediaContentFromItem(JsonNode i){

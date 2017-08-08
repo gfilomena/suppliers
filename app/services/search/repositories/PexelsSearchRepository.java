@@ -6,6 +6,9 @@ import com.typesafe.config.ConfigFactory;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
+import models.response.PexelsRepositoryResponseMapping;
+import models.response.RepositoryResponseMapping;
+import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -52,9 +55,19 @@ public class PexelsSearchRepository implements SearchRepository {
     }
 
     @Override
-    public List<MultimediaContent> transform( JsonNode clientResponse ) {
+    public RepositoryResponseMapping transform(JsonNode clientResponse ) {
         //Logger.info("Pexels Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
+        PexelsRepositoryResponseMapping respMap=new PexelsRepositoryResponseMapping();
+        if(clientResponse.get("total_results")!=null){
+            respMap.setnOfResults(clientResponse.get("total_results").asInt());
+        }
+        if(clientResponse.get("next_page")!=null){
+            respMap.setNextPage(clientResponse.get("next_page").asText());
+        }
+        if(clientResponse.get("prev_page")!=null){
+            respMap.setPreviousPage(clientResponse.get("prev_page").asText());
+        }
         ArrayNode itemsArray = (ArrayNode) clientResponse.get("photos");
         Iterator<JsonNode> itemsIterator = itemsArray.elements();
         List<JsonNode> itemsList=new ArrayList<JsonNode>();
@@ -67,7 +80,9 @@ public class PexelsSearchRepository implements SearchRepository {
                     .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
                     .collect(Collectors.toList());
         }
-        return stages;
+
+        respMap.setMultimediaContents(stages);
+        return respMap;
     }
 
     private MultimediaContent getMultimediaContentFromItem( JsonNode i ) {

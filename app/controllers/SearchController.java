@@ -3,6 +3,8 @@ package controllers;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import models.dao.*;
+import models.response.RepositoryResponseMapping;
+import models.response.ResponseMapping;
 import org.bson.types.ObjectId;
 import play.Logger;
 import play.libs.Json;
@@ -68,7 +70,7 @@ public class SearchController extends Controller {
             Object[] values={wsclient, r};
             return srf.newInstance(r.getRepository().getName(), params,values);
         }).collect(Collectors.toList());
-        List<CompletionStage<List<MultimediaContent>>> dispatched=searchManager.dispatch(repositories);
+        List<CompletionStage<RepositoryResponseMapping>> dispatched=searchManager.dispatch(repositories);
         CompletionStage<List<MultimediaContent>> aggregated=searchManager.aggregate(dispatched);
         CompletionStage<SearchResult> transformedQuery=aggregated.thenApply(l -> {
             SearchResult qr=new SearchResult();
