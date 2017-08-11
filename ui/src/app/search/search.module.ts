@@ -10,8 +10,8 @@ import "hammerjs";
 import { MaterialModule, MdMenuModule , MdButtonModule, MdIconModule, MdTabsModule, MdInputModule, MdSelectModule, MdDatepickerModule,  MdNativeDateModule, DateAdapter, MdDateFormats, MdDialog, MdDialogRef } from "@angular/material";
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogRepositoryComponent, DialogRepositoryDetail } from '../dialog-repository/dialog-repository.component'
-import { ProfileComponent } from '../profile/profile.component';
-import { DialogDetailComponent,DialogDetail } from "../dialog-detail/dialog-detail.component";
+
+import { DialogDetail } from "../dialog-detail/dialog-detail.component";
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
 
 
@@ -27,11 +27,10 @@ import { BookmarksComponent } from '../bookmarks/bookmarks.component';
   declarations: [
     SearchFormComponent,
     MultimediaContentComponent,
-    ProfileComponent,
+  
     DialogRepositoryComponent,
     DialogRepositoryDetail,
     DialogDetail,
-    DialogDetailComponent,
     BookmarksComponent
   ],
   // entryComponents declare Components created manually

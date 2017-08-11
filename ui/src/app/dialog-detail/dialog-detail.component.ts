@@ -6,43 +6,6 @@ import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 
 
 
-@Component({
-  selector: 'app-dialog-detail',
-  inputs: ['multimediaContent'],
-  templateUrl: './dialog-detail.component.html',
-  styleUrls: ['./dialog-detail.component.css']
-})
-export class DialogDetailComponent implements OnInit {
- multimediaContent: MultimediaContent;
- modalId: string;
- 
-
-  constructor(public dialog: MdDialog,public sanitizer: DomSanitizer) { }
-
-   
-
-
- 
-  ngOnInit() {
-   // console.log('Modal ID: '+this.modalId);
-  }
-
- openDialog() {
-   console.log('this.multimediaContent',this.multimediaContent);
-let dialogRef = this.dialog.open(DialogDetail, {
-  
-  data: this.multimediaContent,
-  height: 'auto',
-  width: '40%',
-  position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
-});
-   
-}
-
-
-
-}
-
 
 @Component({
   selector: 'dialog-detail-dialog',
@@ -61,6 +24,8 @@ export class DialogDetail implements OnInit  {
    }
 
   getVideoSource(URI:string):any {
+
+
 
         let link =  this.sanitizer.bypassSecurityTrustResourceUrl(URI);
         return link;

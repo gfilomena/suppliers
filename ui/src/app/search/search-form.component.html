@@ -61,12 +61,12 @@
        
        <div *ngIf="filter(sr.type)">
         <md-card class="card">
-           <div *ngIf="sr.thumbnail; else defaultimg" class="image-card">
-                 <img md-card-image  src="{{sr.thumbnail}}" >
+           <div *ngIf="sr.thumbnail; else defaultimg" class="image-card" >
+                 <img md-card-image  src="{{sr.thumbnail}}" (click)="openDialog(sr)">
           </div>
           <ng-template #defaultimg >
             <div class="image-card">
-                <img md-card-image  src="../assets/images/logo_producer_511x103.jpg" >
+                <img md-card-image  src="../assets/images/logo_producer_511x103.jpg" (click)="openDialog(sr)">
             </div>
           </ng-template>
           <md-card-content class="content-card">
@@ -79,13 +79,13 @@
                         <div *ngSwitchCase="'text'"><button md-icon-button><md-icon>textsms</md-icon></button></div>
                      </div>
                         <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="saveMC(sr)"><md-icon id="{{sr.uri}}">star_border</md-icon></button>
-                        <app-dialog-detail [multimediaContent]="sr"></app-dialog-detail>
+                        <button md-icon-button mdTooltip="Click for more info."  (click)="openDialog(sr)"><md-icon>info</md-icon></button>
                 </div>
                 <div class="detail-card" fxLayout="column" >
                   <div class="title-card"><b>Title:</b>{{sr.name}}</div>
-                  <div class="description"><b>Description:</b>{{sr.description}}</div>
-                  <div class="item-card"><b>Source:</b>{{sr.source.name}}</div>
-                  <div class="item-card"><b>Date:</b>{{getDate(sr.date)}}</div>
+                 <!-- <div class="description"><b>Description:</b>{{sr.description}}</div>-->
+                  <div class="source-card"><b>Source:</b>{{sr.source.name}}</div>
+                  <div class="date-card"><b>Date:</b>{{getDate(sr.date)}}</div>
                 </div>
             </div>
           </md-card-content>

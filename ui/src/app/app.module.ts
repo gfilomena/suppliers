@@ -22,7 +22,7 @@ import { SettingComponent } from './setting/setting.component'
 import { SearchHistoryComponent } from './search-history/search-history.component'
 import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
 import { DialogRegistrationRepository, RegistrationRepositoryComponent } from './setting/registration-repository/registration-repository.component';
-
+import { ProfileComponent } from './profile/profile.component';
 
 
 
@@ -51,7 +51,8 @@ import { DialogRegistrationRepository, RegistrationRepositoryComponent } from '.
         SearchHistoryComponent,
         BreadcrumbComponent,
         DialogRegistrationRepository,
-        RegistrationRepositoryComponent
+        RegistrationRepositoryComponent,
+        ProfileComponent,
     ],
     providers: [
         AuthGuard,

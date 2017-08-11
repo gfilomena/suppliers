@@ -19,8 +19,14 @@
 }
 
 .logo{
+    height: 25px;
     width: 128px;
 }
+
+.span-logo{
+  display: flex;
+}
+
 
 md-toolbar,md-toolbar-row{
         display: contents;

@@ -1,4 +1,9 @@
 .breadcrumb_item{
     width:50px;
+    color:black;
+}
+
+.breadcrumb_item:hover{
+
 }
 

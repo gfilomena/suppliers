@@ -2,7 +2,8 @@ import { MultimediaContent } from './../_models/multimediaContent';
 import { Component, OnInit } from '@angular/core';
 import { Bookmark } from "../_models/bookmark";
 import { BookmarkService, AlertService } from "../_services/index";
-
+import { DialogDetail } from "../dialog-detail/dialog-detail.component";
+import { MdDialog } from "@angular/material";
 
 @Component({
   selector: 'app-bookmarks',
@@ -28,11 +29,25 @@ export class BookmarksComponent implements OnInit {
    submitted: boolean = false;
 
   constructor( private BookmarkService:BookmarkService,
-    private alertService: AlertService ) { }
+               private alertService: AlertService,
+               private dialog: MdDialog ) { }
 
   ngOnInit() {
     this.getAllBookmarks();
   }
+
+       openDialog(item) {
+   console.log('item sr',item);
+let dialogRef = this.dialog.open(DialogDetail, {
+  
+  data: item,
+  height: 'auto',
+  width: '600px',
+  position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+});
+   
+}
+
 
     getAllBookmarks(){
     this.submitted = true

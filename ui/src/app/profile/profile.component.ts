@@ -5,6 +5,7 @@ import { User } from '../_models/user';
 import { UserService, AlertService } from "../_services/index";
 import {MdSnackBar} from '@angular/material';
 import { Validators } from '@angular/forms';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -19,7 +20,7 @@ user;
   constructor(     
       private UserService: UserService,
       private alertService: AlertService,
-      public snackBar: MdSnackBar 
+      public snackBar: MdSnackBar
       ) { }
 
   ngOnInit() {
@@ -31,6 +32,7 @@ user;
   
 
   update(){
+    this.submitted = true
     this.UserService.update(this.user)
             .subscribe(
                 data => {

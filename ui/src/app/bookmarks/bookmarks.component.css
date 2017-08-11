@@ -2,26 +2,63 @@
     /*display:inline-block;
     display: inline-table;*/
     display:flow-root;
-    width: 175px;
-    height: 100%;
-    margin: 3px;
+    width: 195px;
+    height: 250px;
+    margin: 3.77px;
    /* vertical-align: top;
     cursor: pointer;
     overflow: visible; */
 }
+.card:hover{
+box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
 .detail-card {
-    font-size: 70%;
+    font-size: 9px;
     overflow-x: hidden;
     overflow-y: hidden;
-    height: 200px;
+    height: 100px;
+    margin-top: 15px;
 }
 .image-card {
-    height: 150px;
+     height: 150px;
+    width:195px;
+    display: flex;
+    justify-content: center; /* align horizontal */
+    align-items: center; /* align vertical */
+}
+
+.image-card img{
+    max-height: 150px;
+    max-width: 220px;
+    object-fit: contain;
+    /*take the centrale part
+    object-fit: cover;*/
+    -o-object-fit: contain;
 }
 
 .title-card {
-    font-size: 100%;
- 
+     overflow-x: hidden;
+    overflow-y: hidden;
+    height: 40px;   
+}
+
+.description {
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 60px;
+        margin-top: 5px;
+}
+.source-card {
+    margin-top: 5px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 20px;
+}
+.date-card {
+    margin-top: 20px;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    height: 20px;
 }
 
 .subfilter_button{

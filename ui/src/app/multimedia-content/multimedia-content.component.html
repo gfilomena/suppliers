@@ -1,17 +1,31 @@
-<md-card class="example-card">
-  <md-card-header>
-    <md-card-title>{{multimediaContent.name}}</md-card-title>
-    <md-card-subtitle>{{multimediaContent.description}}</md-card-subtitle>
-  </md-card-header>
-  <img md-card-image [src]="multimediaContent.thumbnail">
-  <md-card-content>
-     <span>Description</span>
-       <p>{{multimediaContent.description}}</p>
 
-  </md-card-content>
-  <md-card-actions>
-    <button md-button>Star</button>
-    <button md-button>Detail</button>
-  </md-card-actions>
-</md-card>
-
+        <md-card class="card">
+           <div *ngIf="sr.thumbnail; else defaultimg" class="image-card">
+                 <img md-card-image  src="{{sr.thumbnail}}" >
+          </div>
+          <ng-template #defaultimg >
+            <div class="image-card">
+                <img md-card-image  src="../assets/images/logo_producer_511x103.jpg" >
+            </div>
+          </ng-template>
+          <md-card-content class="content-card">
+             <div fxLayout="row">
+                <div fxLayout="column" >
+                     <div [ngSwitch]="sr.type">
+                        <div *ngSwitchCase="'video'"><button md-icon-button><md-icon>videocam</md-icon></button></div>
+                        <div *ngSwitchCase="'image'"><button md-icon-button><md-icon>photo</md-icon></button></div>
+                        <div *ngSwitchCase="'audio'"><button md-icon-button><md-icon>audiotrack</md-icon></button></div>
+                        <div *ngSwitchCase="'text'"><button md-icon-button><md-icon>textsms</md-icon></button></div>
+                     </div>
+                        <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="saveMC(sr)"><md-icon id="{{sr.uri}}">star_border</md-icon></button>
+                       
+                </div>
+                <div class="detail-card" fxLayout="column" >
+                  <div class="title-card"><b>Title:</b>{{sr.name}}</div>
+                 <!-- <div class="description"><b>Description:</b>{{sr.description}}</div>-->
+                  <div class="item-card"><b>Source:</b>{{sr.source.name}}</div>
+                  <div class="item-card"><b>Date:</b>{{getDate(sr.date)}}</div>
+                </div>
+            </div>
+          </md-card-content>
+        </md-card>

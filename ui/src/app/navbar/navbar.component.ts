@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Http } from '@angular/http';
-import { Router, ActivatedRoute } from '@angular/router';
+
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +11,7 @@ export class NavbarComponent implements OnInit {
 
     api:string;
 
-  constructor(public router: Router, public http: Http, public route: ActivatedRoute) {
+  constructor( public http: Http) {
   }
 
   ngOnInit() {

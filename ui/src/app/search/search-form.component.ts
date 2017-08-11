@@ -7,7 +7,7 @@ import { SearchService } from "./search.service";
 import { BookmarkService } from "../_services/bookmark.service";
 import { MultimediaContent } from "../_models/multimediaContent";
 import { MdDialog, MdDialogRef,DateAdapter } from "@angular/material";
-import { DialogDetailComponent } from "../dialog-detail/dialog-detail.component";
+import { DialogDetail } from "../dialog-detail/dialog-detail.component";
 import { NgSwitch } from '@angular/common';
 import { CustomDateAdapter } from './custom-date-adapter'
 
@@ -46,7 +46,8 @@ export class SearchFormComponent {
 
     constructor(private searchService: SearchService, private route: ActivatedRoute,
                 private router: Router,private BookmarkService: BookmarkService,
-                private dateAdapter: DateAdapter<Date>){
+                private dateAdapter: DateAdapter<Date>,
+                private dialog: MdDialog){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
         this.dateAdapter.setLocale('ll');
@@ -61,6 +62,19 @@ export class SearchFormComponent {
         }
         
     }
+
+
+     openDialog(item) {
+   console.log('item sr',item);
+let dialogRef = this.dialog.open(DialogDetail, {
+  
+  data: item,
+  height: 'auto',
+  width: '600px',
+  position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+});
+   
+}
 
 @HostListener("window:scroll", ["$event"])
 onWindowScroll() {
@@ -112,6 +126,9 @@ onWindowScroll() {
                   }
                 )
     }
+
+
+
 
 
 

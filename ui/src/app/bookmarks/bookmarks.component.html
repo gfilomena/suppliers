@@ -28,11 +28,13 @@
      <div class="sub_container-card" *ngFor="let item of bookmarks">
        <div *ngIf="filter(item.multimediaContent.type)">
         <md-card class="card">
-           <div *ngIf="item.multimediaContent.thumbnail; else defaultimg">
-              <img md-card-image class="image-card" src="{{item.multimediaContent.thumbnail}}" >
+           <div *ngIf="item.multimediaContent.thumbnail; else defaultimg" class="image-card">
+              <img md-card-image  src="{{item.multimediaContent.thumbnail}}" (click)="openDialog(item.multimediaContent)">
           </div>
           <ng-template #defaultimg>
-                <img md-card-image class="image-card" src="../assets/images/logo_producer_511x103.jpg" >
+            <div class="image-card">
+                <img md-card-image src="../assets/images/logo_producer_511x103.jpg"  (click)="openDialog(item.multimediaContent)">
+            </div>
           </ng-template>
           <md-card-content class="content-card">
              <div fxLayout="row">
@@ -44,13 +46,13 @@
                         <div *ngSwitchCase="'text'"><button md-icon-button><md-icon>textsms</md-icon></button></div>
                      </div>
                         <button md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>star</md-icon></button>
-                        <app-dialog-detail [multimediaContent]="item.multimediaContent"></app-dialog-detail>
+                        <button md-icon-button mdTooltip="Click for more info."  (click)="openDialog(item.multimediaContent)"><md-icon>info</md-icon></button>
                 </div>
-                <div class="detail-card" fxLayout="column">
-                  <p><b>Title:</b>{{item.multimediaContent.name}}</p>
-                  <p><b>Description:</b>{{item.multimediaContent.description}}</p>
-                  <p><b>Source:</b>{{item.multimediaContent.source.name}}</p>
-                  <p><b>Date:</b>{{getDate(item.multimediaContent.date)}}</p>
+                <div class="detail-card" fxLayout="column" >
+                  <div class="title-card"><b>Title:</b>{{item.multimediaContent.name}}</div>
+                 <!-- <div class="description"><b>Description:</b>{{sr.description}}</div>-->
+                  <div class="source-card"><b>Source:</b>{{item.multimediaContent.source.name}}</div>
+                  <div class="date-card"><b>Date:</b>{{getDate(item.multimediaContent.date)}}</div>
                 </div>
             </div>
           </md-card-content>

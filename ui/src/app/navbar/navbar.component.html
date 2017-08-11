@@ -37,10 +37,10 @@
 -->
 
 <md-toolbar *ngIf="isLoggedIn()" color="primary">
-                 <span>
-				
+                 <span class="span-logo">
 					<img class="logo" src="../assets/images/logo_producer_511x103.jpg">
-				</span>			
+				</span>
+				 <span><breadcrumb class="breadcrumbs"></breadcrumb></span>			
 	            <span class="menu">
 				<button md-button [routerLink]="['/']"> Home </button>
 				<button md-button [routerLink]="['/search-history']"> Search History </button>

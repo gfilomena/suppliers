@@ -1,14 +1,14 @@
 .card {
-    /*display:inline-block;
-    display: inline-table;*/
-    display:flow-root;
-    width: 175px;
-    height: 100%;
-    margin: 3px;
-   /* vertical-align: top;
-    cursor: pointer;
-    overflow: visible; */
+    height: 100px;
 }
+.card:hover{
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+md-list-item:hover{
+     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
 .detail-card {
     font-size: 70%;
     overflow-x: hidden;
@@ -96,4 +96,10 @@
 
 .date{
     font-size: x-small;
+    margin-left: 30px;
+}
+
+.keywords{
+    font-size: x-small;
+    margin-right: 5px;
 }
