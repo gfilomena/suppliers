@@ -38,7 +38,15 @@ const appRoutes: Routes = [
     { path: "bookmarks", component: BookmarksComponent , data: { breadcrumb: 'bookmarks' }},
     { path: "search-history", component: SearchHistoryComponent , data: { breadcrumb: 'search history' }},
     { path: "setting-rep", component: DialogRepositoryComponent , data: { breadcrumb: 'setting repository' }},
-    { path: "profile", component: ProfileComponent , data: { breadcrumb: 'profile' }},
+    { path: "profile", component: ProfileComponent , data: { breadcrumb: 'profile' },
+   /*children: [
+      { path: '', redirectTo: 'profile', pathMatch: 'full' },
+      {
+        path: "setting",
+        component: SettingComponent,
+        data: { breadcrumb: 'setting' }
+       } ]*/
+    },
     
     // otherwise redirect to home
     { path: "**", redirectTo: "" }

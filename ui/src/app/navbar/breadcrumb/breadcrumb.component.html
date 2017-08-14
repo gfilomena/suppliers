@@ -1,5 +1,5 @@
 
 
 <div *ngFor="let breadcrumb of breadcrumbs; let i = index; let l = last">
-            <button class="breadcrumb_item" md-button [routerLink]="[breadcrumb.url]"> {{ breadcrumb.label }}</button>       
+            <a class="breadcrumb_item"  [routerLink]="[breadcrumb.url]"> {{ breadcrumb.label }}</a>       
 </div>

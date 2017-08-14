@@ -21,11 +21,14 @@
                 <tr *ngFor="let rep of repositories">
                   <td class="name">{{rep.name}}</td>
                   <td class="uri">{{rep.URI}}</td>
-                  <td><button md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
-                  <td><button md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
+                  <td><button class="item" md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
+                  <td><button class="item" md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
                 </tr>  
                 <tr>
-                  <td  align="right" colspan="4"><button md-icon-button (click)="create()"><md-icon>add circle</md-icon></button></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                  <td  align="right" ><button class="add" md-icon-button (click)="create()"><md-icon>add circle</md-icon></button></td>
                 </tr>  
               </tbody>
           </table>

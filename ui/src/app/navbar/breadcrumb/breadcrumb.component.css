@@ -1,9 +1,12 @@
 .breadcrumb_item{
     width:50px;
-    color:black;
+    color: currentColor;
+    text-decoration: none;
+    font-size: 13px;
+    font-weight: bolder;
 }
 
 .breadcrumb_item:hover{
-
+  color:grey;
 }
 
