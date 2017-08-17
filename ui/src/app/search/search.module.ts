@@ -3,7 +3,6 @@ import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
 import { SearchFormComponent }    from './search-form.component';
 import { SearchService } from './search.service';
-import { MultimediaContentComponent } from '../multimedia-content/multimedia-content.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NoopAnimationsModule } from "@angular/platform-browser/animations"
 import "hammerjs";
@@ -26,8 +25,6 @@ import { BookmarksComponent } from '../bookmarks/bookmarks.component';
   ],
   declarations: [
     SearchFormComponent,
-    MultimediaContentComponent,
-  
     DialogRepositoryComponent,
     DialogRepositoryDetail,
     DialogDetail,

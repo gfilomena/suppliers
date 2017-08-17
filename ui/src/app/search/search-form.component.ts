@@ -13,7 +13,7 @@ import { CustomDateAdapter } from './custom-date-adapter'
 
 @Component({
   selector: 'app-search-form',
-  providers: [SearchService, {provide: DateAdapter, useClass: CustomDateAdapter } ],
+  providers: [ {provide: DateAdapter, useClass: CustomDateAdapter } ],
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.css']
 })
@@ -125,6 +125,8 @@ onWindowScroll() {
                       this.submitted = false;
                   }
                 )
+
+               
     }
 
 

@@ -7,7 +7,6 @@ import { User } from "../_models/user";
 import { SearchForm }    from '../_models/search-form';
 @Component({
   selector: 'app-search-history',
-  providers: [HistorysearchService],
   templateUrl: './search-history.component.html',
   styleUrls: ['./search-history.component.css']
 })

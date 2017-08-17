@@ -16,7 +16,7 @@
 </md-card>
   </div>
   <div  fxFlex>
-  <md-card>
+
   <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
       <md-card>
@@ -52,7 +52,7 @@
        </md-card>
     </div>
 </form>
-</md-card>
+
 <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
 
 <div class="container-card"  fxflex>
