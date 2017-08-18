@@ -13,6 +13,7 @@ import { CustomDateAdapter } from './custom-date-adapter'
 
 @Component({
   selector: 'app-search-form',
+  //issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter 
   providers: [ {provide: DateAdapter, useClass: CustomDateAdapter } ],
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.css']

@@ -13,32 +13,15 @@ import { DialogRepositoryComponent } from "./dialog-repository/index"
 import {HashLocationStrategy, Location, LocationStrategy, APP_BASE_HREF} from '@angular/common';
 import { ProfileComponent } from "./profile/index"
 const appRoutes: Routes = [
-    { path: "",
-      component: SearchFormComponent,
-      canActivate: [AuthGuard],
-      data: { breadcrumb: 'home' }
-  /* children: [
-      { path: '', redirectTo: 'bookmarks', pathMatch: 'full' },
-      {
-        path: "bookmarks",
-        component: BookmarksComponent,
-        data: { breadcrumb: 'bookmarks' }
-       },
-       {
-        path: "setting",
-        component: SettingComponent,
-        data: { breadcrumb: 'setting' }
-       }
-
-   ]*/
-    },
-    { path: "login", component: LoginComponent , data: { breadcrumb: 'login' }},
-    { path: "register", component: RegisterComponent, data: { breadcrumb: 'register' }},
-    { path: "setting", component: SettingComponent , data: { breadcrumb: 'setting' }},
-    { path: "bookmarks", component: BookmarksComponent , data: { breadcrumb: 'bookmarks' }},
-    { path: "search-history", component: SearchHistoryComponent , data: { breadcrumb: 'search history' }},
-    { path: "setting-rep", component: DialogRepositoryComponent , data: { breadcrumb: 'setting repository' }},
-    { path: "profile", component: ProfileComponent , data: { breadcrumb: 'profile' },
+    { path: "", redirectTo: 'home', pathMatch: 'full' },
+    { path: "home", component: SearchFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'home' }},
+    { path: "login", component: LoginComponent, canActivate: [AuthGuard], data: { breadcrumb: 'login' }},
+    { path: "register", component: RegisterComponent, canActivate: [AuthGuard], data: { breadcrumb: 'register' }},
+    { path: "setting", component: SettingComponent, canActivate: [AuthGuard], data: { breadcrumb: 'setting' }},
+    { path: "bookmarks", component: BookmarksComponent, canActivate: [AuthGuard], data: { breadcrumb: 'bookmarks' }},
+    { path: "search-history", component: SearchHistoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'search history' }},
+    { path: "setting-rep", component: DialogRepositoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'setting repository' }},
+    { path: "profile", component: ProfileComponent, canActivate: [AuthGuard], data: { breadcrumb: 'profile' },
    /*children: [
       { path: '', redirectTo: 'profile', pathMatch: 'full' },
       {

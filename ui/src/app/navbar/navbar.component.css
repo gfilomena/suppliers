@@ -41,6 +41,11 @@ md-toolbar,md-toolbar-row{
       font-weight: 600;
 }
 
+.active{
+  background-color: transparent;
+  color: slategrey;
+}
+
 .breadcrumbs{
    display: flex;
     box-sizing: border-box;
