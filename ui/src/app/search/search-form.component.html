@@ -19,7 +19,7 @@
 
   <form name="form" (ngSubmit)="f.form.valid && onSubmit()" #f="ngForm" novalidate>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
-      <md-card>
+      <md-card class="form">
         <div>
        <md-input-container  fxFlex> 
         <input mdInput placeholder="Are you searching for" value=""  minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText" required>
