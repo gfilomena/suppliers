@@ -13,20 +13,20 @@ import { MdDialog } from "@angular/material";
 })
 export class BookmarksComponent implements OnInit {
 
-   bookmarks: Bookmark[];
-   videofilter: Boolean = true;
-   audiofilter: Boolean = true;
-   textfilter: Boolean = true;
-   imagefilter: Boolean = true;
+    bookmarks: Bookmark[];
+    videofilter: Boolean = true;
+    audiofilter: Boolean = true;
+    textfilter: Boolean = true;
+    imagefilter: Boolean = true;
 
     VideoResult: number = 0;
     ImageResult: number = 0;
     AudioResult: number = 0;
     TextResult: number = 0;
     nResults: number;
-   filterbar:boolean = true;
-   showSidebar: boolean = true;
-   submitted: boolean = false;
+    filterbar:boolean = true;
+    showSidebar: boolean = true;
+    submitted: boolean = false;
 
   constructor( private BookmarkService:BookmarkService,
                private alertService: AlertService,
@@ -36,16 +36,15 @@ export class BookmarksComponent implements OnInit {
     this.getAllBookmarks();
   }
 
-       openDialog(item) {
-   console.log('item sr',item);
-let dialogRef = this.dialog.open(DialogDetail, {
-  
-  data: item,
-  height: 'auto',
-  width: '600px',
-  position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
-});
-   
+openDialog(item:MultimediaContent) {
+    console.log('item sr',item);
+        let dialogRef = this.dialog.open(DialogDetail, {
+        height: 'auto',
+        width: '600px',
+        position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+        });
+
+    dialogRef.componentInstance.data = item;
 }
 
 

@@ -1,15 +1,16 @@
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
-import { Component, Inject, HostListener  } from '@angular/core';
+import { Component, Inject, HostListener, Output, EventEmitter  } from '@angular/core';
 import { Router, ActivatedRoute } from "@angular/router"
 import { User } from "../_models/user";
 import { SearchService } from "./search.service";
 import { BookmarkService } from "../_services/bookmark.service";
 import { MultimediaContent } from "../_models/multimediaContent";
-import { MdDialog, MdDialogRef,DateAdapter } from "@angular/material";
+import { MdDialog, MdDialogRef,DateAdapter, MdSnackBar } from "@angular/material";
 import { DialogDetail } from "../dialog-detail/dialog-detail.component";
 import { NgSwitch } from '@angular/common';
 import { CustomDateAdapter } from './custom-date-adapter'
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-search-form',
@@ -44,15 +45,20 @@ export class SearchFormComponent {
    showSidebar: boolean = true;
    history:any;
    nOfResults:number;
+   bookmarks: Bookmark[];
+   minDate = new Date(2017, 0, 1);
+   maxDate = new Date(2018, 0, 1);
 
+   
     constructor(private searchService: SearchService, private route: ActivatedRoute,
                 private router: Router,private BookmarkService: BookmarkService,
                 private dateAdapter: DateAdapter<Date>,
-                private dialog: MdDialog){
+                private dialog: MdDialog,
+                public snackBar: MdSnackBar){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
         this.dateAdapter.setLocale('ll');
-        
+
         if (localStorage["searchForm"]) {
            this.searchForm= new SearchForm('',historyform.keywords,'',historyform.inDate,historyform.endDate,'') 
            localStorage.removeItem("searchForm")
@@ -65,20 +71,30 @@ export class SearchFormComponent {
     }
 
 
-     openDialog(item) {
-   console.log('item sr',item);
-let dialogRef = this.dialog.open(DialogDetail, {
-  
-  data: item,
-  height: 'auto',
-  width: '600px',
-  position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
-});
-   
+openDialog(mc) {
+ 
+
+        let dialogRef = this.dialog.open(DialogDetail, {
+        height: 'auto',
+        width: '600px',
+        position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+        });
+
+
+        dialogRef.componentInstance.data = mc;
+
+          const sub = dialogRef.componentInstance.mcupdate.subscribe(() => {
+            console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:',mc)
+     
+          });
+          dialogRef.afterClosed().subscribe(() => {
+            sub.unsubscribe();
+          });
 }
 
+
 @HostListener("window:scroll", ["$event"])
-onWindowScroll() {
+    onWindowScroll() {
 
          let status = "not reached";
          let windowHeight = "innerHeight" in window ? window.innerHeight
@@ -91,15 +107,11 @@ onWindowScroll() {
          if (windowBottom + 1 >= docHeight) {
           console.log('bottom reached');
          }
-
-        // console.log('windowBottom',windowBottom)
-        // console.log('windowHeight',windowHeight)
-        // console.log('docHeight',docHeight)
          
 }
 
 
-    onSubmit() {
+onSubmit() {
 
         this.submitted = true;
         console.log('this.searchForm',this.searchForm);
@@ -109,7 +121,7 @@ onWindowScroll() {
 }
 
 
-    search(){
+search(){
         this.searchService.search(this.searchForm)
         .subscribe(
                   res => {
@@ -126,19 +138,64 @@ onWindowScroll() {
                       this.submitted = false;
                   }
                 )
+}
 
-               
+    checkSaveBookmark(mc:MultimediaContent) {
+
+
+        let bookmarks : Bookmark[];
+        let exist: boolean = false;
+        let responses$ =  this.BookmarkService.findByUser().subscribe(
+            res => {
+                console.log('getBookmarks- subscribe - ok:',res);
+                bookmarks = res;  
+                for(let item of res) {
+                    
+                    if (mc.uri == item.multimediaContent.uri) {
+                        console.log('mc:',mc.uri)
+                        console.log('item:',item.multimediaContent.uri)
+                        exist = true;
+                    }
+                }
+                if(!exist) {
+                    this.saveMC(mc);
+                }else{
+                    this.openSnackBar('The Bookmark was already saved',"error");
+                }
+            },
+            error => {
+                console.log('getBookmarks - subscribe - error:',error);
+            }
+        )
     }
 
+    saveMC(mc:MultimediaContent){
+        
+         let bookmark = new Bookmark(this.currentUser.username,mc);
+         console.log('bookmark:',bookmark);
+        
+         this.BookmarkService.create(bookmark)
+                .subscribe(
+                          res => {
+                              console.log('saveMC - subscribe OK:',res);
+                              let element = document.getElementById(mc.uri);
+                                  element.innerText = "star"
+                          },
+                          error => {
+                              console.log('saveMC - subscribe - error:',error);
+                          }
+                        )
+        }    
+
+        openSnackBar(message: string, action: string) {
+            this.snackBar.open(message, action, {
+              duration: 2000,
+            });
+          }
 
 
 
-
-
-
-
-
-        counter(array) {
+   counter(array) {
     var i:number
         for(i = 0;i<array.length;i++) { 
          var type = array[i].type
@@ -211,22 +268,7 @@ onWindowScroll() {
     }
 
 
-saveMC(mc:MultimediaContent){
- let bookmark = new Bookmark(this.currentUser.username,mc);
- console.log('bookmark:',bookmark);
 
- this.BookmarkService.create(bookmark)
-        .subscribe(
-                  res => {
-                      console.log('saveMC - subscribe OK:',res);
-                      let element = document.getElementById(mc.uri);
-                          element.innerText = "star"
-                  },
-                  error => {
-                      console.log('saveMC - subscribe - error:',error);
-                  }
-                )
-}    
 
 sidebar(size:number):number {
   if(this.showSidebar){
@@ -240,6 +282,10 @@ sidebar(size:number):number {
 
   getDate(date:string): string{
     return new Date(date).toString().slice(0,15);
+  }
+
+  toDate(date){
+      console.log('date',date)
   }
 
 

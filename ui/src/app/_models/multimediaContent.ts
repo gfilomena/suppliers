@@ -2,6 +2,7 @@ export class MultimediaContent {
     type: string
     fileExtension: string
     length: string
+    metadata:string[]
     name: string
     description: string
     thumbnail: string
@@ -10,4 +11,5 @@ export class MultimediaContent {
     uri: string
     licenseType: string
     date: string
+    bookmark: boolean
 }

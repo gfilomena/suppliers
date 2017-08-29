@@ -35,13 +35,13 @@
           </div>-->
           <md-input-container fxFlex>
             <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate"
-                   name="inDate" required>
+                   name="inDate" [max]="searchForm.endDate" required>
             <button mdSuffix [mdDatepickerToggle]="startdate"></button>
           </md-input-container>
           <md-datepicker #startdate></md-datepicker>
           <md-input-container fxFlex fxFlexOffset="2">
             <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate"
-                   name="endDate" required>
+                   name="endDate" [min]="searchForm.inDate" required>
             <button mdSuffix [mdDatepickerToggle]="enddate"></button>
           </md-input-container>
           <md-datepicker #enddate></md-datepicker>
@@ -78,7 +78,7 @@
                         <div *ngSwitchCase="'audio'"><button md-icon-button><md-icon>audiotrack</md-icon></button></div>
                         <div *ngSwitchCase="'text'"><button md-icon-button><md-icon>textsms</md-icon></button></div>
                      </div>
-                        <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="saveMC(sr)"><md-icon id="{{sr.uri}}">star_border</md-icon></button>
+                        <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(sr)"><md-icon id="{{sr.uri}}">star_border</md-icon></button>
                         <button md-icon-button mdTooltip="Click for more info."  (click)="openDialog(sr)"><md-icon>info</md-icon></button>
                 </div>
                 <div class="detail-card" fxLayout="column" >

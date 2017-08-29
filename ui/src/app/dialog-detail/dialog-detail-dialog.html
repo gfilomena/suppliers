@@ -44,12 +44,31 @@
 
   <md-card-content>
 <div fxLayout="column" fxLayoutAlign="space-around none" fxFlexOffset="2">
-    <div><h5>{{data.description}}</h5></div>
-    <md-chip-list>
-      <md-basic-chip class="badge">Tag 1</md-basic-chip>
-      <md-basic-chip class="badge">Tag 2</md-basic-chip>
+
+    <div>
+        <h5>
+          <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(data)"><md-icon id="({{data.uri}})">star_border</md-icon></button>
+               {{data.description}}
+        </h5>
+      </div>
+    <md-chip-list fxLayout="row" >
+      <md-basic-chip *ngFor="let tag of data.metadata" class="badge">
+        {{tag}}
+      </md-basic-chip>
     </md-chip-list>
-    <div><h6>Repository:{{data.source.name}} - Date:{{getDate(data.date)}}</h6></div>
+    <button md-icon-button mdTooltip="Insert Tag" (click)="tagInsert = !tagInsert">
+      <div *ngIf="tagInsert">
+          <md-icon>remove_circle</md-icon>
+      </div>
+      <div *ngIf="!tagInsert">
+          <md-icon>add_circle</md-icon>
+      </div>
+    </button>
+            <md-input-container  *ngIf="tagInsert">
+              <input #newtag mdInput placeholder="insert Tag" value="sport" (keyup.enter)="saveTag(data, newtag.value)" >
+            </md-input-container>
+    <div>
+      <h6>Repository:{{data.source.name}} - Date:{{getDate(data.date)}}</h6></div>
 </div>
   </md-card-content>
    <md-card-actions align="end">
