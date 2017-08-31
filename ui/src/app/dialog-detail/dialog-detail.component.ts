@@ -98,7 +98,7 @@ export class DialogDetail implements OnInit  {
       console.log('newtag', newtag)
       console.log('before-mc', mc)
       if(mc.metadata == null) {mc.metadata = [];}
-      if (mc.metadata.find(x => x == newtag) == undefined) {
+      if (mc.metadata.find(x => x == newtag) == undefined && !isNullOrWhiteSpace(newtag)) {
         mc.metadata.push(newtag)
       }
       
@@ -146,4 +146,9 @@ export class DialogDetail implements OnInit  {
    getDate(date:string):string{
     return new Date(date).toString().slice(0,15);
   }
+
+}
+
+function isNullOrWhiteSpace(str){
+    return str == null || str.replace(/\s/g, '').length < 1;
 }
