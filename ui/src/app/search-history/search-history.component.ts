@@ -30,7 +30,7 @@ export class SearchHistoryComponent implements OnInit {
             .subscribe(
                       res => {
                           console.log('get all history - subscribe OK:',res)
-                          this.searchResult=this.arrToString(res)
+                          this.searchResult=this.arrToString(res.reverse())
                           this.nResults = this.searchResult.length;
                           console.log('this.searchResult',this.searchResult)
                               this.loading = false;

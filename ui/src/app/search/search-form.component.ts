@@ -46,9 +46,8 @@ export class SearchFormComponent {
    history:any;
    nOfResults:number;
    bookmarks: Bookmark[];
-   minDate = new Date(2017, 0, 1);
-   maxDate = new Date(2018, 0, 1);
 
+   
    
     constructor(private searchService: SearchService, private route: ActivatedRoute,
                 private router: Router,private BookmarkService: BookmarkService,
@@ -57,11 +56,29 @@ export class SearchFormComponent {
                 public snackBar: MdSnackBar){
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
-        this.dateAdapter.setLocale('ll');
 
+        this.dateAdapter.setLocale('ll');
+        if (localStorage["lastresearch"]) {
+            this.searchResult = JSON.parse(localStorage.getItem("lastresearch"))
+            this.counter(this.searchResult)
+            this.nOfResults = this.searchResult.length;
+        }
+        
         if (localStorage["searchForm"]) {
-           this.searchForm= new SearchForm('',historyform.keywords,'',historyform.inDate,historyform.endDate,'') 
-           localStorage.removeItem("searchForm")
+            if (this.searchForm == undefined) {
+                console.log('undefined - this.searchForm',this.searchForm)
+                this.searchForm= new SearchForm('',historyform.freeText,'',new Date(historyform.inDate),new Date(historyform.endDate),'') 
+                console.log('undefined - this.searchForm',this.searchForm)
+            }else{
+                console.log('this.searchForm',this.searchForm)
+                this.searchForm.freeText = historyform.freeText
+                this.searchForm.inDate = new Date(historyform.inDate)
+                this.searchForm.endDate = new Date(historyform.endDate)
+            }
+
+
+          
+           //localStorage.removeItem("searchForm")
         }else{
             console.log('NEW searchForm')
             let type :string[]
@@ -127,6 +144,7 @@ search(){
                   res => {
                       this.searchResult=res.json().multimediaContents;
                       console.log('this.searchResult: '+this.searchResult);
+                      localStorage.setItem("lastresearch", JSON.stringify(this.searchResult));
                       this.counter(this.searchResult)
                       //this.validator(this.searchResult)
                       this.nOfResults = this.searchResult.length;
@@ -193,6 +211,17 @@ search(){
             });
           }
 
+getImage(mc:MultimediaContent):string {
+
+    if(mc.source.name === "Wikipedia"){
+        return "http://www.flipmagazine.eu/wp-content/uploads/2017/05/wiki-.jpeg"
+    }else if(mc.thumbnail) {
+        return mc.thumbnail
+    }else{
+        return "../assets/images/logo_producer_511x103.jpg"
+    }
+
+}
 
 
    counter(array) {
@@ -284,9 +313,6 @@ sidebar(size:number):number {
     return new Date(date).toString().slice(0,15);
   }
 
-  toDate(date){
-      console.log('date',date)
-  }
 
 
 }

@@ -7,7 +7,9 @@ export class MultimediaContent {
     description: string
     thumbnail: string
     downloadUri: string
-    source: string
+    source: {
+        name:string
+    }
     uri: string
     licenseType: string
     date: string

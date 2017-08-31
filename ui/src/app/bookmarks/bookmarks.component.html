@@ -1,5 +1,5 @@
 <div align="center">
- <div *ngIf="nResults > 0"><button md-icon-button (click)="deleteAllByUser()"><md-icon>delete</md-icon>Delete All Bookmarks</button></div>
+ <div *ngIf="nResults > 0"><button class="delete" md-icon-button (click)="deleteAllByUser()"><md-icon>delete</md-icon>Delete All Bookmarks</button></div>
  <h3 *ngIf="nResults == 0">No bookmarks available.</h3>
 </div>
 <div class="container">

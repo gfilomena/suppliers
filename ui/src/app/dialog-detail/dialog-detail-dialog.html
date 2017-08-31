@@ -34,7 +34,7 @@
     </audio>
   </div>
   <div *ngSwitchCase="'text'">
-
+    <img width="100%" height="250px" src="http://www.flipmagazine.eu/wp-content/uploads/2017/05/wiki-.jpeg" class="image-card">
   </div>
 </div>
 
@@ -45,30 +45,38 @@
   <md-card-content>
 <div fxLayout="column" fxLayoutAlign="space-around none" fxFlexOffset="2">
 
-    <div>
-        <h5>
-          <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(data)"><md-icon id="({{data.uri}})">star_border</md-icon></button>
-               {{data.description}}
-        </h5>
+      <div>
+        <h5></h5>
       </div>
     <md-chip-list fxLayout="row" >
       <md-basic-chip *ngFor="let tag of data.metadata" class="badge">
         {{tag}}
       </md-basic-chip>
     </md-chip-list>
-    <button md-icon-button mdTooltip="Insert Tag" (click)="tagInsert = !tagInsert">
-      <div *ngIf="tagInsert">
-          <md-icon>remove_circle</md-icon>
-      </div>
-      <div *ngIf="!tagInsert">
-          <md-icon>add_circle</md-icon>
-      </div>
-    </button>
-            <md-input-container  *ngIf="tagInsert">
-              <input #newtag mdInput placeholder="insert Tag" value="sport" (keyup.enter)="saveTag(data, newtag.value)" >
-            </md-input-container>
+<table>
+  <tr><td> 
+    <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(data)"><md-icon id="({{data.uri}})">star_border</md-icon></button>
+  </td><td rowspan="2"> {{data.description}}</td></tr>
+   <tr><td>   <button md-icon-button mdTooltip="Insert Tag" (click)="tagInsert = !tagInsert">
+        <div *ngIf="tagInsert">
+            <md-icon>remove_circle</md-icon>
+        </div>
+        <div *ngIf="!tagInsert">
+            <md-icon>add_circle</md-icon>
+        </div>
+      </button>
+             
+</td>
+  <td >
+     
+  </td>
+</tr>
+</table>
+<md-input-container  *ngIf="tagInsert">
+    <input #newtag mdInput placeholder="insert Tag" value="sport" (keyup.enter)="saveTag(data, newtag.value)" >
+  </md-input-container>
     <div>
-      <h6>Repository:{{data.source.name}} - Date:{{getDate(data.date)}}</h6></div>
+      <h6>Repository:<a [href]="data.uri">{{data.source.name}}</a> - Date:{{getDate(data.date)}}</h6></div>
 </div>
   </md-card-content>
    <md-card-actions align="end">

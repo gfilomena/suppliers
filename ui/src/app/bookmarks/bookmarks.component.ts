@@ -53,7 +53,7 @@ openDialog(item:MultimediaContent) {
     this.BookmarkService.getAll()
             .subscribe(
                 data => {
-                    this.bookmarks = data
+                    this.bookmarks = data.reverse()
                     this.counter(data)
                     this.submitted = false
                     this.nResults = data.length
