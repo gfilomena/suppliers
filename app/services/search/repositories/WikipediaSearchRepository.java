@@ -18,7 +18,7 @@ import java.util.*;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-
+import services.nuxeo.NuxeoService;
 /**
  * Created by Giuseppe on 29/08/2017.
  */
@@ -40,7 +40,7 @@ public class WikipediaSearchRepository  implements SearchRepository {
             query+=s;
             query+="+";
         }
-        Logger.info("Wikipedia search: "+query);
+        //Logger.info("Wikipedia search: "+query);
         CompletionStage<JsonNode> jsonPromise;
         jsonPromise = ws.url(reg.getRepository().getURI()).
                 setQueryParameter("action", "opensearch").
@@ -61,7 +61,7 @@ public class WikipediaSearchRepository  implements SearchRepository {
         WikipediaRepositoryResponseMapping respMapping=new WikipediaRepositoryResponseMapping();
         List<MultimediaContent> stages=new ArrayList<>();
         //List<JsonNode> items=clientResponse.findValues("items");
-
+        NuxeoService ns = new NuxeoService();
  
         if(clientResponse.get(1)!=null) {
             ArrayNode titleArray = (ArrayNode) clientResponse.get(1);
@@ -73,17 +73,16 @@ public class WikipediaSearchRepository  implements SearchRepository {
             respMapping.setnOfResults(clientResponse.get(1).size());
 
             List<ArrayNode> itemsList = new ArrayList<ArrayNode>();
-           
             ArrayNode item;
             for(int i = 0; i < titleArray.size(); i++ ) {
             	//titleArray.get(i)+","+descArray.get(i)+","+linkArray.get(i)
             	 JsonNode title = titleArray.get(i);
             	 JsonNode desc = descArray.get(i);
             	 JsonNode link = linkArray.get(i);
-            	 
-            	 Logger.info("title:"+titleArray.get(i).asText());
-            	 Logger.info("desc:"+descArray.get(i).asText());
-            	 Logger.info("link:"+linkArray.get(i).asText());
+            	 Logger.info("Nuxeo Service" + i +"->"+ns.create(title.asText(), desc.asText()));
+//            	 Logger.info("title:"+titleArray.get(i).asText());
+//            	 Logger.info("desc:"+descArray.get(i).asText());
+//            	 Logger.info("link:"+linkArray.get(i).asText());
             	 
             	 item = new ArrayNode(null);
             	 item.add(title);
@@ -93,7 +92,7 @@ public class WikipediaSearchRepository  implements SearchRepository {
             	itemsList.add(i, item);
             }
             
-            Logger.info("ITEM:"+itemsList);
+            //Logger.info("ITEM:"+itemsList);
             
 
             
@@ -115,7 +114,6 @@ public class WikipediaSearchRepository  implements SearchRepository {
                         .collect(Collectors.toList());
             }
         }
-        Logger.info("stages:"+stages);
         respMapping.setMultimediaContents(stages);
         return respMapping;
     }
