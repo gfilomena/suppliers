@@ -80,7 +80,7 @@
 </div>
   </md-card-content>
    <md-card-actions align="end">
-    <button md-button>Send to MCSSR</button>
+    <button md-button (click)="sendMcssr(data)">Send to MCSSR</button>
     <button md-button  [md-dialog-close]="true">Close</button>
   </md-card-actions>
 </md-card>

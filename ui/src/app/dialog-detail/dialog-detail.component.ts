@@ -1,3 +1,4 @@
+import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs,RequestOptions, Headers  } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
@@ -26,6 +27,7 @@ export class DialogDetail implements OnInit  {
     public sanitizer: DomSanitizer,
     public http: Http,
     private BookmarkService: BookmarkService,
+    private McssrService: McssrService,
     public snackBar: MdSnackBar) {
       this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
     }
@@ -101,11 +103,22 @@ export class DialogDetail implements OnInit  {
       if (mc.metadata.find(x => x == newtag) == undefined && !isNullOrWhiteSpace(newtag)) {
         mc.metadata.push(newtag)
       }
-      
-      
-
       //this.mcupdate.emit(mc);
   }
+
+  sendMcssr(mc:MultimediaContent) {
+
+    this.McssrService.create(mc)
+    .subscribe(
+              res => {
+                  console.log('Send to Mcssr - subscribe OK:',res);
+              },
+              error => {
+                  console.log('saveMC - subscribe - error:',error);
+              }
+            )
+    
+          }
 
  uriValidation(uri: string)
   {

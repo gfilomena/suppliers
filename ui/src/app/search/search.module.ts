@@ -1,3 +1,4 @@
+import { McssrService } from './../_services/mcssr.service';
 import { NgModule }       from '@angular/core';
 import { CommonModule }   from '@angular/common';
 import { FormsModule }    from '@angular/forms';
@@ -32,7 +33,7 @@ import { BookmarksComponent } from '../bookmarks/bookmarks.component';
   ],
   // entryComponents declare Components created manually
   entryComponents: [DialogDetail,DialogRepositoryDetail],  
-  providers: [ SearchService ]
+  providers: [ SearchService, McssrService ]
 })
 export class SearchModule {
 
