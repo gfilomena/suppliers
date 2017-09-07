@@ -58,11 +58,11 @@ export class SearchFormComponent {
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
 
         this.dateAdapter.setLocale('ll');
-        if (localStorage["lastresearch"]) {
+       /* if (localStorage["lastresearch"]) {
             this.searchResult = JSON.parse(localStorage.getItem("lastresearch"))
             this.counter(this.searchResult)
             this.nOfResults = this.searchResult.length;
-        }
+        }*/
         
         if (localStorage["searchForm"]) {
             if (this.searchForm == undefined) {
@@ -143,7 +143,7 @@ search(){
         .subscribe(
                   res => {
                       this.searchResult=res.json().multimediaContents;
-                      console.log('this.searchResult: '+this.searchResult);
+                      console.log(res);
                       localStorage.setItem("lastresearch", JSON.stringify(this.searchResult));
                       this.counter(this.searchResult)
                       //this.validator(this.searchResult)

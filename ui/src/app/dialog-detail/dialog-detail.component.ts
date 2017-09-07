@@ -93,8 +93,23 @@ export class DialogDetail implements OnInit  {
       duration: 2000,
     });
   }
+/*
+  saveTag(mc:MultimediaContent, newtag:string){
+    console.log('newtag', newtag)
+    console.log('before-mc', mc)
+    newtag = newtag.trim();
+    if(mc.metadata == null) {mc.metadata = "";}
 
- 
+    let re = "/"+newtag+"/gi"; 
+
+    if (mc.metadata.search(re) == -1 ) { 
+    
+        mc.metadata =+ ","+newtag;
+    }
+    //this.mcupdate.emit(mc);
+}
+*/
+
 
   saveTag(mc:MultimediaContent, newtag:string){
       console.log('newtag', newtag)
@@ -106,15 +121,24 @@ export class DialogDetail implements OnInit  {
       //this.mcupdate.emit(mc);
   }
 
+  removeTag(mc:MultimediaContent,tag:string) {
+      let index = mc.metadata.findIndex(x => x == tag);
+    if (index != -1 && !isNullOrWhiteSpace(tag)) {
+        mc.metadata.splice(index);
+      }
+  }
+
   sendMcssr(mc:MultimediaContent) {
 
     this.McssrService.create(mc)
     .subscribe(
               res => {
                   console.log('Send to Mcssr - subscribe OK:',res);
+                  this.openSnackBar('The Multimedia Item has been sent correctly to Mcssr',"Successful!");
               },
               error => {
-                  console.log('saveMC - subscribe - error:',error);
+                  console.log('Send to Mcssr - subscribe - error:',error);
+                  this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr',"error!");
               }
             )
     

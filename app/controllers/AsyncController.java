@@ -82,7 +82,8 @@ public class AsyncController extends Controller {
         MongoDBService.getDatastore().save(r);
         License l=new License();
         MongoDBService.getDatastore().save(l);
-        MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432",2048,"videotest1","description", "thumbnail","downloadURI",r, l, new Date(), "{ metadata: test }");
+        String[] metadata = new String[0];
+        MultimediaContent mc=new MultimediaContent(MultimediaType.video,"mp4", "youtube/dsadaòjs432",2048,"videotest1","description", "thumbnail","downloadURI",r, l, new Date(),metadata);
         MongoDBService.getDatastore().save(mc);
         qr.getMultimediaContents().add(mc);
         //qr.getMultimediaContents().add(mc);

@@ -62,7 +62,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
 
     @Override
     public RepositoryResponseMapping transform(JsonNode clientResponse ) {
-        Logger.info("Internet Archive Response: "+clientResponse.toString());
+        //Logger.info("Internet Archive Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         InternetArchiveRepositoryResponseMapping respMap=new InternetArchiveRepositoryResponseMapping();
         if(clientResponse.get("count")!=null){

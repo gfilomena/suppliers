@@ -102,6 +102,7 @@ public class PixabaySearchRepository implements SearchRepository {
         MultimediaContent m=new MultimediaContent();
         //m.setType(i.get("mediatype").asText());
         //Logger.debug("Type="+i.get("mediatype").asText());
+       
         m.setType(MultimediaType.video);
         m.setFileExtension("video/mp4");
         if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null))) {
@@ -123,7 +124,7 @@ public class PixabaySearchRepository implements SearchRepository {
 
         m.setSource(registration.getRepository());
         m.setThumbnail(i.get("userImageURL").asText());
-        m.setMetadata(i.get("tags").asText());
+        m.setMetadata(i.get("tags").asText().split(","));
         m.setName(i.get("picture_id").asText());
         return m;
     }

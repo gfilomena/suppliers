@@ -44,7 +44,7 @@ public class PexelsSearchRepository implements SearchRepository {
             query+=s;
             query+="+";
         }
-        Logger.info("Pexels search: "+query);
+        //Logger.info("Pexels search: "+query);
         CompletionStage<JsonNode> jsonPromise;
         jsonPromise = ws.url(registration.getRepository().getURI()).
                 setHeader("Authorization", registration.getApiKey()).

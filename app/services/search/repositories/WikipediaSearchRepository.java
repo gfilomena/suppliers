@@ -61,7 +61,7 @@ public class WikipediaSearchRepository  implements SearchRepository {
         WikipediaRepositoryResponseMapping respMapping=new WikipediaRepositoryResponseMapping();
         List<MultimediaContent> stages=new ArrayList<>();
         //List<JsonNode> items=clientResponse.findValues("items");
-        NuxeoService ns = new NuxeoService();
+        //NuxeoService ns = new NuxeoService();
  
         if(clientResponse.get(1)!=null) {
             ArrayNode titleArray = (ArrayNode) clientResponse.get(1);
@@ -79,7 +79,7 @@ public class WikipediaSearchRepository  implements SearchRepository {
             	 JsonNode title = titleArray.get(i);
             	 JsonNode desc = descArray.get(i);
             	 JsonNode link = linkArray.get(i);
-            	 Logger.info("Nuxeo Service" + i +"->"+ns.create(title.asText(), desc.asText()));
+            	
 //            	 Logger.info("title:"+titleArray.get(i).asText());
 //            	 Logger.info("desc:"+descArray.get(i).asText());
 //            	 Logger.info("link:"+linkArray.get(i).asText());
@@ -95,7 +95,9 @@ public class WikipediaSearchRepository  implements SearchRepository {
             //Logger.info("ITEM:"+itemsList);
             
 
+            //Logger.info("Nuxeo Service" +"->"+ns.create());
             
+
             
 
         /*final List<MultimediaContent> multimediaContents = new ArrayList<MultimediaContent>();

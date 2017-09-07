@@ -67,7 +67,7 @@ public class BookmarkController extends Controller{
                 mc.setSource(repoDAO.get(json.findPath("source").findPath("id").textValue()));
             }
             //if(!json.findPath("date").isMissingNode()) mc.setDate(json.findPath("date"));
-            if(!json.findPath("metadata").isMissingNode()) mc.setMetadata(json.findPath("metadata").textValue());
+            if(!json.findPath("metadata").isMissingNode()) mc.setMetadata(json.findPath("metadata").textValue().split(","));
             if(!json.findPath("uri").isMissingNode()) mc.setURI(json.findPath("uri").textValue());
             multimediaContentDAO.save(mc);
             if (!bookmarkDAO.isPresent(user, mc)) {
