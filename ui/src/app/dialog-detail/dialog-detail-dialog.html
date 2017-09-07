@@ -50,10 +50,9 @@
       </div>
     <md-chip-list fxLayout="row" >
       <md-basic-chip *ngFor="let tag of data.metadata" class="badge">
-          <div style="font-size: 1em;">
-              <md-icon (click)="removeTag(data,tag)">clear</md-icon> 
+
+              <md-icon class="removeTag" (click)="removeTag(data,tag)">clear</md-icon> 
               {{tag}}
-          </div>
       </md-basic-chip>
     </md-chip-list>
 <table>
@@ -72,6 +71,7 @@
 </div>
   </md-card-content>
    <md-card-actions align="end">
+      <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
     <button md-button (click)="sendMcssr(data)">Send to MCSSR</button>
     <button md-button  [md-dialog-close]="true">Close</button>
   </md-card-actions>

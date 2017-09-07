@@ -5,7 +5,7 @@ import { MdSnackBar } from '@angular/material';
 import { Validators } from '@angular/forms';
 @Component({
     templateUrl: "./register.component.html",
-     styles: ['.card { width:250px; }']
+     styles: ['.card { width:250px; } .spinner{height:36px;width:36px;} ']
 })
 
 export class RegisterComponent {

@@ -2,7 +2,7 @@ import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs,RequestOptions, Headers  } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdChipsModule, MdSnackBar } from "@angular/material";
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdChipsModule, MdSnackBar, MdProgressSpinnerModule } from "@angular/material";
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { User } from "../_models/user";
 import { Bookmark } from './../_models/bookmark';
@@ -17,7 +17,7 @@ export class DialogDetail implements OnInit  {
   loaderror:boolean = true;
   currentUser: User;
   tagInsert:boolean = false;
- 
+  loading:boolean = false;
 
   @Input() data: MultimediaContent;
   @Output() mcupdate = new EventEmitter<MultimediaContent>();
@@ -124,20 +124,22 @@ export class DialogDetail implements OnInit  {
   removeTag(mc:MultimediaContent,tag:string) {
       let index = mc.metadata.findIndex(x => x == tag);
     if (index != -1 && !isNullOrWhiteSpace(tag)) {
-        mc.metadata.splice(index);
+        mc.metadata.splice(index,1);
       }
   }
 
   sendMcssr(mc:MultimediaContent) {
-
+    this.loading = true;
     this.McssrService.create(mc)
     .subscribe(
               res => {
                   console.log('Send to Mcssr - subscribe OK:',res);
+                  this.loading = false;
                   this.openSnackBar('The Multimedia Item has been sent correctly to Mcssr',"Successful!");
               },
               error => {
                   console.log('Send to Mcssr - subscribe - error:',error);
+                  this.loading = false;
                   this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr',"error!");
               }
             )

@@ -53,3 +53,13 @@
     margin-top: 10px;
 }
 
+.spinner{
+    height:36px;
+    width:36px;
+}
+
+.removeTag{
+    height:12px;
+    width:12px;
+    font-size: 12px;
+}
