@@ -9,10 +9,11 @@ import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import services.db.MongoDBService;
-
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+
 
 /**
  * Created by Pasquale on 13/07/2017.
@@ -67,7 +68,8 @@ public class BookmarkController extends Controller{
                 mc.setSource(repoDAO.get(json.findPath("source").findPath("id").textValue()));
             }
             //if(!json.findPath("date").isMissingNode()) mc.setDate(json.findPath("date"));
-            if(!json.findPath("metadata").isMissingNode()) mc.setMetadata(json.findPath("metadata").textValue().split(","));
+            
+            if(!json.findPath("metadata").isMissingNode()) mc.setMetadata(JsonNodetoArrayList(json.findPath("metadata")));
             if(!json.findPath("uri").isMissingNode()) mc.setURI(json.findPath("uri").textValue());
             multimediaContentDAO.save(mc);
             if (!bookmarkDAO.isPresent(user, mc)) {
@@ -100,6 +102,19 @@ public class BookmarkController extends Controller{
             }*/
         }
     }
+    
+    private String[] JsonNodetoArrayList(JsonNode arrNode) {
+
+    	ArrayList<String> arr = new ArrayList<String>();
+    	if (arrNode.isArray()) {
+    	    for (final JsonNode objNode : arrNode) {
+    	       arr.add(objNode.textValue());
+    	    }
+    	}
+    	String[] res = arr.toArray(new String[arr.size()]);;
+		return res;
+
+    }
 
 
     @Security.Authenticated(Secured.class)
@@ -124,4 +139,6 @@ public class BookmarkController extends Controller{
             return CompletableFuture.supplyAsync(() -> notFound("The Username doesn't exists!"));
         }
     }
+    
+
 }

@@ -58,11 +58,11 @@ export class SearchFormComponent {
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
 
         this.dateAdapter.setLocale('ll');
-       /* if (localStorage["lastresearch"]) {
+        if (localStorage["lastresearch"]) {
             this.searchResult = JSON.parse(localStorage.getItem("lastresearch"))
             this.counter(this.searchResult)
             this.nOfResults = this.searchResult.length;
-        }*/
+        }
         
         if (localStorage["searchForm"]) {
             if (this.searchForm == undefined) {
@@ -226,6 +226,10 @@ getImage(mc:MultimediaContent):string {
 
    counter(array) {
     var i:number
+    this.VideoResult = 0;
+    this.AudioResult = 0;
+    this.ImageResult = 0;
+    this.TextResult  = 0;
         for(i = 0;i<array.length;i++) { 
          var type = array[i].type
          //console.log('type::',type)

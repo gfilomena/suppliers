@@ -47,20 +47,24 @@ public class PixabaySearchRepository implements SearchRepository {
                 query+="+";
             }
             Logger.info("Pixabay search: "+query);
-            /*CompletionStage<JsonNode> jsonPromiseImage= ws.url(registration.getRepository().getURI()).
+            
+            CompletionStage<JsonNode> jsonPromiseImage= ws.url(registration.getRepository().getURI()).
+                    setQueryParameter("key", registration.getApiKey()).
+                    setQueryParameter("q", query).
+                    setQueryParameter("per_page", "200").
+                    get().
+                    thenApply(WSResponse::asJson);
+            
+            /*CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
                     setQueryParameter("key", registration.getApiKey()).
                     setQueryParameter("q", query).
                     get().
                     thenApply(WSResponse::asJson);*/
-            CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
-                    setQueryParameter("key", registration.getApiKey()).
-                    setQueryParameter("q", query).
-                    get().
-                    thenApply(WSResponse::asJson);
+            
             /*CompletionStage<JsonNode> combined=jsonPromiseImage.thenApply(l -> jsonPromiseVideo.thenApply(m -> {l.
             ;
             return l;}));*/
-            return jsonPromiseVideo;
+            return jsonPromiseImage;
         }
 
         @Override
@@ -103,6 +107,7 @@ public class PixabaySearchRepository implements SearchRepository {
         //m.setType(i.get("mediatype").asText());
         //Logger.debug("Type="+i.get("mediatype").asText());
        
+     /*
         m.setType(MultimediaType.video);
         m.setFileExtension("video/mp4");
         if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null))) {
@@ -121,11 +126,34 @@ public class PixabaySearchRepository implements SearchRepository {
             m.setURI(i.get("videos").get("tiny").get("url").asText());
             m.setDownloadURI(i.get("videos").get("tiny").get("url").asText());
         }
-
         m.setSource(registration.getRepository());
         m.setThumbnail(i.get("userImageURL").asText());
         m.setMetadata(i.get("tags").asText().split(","));
-        m.setName(i.get("picture_id").asText());
+        m.setName(i.get("picture_id").asText());   
+        */
+        
+        
+        
+        
+        //image retrieve
+        m.setType(MultimediaType.image);
+        m.setFileExtension("image/jpeg");
+        if(!i.get("webformatURL").isMissingNode()) {
+            m.setURI(i.get("webformatURL").asText());
+            m.setDownloadURI(i.get("webformatURL").asText());
+        }
+
+        m.setSource(registration.getRepository());
+        m.setThumbnail(i.get("previewURL").asText());
+        m.setMetadata(i.get("tags").asText().split(","));
+        m.setName(i.get("id").asText());
+        
+        
+        
+        
+        
+        
+        
         return m;
     }
 

@@ -18,14 +18,11 @@ getParam(mc: MultimediaContent): JSON {
    let mimeType : String;
    let extension : String;
    let filename : String;
-   let splitted = mc.uri.split("."); 
+   let type : String;
+   let splitted = mc.fileExtension.split("/"); 
    extension = splitted[splitted.length-1];
 
-   let name = mc.uri.split("/"); 
-   filename = name[name.length-1];
-   mimeType = mc.type+"/"+extension;
 
- 
 
    //console.log('uri:',splitted)
    //console.log('uri-length:',splitted.length)
@@ -33,21 +30,22 @@ getParam(mc: MultimediaContent): JSON {
    switch(mc.type) { 
     case 'video': { 
         mimeType = "video/mp4"
-       
+        type = "Video"
         break;
     } 
     case 'audio': { 
-       
+        type = "Audio"
       
        break;
     } 
     case 'image': { 
         mimeType = "image/jpg"
-     
+        type = "Image"
        break;
     } 
     case 'text': { 
         mimeType = "text/html"
+        type = "Text"
      
        break;
     } 
@@ -56,23 +54,24 @@ getParam(mc: MultimediaContent): JSON {
     } 
   } 
             
-            //mc.uri = "https://ia800304.us.archive.org/18/items/CR7_Skills_Vs_AC_Milan/CR7_Skills_Vs_AC_Milan.mp4";
-
+            //mc.uri = "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg";
+            //mc.name = "pexels-photo-207962.jpeg";
+            //mc.fileExtension = "image/jpeg"
             let params = '{ '
             +' "user":"salsx", '
             +' "params" : {' 
-            +' "path":"/Producer_Repository/workspaces/'+mc.type+'", '
+            +' "path":"/Producer_Repository/workspaces/'+type+'", '
             +' "url":"'+ mc.uri +'", '
             +' "encoding":"UTF-8", '
-            +' "fileName":"'+filename+'", '
-            +' "mimeType":"'+mimeType+'", '
+            +' "fileName":"'+mc.name+'.'+extension+'", '
+            +' "mimeType":"'+mc.fileExtension+'", '
             if(mc.metadata) {
                 params +=    ' "tags":"'+ mc.metadata +'", ';
             }else{
                 params +=    ' "tags":"", ';
             }
-                params +=' "type":"File"'
-            +'}}';
+            params +=' "type":"File" '
+            params +='}}';
 
         console.log("params",params)
 

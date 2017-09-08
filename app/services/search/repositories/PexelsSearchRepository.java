@@ -13,7 +13,12 @@ import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -49,6 +54,7 @@ public class PexelsSearchRepository implements SearchRepository {
         jsonPromise = ws.url(registration.getRepository().getURI()).
                 setHeader("Authorization", registration.getApiKey()).
                 setQueryParameter("query", query).
+                setQueryParameter("per_page", "40").
                 get().
                 thenApply(WSResponse::asJson);
         return jsonPromise;
@@ -56,7 +62,7 @@ public class PexelsSearchRepository implements SearchRepository {
 
     @Override
     public RepositoryResponseMapping transform(JsonNode clientResponse ) {
-        //Logger.info("Pexels Response: "+clientResponse.toString());
+        Logger.info("Pexels Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         PexelsRepositoryResponseMapping respMap=new PexelsRepositoryResponseMapping();
         if(clientResponse.get("total_results")!=null){
@@ -88,13 +94,34 @@ public class PexelsSearchRepository implements SearchRepository {
     private MultimediaContent getMultimediaContentFromItem( JsonNode i ) {
         MultimediaContent m = new MultimediaContent();
         m.setType(MultimediaType.image);
-        m.setURI(i.get("src").get("original").asText());
-        m.setDownloadURI(i.get("src").get("original").asText());
+        m.setURI(i.get("src").get("large").asText());
+        m.setDownloadURI(i.get("src").get("large").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
+    
+        m.setFileExtension(fileToFileExtension(i.get("src").get("large").asText()));
         // TODO: Modify to find SearchRepository from DB
         m.setSource(registration.getRepository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());
         return m;
     }
+    
+    private String fileToFileExtension(String path){
+    	URL url;
+    	String mimetype = null;
+		try {
+			url = new URL(path);
+			File f = new File(url.getFile());
+	        final MimetypesFileTypeMap mtftp = new MimetypesFileTypeMap();
+	        mimetype = mtftp.getContentType(f);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+		return mimetype;
+    }
+
+    
 }
