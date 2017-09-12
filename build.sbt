@@ -16,7 +16,8 @@ libraryDependencies ++= Seq(
   "org.mongodb.morphia" % "morphia" % "1.3.2",
   "com.auth0" % "java-jwt" % "3.0.1",
   "org.mindrot" % "jbcrypt" % "0.3m",
-  "org.apache.commons" % "commons-lang3" % "3.5"
+  "org.apache.commons" % "commons-lang3" % "3.5",
+  "org.nuxeo.client" % "nuxeo-java-client" % "2.6"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
