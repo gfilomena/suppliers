@@ -12,7 +12,12 @@ import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 
+import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
+
+import java.io.File;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -55,21 +60,20 @@ public class PixabaySearchRepository implements SearchRepository {
                     get().
                     thenApply(WSResponse::asJson);
             
-            /*CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
+           /* CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
                     setQueryParameter("key", registration.getApiKey()).
                     setQueryParameter("q", query).
                     get().
-                    thenApply(WSResponse::asJson);*/
-            
-            /*CompletionStage<JsonNode> combined=jsonPromiseImage.thenApply(l -> jsonPromiseVideo.thenApply(m -> {l.
-            ;
-            return l;}));*/
+                    thenApply(WSResponse::asJson);
+          */
+
             return jsonPromiseImage;
+
         }
 
         @Override
         public RepositoryResponseMapping transform(JsonNode clientResponse ) {
-            Logger.info("Pixabay Response: "+clientResponse.toString());
+            //Logger.info("Pixabay Response: "+clientResponse.toString());
             List<MultimediaContent> stages=new ArrayList<>();
             //List<JsonNode> items=clientResponse.findValues("items");
             PixabayRepositoryResponseMapping respMap=new PixabayRepositoryResponseMapping();
@@ -107,7 +111,9 @@ public class PixabaySearchRepository implements SearchRepository {
         //m.setType(i.get("mediatype").asText());
         //Logger.debug("Type="+i.get("mediatype").asText());
        
-     /*
+   /*  if(!i.get("videos").get("large").isMissingNode()) {
+    	 
+        //video
         m.setType(MultimediaType.video);
         m.setFileExtension("video/mp4");
         if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null))) {
@@ -130,29 +136,30 @@ public class PixabaySearchRepository implements SearchRepository {
         m.setThumbnail(i.get("userImageURL").asText());
         m.setMetadata(i.get("tags").asText().split(","));
         m.setName(i.get("picture_id").asText());   
-        */
         
+     }
+     */
+
+         //image 
+         m.setType(MultimediaType.image);
+         
         
-        
-        
-        //image retrieve
-        m.setType(MultimediaType.image);
-        m.setFileExtension("image/jpeg");
+         
         if(!i.get("webformatURL").isMissingNode()) {
-            m.setURI(i.get("webformatURL").asText());
-            m.setDownloadURI(i.get("webformatURL").asText());
+             m.setFileExtension(fileToFileExtension(i.get("webformatURL").asText()));
+             m.setURI(i.get("webformatURL").asText());
+             m.setDownloadURI(i.get("webformatURL").asText());
+        }else{
+        	
+        	
         }
 
-        m.setSource(registration.getRepository());
-        m.setThumbnail(i.get("previewURL").asText());
-        m.setMetadata(i.get("tags").asText().split(","));
-        m.setName(i.get("id").asText());
-        
-        
-        
-        
-        
-        
+         m.setSource(registration.getRepository());
+         m.setThumbnail(i.get("previewURL").asText());
+         m.setMetadata(i.get("tags").asText().split(","));
+         m.setName(i.get("id").asText());
+     
+
         
         return m;
     }
@@ -235,5 +242,22 @@ public class PixabaySearchRepository implements SearchRepository {
         if (newEntry) {
             ((ObjectNode) mergeInTo).replace(toBeMerged.getKey(), toBeMerged.getValue());
         }
+    }
+    
+    private String fileToFileExtension(String path){
+    	URL url;
+    	String mimetype = null;
+		try {
+			url = new URL(path);
+			File f = new File(url.getFile());
+	        final MimetypesFileTypeMap mtftp = new MimetypesFileTypeMap();
+	        mimetype = mtftp.getContentType(f);
+		} catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+		return mimetype;
     }
 }

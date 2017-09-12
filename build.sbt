@@ -16,10 +16,14 @@ libraryDependencies ++= Seq(
   "org.mongodb.morphia" % "morphia" % "1.3.2",
   "com.auth0" % "java-jwt" % "3.0.1",
   "org.mindrot" % "jbcrypt" % "0.3m",
-  "org.apache.commons" % "commons-lang3" % "3.5"
+  "org.apache.commons" % "commons-lang3" % "3.5",
+  "org.nuxeo.client" % "nuxeo-java-client" % "2.6"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
+/*resolvers += "maven-nuxeo" at "http://maven.nuxeo.com/nexus/content/repositories/public-releases/"*/
+
 
 fork in run := true
 
@@ -80,3 +84,6 @@ dist <<= dist dependsOn `ui-prod-build`
 stage <<= stage dependsOn `ui-prod-build`
 
 test <<= (test in Test) dependsOn `ui-test`
+
+// Compile the project before generating Eclipse files, so that generated .scala or .class files for views and routes are present
+EclipseKeys.preTasks := Seq(compile in Compile)

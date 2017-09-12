@@ -17,34 +17,39 @@ getParam(mc: MultimediaContent): JSON {
 
    let mimeType : String;
    let extension : String;
+   let arrextension : String[];
    let filename : String;
    let type : String;
-   let splitted = mc.fileExtension.split("/"); 
-   extension = splitted[splitted.length-1];
+
+if(mc.fileExtension) {
+    arrextension = mc.fileExtension.split("/");
+    extension = arrextension[arrextension.length-1]; 
+    mimeType = mc.fileExtension;
+    filename = mc.name+"."+extension;
+}
 
 
-
-   //console.log('uri:',splitted)
-   //console.log('uri-length:',splitted.length)
-   console.log('extensionh:',extension)
+   
    switch(mc.type) { 
-    case 'video': { 
-        mimeType = "video/mp4"
+    case 'video': {
+
+        
         type = "Video"
+       
         break;
     } 
     case 'audio': { 
         type = "Audio"
-      
+
        break;
     } 
     case 'image': { 
-        mimeType = "image/jpg"
         type = "Image"
        break;
     } 
     case 'text': { 
-        mimeType = "text/html"
+        filename = mc.name;
+        mimeType = "text/html";
         type = "Text"
      
        break;
@@ -53,6 +58,8 @@ getParam(mc: MultimediaContent): JSON {
       break;
     } 
   } 
+
+  console.log('extension:',extension)
             
             //mc.uri = "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg";
             //mc.name = "pexels-photo-207962.jpeg";
@@ -63,15 +70,16 @@ getParam(mc: MultimediaContent): JSON {
             +' "path":"/Producer_Repository/workspaces/'+type+'", '
             +' "url":"'+ mc.uri +'", '
             +' "encoding":"UTF-8", '
-            +' "fileName":"'+mc.name+'.'+extension+'", '
-            +' "mimeType":"'+mc.fileExtension+'", '
+            +' "fileName":"'+filename+'", '
+            +' "mimeType":"'+mimeType+'", '
+            
             if(mc.metadata) {
                 params +=    ' "tags":"'+ mc.metadata +'", ';
             }else{
                 params +=    ' "tags":"", ';
             }
-            params +=' "type":"File" '
-            params +='}}';
+                params +=' "type":"File" '
+                params +='}}';
 
         console.log("params",params)
 

@@ -78,7 +78,15 @@
 
 .subfilter_button{
 background-color: #fd9a7a;
+width: 30px;
+height: 30px;
 
+
+
+}
+
+.close_icon{
+    vertical-align: sub;
 }
 
 .filter_button {
@@ -92,9 +100,24 @@ background-color: #fd9a7a;
     
 }
 
+.fitem{
+    font-size: 12px;
+}
+
+
+.mat-list .mat-list-item .mat-list-item-content, .mat-nav-list .mat-list-item .mat-list-item-content {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    box-sizing: border-box;
+    height: 24px;
+    padding: 0 16px;
+    position: relative;
+}
+
 .close_button {
-    width: auto;
-    height: auto;
+    width: 40px;
+    height: 40px;
     top: 0;
     bottom: 0;
     right: 0;

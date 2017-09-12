@@ -18,6 +18,7 @@ export class DialogDetail implements OnInit  {
   currentUser: User;
   tagInsert:boolean = false;
   loading:boolean = false;
+  title:boolean = true;
 
   @Input() data: MultimediaContent;
   @Output() mcupdate = new EventEmitter<MultimediaContent>();
@@ -41,6 +42,14 @@ export class DialogDetail implements OnInit  {
     getVideoSource(URI:string):any {
         let link =  this.sanitizer.bypassSecurityTrustResourceUrl(URI);
         return link;
+    }
+
+    isDisabled() : boolean{
+        return this.title;
+    }
+
+    toggle() {
+        this.title = !this.title;;
     }
 
   checkSaveBookmark(mc:MultimediaContent) {

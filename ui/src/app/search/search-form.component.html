@@ -2,16 +2,18 @@
   <div class="container-sidebar">
 <md-card class="sidebar"  [style.left.px]="sidebar(-150)">
        <div class="filter_button" [style.left.px]="sidebar(150)">
-         <button md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;"><md-icon>tune</md-icon></button>
+         <button md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;"><md-icon class="close_icon">tune</md-icon></button>
        </div>
        <div class="close_button">
          <button md-icon-button	 (click)="showSidebar = !showSidebar;"><md-icon>close</md-icon></button>
        </div>
 <md-list> 
-  <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox>({{VideoResult}})</md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox>({{AudioResult}})</md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox>({{TextResult}})</md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox>({{ImageResult}})</md-list-item>
+  <md-list-item class="fitem"><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox>({{VideoResult}})</md-list-item>
+  <md-list-item class="fitem"><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox>({{AudioResult}})</md-list-item>
+  <md-list-item class="fitem"><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox>({{TextResult}})</md-list-item>
+  <md-list-item class="fitem"><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox>({{ImageResult}})</md-list-item>
+  <md-divider></md-divider>
+  <md-list-item class="fitem"><md-checkbox>Image</md-checkbox>({{ImageResult}})</md-list-item>
 </md-list>   
 </md-card>
   </div>
