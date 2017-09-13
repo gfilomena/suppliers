@@ -1,131 +1,136 @@
 .card {
-    /*display:inline-block;
+  /*display:inline-block;
     display: inline-table;*/
-    display:flow-root;
-    width: 195px;
-    height: 250px;
-    margin: 3.77px;
-   /* vertical-align: top;
+  display: flow-root;
+  width: 195px;
+  height: 250px;
+  margin: 3.77px;
+  /* vertical-align: top;
     cursor: pointer;
     overflow: visible; */
 }
 
-.card:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    z-index: 1;
+.card:hover {
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1;
 }
+
 .detail-card {
-    font-size: 9px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 100px;
-    margin-top: 15px;
+  font-size: 9px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100px;
+  margin-top: 15px;
 }
+
 .image-card {
-    height: 150px;
-    width:195px;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
+  height: 150px;
+  width: 195px;
+  display: flex;
+  justify-content: center;
+  /* align horizontal */
+  align-items: center;
+  /* align vertical */
 }
 
-.image-card img{
-    max-height: 150px;
-    max-width: 220px;
-    object-fit: contain;
-    /*take the centrale part
+.image-card img {
+  max-height: 150px;
+  max-width: 220px;
+  object-fit: contain;
+  /*take the centrale part
     object-fit: cover;*/
-    -o-object-fit: contain;
+  -o-object-fit: contain;
 }
-
-
 
 .title-card {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 40px;   
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 40px;
 }
-
-
 
 .description {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 60px;
-        margin-top: 5px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 60px;
+  margin-top: 5px;
 }
+
 .source-card {
-    margin-top: 5px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 20px;
+  margin-top: 5px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 20px;
 }
+
 .date-card {
-    margin-top: 20px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 20px;
+  margin-top: 20px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 20px;
 }
 
-
-.sidebar{
+.sidebar {
   position: fixed;
   z-index: 1;
-  width: 120px; /* sum padding */
-  padding:15px;
+  width: 140px;
+  /* sum padding */
+  padding: 15px;
   /*left: -130px;    hide*/
 }
 
-.subfilter_button{
-background-color: #fd9a7a;
-width: 30px;
-height: 30px;
-
-
-
+.subfilter_button {
+  background-color: #fd9a7a;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  position: absolute;
 }
 
-.close_icon{
-    vertical-align: sub;
+.close_icon {
+  vertical-align: sub;
 }
 
 .filter_button {
-    width: auto;
-    height: auto;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    /*left: 130px;  move button outside*/
-    
+  width: auto;
+  height: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /*left: 130px;  move button outside*/
 }
 
-.fitem{
+.list-item {
+  font-size: 12px;
+  height: 22px;
+  /*display: initial;
     font-size: 12px;
+  */
 }
 
+md-checkbox {
+  min-height: 100%;
+  align-items: center;
+}
 
-.mat-list .mat-list-item .mat-list-item-content, .mat-nav-list .mat-list-item .mat-list-item-content {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    box-sizing: border-box;
-    height: 24px;
-    padding: 0 16px;
-    position: relative;
+.label {
+  font-weight: bolder;
+  font-size: 12px;
+}
+
+.nitem{
+    font-size: 9px;
 }
 
 .close_button {
-    width: 40px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    /*left: 130px;  move button outside*/
+  width: 40px;
+  height: 40px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /*left: 130px;  move button outside*/
 }
-
-
 
 .container-card {
   display: flex;
@@ -138,34 +143,26 @@ height: 30px;
   height: 100%
 }
 
-
 .typefield {
-    margin-top: 16px;
+  margin-top: 16px;
 }
-
-
 
 @media (min-width: 0px) and (max-width: 800px) {
- 
-
-    .container-sidebar {
-      display:none;
-    }
+  .container-sidebar {
+    display: none;
+  }
 }
 
-
 @media (min-width: 800px) and (max-width: 3000px) {
- 
-
-    .container-sidebar {
-      display:flex;
-    }
+  .container-sidebar {
+    display: flex;
+  }
 }
 
 .board {
-    align-content: flex-end;
+  align-content: flex-end;
 }
 
-.form{
-    height: 183px;
+.form {
+  height: 183px;
 }
