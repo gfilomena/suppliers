@@ -76,6 +76,7 @@
   /* sum padding */
   padding: 15px;
   /*left: -130px;    hide*/
+  background-color: rgba(255,255,255,0.6);
 }
 
 .subfilter_button {

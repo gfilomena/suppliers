@@ -125,7 +125,10 @@ export class DialogDetail implements OnInit  {
       console.log('before-mc', mc)
       if(mc.metadata == null) {mc.metadata = [];}
       if (mc.metadata.find(x => x == newtag) == undefined && !isNullOrWhiteSpace(newtag)) {
-        mc.metadata.push(newtag)
+        mc.metadata.push(newtag);
+        //empty input tag
+        (<HTMLInputElement>document.getElementById("newtag")).value = "";
+        
       }
       //this.mcupdate.emit(mc);
   }

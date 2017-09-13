@@ -147,7 +147,16 @@ export class SearchFormComponent {
         this.search();
 
     }
-
+    
+    clear(){
+        console.log("clear")
+        localStorage.removeItem("searchForm");
+        localStorage.removeItem("lastresearch");
+        this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
+        this.searchResult = [];
+        this.counter(this.searchResult);
+        this.getUserRepositories()
+    }
 
     search() {
         this.searchService.search(this.searchForm)
