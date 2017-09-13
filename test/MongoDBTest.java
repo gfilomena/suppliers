@@ -21,7 +21,7 @@ public class MongoDBTest {
     @Inject
     Application application;
 
-    @Before
+    /*@Before
     public void setup() {
         com.google.inject.Module testModule = new AbstractModule() {
             @Override
@@ -53,5 +53,5 @@ public class MongoDBTest {
         running(application, () -> {
 
         });
-    }
+    }*/
 }

@@ -1,7 +1,10 @@
 package services.search.repositories;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.*;
+import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
@@ -22,7 +25,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
+import java.util.concurrent.ExecutionException;
+import java.util.function.BiFunction;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 
@@ -59,15 +65,35 @@ public class PixabaySearchRepository implements SearchRepository {
                     setQueryParameter("per_page", "200").
                     get().
                     thenApply(WSResponse::asJson);
-            
-           /* CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
+            JsonNode jImg = null, jVid=null;
+            try {
+                jImg=jsonPromiseImage.toCompletableFuture().get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
                     setQueryParameter("key", registration.getApiKey()).
                     setQueryParameter("q", query).
                     get().
                     thenApply(WSResponse::asJson);
-          */
+            try {
+                jVid=jsonPromiseVideo.toCompletableFuture().get();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            }
+            BiFunction<JsonNode, JsonNode, JsonNode> unifier= (x,y) ->{
+                JsonNode z=merge(x,y);
+                return z;
+            };
 
-            return jsonPromiseImage;
+
+            JsonNode finalJVid = jVid;
+            JsonNode finalJImg = jImg;
+            return CompletableFuture.supplyAsync( () -> {return unifier.apply(finalJImg, finalJVid);});
 
         }
 
@@ -106,143 +132,100 @@ public class PixabaySearchRepository implements SearchRepository {
         }
 
     private MultimediaContent getMultimediaContentFromItem(JsonNode i){
-        //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
         MultimediaContent m=new MultimediaContent();
-        //m.setType(i.get("mediatype").asText());
-        //Logger.debug("Type="+i.get("mediatype").asText());
-       
-   /*  if(!i.get("videos").get("large").isMissingNode()) {
-    	 
-        //video
-        m.setType(MultimediaType.video);
-        m.setFileExtension("video/mp4");
-        if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null))) {
-            m.setURI(i.get("videos").get("large").get("url").asText());
-            m.setDownloadURI(i.get("videos").get("large").get("url").asText());
+        if(i.get("webformatURL")!=null && !i.get("webformatURL").isMissingNode()) { // is an image type item
+            setImageItem(i, m);
+        }else{ // is a video type item
+            setVideoItem(i,m);
         }
-        else if(!i.get("videos").get("medium").isMissingNode() && (!i.get("videos").get("medium").get("url").isMissingNode() || !(i.get("videos").get("medium").get("url").asText()==null))) {
-            m.setURI(i.get("videos").get("medium").get("url").asText());
-            m.setDownloadURI(i.get("videos").get("medium").get("url").asText());
-        }
-        else if(!i.get("videos").get("small").isMissingNode() && (!i.get("videos").get("small").get("url").isMissingNode() || !(i.get("videos").get("small").get("url").asText()==null))) {
-            m.setURI(i.get("videos").get("small").get("url").asText());
-            m.setDownloadURI(i.get("videos").get("small").get("url").asText());
-        }
-        else if(!i.get("videos").get("tiny").isMissingNode() && (!i.get("videos").get("tiny").get("url").isMissingNode() || !(i.get("videos").get("tiny").get("url").asText()==null))) {
-            m.setURI(i.get("videos").get("tiny").get("url").asText());
-            m.setDownloadURI(i.get("videos").get("tiny").get("url").asText());
-        }
-        m.setSource(registration.getRepository());
-        m.setThumbnail(i.get("userImageURL").asText());
-        m.setMetadata(i.get("tags").asText().split(","));
-        m.setName(i.get("picture_id").asText());   
-        
-     }
-     */
-
-         //image 
-         m.setType(MultimediaType.image);
-         
-        
-         
-        if(!i.get("webformatURL").isMissingNode()) {
-             m.setFileExtension(fileToFileExtension(i.get("webformatURL").asText()));
-             m.setURI(i.get("webformatURL").asText());
-             m.setDownloadURI(i.get("webformatURL").asText());
-        }else{
-        	
-        	
-        }
-
-         m.setSource(registration.getRepository());
-         m.setThumbnail(i.get("previewURL").asText());
-         m.setMetadata(i.get("tags").asText().split(","));
-         m.setName(i.get("id").asText());
-     
-
-        
         return m;
     }
 
-    /**
-     * Merge two JSON tree into one i.e mergedInTo.
-     *
-     * @param toBeMerged
-     * @param mergedInTo
-     */
-    public static void merge(JsonNode toBeMerged, JsonNode mergedInTo) {
-        Iterator<Map.Entry<String, JsonNode>> incomingFieldsIterator = toBeMerged.fields();
-        Iterator<Map.Entry<String, JsonNode>> mergedIterator = mergedInTo.fields();
+    private void setImageItem(JsonNode i, MultimediaContent m) {
+        m.setType(MultimediaType.image);
+        if(i.get("webformatURL")!=null && !i.get("webformatURL").isMissingNode()) {
+            m.setFileExtension(fileToFileExtension(i.get("webformatURL").asText()));
+            m.setURI(i.get("webformatURL").asText());
+            m.setDownloadURI(i.get("webformatURL").asText());
+        }
+        m.setSource(registration.getRepository());
+        m.setThumbnail(i.get("previewURL").asText());
+        m.setMetadata(i.get("tags").asText().split(","));
+        m.setName(i.get("id").asText());
+    }
 
-        while (incomingFieldsIterator.hasNext()) {
-            Map.Entry<String, JsonNode> incomingEntry = incomingFieldsIterator.next();
+    private void setVideoItem(JsonNode i, MultimediaContent m){
+        if(!i.get("videos").get("large").isMissingNode()) {
+            m.setType(MultimediaType.video);
+            m.setFileExtension("video/mp4");
+            if(!i.get("videos").get("large").isMissingNode() && (!i.get("videos").get("large").get("url").isMissingNode() || !(i.get("videos").get("large").get("url").asText()==null))) {
+                m.setURI(i.get("videos").get("large").get("url").asText());
+                m.setDownloadURI(i.get("videos").get("large").get("url").asText());
+            }
+            else if(!i.get("videos").get("medium").isMissingNode() && (!i.get("videos").get("medium").get("url").isMissingNode() || !(i.get("videos").get("medium").get("url").asText()==null))) {
+                m.setURI(i.get("videos").get("medium").get("url").asText());
+                m.setDownloadURI(i.get("videos").get("medium").get("url").asText());
+            }
+            else if(!i.get("videos").get("small").isMissingNode() && (!i.get("videos").get("small").get("url").isMissingNode() || !(i.get("videos").get("small").get("url").asText()==null))) {
+                m.setURI(i.get("videos").get("small").get("url").asText());
+                m.setDownloadURI(i.get("videos").get("small").get("url").asText());
+            }
+            else if(!i.get("videos").get("tiny").isMissingNode() && (!i.get("videos").get("tiny").get("url").isMissingNode() || !(i.get("videos").get("tiny").get("url").asText()==null))) {
+                m.setURI(i.get("videos").get("tiny").get("url").asText());
+                m.setDownloadURI(i.get("videos").get("tiny").get("url").asText());
+            }
+            m.setSource(registration.getRepository());
+            m.setThumbnail(i.get("userImageURL").asText());
+            m.setMetadata(i.get("tags").asText().split(","));
+            m.setName(i.get("picture_id").asText());
 
-            JsonNode subNode = incomingEntry.getValue();
-
-            if (subNode.getNodeType().equals(JsonNodeType.OBJECT.OBJECT)) {
-                boolean isNewBlock = true;
-                mergedIterator = mergedInTo.fields();
-                while (mergedIterator.hasNext()) {
-                    Map.Entry<String, JsonNode> entry = mergedIterator.next();
-                    if (entry.getKey().equals(incomingEntry.getKey())) {
-                        merge(incomingEntry.getValue(), entry.getValue());
-                        isNewBlock = false;
-                    }
-                }
-                if (isNewBlock) {
-                    ((ObjectNode) mergedInTo).replace(incomingEntry.getKey(), incomingEntry.getValue());
-                }
-            } else if (subNode.getNodeType().equals(JsonNodeType.ARRAY)) {
-                boolean newEntry = true;
-                mergedIterator = mergedInTo.fields();
-                while (mergedIterator.hasNext()) {
-                    Map.Entry<String, JsonNode> entry = mergedIterator.next();
-                    if (entry.getKey().equals(incomingEntry.getKey())) {
-                        updateArray(incomingEntry.getValue(), entry);
-                        newEntry = false;
-                    }
-                }
-                if (newEntry) {
-                    ((ObjectNode) mergedInTo).replace(incomingEntry.getKey(), incomingEntry.getValue());
-                }
-            }
-            ValueNode valueNode = null;
-            JsonNode incomingValueNode = incomingEntry.getValue();
-            switch (subNode.getNodeType()) {
-                case STRING:
-                    valueNode = new TextNode(incomingValueNode.textValue());
-                    break;
-                case NUMBER:
-                    valueNode = new IntNode(incomingValueNode.intValue());
-                    break;
-                case BOOLEAN:
-                    valueNode = BooleanNode.valueOf(incomingValueNode.booleanValue());
-            }
-            if (valueNode != null) {
-                updateObject(mergedInTo, valueNode, incomingEntry);
-            }
         }
     }
 
-    private static void updateArray(JsonNode valueToBePlaced, Map.Entry<String, JsonNode> toBeMerged) {
-        toBeMerged.setValue(valueToBePlaced);
-    }
+    public static JsonNode merge(JsonNode imagesNode, JsonNode videosNode) {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode mergedNode=JsonNodeFactory.instance.objectNode();
+       /* try {
+            System.out.println("Images Node="+mapper.writerWithDefaultPrettyPrinter().writeValueAsString(imagesNode));
+            System.out.println("Videos Node="+mapper.writerWithDefaultPrettyPrinter().writeValueAsString(videosNode));
+            System.out.println("Before Merged Node="+mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mergedNode));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }*/
+        if(imagesNode.get("totalHits")!=null && videosNode.get("totalHits")!=null){
+            ((ObjectNode) mergedNode).put("totalHits",imagesNode.get("totalHits").asInt()+videosNode.get("totalHits").asInt());
+        }
+        ArrayNode hitsMergedArray = mapper.createArrayNode();
 
-    private static void updateObject(JsonNode mergeInTo, ValueNode valueToBePlaced,
-                                     Map.Entry<String, JsonNode> toBeMerged) {
-        boolean newEntry = true;
-        Iterator<Map.Entry<String, JsonNode>> mergedIterator = mergeInTo.fields();
-        while (mergedIterator.hasNext()) {
-            Map.Entry<String, JsonNode> entry = mergedIterator.next();
-            if (entry.getKey().equals(toBeMerged.getKey())) {
-                newEntry = false;
-                entry.setValue(valueToBePlaced);
+        JsonNode imagesHits = imagesNode.path("hits");
+        if (imagesHits.isArray()) {
+            for (JsonNode node : imagesHits) {
+                hitsMergedArray.add(node);
             }
         }
-        if (newEntry) {
-            ((ObjectNode) mergeInTo).replace(toBeMerged.getKey(), toBeMerged.getValue());
+
+        JsonNode videosHits = videosNode.path("hits");
+        if (videosHits.isArray()) {
+            for (JsonNode node : videosHits) {
+                hitsMergedArray.add(node);
+            }
         }
+        ((ObjectNode) mergedNode).set("hits", hitsMergedArray);
+
+        if(imagesNode.get("total")!=null && videosNode.get("total")!=null){
+            ((ObjectNode) mergedNode).put("total",imagesNode.get("total").asInt()+videosNode.get("total").asInt());
+        }
+
+        /*try {
+            System.out.println("After Merged Node="+mapper.writerWithDefaultPrettyPrinter().writeValueAsString(mergedNode));
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }*/
+
+
+        return mergedNode;
     }
+
     
     private String fileToFileExtension(String path){
     	URL url;
@@ -256,8 +239,6 @@ public class PixabaySearchRepository implements SearchRepository {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-    	
-    	
 		return mimetype;
     }
 }

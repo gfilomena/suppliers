@@ -85,5 +85,3 @@ stage <<= stage dependsOn `ui-prod-build`
 
 test <<= (test in Test) dependsOn `ui-test`
 
-// Compile the project before generating Eclipse files, so that generated .scala or .class files for views and routes are present
-EclipseKeys.preTasks := Seq(compile in Compile)
