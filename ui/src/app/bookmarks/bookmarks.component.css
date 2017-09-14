@@ -45,7 +45,7 @@ z-index: 1;
 }
 
 .title-card {
-     overflow-x: hidden;
+    overflow-x: hidden;
     overflow-y: hidden;
     height: 40px;   
 }
@@ -54,7 +54,7 @@ z-index: 1;
     overflow-x: hidden;
     overflow-y: hidden;
     height: 60px;
-        margin-top: 5px;
+    margin-top: 5px;
 }
 .source-card {
     margin-top: 5px;
@@ -69,19 +69,38 @@ z-index: 1;
     height: 20px;
 }
 
-.subfilter_button{
-background-color: #fd9a7a;
-}
-
-
 .sidebar{
-  position: fixed;
-  z-index: 1;
-  width: 120px; /* sum padding */
-  padding:15px;
-  /*left: -130px;    hide*/
+    position: fixed;
+    z-index: 1;
+    width: 140px; /* sum padding */
+    padding:15px;  /*left: -130px;    hide*/
+    background-color: rgba(255,255,255,0.6);
+  }
+  
+.sidebar:hover{
+    background-color: rgb(255, 255, 255);
 }
 
+.subfilter_button {
+    background-color: #fd9a7a;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    position: absolute;
+  }
+
+.list-item {
+    font-size: 12px;
+    height: 22px;
+    /*display: initial;
+      font-size: 12px;
+    */
+}
+  
+md-checkbox {
+    min-height: 100%;
+    align-items: center;
+}
 
 
 .filter_button {
@@ -94,9 +113,18 @@ background-color: #fd9a7a;
     /*left: 130px;  move button outside*/
 }
 
+.label {
+    font-weight: bolder;
+    font-size: 12px;
+  }
+  
+.nitem{
+    font-size: 9px;
+}
+  
 .close_button {
-    width: auto;
-    height: auto;
+    width: 40px;
+    height: 40px;
     top: 0;
     bottom: 0;
     right: 0;
@@ -104,6 +132,9 @@ background-color: #fd9a7a;
     /*left: 130px;  move button outside*/
 }
 
+.close_icon {
+    vertical-align: sub;
+}
 
 
 .container-card {

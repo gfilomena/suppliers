@@ -15,6 +15,8 @@ import { CustomDateAdapter } from './custom-date-adapter'
 import { Observable } from 'rxjs';
 import { UserRepositoryService, RepositoryService } from "../_services/index";
 import { UserRepository } from '../_models/user-repository';
+import { FilterRepositories } from '../_models/filter-repositories';
+
 
 @Component({
     selector: 'app-search-form',
@@ -411,17 +413,4 @@ export class SearchFormComponent {
 }
 
 
-export class FilterRepositories {
-    name: string;
-    count: number;
-    enabled: boolean;
 
-    constructor(name: string) {
-        this.name = name;
-        this.count = 0;
-        this.enabled = true;
-
-    }
-
-
-}

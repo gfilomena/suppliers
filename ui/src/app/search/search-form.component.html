@@ -1,3 +1,4 @@
+<md-progress-bar mode="indeterminate" *ngIf="submitted"></md-progress-bar>
 <div class="container">
   <div class="container-sidebar">
     <md-card class="sidebar" [style.left.px]="sidebar(-170)">
@@ -63,9 +64,6 @@
         </md-card>
       </div>
     </form>
-
-    <md-progress-bar mode="indeterminate" *ngIf="submitted"></md-progress-bar>
-
     <div class="container-card" fxflex>
       <h2 *ngIf="nOfResults == 0">No results found!</h2>
       <div class="sub_container-card" *ngFor="let sr of searchResult">

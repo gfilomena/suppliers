@@ -1,32 +1,41 @@
+<md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
 <div align="center">
  <div *ngIf="nResults > 0"><button class="delete" md-icon-button (click)="deleteAllByUser()"><md-icon>delete</md-icon>Delete All Bookmarks</button></div>
  <h3 *ngIf="nResults == 0">No bookmarks available.</h3>
 </div>
 <div class="container">
-
   <div class="container-sidebar">
-<md-card class="sidebar"  [style.left.px]="sidebar(-150)">
-       <div class="filter_button" [style.left.px]="sidebar(150)">
-         <button md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;"><md-icon>tune</md-icon></button>
-       </div>
-       <div class="close_button">
-         <button md-icon-button	 (click)="showSidebar = !showSidebar;"><md-icon>close</md-icon></button>
-       </div>
-<md-list> 
-  <md-list-item><md-checkbox  [(ngModel)]="videofilter" [checked]="videofilter">Video</md-checkbox>({{VideoResult}})</md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="audiofilter" [checked]="audiofilter">Audio</md-checkbox>({{AudioResult}})</md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="textfilter"  [checked]="textfilter">Text</md-checkbox>({{TextResult}})</md-list-item>
-  <md-list-item><md-checkbox  [(ngModel)]="imagefilter" [checked]="imagefilter">Image</md-checkbox>({{ImageResult}})</md-list-item>
-</md-list>   
-</md-card>
+    <md-card class="sidebar" [style.left.px]="sidebar(-170)">
+      <button [style.left.px]="sidebar(170)" md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon class="close_icon">tune</md-icon></button>
+      <button class="close_button" md-icon-button (click)="showSidebar = !showSidebar;"><md-icon>close</md-icon></button>
+      <md-list>
+        <p class="label">Types</p>
+        <md-list-item class="list-item">
+          <md-checkbox [(ngModel)]="videofilter" [checked]="videofilter">Video<i class="nitem">({{VideoResult}})</i></md-checkbox>
+        </md-list-item>
+        <md-list-item class="list-item">
+          <md-checkbox [(ngModel)]="audiofilter" [checked]="audiofilter">Audio<i class="nitem">({{AudioResult}})</i></md-checkbox>
+        </md-list-item>
+        <md-list-item class="list-item">
+          <md-checkbox [(ngModel)]="textfilter" [checked]="textfilter">Text<i class="nitem">({{TextResult}})</i></md-checkbox>
+        </md-list-item>
+        <md-list-item class="list-item">
+          <md-checkbox [(ngModel)]="imagefilter" [checked]="imagefilter">Image<i class="nitem">({{ImageResult}})</i></md-checkbox>
+        </md-list-item>
+        <p class="label">Repositories</p>
+        <md-list-item class="list-item" *ngFor="let item of activeRepositories">
+          <md-checkbox [(ngModel)]="item.enabled" [checked]="item.enabled">{{item.name}}<i class="nitem">({{item.count}})</i></md-checkbox>
+        </md-list-item>
+      </md-list>
+    </md-card>
   </div>
 
-<md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
+
 
   <div  fxFlex>
 <div class="container-card"  fxflex>
      <div class="sub_container-card" *ngFor="let item of bookmarks">
-       <div *ngIf="filter(item.multimediaContent.type)">
+       <div *ngIf="filter(item.multimediaContent)">
         <md-card class="card">
            <div *ngIf="item.multimediaContent.thumbnail; else defaultimg" class="image-card">
               <img md-card-image  src="{{item.multimediaContent.thumbnail}}" (click)="openDialog(item.multimediaContent)">

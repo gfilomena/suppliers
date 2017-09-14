@@ -4,6 +4,9 @@ import { Bookmark } from "../_models/bookmark";
 import { BookmarkService, AlertService } from "../_services/index";
 import { DialogDetail } from "../dialog-detail/dialog-detail.component";
 import { MdDialog } from "@angular/material";
+import { UserRepositoryService, RepositoryService } from "../_services/index";
+import { UserRepository } from '../_models/user-repository';
+import { FilterRepositories } from '../_models/filter-repositories';
 
 @Component({
   selector: 'app-bookmarks',
@@ -28,9 +31,13 @@ export class BookmarksComponent implements OnInit {
     showSidebar: boolean = true;
     submitted: boolean = false;
 
+    userRepositories: UserRepository[];
+    activeRepositories: FilterRepositories[];
+
   constructor( private BookmarkService:BookmarkService,
                private alertService: AlertService,
-               private dialog: MdDialog ) { }
+               private dialog: MdDialog,
+               private userRepositoryService: UserRepositoryService ) { }
 
   ngOnInit() {
     this.getAllBookmarks();
@@ -55,6 +62,7 @@ openDialog(item:MultimediaContent) {
                 data => {
                     this.bookmarks = data.reverse()
                     this.counter(data)
+                    this.getUserRepositories()
                     this.submitted = false
                     this.nResults = data.length
                     localStorage.setItem("bookmarks",JSON.stringify(this.bookmarks));
@@ -64,6 +72,76 @@ openDialog(item:MultimediaContent) {
                     this.alertService.error(error._body)
                      this.submitted = false
                 })
+    }
+
+    getUserRepositories() {
+        this.userRepositoryService.findByUser()
+            .subscribe(
+            data => {
+                this.userRepositories = data;
+                this.initRepo(this.userRepositories);
+                this.incRepo(this.bookmarks)
+                console.log(' this.userRepositories', this.userRepositories);
+            },
+            error => {
+                console.log('getUserRepositories -> error:', error);
+            })
+    }
+
+    incRepo(bookmarks:Bookmark[]) {
+        
+        let i: number;
+        let repository: string;
+
+        for (i = 0; i < bookmarks.length; i++) {
+
+            repository = bookmarks[i].multimediaContent.source.name;
+
+            if (this.activeRepositories) {
+                let index = this.activeRepositories.findIndex(obj => obj.name == repository)
+                //console.log("this.activeRepositories",this.activeRepositories)
+                //console.log("repository",repository)
+                //console.log("item",index)
+                if (index > -1) {
+                    this.activeRepositories[index].count = this.activeRepositories[index].count + 1;
+                }
+            }
+
+        }
+
+    }
+
+    initRepo(array: UserRepository[]) {
+        let i: number;
+        let repository: string;
+        this.activeRepositories = [];
+        for (i = 0; i < array.length; i++) {
+            let enabled = array[i].enabled;
+            if (enabled) {
+                repository = array[i].repository;
+                //console.log("repository::",repository);
+                this.activeRepositories.push(new FilterRepositories(repository));
+            }
+        }
+        //console.log("end initRepo",this.activeRepositories)
+    }
+
+    filterRepository(item: MultimediaContent): boolean {
+        console.log("this.activeRepositories",this.activeRepositories);
+        let repository = item.source.name;
+        console.log("repository->",repository);
+        if (this.activeRepositories) {
+            let index = this.activeRepositories.findIndex(obj => obj.name == repository)
+
+            if (index > -1) {
+                return this.activeRepositories[index].enabled;
+            } else {
+                return false;
+            }
+        }
+
+
+        return false;
     }
 
     counter(array) {
@@ -133,41 +211,45 @@ openDialog(item:MultimediaContent) {
                         )
     }
 
-    filter(type:string):any{
-     
-          switch(type) { 
-            case 'video': { 
-                if (this.videofilter){
+    filter(item: MultimediaContent): any {
+        let repo: boolean;
+
+        if (this.filterRepository(item)) {
+
+            switch (item.type) {
+                case 'video': {
+                    if (this.videofilter) {
                         return true;
-                }else{
+                    } else {
                         return false
+                    }
                 }
-            } 
-            case 'audio': { 
-                if (this.audiofilter){
+                case 'audio': {
+                    if (this.audiofilter) {
                         return true;
-                }else{
+                    } else {
                         return false
+                    }
                 }
-            } 
-            case 'image': { 
-                if (this.imagefilter){
+                case 'image': {
+                    if (this.imagefilter) {
                         return true;
-                }else{
+                    } else {
                         return false
+                    }
                 }
-            } 
-            case 'text': { 
-                if (this.textfilter){
+                case 'text': {
+                    if (this.textfilter) {
                         return true;
-                }else{
+                    } else {
                         return false
+                    }
                 }
-            } 
-            default: { 
-              return true;
-            } 
-          } 
+                default: {
+                    return true;
+                }
+            }
+        }
 
     }
 

@@ -27,10 +27,8 @@
   height: 150px;
   width: 195px;
   display: flex;
-  justify-content: center;
-  /* align horizontal */
-  align-items: center;
-  /* align vertical */
+  justify-content: center; /* align horizontal */
+  align-items: center; /* align vertical */
 }
 
 .image-card img {
@@ -69,14 +67,16 @@
   height: 20px;
 }
 
-.sidebar {
+.sidebar{
   position: fixed;
   z-index: 1;
-  width: 140px;
-  /* sum padding */
-  padding: 15px;
-  /*left: -130px;    hide*/
+  width: 140px; /* sum padding */
+  padding:15px;  /*left: -130px;    hide*/
   background-color: rgba(255,255,255,0.6);
+}
+
+.sidebar:hover{
+  background-color: rgb(255, 255, 255);
 }
 
 .subfilter_button {
@@ -85,20 +85,6 @@
   height: 30px;
   top: 0;
   position: absolute;
-}
-
-.close_icon {
-  vertical-align: sub;
-}
-
-.filter_button {
-  width: auto;
-  height: auto;
-  top: 0;
-  bottom: 0;
-  right: 0;
-  position: absolute;
-  /*left: 130px;  move button outside*/
 }
 
 .list-item {
@@ -112,6 +98,16 @@
 md-checkbox {
   min-height: 100%;
   align-items: center;
+}
+
+.filter_button {
+  width: auto;
+  height: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /*left: 130px;  move button outside*/
 }
 
 .label {
@@ -131,6 +127,11 @@ md-checkbox {
   right: 0;
   position: absolute;
   /*left: 130px;  move button outside*/
+}
+
+
+.close_icon {
+  vertical-align: sub;
 }
 
 .container-card {
