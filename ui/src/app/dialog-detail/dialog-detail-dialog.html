@@ -70,8 +70,7 @@
 <md-input-container>
     <input #newtag mdInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)" >
   </md-input-container>
-    <div>
-      <h6>Repository:<a [href]="data.uri">{{data.source.name}}</a> - Date:{{getDate(data.date)}}</h6></div>
+    <div><a [href]="data.uri"><img src="../assets/ui/assets/images/{{data.source.name}}.png"/></a></div>
 </div>
   </md-card-content>
    <md-card-actions align="end">

@@ -27,7 +27,7 @@
   </div>
   <div fxFlex>
 
-    <form name="form" (click)="f.form.valid && onSubmit()" #f="ngForm">
+    <form name="form" #f="ngForm">
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
         <md-card class="form">
           <div>
@@ -59,7 +59,7 @@
           </div>
           <div align="end">
             <button md-raised-button type="button" (click)="clear()">Clear</button>
-            <button md-raised-button>Search</button>
+            <button md-raised-button (click)="f.form.valid && onSubmit()">Search</button>
           </div>
         </md-card>
       </div>
@@ -87,10 +87,10 @@
                   <button md-icon-button mdTooltip="Click for more info." (click)="openDialog(sr)"><md-icon>info</md-icon></button>
                 </div>
                 <div class="detail-card" fxLayout="column">
-                  <div class="title-card"><b>Title:</b>{{sr.name}}</div>
+                  <div class="title-card">{{sr.name}}</div>
                   <!-- <div class="description"><b>Description:</b>{{sr.description}}</div>-->
-                  <div class="source-card"><b>Source:</b>{{sr.source.name}}</div>
-                  <div class="date-card"><b>Date:</b>{{getDate(sr.date)}}</div>
+                  <div class="source-card">{{sr.source.name}}</div>
+                  <div class="date-card">{{getDate(sr.date)}}</div>
                 </div>
               </div>
             </md-card-content>

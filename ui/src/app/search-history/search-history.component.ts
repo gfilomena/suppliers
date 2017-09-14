@@ -62,13 +62,15 @@ deleteAll() {
 arrToString(array:any[]) {
     var i:number
         for(i = 0;i<array.length;i++) { 
-          array[i].keywords = array[i].keyWords.join(" ")
+          array[i].freeText = array[i].freeText.join(" ")
         }
     return array
 }
 
 goToSearchForm(searchForm: SearchForm) {
-   console.log(searchForm)
+    console.log(searchForm)
+    localStorage.removeItem("lastresearch");
+    this.searchResult = [];
     localStorage.setItem("searchForm", JSON.stringify(searchForm));
     this.router.navigate(['/']);
   }

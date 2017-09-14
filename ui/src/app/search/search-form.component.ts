@@ -1,4 +1,4 @@
-import { OnInit } from '@angular/core';
+import { OnInit, OnDestroy  } from '@angular/core';
 import { Repository } from './../_models/repository';
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
@@ -65,39 +65,46 @@ export class SearchFormComponent {
         private userRepositoryService: UserRepositoryService) {
         this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         let historyform = JSON.parse(localStorage.getItem("searchForm"))
+        let lastresearch = JSON.parse(localStorage.getItem("lastresearch"))
 
         this.dateAdapter.setLocale('ll');
-        if (localStorage["lastresearch"]) {
-            this.searchResult = JSON.parse(localStorage.getItem("lastresearch"))
+
+        if (lastresearch) {
+            //progress bar ON
+            this.submitted = true;
+
+            this.searchResult = lastresearch
             this.counter(this.searchResult)
             this.getUserRepositories()
             this.nOfResults = this.searchResult.length;
-        }
 
-        if (localStorage["searchForm"]) {
-            if (this.searchForm == undefined) {
+            
+        }
+        
+
+        console.log("historyform",historyform);
+            if (historyform === undefined || historyform === null) {
                 console.log('undefined - this.searchForm', this.searchForm)
-                this.searchForm = new SearchForm('', historyform.freeText, '', new Date(historyform.inDate), new Date(historyform.endDate), '')
+                console.log('NEW searchForm')
+                let type: string[]
+                this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
             } else {
-                console.log('this.searchForm', this.searchForm)
+                this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
                 this.searchForm.freeText = historyform.freeText
                 this.searchForm.inDate = new Date(historyform.inDate)
                 this.searchForm.endDate = new Date(historyform.endDate)
             }
-
-
-
-            //localStorage.removeItem("searchForm")
-        } else {
-            console.log('NEW searchForm')
-            let type: string[]
-            this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
-        }
+            
 
 
 
     }
 
+    ngOnDestroy() {
+        
+        //this.searchForm.freeText = "";
+
+      }
 
 
 
@@ -189,7 +196,8 @@ export class SearchFormComponent {
                 this.userRepositories = data;
                 this.initRepo(this.userRepositories);
                 this.incRepo(this.searchResult)
-                console.log(' this.userRepositories', this.userRepositories);
+                //console.log(' this.userRepositories', this.userRepositories);
+                this.submitted = false;
             },
             error => {
                 console.log('getUserRepositories -> error:', error);
