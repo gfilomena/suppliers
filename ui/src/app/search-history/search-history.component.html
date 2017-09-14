@@ -21,7 +21,7 @@
 
         
         <md-list *ngFor="let sr of searchResult">
-          <md-list-item  mdTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.keywords}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></md-list-item>
+          <md-list-item  mdTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.freeText}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></md-list-item>
         </md-list>
       
     </div>

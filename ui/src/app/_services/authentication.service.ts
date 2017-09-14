@@ -23,7 +23,9 @@ export class AuthenticationService {
 
     logout() {
         // remove user from local storage to log user out
-        localStorage.removeItem("currentUser")
+        localStorage.removeItem("searchForm");
+        localStorage.removeItem("lastresearch");
+        localStorage.removeItem("currentUser");
         //this.http.post(environment.serviceUrl + "/users/logout")
     }
 }
