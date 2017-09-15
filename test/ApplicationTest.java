@@ -1,9 +1,13 @@
+import java.io.File;
+import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import com.fasterxml.jackson.databind.JsonNode;
+import org.apache.commons.io.FileUtils;
 import org.junit.*;
 
 import play.libs.Json;
@@ -66,6 +70,24 @@ public class ApplicationTest {
         JsonNode mJ=PixabaySearchRepository.merge(aJ,bJ);
         System.out.println("mJ="+mJ.asText());
         assertNotEquals(aJ,bJ);
+    }
+
+    @Test
+    public void testDownloadURI() {
+        String toFile ="e-watch-tv-tv-screen-monitor-589640/";
+        String fromFile ="https://pixabay.com/get/ed37b90c29f31c2ad65a5854e3444f96e57ee7c818b4114491f0c478a3e8_640.jpg";
+
+        //fromFile = "https://static.pexels.com/photos/67636/rose-blue-flower-rose-blooms-67636.jpeg";
+        toFile = "C:\\"+toFile;
+
+        try {
+
+            //connectionTimeout, readTimeout = 10 seconds
+            FileUtils.copyURLToFile(new URL(fromFile), new File(toFile), 10000, 10000);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 
