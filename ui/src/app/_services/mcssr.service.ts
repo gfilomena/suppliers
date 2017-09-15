@@ -7,7 +7,7 @@ import { environment } from '../../environments/environment';
 export class McssrService {
 
 constructor(private http: Http) { }
-url = "http://localhost:8080/nuxeo/site/automation/Document.DownloadMultimediaContent"
+
 
 create(mc: MultimediaContent) {
     return this.http.post(environment.serviceUrl + "/mcssr", this.getParam(mc),this.jwt())
@@ -64,8 +64,9 @@ if(mc.fileExtension) {
             //mc.uri = "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg";
             //mc.name = "pexels-photo-207962.jpeg";
             //mc.fileExtension = "image/jpeg"
+            let currentUser = JSON.parse(localStorage.getItem("currentUser"))
             let params = '{ '
-            +' "user":"salsx", '
+            +' "user":"'+currentUser.username+'", '
             +' "params" : {' 
             +' "path":"/Producer_Repository/workspaces/'+type+'", '
             +' "url":"'+ mc.uri +'", '
