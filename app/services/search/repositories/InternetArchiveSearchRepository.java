@@ -96,7 +96,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         //Logger.debug("Type="+i.get("mediatype").asText());
         m.setType(MultimediaType.video);
         m.setFileExtension("video/mp4");
-        m.setDownloadURI("https://archive.org/download/"+i.get("identifier").asText()+"/"+i.get("identifier").asText()+".mp4");
+        m.setDownloadURI("");
         m.setURI(registration.getRepository().getUrlPrefix()+i.get("identifier").asText());
         m.setSource(registration.getRepository());
         m.setName(i.get("title").asText());

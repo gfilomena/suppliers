@@ -24,7 +24,7 @@ getParam(mc: MultimediaContent): JSON {
 if(mc.fileExtension) {
     arrextension = mc.fileExtension.split("/");
     extension = arrextension[arrextension.length-1]; 
-    mimeType = mc.fileExtension;
+    mimeType = mc.fileExtension;    
     filename = mc.name+"."+extension;
 }
 

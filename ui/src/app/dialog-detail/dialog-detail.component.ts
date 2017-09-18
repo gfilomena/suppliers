@@ -1,3 +1,4 @@
+import { element } from 'protractor';
 import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs,RequestOptions, Headers  } from '@angular/http';
@@ -7,6 +8,11 @@ import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { User } from "../_models/user";
 import { Bookmark } from './../_models/bookmark';
 import { BookmarkService } from "../_services/bookmark.service";
+import { InternetArchiveService } from "../_services/internetarchive.service";
+import { mediafile, File } from './../_models/mediafile';
+import * as mime from 'mime-types';
+
+
 
 @Component({
   selector: 'dialog-detail-dialog',
@@ -19,6 +25,14 @@ export class DialogDetail implements OnInit  {
   tagInsert:boolean = false;
   loading:boolean = false;
   title:boolean = true;
+  details:mediafile = null;
+  formats:File[] = null;
+  path:string = "";
+  formatVideo:String[]= ["ogv","ogg","avi","mp4","flv","fla","mov","mpeg","mpg","mpe","wmv","swf"];
+  formatAudio:String[]=["mp3"];
+  formatImage:String[]=["jpeg","jpg","png","gif"];
+  formatText:String []=["text","html","pdf"];
+
 
   @Input() data: MultimediaContent;
   @Output() mcupdate = new EventEmitter<MultimediaContent>();
@@ -29,14 +43,18 @@ export class DialogDetail implements OnInit  {
     public http: Http,
     private BookmarkService: BookmarkService,
     private McssrService: McssrService,
-    public snackBar: MdSnackBar) {
-      this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
+    public snackBar: MdSnackBar,
+    private InternetArchiveService: InternetArchiveService) {
+    this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
     }
 
 
     ngOnInit() {
          console.log('init mc:',this.data)
          //this.uriValidation(this.getVideoSource(this.data.downloadURI));
+         if(this.data.source.name == "InternetArchive") {
+            this.getInternetArchiveformat(this.data.uri)
+         }
     }
 
     getVideoSource(URI:string):any {
@@ -51,6 +69,86 @@ export class DialogDetail implements OnInit  {
     toggle() {
         this.title = !this.title;;
     }
+
+
+
+  getInternetArchiveformat(url:string) {
+   
+     // let url = "https://archive.org/download/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml";
+    //let url = "https://ia801600.us.archive.org/26/items/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml";
+    url = encodeURI(url)
+    
+    this.InternetArchiveService.getDetails(url).subscribe(
+              res => {
+                  this.details = res;
+                  this.formats = this.filtertype(this.details);
+                  this.path = this.details.server+this.details.dir+"/";
+                  console.log('getInternetArchiveformat - subscribe OK:',this.details);
+                  console.log("path",this.path)
+              },
+              error => {
+                  console.log('getInternetArchiveformat - subscribe - error:',error);
+              }
+            )
+    
+  }  
+  
+  getExt(uri:String):String {
+    //console.log("extension:", mime.extension(mime.lookup(uri)))
+    return mime.extension(mime.lookup(uri))
+  }
+
+  getMB(byte:number){
+      let num = byte/1048576;
+      return num.toPrecision(3);
+  }
+
+filtertype(array:mediafile):File[] {
+    let finals:File[] = [];
+    let i:number;
+     
+    for ( i = 0; i < array.files.length; i++) {
+       
+        let extension = this.getExt(array.files[i].name);
+
+           if(this.acceptedFormat(extension) > -1) {
+              console.log("ADD array.files[i].name",array.files[i].name)
+                 finals.push(array.files[i])
+            } 
+        }
+
+ console.log("finals",finals)
+    return finals;
+}
+
+acceptedFormat(extension):number{
+
+    switch (this.data.type) {
+        case 'video': {
+            return this.formatVideo.indexOf(extension);
+        }
+        case 'audio': {
+            return this.formatAudio.indexOf(extension);
+        }
+        case 'image': {
+            return this.formatImage.indexOf(extension);
+        }
+        case 'text': {
+            return this.formatText.indexOf(extension);
+        }
+        default: {
+            return -1;
+        }
+    }
+}
+  
+
+  onChange(filename) {
+    console.log("filename",filename)
+    this.data.downloadUri = filename
+    this.data.uri = "https:\/\/"+this.path+filename
+  }
+
 
   checkSaveBookmark(mc:MultimediaContent) {
             let bookmarks : Bookmark[];
@@ -102,22 +200,8 @@ export class DialogDetail implements OnInit  {
       duration: 2000,
     });
   }
-/*
-  saveTag(mc:MultimediaContent, newtag:string){
-    console.log('newtag', newtag)
-    console.log('before-mc', mc)
-    newtag = newtag.trim();
-    if(mc.metadata == null) {mc.metadata = "";}
 
-    let re = "/"+newtag+"/gi"; 
 
-    if (mc.metadata.search(re) == -1 ) { 
-    
-        mc.metadata =+ ","+newtag;
-    }
-    //this.mcupdate.emit(mc);
-}
-*/
 
 
   saveTag(mc:MultimediaContent, newtag:string){
@@ -189,7 +273,7 @@ export class DialogDetail implements OnInit  {
                 })
   }
 
-  
+
 
 
 

@@ -28,7 +28,8 @@ public class NuxeoService {
 		// PUT Method and Deserialize Json Response Payload
 		Response response = nuxeoClient.post(mcssrUri+ConfigFactory.load().getString("mcssr.downloadWSUri"), body.toString());
 		try {
-			final String json = response.body().string();
+			String json = response.body().string();
+			
 			if(json != null) {
 				return CompletableFuture.supplyAsync(() -> Json.toJson(json));
 			}
