@@ -43,8 +43,11 @@ public class NuxeoService {
 		Logger.info("create - body->"+body.toString());	
 		// PUT Method and Deserialize Json Response Payload
 		Response response = nuxeoClient.post(url, body.toString());
+		Logger.info("response - code"+response.code());
+		//Logger.info("response - json->"+response.body().string());	
 		try {
-			final String json = response.body().string();
+			String json = response.body().string();
+			
 			if(json != null) {
 				return CompletableFuture.supplyAsync(() -> Json.toJson(json));
 			}

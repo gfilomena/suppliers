@@ -13,6 +13,7 @@ import { DialogRepositoryComponent, DialogRepositoryDetail } from '../dialog-rep
 
 import { DialogDetail } from "../dialog-detail/dialog-detail.component";
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
+import { InternetArchiveService} from "../_services/internetarchive.service";
 
 
 @NgModule({
@@ -33,7 +34,7 @@ import { BookmarksComponent } from '../bookmarks/bookmarks.component';
   ],
   // entryComponents declare Components created manually
   entryComponents: [DialogDetail,DialogRepositoryDetail],  
-  providers: [ SearchService, McssrService ]
+  providers: [ SearchService, McssrService, InternetArchiveService ]
 })
 export class SearchModule {
 
