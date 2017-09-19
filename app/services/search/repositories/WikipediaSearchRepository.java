@@ -140,6 +140,7 @@ public class WikipediaSearchRepository  implements SearchRepository {
         //m.setType(i.path("id").get("kind").asText());
         m.setType(MultimediaType.text);
         m.setURI(link);
+        m.setDownloadURI(link);
         //m.setDownloadURI(reg.getRepository().getUrlPrefix() + i.path("id").get("videoId").asText());
         m.setName(name);
         m.setDescription(description);

@@ -23,8 +23,12 @@ getParam(mc: MultimediaContent): JSON {
    let type : String;
    let folder: String;
    let charset: String;
+if(!mc.fileExtension) {
+    mimeType = mime.lookup(mc.downloadURI) 
+}else{
+    mimeType = mc.fileExtension;
+}
 
-mimeType = mime.lookup(mc.uri) 
 console.log("mcssrService-mimeType",mimeType)
 //charset = mime.charset(mimeType) // 'UTF-8'
 //console.log('charset:',charset)
@@ -53,6 +57,7 @@ console.log('mimeType:',mimeType)
     case 'text': { 
         folder = "Text"
         type = "File"
+        mimeType = "text/html"
        break;
     } 
     default: { 
@@ -70,7 +75,7 @@ console.log('mimeType:',mimeType)
             +' "user":"'+currentUser.username+'", '
             +' "params" : {' 
             +' "path":"/Producer_Repository/workspaces/'+folder+'", '
-            +' "url":"'+ mc.uri +'", '
+            +' "url":"'+ mc.downloadURI +'", '
             +' "encoding":"'+charset+'", '
             +' "fileName":"'+mc.name+'", '
             +' "mimeType":"'+mimeType+'", '

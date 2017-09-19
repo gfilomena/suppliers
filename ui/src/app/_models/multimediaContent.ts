@@ -6,7 +6,7 @@ export class MultimediaContent {
     name: string
     description: string
     thumbnail: string
-    downloadUri: string
+    downloadURI: string
     source: {
         name:string
     }

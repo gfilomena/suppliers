@@ -4,7 +4,7 @@ import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs,RequestOptions, Headers  } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA, MdChipsModule, MdSnackBar, MdProgressSpinnerModule } from "@angular/material";
-import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from "../_models/user";
 import { Bookmark } from './../_models/bookmark';
 import { BookmarkService } from "../_services/bookmark.service";
@@ -58,7 +58,7 @@ export class DialogDetail implements OnInit  {
     }
 
     getVideoSource(URI:string):any {
-        console.log("getVideoSource:",URI)
+        console.log("getVideoSource:", URI)
         let link =  this.sanitizer.bypassSecurityTrustResourceUrl(URI);
         console.log("link:",link)
         return link;
@@ -74,12 +74,11 @@ export class DialogDetail implements OnInit  {
 
 
 
-  getInternetArchiveformat(url:string) {
-   
+  getInternetArchiveformat(url: string) {
      // let url = "https://archive.org/download/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml";
-    //let url = "https://ia801600.us.archive.org/26/items/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml";
+    // let url = "https://ia801600.us.archive.org/26/items/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml";
     url = encodeURI(url)
-    
+
     this.InternetArchiveService.getDetails(url).subscribe(
               res => {
                   this.details = res;
@@ -92,11 +91,11 @@ export class DialogDetail implements OnInit  {
                   console.log('getInternetArchiveformat - subscribe - error:',error);
               }
             )
-    
-  }  
-  
+
+  }
+
   getExt(uri:String):String {
-    //console.log("extension:", mime.extension(mime.lookup(uri)))
+    //console.log("mimetype:", mime.lookup(uri))
     return mime.extension(mime.lookup(uri))
   }
 
@@ -106,23 +105,25 @@ export class DialogDetail implements OnInit  {
   }
 
 filtertype(array:mediafile):File[] {
-    let finals:File[] = [];
-    let i:number;
-     
-    for ( i = 0; i < array.files.length; i++) {
-       
-        let extension = this.getExt(array.files[i].name);
+    let finals: File[] = [];
+    let i: number;
 
-           if(this.acceptedFormat(extension) > -1) {
-              //console.log("ADD array.files[i].name",array.files[i].name)
+    for ( i = 0; i < array.files.length; i++) {
+
+        let extension = this.getExt(array.files[i].name);
+        //console.log("array.files[i].name",array.files[i].name)
+        //console.log("extension",extension)
+
+           if (this.acceptedFormat(extension) > -1) {
+               //console.log('ADD array.files[i].name', array.files[i].name)
                  finals.push(array.files[i])
-            } 
+            }
         }
- console.log("finals",finals)
+ console.log('finals', finals);
     return finals;
 }
 
-acceptedFormat(extension):number{
+acceptedFormat(extension): number {
 
     switch (this.data.type) {
         case 'video': {
@@ -146,15 +147,25 @@ acceptedFormat(extension):number{
 
   onChange(filename) {
     
-    this.data.downloadUri = "https:\/\/"+this.path+filename
-    console.log("onChange - this.data.downloadUri",this.data.downloadUri)
-    this.data.uri = "https:\/\/"+this.path+filename
-    this.data.fileExtension = mime.lookup(this.data.downloadUri)
-    console.log("this.data.fileExtension",this.data.fileExtension)
-    //let element:HTMLElement = document.getElementById("video");
-    let video:HTMLVideoElement  = <HTMLVideoElement> document.getElementById("video");
-    console.log("video",video);
-    video.load();
+    this.data.downloadURI = "https:\/\/"+this.path+filename
+    console.log('onChange - this.data.downloadURI',this.data.downloadURI)
+    this.data.fileExtension = mime.lookup(this.data.downloadURI)
+    console.log('this.data.fileExtension',this.data.fileExtension)
+    // let element:HTMLElement = document.getElementById("video");
+    switch (this.data.type) {
+        case 'video': {
+            let video:HTMLVideoElement  = <HTMLVideoElement> document.getElementById("video");
+            console.log('video',video);
+            video.load();
+            break;
+        }
+        case 'audio': {
+            let audio:HTMLAudioElement  = <HTMLAudioElement> document.getElementById("audio");
+            console.log('audio',audio);
+            audio.load();
+            break;
+        }
+    }
 
 
   }

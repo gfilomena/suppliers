@@ -58,7 +58,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
                 setQueryParameter("debug", "false").
                 setQueryParameter("xvar", "production").
                 setQueryParameter("total_only", "false").
-                setQueryParameter("count", "200").
+                setQueryParameter("count", "100").
                 setQueryParameter("fields", "title,description,downloads,identifier,source,type,mediatype,external-identifier,licenseurl,format,bith,collection").
                 setQueryParameter("q", query).
                 setQueryParameter("sorts", "downloads desc").
@@ -116,11 +116,11 @@ public class InternetArchiveSearchRepository implements SearchRepository {
     	String mediatype = i.get("mediatype").asText();
 
 	    MultimediaContent m=new MultimediaContent();
-		if(mediatype == "movies"){ m.setType(MultimediaType.video); }
+		if(mediatype.contains("movies")){ m.setType(MultimediaType.video); }
 	
-	    else if(mediatype == "audio"){ m.setType(MultimediaType.audio); }
+	    else if(mediatype.contains("audio")){ m.setType(MultimediaType.audio); }
 	       
-	    else if(mediatype == "image"){ m.setType(MultimediaType.image); }
+	    else if(mediatype.contains("image")){ m.setType(MultimediaType.image); }
 	    else{ m.setType(MultimediaType.video); }
 
 
