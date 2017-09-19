@@ -19,14 +19,13 @@ create(mc: MultimediaContent) {
 getParam(mc: MultimediaContent): JSON {
 
    let mimeType : String;
-   let extension : String;
-   let arrextension : String[];
    let filename : String;
    let type : String;
    let folder: String;
    let charset: String;
 
 mimeType = mime.lookup(mc.uri) 
+console.log("mcssrService-mimeType",mimeType)
 //charset = mime.charset(mimeType) // 'UTF-8'
 //console.log('charset:',charset)
 charset = 'UTF-8';
@@ -61,7 +60,7 @@ console.log('mimeType:',mimeType)
     } 
   } 
 
-  console.log('extension:',extension)
+
             
             //mc.uri = "https://images.pexels.com/photos/207962/pexels-photo-207962.jpeg";
             //mc.name = "pexels-photo-207962.jpeg";

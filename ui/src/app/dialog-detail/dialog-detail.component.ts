@@ -58,7 +58,9 @@ export class DialogDetail implements OnInit  {
     }
 
     getVideoSource(URI:string):any {
+        console.log("getVideoSource:",URI)
         let link =  this.sanitizer.bypassSecurityTrustResourceUrl(URI);
+        console.log("link:",link)
         return link;
     }
 
@@ -112,11 +114,10 @@ filtertype(array:mediafile):File[] {
         let extension = this.getExt(array.files[i].name);
 
            if(this.acceptedFormat(extension) > -1) {
-              console.log("ADD array.files[i].name",array.files[i].name)
+              //console.log("ADD array.files[i].name",array.files[i].name)
                  finals.push(array.files[i])
             } 
         }
-
  console.log("finals",finals)
     return finals;
 }
@@ -144,9 +145,18 @@ acceptedFormat(extension):number{
   
 
   onChange(filename) {
-    console.log("filename",filename)
-    this.data.downloadUri = filename
+    
+    this.data.downloadUri = "https:\/\/"+this.path+filename
+    console.log("onChange - this.data.downloadUri",this.data.downloadUri)
     this.data.uri = "https:\/\/"+this.path+filename
+    this.data.fileExtension = mime.lookup(this.data.downloadUri)
+    console.log("this.data.fileExtension",this.data.fileExtension)
+    //let element:HTMLElement = document.getElementById("video");
+    let video:HTMLVideoElement  = <HTMLVideoElement> document.getElementById("video");
+    console.log("video",video);
+    video.load();
+
+
   }
 
 
