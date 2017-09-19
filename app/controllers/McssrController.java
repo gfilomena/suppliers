@@ -45,15 +45,6 @@ public class McssrController extends Controller{
         }else {
         	params = json.findPath("params");
         }
-        
-        if (json.findPath("user").isMissingNode()) {
-            return CompletableFuture.supplyAsync(() -> badRequest("User is mandatory!"));
-        } else {
-            String username = json.findPath("user").textValue();
-            User us = userDAO.findByUsername(username);
-            if( us==null){
-                return CompletableFuture.supplyAsync(() -> badRequest("User not present!"));
-            }
             if(params.findPath("url").isMissingNode()){
                 return CompletableFuture.supplyAsync(() -> badRequest("url not present!"));
             }
@@ -67,8 +58,6 @@ public class McssrController extends Controller{
                 return CompletableFuture.supplyAsync(() -> badRequest("type not present!"));
             }
             //Logger.info("create->"+ws.create(json));
-           
-        }
         r = ws.create(json);
         if(r != null) {
             return r.thenApply(( p ) -> ok(p));
@@ -76,9 +65,6 @@ public class McssrController extends Controller{
         else{
             return CompletableFuture.supplyAsync(() -> badRequest("ws.create(json) -> error!"));
         }
-       
-		
-	
     }
 
 

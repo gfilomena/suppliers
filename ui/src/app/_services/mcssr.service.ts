@@ -3,6 +3,9 @@ import { Http, Headers, RequestOptions, Response } from "@angular/http"
 import { MultimediaContent } from "../_models/multimediaContent"
 import { User } from "../_models/user";
 import { environment } from '../../environments/environment';
+import * as mime from 'mime-types';
+
+
 @Injectable()
 export class McssrService {
 
@@ -20,38 +23,37 @@ getParam(mc: MultimediaContent): JSON {
    let arrextension : String[];
    let filename : String;
    let type : String;
+   let folder: String;
+   let charset: String;
 
-if(mc.fileExtension) {
-    arrextension = mc.fileExtension.split("/");
-    extension = arrextension[arrextension.length-1]; 
-    mimeType = mc.fileExtension;    
-    filename = mc.name+"."+extension;
-}
+mimeType = mime.lookup(mc.uri) 
+//charset = mime.charset(mimeType) // 'UTF-8'
+//console.log('charset:',charset)
+charset = 'UTF-8';
+console.log('mimeType:',mimeType)
+
 
 
    
    switch(mc.type) { 
     case 'video': {
-
-        
+        folder = "Video"
         type = "Video"
-       
         break;
     } 
     case 'audio': { 
+        folder = "Audio"
         type = "Audio"
-
        break;
     } 
     case 'image': { 
-        type = "Image"
+        folder = "Image"
+        type = "Picture"
        break;
     } 
     case 'text': { 
-        filename = mc.name;
-        mimeType = "text/html";
-        type = "Text"
-     
+        folder = "Text"
+        type = "File"
        break;
     } 
     default: { 
@@ -68,10 +70,10 @@ if(mc.fileExtension) {
             let params = '{ '
             +' "user":"'+currentUser.username+'", '
             +' "params" : {' 
-            +' "path":"/Producer_Repository/workspaces/'+type+'", '
+            +' "path":"/Producer_Repository/workspaces/'+folder+'", '
             +' "url":"'+ mc.uri +'", '
-            +' "encoding":"UTF-8", '
-            +' "fileName":"'+filename+'", '
+            +' "encoding":"'+charset+'", '
+            +' "fileName":"'+mc.name+'", '
             +' "mimeType":"'+mimeType+'", '
             
             if(mc.metadata) {
@@ -79,10 +81,10 @@ if(mc.fileExtension) {
             }else{
                 params +=    ' "tags":"", ';
             }
-                params +=' "type":"File" '
+                params +=' "type":"'+type+'" '
                 params +='}}';
 
-        console.log("params",params)
+        console.log("to Nuxeo:",params)
 
         let obj = JSON.parse(params);
 
