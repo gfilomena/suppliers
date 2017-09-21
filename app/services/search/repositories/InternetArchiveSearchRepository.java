@@ -74,24 +74,33 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         InternetArchiveRepositoryResponseMapping respMap=new InternetArchiveRepositoryResponseMapping();
         if(clientResponse.get("count")!=null){
             respMap.setnOfResults(clientResponse.get("count").asInt());
+        }else{
+        	 Logger.debug("tag count is missing");
         }
         if(clientResponse.get("cursor")!=null){
             respMap.setCursor(clientResponse.get("cursor").asText());
+        }else{
+        	Logger.debug("tag cursor is missing");
         }
 
-        ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
+        if(clientResponse.get("docs")==null){
+        	Logger.error("tag docs is missing");
+        }
+        ArrayNode itemsArray = (ArrayNode) clientResponse.get("docs");
+        Logger.debug("clientResponse.get(docs)"+clientResponse.get("docs"));
         Iterator<JsonNode> itemsIterator = itemsArray.elements();
+
         List<JsonNode> itemsList=new ArrayList<JsonNode>();
         while(itemsIterator.hasNext()){
             itemsList.add(itemsIterator.next());
         }
         
-        List<String> mediatypes = Arrays.asList("movies", "audio", "image" );
+        List<String> mediatypes = Arrays.asList("movies","audio","image");
 
         if(!itemsList.isEmpty()) {
             stages = itemsList
                     .stream()
-                    //.filter(i -> Stream.of(mediatypes).anyMatch(x -> x.equals(i.get("mediatype").asText())))
+                    .filter(i -> mediatypes.contains(i.get("mediatype").asText()))
                     .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
                     .collect(Collectors.toList());
         }
@@ -99,39 +108,23 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         return respMap;
     }
     private MultimediaContent getMultimediaContentFromItem(JsonNode i){
-/*        //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
-        MultimediaContent m=new MultimediaContent();
-        //m.setType(i.get("mediatype").asText());
-        //Logger.debug("Type="+i.get("mediatype").asText());
-        m.setType(MultimediaType.video);
-        m.setFileExtension("video/mp4");
-        m.setDownloadURI("");
-        m.setURI(registration.getRepository().getUrlPrefix()+i.get("identifier").asText());
-        m.setSource(registration.getRepository());
-        m.setName(i.get("title").asText());
-        //Logger.debug("Debug internet archive multimedia enum:"+m.toString());
-        return m;
-*/
- 
+
     	String mediatype = i.get("mediatype").asText();
 
-	    MultimediaContent m=new MultimediaContent();
-		if(mediatype.contains("movies")){ m.setType(MultimediaType.video); }
-	
-	    else if(mediatype.contains("audio")){ m.setType(MultimediaType.audio); }
-	       
-	    else if(mediatype.contains("image")){ m.setType(MultimediaType.image); }
-	    else{ m.setType(MultimediaType.video); }
+    	MultimediaContent m=new MultimediaContent();
+ 		if(mediatype.contains("movies")){ m.setType(MultimediaType.video); }
+ 	
+ 	    else if(mediatype.contains("audio")){ m.setType(MultimediaType.audio); }
+ 	       
+ 	    else if(mediatype.contains("image")){ m.setType(MultimediaType.image); }
 
-
-   //m.setFileExtension("video/mp4");
-   //m.setDownloadURI("");
-   m.setURI(registration.getRepository().getUrlPrefix()+i.get("identifier").asText());
-   m.setSource(registration.getRepository());
-   m.setName(i.get("title").asText());
+	   //m.setFileExtension("video/mp4");
+	   //m.setDownloadURI("");
+	   m.setURI(registration.getRepository().getUrlPrefix()+i.get("identifier").asText());
+	   m.setSource(registration.getRepository());
+	   m.setName(i.get("title").asText());
    
-   return m;
-
+	   return m;
 
     }
     

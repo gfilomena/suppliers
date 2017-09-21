@@ -21,11 +21,12 @@ public class NuxeoService {
 		Logger.debug("MCSSR user="+ConfigFactory.load().getString("mcssr.username"));
 		Logger.debug("MCSSR password="+ConfigFactory.load().getString("mcssr.password"));
 		nuxeoClient = new NuxeoClient(mcssrUri, ConfigFactory.load().getString("mcssr.username"), ConfigFactory.load().getString("mcssr.password"));
+		nuxeoClient = nuxeoClient.timeout(600).transactionTimeout(600);
 	}
 	
 	public CompletionStage<JsonNode> create(JsonNode body) {
 		Logger.info("create - body->"+body.toString());	
-		// PUT Method and Deserialize Json Response Payload
+		// POST Method and Deserialize Json Response Payload
 		Response response = nuxeoClient.post(mcssrUri+ConfigFactory.load().getString("mcssr.downloadWSUri"), body.toString());
 		try {
 			String json = response.body().string();

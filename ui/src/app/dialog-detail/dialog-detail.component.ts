@@ -28,8 +28,8 @@ export class DialogDetail implements OnInit  {
   details:mediafile = null;
   formats:File[] = null;
   path:string = "";
-  formatVideo:String[]= ["ogv","ogg","avi","mp4","flv","fla","mov","mpeg","mpg","mpe","wmv","swf"];
-  formatAudio:String[]=["mp3"];
+  formatVideo:String[]= ["ogv","ogg","mp4","flv","fla","mov","mpeg","mpg","mpe","wmv","swf"];
+  formatAudio:String[]=["mp3","mpga"];
   formatImage:String[]=["jpeg","jpg","png","gif"];
   formatText:String []=["text","html","pdf"];
 

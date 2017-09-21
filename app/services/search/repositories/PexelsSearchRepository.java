@@ -94,12 +94,12 @@ public class PexelsSearchRepository implements SearchRepository {
     private MultimediaContent getMultimediaContentFromItem( JsonNode i ) {
         MultimediaContent m = new MultimediaContent();
         m.setType(MultimediaType.image);
-        m.setURI(i.get("src").get("large").asText());
-        m.setDownloadURI(i.get("src").get("large").asText());
+        m.setURI(i.get("src").get("original").asText());
+        m.setDownloadURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
     
-        m.setFileExtension(fileToFileExtension(i.get("src").get("large").asText()));
+        m.setFileExtension(fileToFileExtension(i.get("src").get("original").asText()));
         // TODO: Modify to find SearchRepository from DB
         m.setSource(registration.getRepository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());
