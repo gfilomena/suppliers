@@ -91,21 +91,7 @@ public class WikipediaSearchRepository  implements SearchRepository {
             	 
             	itemsList.add(i, item);
             }
-            
-            //Logger.info("ITEM:"+itemsList);
-            
 
-            //Logger.info("Nuxeo Service" +"->"+ns.create());
-            
-
-            
-
-        /*final List<MultimediaContent> multimediaContents = new ArrayList<MultimediaContent>();
-        if(items.isArray()) {
-            items.forEach(( JsonNode i ) -> multimediaContents.add(getMultimediaContentFromItem(i)));
-        }
-
-        return multimediaContents;*/
             Function<JsonNode, MultimediaContent> convertToMultimediaContent =
                     jsonNode -> getMultimediaContentFromItem(jsonNode);
                     

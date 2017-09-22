@@ -152,12 +152,14 @@ md-checkbox {
 @media (min-width: 0px) and (max-width: 800px) {
   .container-sidebar {
     display: none;
+    margin-top: 64px;
   }
 }
 
 @media (min-width: 800px) and (max-width: 3000px) {
   .container-sidebar {
     display: flex;
+    margin-top: 64px;
   }
 }
 
@@ -166,5 +168,7 @@ md-checkbox {
 }
 
 .form {
-  height: 183px;
+  margin-top: 64px;
+  height: 150px;
 }
+

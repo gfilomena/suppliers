@@ -105,6 +105,12 @@ public class PixabaySearchRepository implements SearchRepository {
             PixabayRepositoryResponseMapping respMap=new PixabayRepositoryResponseMapping();
             if(clientResponse.get("totalHits")!=null){
                 respMap.setnOfResults(clientResponse.get("totalHits").asInt());
+            }else{
+            	Logger.error("Pixabay Response - tag totalHits is missing");
+            }
+            
+            if(clientResponse.get("hits")==null){
+            	Logger.error("Pixabay Response - tag hits is missing");
             }
             ArrayNode itemsArray = (ArrayNode) clientResponse.get("hits");
             Iterator<JsonNode> itemsIterator = itemsArray.elements();
