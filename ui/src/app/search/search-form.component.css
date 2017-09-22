@@ -16,7 +16,7 @@
 }
 
 .detail-card {
-  font-size: 9px;
+  font-size: 11px;
   overflow-x: hidden;
   overflow-y: hidden;
   height: 100px;
@@ -38,33 +38,38 @@
   /*take the centrale part
     object-fit: cover;*/
   -o-object-fit: contain;
+
 }
 
+
 .title-card {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  height: 40px;
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 
 .description {
-  overflow-x: hidden;
-  overflow-y: hidden;
-  height: 60px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
   margin-top: 5px;
 }
 
-.source-card {
-  margin-top: 5px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  height: 20px;
+.logo-card {
+  height: 25px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
 }
 
 .date-card {
-  margin-top: 20px;
-  overflow-x: hidden;
-  overflow-y: hidden;
-  height: 20px;
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-style: italic;
 }
 
 .sidebar{
@@ -111,12 +116,14 @@ md-checkbox {
 }
 
 .label {
-  font-weight: bolder;
-  font-size: 12px;
+  font-size: 13px;
+  font-weight: 800;
 }
 
 .nitem{
-    font-size: 9px;
+  font-size: 10px;
+  font-weight: 800;
+  color:red;
 }
 
 .close_button {
@@ -167,8 +174,37 @@ md-checkbox {
   align-content: flex-end;
 }
 
-.form {
+form{
   margin-top: 64px;
+}
+.form {
   height: 150px;
+}
+
+.type{
+  position: absolute;
+  left:0;
+  top:0;
+}
+.type:hover{
+  box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
+}
+
+.save{
+  position: absolute;
+  left:0;
+  top:50px;
+}
+.save:hover{
+  box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
+}
+
+.info{
+  position: absolute;
+  left:0;
+  top:100px;
+}
+.info:hover{
+  box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
 }
 

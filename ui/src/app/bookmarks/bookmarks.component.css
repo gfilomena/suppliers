@@ -1,3 +1,4 @@
+
 .card {
     /*display:inline-block;
     display: inline-table;*/
@@ -13,15 +14,17 @@
 box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 z-index: 1;
 }
-.delete {
-    width: fit-content;
-    border-radius: 5%;
+.deleteall{
+  position: fixed;
+  bottom:10px;
+  right:10px;
 }
-.delete:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.deleteall:hover{
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  z-index: 1;
 }
 .detail-card {
-    font-size: 9px;
+    font-size: 11px;
     overflow-x: hidden;
     overflow-y: hidden;
     height: 100px;
@@ -45,29 +48,35 @@ z-index: 1;
 }
 
 .title-card {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 40px;   
+  font-weight: bold;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 
 .description {
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 60px;
-    margin-top: 5px;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+  margin-top: 5px;
 }
-.source-card {
-    margin-top: 5px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 20px;
-}
-.date-card {
-    margin-top: 20px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 20px;
-}
+  
+  .logo-card {
+    height: 25px;
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+  }
+  
+  .date-card {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    font-style: italic;
+  }
 
 .sidebar{
     position: fixed;
@@ -118,9 +127,11 @@ md-checkbox {
     font-size: 12px;
   }
   
-.nitem{
-    font-size: 9px;
-}
+  .nitem{
+    font-size: 10px;
+    font-weight: 800;
+    color:red;
+  }
   
 .close_button {
     width: 40px;
@@ -142,6 +153,7 @@ md-checkbox {
   flex-flow: row wrap;
   align-content: space-between;
   justify-content: flex-start;
+  margin-top: 64px;
 }
 
 .sub_container-card {
@@ -160,6 +172,7 @@ md-checkbox {
 
     .container-sidebar {
       display:none;
+      margin-top: 64px;
     }
 }
 
@@ -169,5 +182,34 @@ md-checkbox {
 
     .container-sidebar {
       display:flex;
+      margin-top: 64px;
     }
 }
+
+
+.type{
+    position: absolute;
+    left:0;
+    top:0;
+  }
+  .type:hover{
+    box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
+  }
+  
+  .del{
+    position: absolute;
+    left:0;
+    top:50px;
+  }
+  .del:hover{
+    box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
+  }
+  
+  .info{
+    position: absolute;
+    left:0;
+    top:100px;
+  }
+  .info:hover{
+    box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
+  }

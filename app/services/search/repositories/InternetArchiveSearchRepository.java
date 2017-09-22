@@ -72,22 +72,19 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         Logger.debug("Internet Archive Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         InternetArchiveRepositoryResponseMapping respMap=new InternetArchiveRepositoryResponseMapping();
-        if(clientResponse.get("count")!=null){
-            respMap.setnOfResults(clientResponse.get("count").asInt());
-        }else{
-        	 Logger.debug("tag count is missing");
-        }
-        if(clientResponse.get("cursor")!=null){
-            respMap.setCursor(clientResponse.get("cursor").asText());
-        }else{
-        	Logger.debug("tag cursor is missing");
-        }
 
-        if(clientResponse.get("docs")==null){
-        	Logger.error("tag docs is missing");
+            respMap.setnOfResults(clientResponse.get("count").asInt());
+        	Logger.info("tag count:"+clientResponse.get("count").asInt());
+      
+      
+            respMap.setCursor(clientResponse.get("cursor").asText());
+        	Logger.info("tag cursor:"+clientResponse.get("cursor").asText());
+      
+
+        if(clientResponse.get("items")==null){
+        	Logger.error("tag items is missing");
         }
-        ArrayNode itemsArray = (ArrayNode) clientResponse.get("docs");
-        Logger.debug("clientResponse.get(docs)"+clientResponse.get("docs"));
+        ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
         Iterator<JsonNode> itemsIterator = itemsArray.elements();
 
         List<JsonNode> itemsList=new ArrayList<JsonNode>();

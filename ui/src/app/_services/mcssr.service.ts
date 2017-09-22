@@ -72,6 +72,7 @@ export class McssrService {
             + ' "url":"' + mc.downloadURI + '", '
             + ' "encoding":"' + charset + '", '
             + ' "fileName":"' + mc.name + '", '
+            + ' "description":"' + mc.description + '", '
             + ' "mimeType":"' + mimeType + '", ';
 
         if (mc.metadata) {

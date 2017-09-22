@@ -4,6 +4,7 @@
           <md-input-container>
             <input mdInput  [(ngModel)]="data.name"   [disabled]="isDisabled()" class="title">
             <md-icon mdSuffix (click)="toggle()">mode_edit</md-icon>
+            <button mdSuffix md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(data)"><md-icon id="({{data.uri}})">star_border</md-icon></button>
           </md-input-container>
     </md-card-title>
   </md-card-header>
@@ -61,36 +62,22 @@
       </md-basic-chip>
     </md-chip-list>
 <table>
-  <tr><td> 
-    <button md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(data)"><md-icon id="({{data.uri}})">star_border</md-icon></button>
-  </td><td rowspan="2"> {{data.description}}</td></tr>
-   <tr><td></td>
-  <td></td>
-</tr>
+  <tr><td> {{data.description}}</td></tr>
 </table>
 <md-input-container>
     <input #newtag mdInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)" >
   </md-input-container>
-    <div><a [href]="data.uri"><img src="../assets/ui/assets/images/{{data.source.name}}.png"/></a></div>
 </div>
-
-  
-
-
-    <md-select *ngIf="formats" [(ngModel)]="data.name" (ngModelChange)="onChange($event)">
+    <md-select placeholder="select format" *ngIf="formats" [(ngModel)]="data.name" (ngModelChange)="onChange($event)">
       <md-option *ngFor="let file of formats" [value]="file.name">
-        
           {{getExt(file.name)}}  ({{getMB(file.size)}}MB)
-   
       </md-option>
     </md-select>
-
-
-
-
+    
   </md-card-content>
    <md-card-actions align="end">
-      <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
+    <a class="logo" [href]="data.uri"><img src="../assets/ui/assets/images/{{data.source.name}}.png"/></a>
+    <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
     <button md-button (click)="sendMcssr(data)">Send to MCSSR</button>
     <button md-button  [md-dialog-close]="true">Close</button>
   </md-card-actions>

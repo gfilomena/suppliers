@@ -1,12 +1,12 @@
-<md-progress-bar  mode="indeterminate"  *ngIf="loading"></md-progress-bar>
- 
-<div class="container">
-  <div  fxFlex>
 
+ 
+<div>
+    
+  <div  fxFlex class="container">
+      <md-progress-bar  mode="indeterminate"  *ngIf="loading"></md-progress-bar>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
-      
-        <div *ngIf="nResults > 0"><button class="delete" md-icon-button (click)="deleteAll()"><md-icon>delete</md-icon>Delete All History</button></div>
-        <h3 *ngIf="nResults == 0">No history available.</h3>
+        <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All History" md-fab color="primary" (click)="deleteAll()"><md-icon>delete</md-icon></button></div>
+        <h3 align="end" *ngIf="nResults == 0">No history available.</h3>
          <!--
           alternative view 
           <div *ngFor="let sr of searchResult">
