@@ -16,8 +16,8 @@ z-index: 1;
 }
 .deleteall{
   position: fixed;
-  bottom:10px;
-  right:10px;
+  bottom:40px;
+  right:40px;
 }
 .deleteall:hover{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -31,20 +31,18 @@ z-index: 1;
     margin-top: 15px;
 }
 .image-card {
-     height: 150px;
+    height: 150px;
     width:195px;
     display: flex;
     justify-content: center; /* align horizontal */
     align-items: center; /* align vertical */
 }
 
-.image-card img{
-    max-height: 150px;
-    max-width: 220px;
-    object-fit: contain;
-    /*take the centrale part
-    object-fit: cover;*/
-    -o-object-fit: contain;
+.image-card img {
+   max-height: 150px;
+   max-width: 243px; /* image-card width:195px + 24px padding = 243px */
+   object-fit: cover;
+   -o-object-fit: cover;
 }
 
 .title-card {
@@ -57,11 +55,12 @@ z-index: 1;
 
 .description {
 
-  white-space: nowrap;
+  /*white-space: nowrap;*/
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
   margin-top: 5px;
+  height: 60px;
 }
   
   .logo-card {
@@ -188,28 +187,42 @@ md-checkbox {
 
 
 .type{
-    position: absolute;
-    left:0;
-    top:0;
-  }
-  .type:hover{
-    box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
-  }
+  position: absolute;
+  bottom: 4px;
+  left: 8px;
+}
+
+
+.del{
+  position: absolute;
+  right: 0;
+  bottom: 0;
   
-  .del{
-    position: absolute;
-    left:0;
-    top:50px;
-  }
-  .del:hover{
-    box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
-  }
-  
-  .info{
-    position: absolute;
-    left:0;
-    top:100px;
-  }
-  .info:hover{
-    box-shadow: 0 4px 8px 0 #fd9a7a, 0 6px 20px 0 #fd9a7a;
-  }
+}
+
+.bar{
+  position: absolute;
+  height: 40px;
+  top: 115px;
+  width: 243px;
+  background-color: rgba(189, 189, 189, 0.50);
+}
+
+.title{
+  position: absolute;
+  color: white;
+  bottom: 14px;
+  left: 40px;
+  height: 12px;
+  width: 170px;
+  font-size: 11px;
+  font-weight: bold;
+  /* text-overflow: ellipsis; */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
+}
+.title:hover{
+  color:grey;
+  cursor: pointer;
+}

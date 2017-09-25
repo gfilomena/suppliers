@@ -1,36 +1,24 @@
-
-
-
-
-
-
-
-<div align="center">
-
-      <h3>Repositories</h3>
-          <table>
-            <thead>
-               <tr>
-                <th class="name">Name</th>
-                <th class="uri">URI</th>
-                <th>Modify</th>
-                <th>Delete</th>
-               </tr>  
-            </thead>
-              <tbody>
-                <tr *ngFor="let rep of repositories">
-                  <td class="name">{{rep.name}}</td>
-                  <td class="uri">{{rep.URI}}</td>
-                  <td><button class="item" md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
-                  <td><button class="item" md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
-                </tr>  
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                  <td  align="right" ><button class="add" md-icon-button (click)="create()"><md-icon>add circle</md-icon></button></td>
-                </tr>  
-              </tbody>
-          </table>
-
+<div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
+  <div class="container">
+  <h3 align="center">Repositories</h3>
+  <table>
+    <thead>
+       <tr>
+        <th class="name">Name</th>
+        <th class="uri">URI</th>
+        <th>Modify</th>
+        <th>Delete</th>
+       </tr>  
+    </thead>
+      <tbody>
+        <tr *ngFor="let rep of repositories">
+          <td class="name">{{rep.name}}</td>
+          <td class="uri">{{rep.URI}}</td>
+          <td><button class="item" md-icon-button (click)="update(rep)"><md-icon>create</md-icon></button></td>
+          <td><button class="item" md-icon-button (click)="delete(rep.id)"><md-icon>delete</md-icon></button></td>
+        </tr>  
+      </tbody>
+  </table>
+  <button class="add" mdTooltip="Add new Repository" md-fab mdTooltipPosition="above" (click)="create()"><md-icon>add circle</md-icon></button>
+</div>
 </div>

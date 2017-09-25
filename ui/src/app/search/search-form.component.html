@@ -1,8 +1,9 @@
 
 <div class="container">
+    <button class="filter" mdTooltip="Filter" md-fab mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
   <div class="container-sidebar">
-    <md-card class="sidebar" [style.left.px]="sidebar(-170)">
-      <button [style.left.px]="sidebar(170)" md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon class="close_icon">tune</md-icon></button>
+    <md-card class="sidebar" [style.right.px]="sidebar(-170)">
+     <!-- <button [style.right.px]="sidebar(170)" md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon class="close_icon">tune</md-icon></button>-->
       <button class="close_button" md-icon-button (click)="showSidebar = !showSidebar;"><md-icon>close</md-icon></button>
       <md-list>
         <p class="label">Types</p>
@@ -72,19 +73,21 @@
           <md-card class="card">
             <div class="image-card">
               <img md-card-image [src]="getImage(sr)" (click)="openDialog(sr)">
-              <div [ngSwitch]="sr.type">
-                  <div *ngSwitchCase="'video'"><button class="type" md-icon-button><md-icon>videocam</md-icon></button></div>
-                  <div *ngSwitchCase="'image'"><button class="type"  md-icon-button><md-icon>photo</md-icon></button></div>
-                  <div *ngSwitchCase="'audio'"><button class="type"  md-icon-button><md-icon>audiotrack</md-icon></button></div>
-                  <div *ngSwitchCase="'text'"><button class="type"  md-icon-button><md-icon>textsms</md-icon></button></div>
-              </div>
+              <div class="bar">
+                <div [ngSwitch]="sr.type" class="type">
+                  <div *ngSwitchCase="'video'"><md-icon>videocam</md-icon></div>
+                  <div *ngSwitchCase="'image'"><md-icon>photo</md-icon></div>
+                  <div *ngSwitchCase="'audio'"><md-icon>audiotrack</md-icon></div>
+                  <div *ngSwitchCase="'text'" ><md-icon>textsms</md-icon></div>
+                </div>
+                <div (click)="openDialog(sr)" class="title" [mdTooltip]="sr.name">{{sr.name}}</div>
                 <button class="save" md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition="above" (click)="checkSaveBookmark(sr)"><md-icon id="{{sr.uri}}">star_border</md-icon></button>
-                <button class="info" md-icon-button mdTooltip="Click for more info." (click)="openDialog(sr)"><md-icon>info</md-icon></button>
+                  <!--<button class="info" md-icon-button mdTooltip="Click for more info." (click)="openDialog(sr)"><md-icon>info</md-icon></button>-->
+              </div>
             </div>
-
             <md-card-content class="content-card">
                 <div class="detail-card" fxLayout="column">
-                  <div class="title-card">{{sr.name}}</div>
+                 <!-- <div class="title-card">{{sr.name}}</div>-->
                   <div class="description">{{sr.description}}</div>
                   <div ><img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png"/></div>
                   <div class="date-card">{{getDate(sr.date)}}</div>

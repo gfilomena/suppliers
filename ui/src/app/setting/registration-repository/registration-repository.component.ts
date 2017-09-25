@@ -18,21 +18,21 @@ import {MdSnackBar} from '@angular/material'
 export class RegistrationRepositoryComponent implements OnInit {
 
 repository = new Repository();
-currentUser:User;
-userRepository:UserRepository;
-userRepositories:UserRepository[];
-loading:boolean = false;
-
+currentUser: User;
+userRepository: UserRepository;
+userRepositories: UserRepository[];
+loading = false;
 
   constructor(
     public dialog: MdDialog,
     private userRepositoryService:UserRepositoryService,
     private alertService: AlertService,
     public snackBar: MdSnackBar ) {
-    //this.repository=new Repository('Youtube','www.youtube.com','prefix');
-    this.currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    // this.repository=new Repository('Youtube','www.youtube.com','prefix');
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.userRepository = new UserRepository();
     this.userRepository.user  = this.currentUser.username;
+
    }
 
   ngOnInit() {

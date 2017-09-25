@@ -267,4 +267,12 @@ getDate(date: string): string {
     return new Date(date).toLocaleDateString();
 }
 
+getImage(mc: MultimediaContent): string {
+    if (mc.thumbnail) {
+         return mc.thumbnail
+     } else {
+         return "../assets/images/logo_producer_511x103.jpg"
+     }
+ }
+
 }

@@ -48,7 +48,7 @@ export class SearchFormComponent {
     imagefilter: Boolean = true;
 
     filterbar: boolean = true;
-    showSidebar: boolean = true;
+    showSidebar: boolean = false;
     history: any;
     nOfResults: number;
     bookmarks: Bookmark[];
@@ -94,17 +94,8 @@ export class SearchFormComponent {
                 this.searchForm.inDate = new Date(historyform.inDate)
                 this.searchForm.endDate = new Date(historyform.endDate)
             }
-            
-
-
-
     }
 
-    ngOnDestroy() {
-        
-        //this.searchForm.freeText = "";
-
-      }
 
 
 
@@ -130,7 +121,7 @@ export class SearchFormComponent {
     }
 
 
-    @HostListener("window:scroll", ["$event"])
+    @HostListener('window:scroll', ['$event'])
     onWindowScroll() {
 
         let status = "not reached";
@@ -258,46 +249,42 @@ export class SearchFormComponent {
     }
 
     getImage(mc: MultimediaContent): string {
-
-        if (mc.source.name === "Wikipedia") {
-            return "http://www.flipmagazine.eu/wp-content/uploads/2017/05/wiki-.jpeg"
-        } else if (mc.thumbnail) {
+       if (mc.thumbnail) {
             return mc.thumbnail
         } else {
             return "../assets/images/logo_producer_511x103.jpg"
         }
-
     }
 
     counter(array) {
-        var i: number
+        let i: number;
         this.VideoResult = 0;
         this.AudioResult = 0;
         this.ImageResult = 0;
         this.TextResult = 0;
-        //this.activeRepositories = [];
+        // this.activeRepositories = [];
         for (i = 0; i < array.length; i++) {
             var type = array[i].type
-            //console.log('type::',type)
+            // console.log('type::',type)
 
             switch (type) {
                 case 'video': {
-                    //console.log('video-array[i]',array[i])
+                    // console.log('video-array[i]',array[i])
                     this.VideoResult++;
                     break;
                 }
                 case 'audio': {
-                    //console.log('audio-array[i]',array[i])
+                    // console.log('audio-array[i]',array[i])
                     this.AudioResult++;
                     break;
                 }
                 case 'image': {
-                    //console.log('image-array[i]',array[i])
+                    // console.log('image-array[i]',array[i])
                     this.ImageResult++;
                     break;
                 }
                 case 'text': {
-                    //console.log('text-array[i]',array[i])
+                    // console.log('text-array[i]',array[i])
                     this.TextResult++;
                     break;
                 }

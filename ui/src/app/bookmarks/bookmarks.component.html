@@ -34,31 +34,28 @@
 <div class="container-card"  fxflex>
     <h3 align="end" *ngIf="nResults == 0">No bookmarks available.</h3>
     <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
-     <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All Bookmarks" md-fab color="primary" (click)="deleteAllByUser()"><md-icon>delete</md-icon></button></div>
+     <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All Bookmarks" mdTooltipPosition="above" md-fab color="primary" (click)="deleteAllByUser()"><md-icon>delete</md-icon></button></div>
    
 
      <div class="sub_container-card" *ngFor="let item of bookmarks">
        <div *ngIf="filter(item.multimediaContent)">
         <md-card class="card">
-           <div *ngIf="item.multimediaContent.thumbnail; else defaultimg" class="image-card">
-              <img md-card-image  src="{{item.multimediaContent.thumbnail}}" (click)="openDialog(item.multimediaContent)">
-          </div>
-          <ng-template #defaultimg>
-            <div class="image-card">
-                <img md-card-image src="../assets/images/logo_producer_511x103.jpg"  (click)="openDialog(item.multimediaContent)">
+          <div class="image-card">
+              <img md-card-image [src]="getImage(item.multimediaContent)" (click)="openDialog(item.multimediaContent)">
+          <div class="bar">
+            <div [ngSwitch]="item.multimediaContent.type" class="type">
+              <div *ngSwitchCase="'video'"><md-icon>videocam</md-icon></div>
+              <div *ngSwitchCase="'image'"><md-icon>photo</md-icon></div>
+              <div *ngSwitchCase="'audio'"><md-icon>audiotrack</md-icon></div>
+              <div *ngSwitchCase="'text'" ><md-icon>textsms</md-icon></div>
             </div>
-          </ng-template>
-                     <div [ngSwitch]="item.multimediaContent.type">
-                        <div *ngSwitchCase="'video'"><button class="type" md-icon-button><md-icon>videocam</md-icon></button></div>
-                        <div *ngSwitchCase="'image'"><button class="type" md-icon-button><md-icon>photo</md-icon></button></div>
-                        <div *ngSwitchCase="'audio'"><button class="type" md-icon-button><md-icon>audiotrack</md-icon></button></div>
-                        <div *ngSwitchCase="'text'"><button class="type" md-icon-button><md-icon>textsms</md-icon></button></div>
-                     </div>
-                        <button class="del" md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>star</md-icon></button>
-                        <button class="info" md-icon-button mdTooltip="Click for more info."  (click)="openDialog(item.multimediaContent)"><md-icon>info</md-icon></button>
-                        <md-card-content class="content-card">
+            <div (click)="openDialog(item.multimediaContent)" class="title" [mdTooltip]="item.multimediaContent.name">{{item.multimediaContent.name}}</div>
+            <button class="del" md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>cancel</md-icon></button> 
+            <!--<button class="info" md-icon-button mdTooltip="Click for more info." (click)="openDialog(sr)"><md-icon>info</md-icon></button>-->
+          </div>
+       </div>
+              <md-card-content class="content-card">
                 <div class="detail-card" fxLayout="column" >
-                  <div class="title-card">{{item.multimediaContent.name}}</div>
                   <div class="description">{{item.multimediaContent.description}}</div>
                   <div><img class="logo-card" src="../assets/ui/assets/images/{{item.multimediaContent.source.name}}.png"/></div>
                   <div class="date-card">{{getDate(item.multimediaContent.date)}}</div>

@@ -1,20 +1,13 @@
 <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
  <div class="container">
     <h3>Repositories Registration</h3>
-    <table >
-     <!-- <thead>
-         <tr>
-          <td class="name">Name</td>
-          <td>Modify</td>
-          <td>Delete</td>
-         </tr>  
-      </thead> -->
+    <table  >
       <tr *ngFor="let ur of userRepositories">
         <td><md-slide-toggle [checked]="ur.enabled" (change)="toggle(ur)" >{{ur.repository}}</md-slide-toggle></td>
         <td><button class="item" md-icon-button (click)="update(ur)"><md-icon>create</md-icon></button></td>
         <td><button class="item" md-icon-button (click)="delete(ur.id)"><md-icon>delete</md-icon></button></td>
       </tr>  
     </table>
-    <button class="add" mdTooltip="Delete All History" md-fab (click)="create()"><md-icon>add circle</md-icon></button>
+    <button class="add" mdTooltip="Register Repository" md-fab mdTooltipPosition="above" (click)="create()"><md-icon>add circle</md-icon></button>
  </div>
 </div>

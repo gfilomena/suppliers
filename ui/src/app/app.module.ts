@@ -52,7 +52,7 @@ import { ProfileComponent } from './profile/profile.component';
         BreadcrumbComponent,
         DialogRegistrationRepository,
         RegistrationRepositoryComponent,
-        ProfileComponent,
+        ProfileComponent
     ],
     providers: [
         AuthGuard,
