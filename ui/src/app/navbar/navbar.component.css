@@ -30,6 +30,8 @@
 
 md-toolbar,md-toolbar-row{
         display: contents;
+        position: fixed;
+        z-index: 2;
 }
 
 .menu{
@@ -37,7 +39,7 @@ md-toolbar,md-toolbar-row{
 }
 .menu button{
       font-size: x-large;
-      font-size: 20px;
+      font-size: 16px;
       font-weight: 600;
 }
 

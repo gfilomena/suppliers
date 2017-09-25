@@ -1,10 +1,7 @@
-<md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
-<div align="center">
- <div *ngIf="nResults > 0"><button class="delete" md-icon-button (click)="deleteAllByUser()"><md-icon>delete</md-icon>Delete All Bookmarks</button></div>
- <h3 *ngIf="nResults == 0">No bookmarks available.</h3>
-</div>
-<div class="container">
+
+
   <div class="container-sidebar">
+      
     <md-card class="sidebar" [style.left.px]="sidebar(-170)">
       <button [style.left.px]="sidebar(170)" md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon class="close_icon">tune</md-icon></button>
       <button class="close_button" md-icon-button (click)="showSidebar = !showSidebar;"><md-icon>close</md-icon></button>
@@ -32,8 +29,14 @@
 
 
 
-  <div  fxFlex>
+<div  fxFlex>
+    
 <div class="container-card"  fxflex>
+    <h3 align="end" *ngIf="nResults == 0">No bookmarks available.</h3>
+    <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
+     <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All Bookmarks" md-fab color="primary" (click)="deleteAllByUser()"><md-icon>delete</md-icon></button></div>
+   
+
      <div class="sub_container-card" *ngFor="let item of bookmarks">
        <div *ngIf="filter(item.multimediaContent)">
         <md-card class="card">
@@ -45,29 +48,25 @@
                 <img md-card-image src="../assets/images/logo_producer_511x103.jpg"  (click)="openDialog(item.multimediaContent)">
             </div>
           </ng-template>
-          <md-card-content class="content-card">
-             <div fxLayout="row">
-                <div fxLayout="column" >
                      <div [ngSwitch]="item.multimediaContent.type">
-                        <div *ngSwitchCase="'video'"><button md-icon-button><md-icon>videocam</md-icon></button></div>
-                        <div *ngSwitchCase="'image'"><button md-icon-button><md-icon>photo</md-icon></button></div>
-                        <div *ngSwitchCase="'audio'"><button md-icon-button><md-icon>audiotrack</md-icon></button></div>
-                        <div *ngSwitchCase="'text'"><button md-icon-button><md-icon>textsms</md-icon></button></div>
+                        <div *ngSwitchCase="'video'"><button class="type" md-icon-button><md-icon>videocam</md-icon></button></div>
+                        <div *ngSwitchCase="'image'"><button class="type" md-icon-button><md-icon>photo</md-icon></button></div>
+                        <div *ngSwitchCase="'audio'"><button class="type" md-icon-button><md-icon>audiotrack</md-icon></button></div>
+                        <div *ngSwitchCase="'text'"><button class="type" md-icon-button><md-icon>textsms</md-icon></button></div>
                      </div>
-                        <button md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>star</md-icon></button>
-                        <button md-icon-button mdTooltip="Click for more info."  (click)="openDialog(item.multimediaContent)"><md-icon>info</md-icon></button>
-                </div>
+                        <button class="del" md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>star</md-icon></button>
+                        <button class="info" md-icon-button mdTooltip="Click for more info."  (click)="openDialog(item.multimediaContent)"><md-icon>info</md-icon></button>
+                        <md-card-content class="content-card">
                 <div class="detail-card" fxLayout="column" >
-                  <div class="title-card"><b>Title:</b>{{item.multimediaContent.name}}</div>
-                 <!-- <div class="description"><b>Description:</b>{{sr.description}}</div>-->
-                  <div class="source-card"><b>Source:</b>{{item.multimediaContent.source.name}}</div>
-                  <div class="date-card"><b>Date:</b>{{getDate(item.multimediaContent.date)}}</div>
+                  <div class="title-card">{{item.multimediaContent.name}}</div>
+                  <div class="description">{{item.multimediaContent.description}}</div>
+                  <div><img class="logo-card" src="../assets/ui/assets/images/{{item.multimediaContent.source.name}}.png"/></div>
+                  <div class="date-card">{{getDate(item.multimediaContent.date)}}</div>
                 </div>
-            </div>
-          </md-card-content>
+              </md-card-content>
         </md-card>
        </div>
       </div>
     </div>
   </div>
-</div>
+

@@ -415,7 +415,7 @@ export class SearchFormComponent {
     }
 
     getDate(date: string): string {
-        return new Date(date).toString().slice(0, 15);
+        return new Date(date).toLocaleDateString();
     }
 
 }

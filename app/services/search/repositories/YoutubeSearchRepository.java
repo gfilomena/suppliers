@@ -69,7 +69,7 @@ public class YoutubeSearchRepository implements SearchRepository {
             List<JsonNode> itemsList = new ArrayList<JsonNode>();
             while (itemsIterator.hasNext()) {
                 itemsList.add(itemsIterator.next());
-            }
+         }
         /*final List<MultimediaContent> multimediaContents = new ArrayList<MultimediaContent>();
         if(items.isArray()) {
             items.forEach(( JsonNode i ) -> multimediaContents.add(getMultimediaContentFromItem(i)));
@@ -84,6 +84,8 @@ public class YoutubeSearchRepository implements SearchRepository {
                         .map(convertToMultimediaContent)
                         .collect(Collectors.toList());
             }
+        }else{
+        	Logger.error("Youtube Response - tag items is missing");
         }
         respMapping.setMultimediaContents(stages);
         return respMapping;

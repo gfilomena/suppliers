@@ -263,8 +263,8 @@ sidebar(size:number):number {
 }
 
 
-    getDate(date:string): string{
-    return new Date(date).toString().slice(0,15);
-    }
+getDate(date: string): string {
+    return new Date(date).toLocaleDateString();
+}
 
 }
