@@ -83,11 +83,12 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         	Logger.debug("tag cursor is missing");
         }
 
-        if(clientResponse.get("docs")==null){
-        	Logger.error("tag docs is missing");
+        if(clientResponse.get("items")==null) {
+            Logger.error("tag items is missing");
         }
-        ArrayNode itemsArray = (ArrayNode) clientResponse.get("docs");
-        Logger.debug("clientResponse.get(docs)"+clientResponse.get("docs"));
+            ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
+            Logger.debug("clientResponse.get(items)" + clientResponse.get("items"));
+
         Iterator<JsonNode> itemsIterator = itemsArray.elements();
 
         List<JsonNode> itemsList=new ArrayList<JsonNode>();
