@@ -26,19 +26,18 @@
             <md-input-container fxFlex>
               <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                 [max]="searchForm.endDate" required disabled>
-              <button mdSuffix [mdDatepickerToggle]="startdate" disabled></button>
+              <button mdSuffix [mdDatepickerToggle]="startdate"></button>
             </md-input-container>
             <md-datepicker #startdate></md-datepicker>
             <md-input-container fxFlex fxFlexOffset="2">
               <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
                 [min]="searchForm.inDate" required disabled>
-              <button mdSuffix [mdDatepickerToggle]="enddate" disabled></button>
+              <button mdSuffix [mdDatepickerToggle]="enddate"></button>
             </md-input-container>
             <md-datepicker #enddate></md-datepicker>
           </div>
           <div align="end">
             <button md-raised-button type="button" (click)="clear()">Clear</button>
-            {{showSidebar}}
             <button md-raised-button (click)="f.form.valid && onSubmit()">Search</button>
           </div>
         </md-card>
