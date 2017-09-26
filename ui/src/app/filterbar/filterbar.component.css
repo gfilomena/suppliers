@@ -1,0 +1,69 @@
+.sidebar{
+    position: fixed;
+    bottom:0;
+    right:0;
+    z-index: 2;
+    width: 140px; /* sum padding */
+    padding:15px;  /*left: -130px;    hide*/
+    background-color: rgba(255,255,255,0.6);
+  }
+  
+  
+  .subfilter_button {
+    background-color: #fd9a7a;
+    width: 30px;
+    height: 30px;
+    top: 0;
+    position: absolute;
+  }
+  
+  .list-item {
+    font-size: 12px;
+    height: 22px;
+    /*display: initial;
+      font-size: 12px;
+    */
+  }
+  
+  md-checkbox {
+    min-height: 100%;
+    align-items: center;
+  }
+  
+  .filter{
+    bottom: 40px;
+    right: 40px;
+    position: fixed;
+    z-index: 2;
+  }
+  
+  .filter_button {
+    width: auto;
+    height: auto;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    /*left: 130px;  move button outside*/
+  }
+  
+  .label {
+    font-size: 13px;
+    font-weight: 800;
+  }
+  
+  .nitem{
+    font-size: 10px;
+    font-weight: 800;
+    color:red;
+  }
+  
+  .close_button {
+    width: 40px;
+    height: 40px;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    /*left: 130px;  move button outside*/
+  }

@@ -17,7 +17,7 @@ z-index: 1;
 .deleteall{
   position: fixed;
   bottom:40px;
-  right:40px;
+  right:110px;
 }
 .deleteall:hover{
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
@@ -109,6 +109,14 @@ md-checkbox {
     min-height: 100%;
     align-items: center;
 }
+
+.filter{
+  bottom: 40px;
+  right: 40px;
+  position: fixed;
+  z-index: 2;
+}
+
 
 
 .filter_button {

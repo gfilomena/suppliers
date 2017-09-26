@@ -1,5 +1,5 @@
 
-export class FilterRepositories {
+export class Filter {
     name: string;
     count: number;
     enabled: boolean;

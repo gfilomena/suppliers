@@ -1,21 +1,21 @@
+import { Observable } from 'rxjs/Observable';
 import { OnInit, OnDestroy  } from '@angular/core';
 import { Repository } from './../_models/repository';
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
 import { Component, Inject, HostListener, Output, EventEmitter, enableProdMode } from '@angular/core';
-import { Router, ActivatedRoute } from "@angular/router"
-import { User } from "../_models/user";
-import { SearchService } from "./search.service";
-import { BookmarkService } from "../_services/bookmark.service";
-import { MultimediaContent } from "../_models/multimediaContent";
-import { MdDialog, MdDialogRef, DateAdapter, MdSnackBar } from "@angular/material";
-import { DialogDetail } from "../dialog-detail/dialog-detail.component";
+import { Router, ActivatedRoute } from '@angular/router'
+import { User } from '../_models/user';
+import { SearchService } from './search.service';
+import { BookmarkService } from '../_services/bookmark.service';
+import { MultimediaContent } from '../_models/multimediaContent';
+import { MdDialog, MdDialogRef, DateAdapter, MdSnackBar } from '@angular/material';
+import { DialogDetail } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
 import { CustomDateAdapter } from './custom-date-adapter'
-import { Observable } from 'rxjs';
-import { UserRepositoryService, RepositoryService } from "../_services/index";
+import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
-import { FilterRepositories } from '../_models/filter-repositories';
+import { Filter } from '../_models/filter';
 
 
 @Component({
@@ -32,28 +32,14 @@ export class SearchFormComponent {
     types = ['Audio', 'Video', 'Text', 'Image'];
     searchForm: SearchForm;
     searchResult: MultimediaContent[];
-    searchVideoResult: MultimediaContent[];
-    searchImgResult: MultimediaContent[];
-    searchAudioResult: MultimediaContent[];
-    searchTextResult: MultimediaContent[];
-
-    VideoResult: number = 0;
-    ImageResult: number = 0;
-    AudioResult: number = 0;
-    TextResult: number = 0;
-
-    videofilter: Boolean = true;
-    audiofilter: Boolean = true;
-    textfilter: Boolean = true;
-    imagefilter: Boolean = true;
-
-    filterbar: boolean = true;
-    showSidebar: boolean = false;
+    filterbar = true;
+    showSidebar = false;
     history: any;
     nOfResults: number;
     bookmarks: Bookmark[];
     userRepositories: UserRepository[];
-    activeRepositories: FilterRepositories[];
+    activeRepositories: Filter[];
+    activeType: Filter[];
 
 
 
@@ -63,11 +49,12 @@ export class SearchFormComponent {
         private dialog: MdDialog,
         public snackBar: MdSnackBar,
         private userRepositoryService: UserRepositoryService) {
-        this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
-        let historyform = JSON.parse(localStorage.getItem("searchForm"))
-        let lastresearch = JSON.parse(localStorage.getItem("lastresearch"))
-
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
+        const historyform = JSON.parse(localStorage.getItem('searchForm'))
+        const lastresearch = JSON.parse(localStorage.getItem('lastresearch'))
         this.dateAdapter.setLocale('ll');
+        //initialize
+
 
         if (lastresearch) {
             //progress bar ON
@@ -77,12 +64,9 @@ export class SearchFormComponent {
             this.counter(this.searchResult)
             this.getUserRepositories()
             this.nOfResults = this.searchResult.length;
-
-            
         }
-        
 
-        console.log("historyform",historyform);
+        console.log('historyform',historyform);
             if (historyform === undefined || historyform === null) {
                 console.log('undefined - this.searchForm', this.searchForm)
                 console.log('NEW searchForm')
@@ -90,13 +74,15 @@ export class SearchFormComponent {
                 this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
             } else {
                 this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
-                this.searchForm.freeText = historyform.freeText
+                this.searchForm.freeText = historyform.freeText;
                 this.searchForm.inDate = new Date(historyform.inDate)
                 this.searchForm.endDate = new Date(historyform.endDate)
             }
     }
 
-
+    setSidebar(showSidebar) {
+        this.showSidebar = showSidebar;
+    }
 
 
     openDialog(mc) {
@@ -124,14 +110,14 @@ export class SearchFormComponent {
     @HostListener('window:scroll', ['$event'])
     onWindowScroll() {
 
-        let status = "not reached";
-        let windowHeight = "innerHeight" in window ? window.innerHeight
+        const status = 'not reached';
+        const windowHeight = 'innerHeight' in window ? window.innerHeight
             : document.documentElement.offsetHeight;
-        let body = document.body, html = document.documentElement;
-        let docHeight = Math.max(body.scrollHeight,
+        const body = document.body, html = document.documentElement;
+        const docHeight = Math.max(body.scrollHeight,
             body.offsetHeight, html.clientHeight,
             html.scrollHeight, html.offsetHeight);
-        let windowBottom = windowHeight + window.pageYOffset;
+        const windowBottom = windowHeight + window.pageYOffset;
         if (windowBottom + 1 >= docHeight) {
             console.log('bottom reached');
         }
@@ -143,15 +129,14 @@ export class SearchFormComponent {
 
         this.submitted = true;
         console.log('this.searchForm', this.searchForm);
-        localStorage.setItem("searchForm", JSON.stringify(this.searchForm));
+        localStorage.setItem('searchForm', JSON.stringify(this.searchForm));
         this.search();
 
     }
-    
-    clear(){
-        console.log("clear")
-        localStorage.removeItem("searchForm");
-        localStorage.removeItem("lastresearch");
+    clear() {
+        console.log('clear')
+        localStorage.removeItem('searchForm');
+        localStorage.removeItem('lastresearch');
         this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
         this.searchResult = [];
         this.counter(this.searchResult);
@@ -164,13 +149,13 @@ export class SearchFormComponent {
             res => {
                 this.searchResult = res.json().multimediaContents;
                 console.log(res);
-                localStorage.setItem("lastresearch", JSON.stringify(this.searchResult));
+                localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
                 this.counter(this.searchResult)
                 this.getUserRepositories()
-                //this.validator(this.searchResult)
+                // this.validator(this.searchResult)
                 this.nOfResults = this.searchResult.length;
-                //console.log('this.searchResult.length;',this.searchResult.length)
+                // console.log('this.searchResult.length;',this.searchResult.length)
                 this.submitted = false;
             },
             error => {
@@ -187,7 +172,7 @@ export class SearchFormComponent {
                 this.userRepositories = data;
                 this.initRepo(this.userRepositories);
                 this.incRepo(this.searchResult)
-                //console.log(' this.userRepositories', this.userRepositories);
+                // console.log(' this.userRepositories', this.userRepositories);
                 this.submitted = false;
             },
             error => {
@@ -199,8 +184,8 @@ export class SearchFormComponent {
 
 
         let bookmarks: Bookmark[];
-        let exist: boolean = false;
-        let responses$ = this.BookmarkService.findByUser().subscribe(
+        let exist = false;
+        const response = this.BookmarkService.findByUser().subscribe(
             res => {
                 console.log('getBookmarks- subscribe - ok:', res);
                 bookmarks = res;
@@ -215,7 +200,7 @@ export class SearchFormComponent {
                 if (!exist) {
                     this.saveMC(mc);
                 } else {
-                    this.openSnackBar('The Bookmark was already saved', "error");
+                    this.openSnackBar('The Bookmark was already saved', 'error');
                 }
             },
             error => {
@@ -226,15 +211,15 @@ export class SearchFormComponent {
 
     saveMC(mc: MultimediaContent) {
 
-        let bookmark = new Bookmark(this.currentUser.username, mc);
+        const bookmark = new Bookmark(this.currentUser.username, mc);
         console.log('bookmark:', bookmark);
 
         this.BookmarkService.create(bookmark)
             .subscribe(
             res => {
                 console.log('saveMC - subscribe OK:', res);
-                let element = document.getElementById(mc.uri);
-                element.innerText = "star"
+                const element = document.getElementById(mc.uri);
+                element.innerText = 'star'
             },
             error => {
                 console.log('saveMC - subscribe - error:', error);
@@ -250,50 +235,26 @@ export class SearchFormComponent {
 
     getImage(mc: MultimediaContent): string {
        if (mc.thumbnail) {
-            return mc.thumbnail
+            return mc.thumbnail;
         } else {
-            return "../assets/images/logo_producer_511x103.jpg"
+            return '../assets/images/logo_producer_511x103.jpg'
         }
     }
 
     counter(array) {
+        console.log('array',array)
+        const activeType: Filter[] = [ new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text') ];
+        console.log('  activeType',  activeType)
         let i: number;
-        this.VideoResult = 0;
-        this.AudioResult = 0;
-        this.ImageResult = 0;
-        this.TextResult = 0;
         // this.activeRepositories = [];
         for (i = 0; i < array.length; i++) {
-            var type = array[i].type
-            // console.log('type::',type)
-
-            switch (type) {
-                case 'video': {
-                    // console.log('video-array[i]',array[i])
-                    this.VideoResult++;
-                    break;
-                }
-                case 'audio': {
-                    // console.log('audio-array[i]',array[i])
-                    this.AudioResult++;
-                    break;
-                }
-                case 'image': {
-                    // console.log('image-array[i]',array[i])
-                    this.ImageResult++;
-                    break;
-                }
-                case 'text': {
-                    // console.log('text-array[i]',array[i])
-                    this.TextResult++;
-                    break;
-                }
-                default: {
-                    break;
-                }
+            const type = array[i].type;
+            // find type
+            const index = activeType.findIndex(obj => obj.name === type);
+            // increment type counter
+            activeType[index].count = activeType[index].count + 1;
             }
-
-        }
+            this.activeType = activeType;
     }
 
     incRepo(array) {
@@ -305,10 +266,7 @@ export class SearchFormComponent {
             repository = array[i].source.name;
 
             if (this.activeRepositories) {
-                let index = this.activeRepositories.findIndex(obj => obj.name == repository)
-                //console.log("this.activeRepositories",this.activeRepositories)
-                //console.log("repository",repository)
-                //console.log("item",index)
+                const index = this.activeRepositories.findIndex(obj => obj.name === repository)
                 if (index > -1) {
                     this.activeRepositories[index].count = this.activeRepositories[index].count + 1;
                 }
@@ -323,74 +281,39 @@ export class SearchFormComponent {
         let repository: string;
         this.activeRepositories = [];
         for (i = 0; i < array.length; i++) {
-            let enabled = array[i].enabled;
+            const enabled = array[i].enabled;
             if (enabled) {
                 repository = array[i].repository;
-                //console.log("repository::",repository);
-                this.activeRepositories.push(new FilterRepositories(repository));
+                // console.log('repository::',repository);
+                this.activeRepositories.push(new Filter(repository));
             }
         }
-        //console.log("end initRepo",this.activeRepositories)
+        // console.log('end initRepo',this.activeRepositories)
     }
 
     filterRepository(item: MultimediaContent): boolean {
-        //console.log("this.activeRepositories",this.activeRepositories);
-        let repository = item.source.name;
-        //console.log("repository->",repository);
+        // console.log('this.activeRepositories',this.activeRepositories);
+        const repository = item.source.name;
+        // console.log('repository->',repository);
         if (this.activeRepositories) {
-            let index = this.activeRepositories.findIndex(obj => obj.name == repository)
-
-            if (index > -1) {
+            const index = this.activeRepositories.findIndex(obj => obj.name === repository)
+            if (index !== -1) {
                 return this.activeRepositories[index].enabled;
-            } else {
-                return false;
             }
         }
-
-
         return false;
     }
 
     filter(item: MultimediaContent): any {
-        let repo: boolean;
-
         if (this.filterRepository(item)) {
-
-            switch (item.type) {
-                case 'video': {
-                    if (this.videofilter) {
-                        return true;
-                    } else {
-                        return false
-                    }
-                }
-                case 'audio': {
-                    if (this.audiofilter) {
-                        return true;
-                    } else {
-                        return false
-                    }
-                }
-                case 'image': {
-                    if (this.imagefilter) {
-                        return true;
-                    } else {
-                        return false
-                    }
-                }
-                case 'text': {
-                    if (this.textfilter) {
-                        return true;
-                    } else {
-                        return false
-                    }
-                }
-                default: {
-                    return true;
+            if (this.activeType) {
+                const index = this.activeType.findIndex(obj => obj.name === item.type);
+                if ( index !== -1) {
+                    return  this.activeType[index].enabled;
                 }
             }
+            return false;
         }
-
     }
 
     sidebar(size: number): number {
