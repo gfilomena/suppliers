@@ -122,9 +122,9 @@ openDialog(item:MultimediaContent) {
     }
 
     filterRepository(item: MultimediaContent): boolean {
-        console.log("this.activeRepositories",this.activeRepositories);
+        // console.log("this.activeRepositories",this.activeRepositories);
         let repository = item.source.name;
-        console.log("repository->",repository);
+        // console.log("repository->",repository);
         if (this.activeRepositories) {
             let index = this.activeRepositories.findIndex(obj => obj.name == repository)
 

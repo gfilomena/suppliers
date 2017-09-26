@@ -66,11 +66,10 @@ export class SearchFormComponent {
             this.nOfResults = this.searchResult.length;
         }
 
-        console.log('historyform',historyform);
+            // console.log('historyform',historyform);
             if (historyform === undefined || historyform === null) {
-                console.log('undefined - this.searchForm', this.searchForm)
-                console.log('NEW searchForm')
-                let type: string[]
+               // console.log('undefined - this.searchForm', this.searchForm)
+               // console.log('NEW searchForm')
                 this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
             } else {
                 this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
@@ -242,9 +241,9 @@ export class SearchFormComponent {
     }
 
     counter(array) {
-        console.log('array',array)
+        // console.log('array',array)
         const activeType: Filter[] = [ new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text') ];
-        console.log('  activeType',  activeType)
+        //  console.log('  activeType',  activeType)
         let i: number;
         // this.activeRepositories = [];
         for (i = 0; i < array.length; i++) {
