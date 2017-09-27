@@ -225,4 +225,8 @@ form{
   cursor: pointer;
 }
 
+.success-snackbar{
+  background-color: #73FF00;
+}
+
 

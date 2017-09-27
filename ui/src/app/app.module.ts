@@ -1,29 +1,40 @@
-﻿import { NgModule } from "@angular/core"
-import { BrowserModule } from "@angular/platform-browser"
-import { FormsModule } from "@angular/forms"
-import { HttpModule } from "@angular/http"
-import { AppRoutingModule } from "./app-routing.module"
-import { SearchModule } from "./search/search.module"
-import { AppComponent } from "./app.component"
-import { AlertComponent } from "./_directives/index"
-import { AuthGuard } from "./_guards/index"
-import { AlertService, AuthenticationService, UserService, RepositoryService, UserRepositoryService, BookmarkService, HistorysearchService /*PagerService*/ } from "./_services/index"
-import { HomeComponent } from "./home/index"
-import { LoginComponent } from "./login/index"
-import { RegisterComponent } from "./register/index"
-import { SidebarComponent } from "./sidebar/index"
-import { NavbarComponent } from "./navbar/index"
-import { LoggedinComponent } from "./loggedin/index"
-import { NoopAnimationsModule } from "@angular/platform-browser/animations"
-import "hammerjs"
-import { MaterialModule,  MdNativeDateModule} from "@angular/material"
-import { FlexLayoutModule } from "@angular/flex-layout"
+﻿import { NgModule } from '@angular/core'
+import { BrowserModule } from '@angular/platform-browser'
+import { FormsModule } from '@angular/forms'
+import { HttpModule } from '@angular/http'
+import { AppRoutingModule } from './app-routing.module'
+import { SearchModule } from './search/search.module'
+import { AppComponent } from './app.component'
+import { AlertComponent } from './_directives/index'
+import { AuthGuard } from './_guards/index'
+import { AlertService, AuthenticationService, UserService, RepositoryService, UserRepositoryService, BookmarkService, HistorysearchService /*PagerService*/ } from './_services/index'
+import { HomeComponent } from './home/index'
+import { LoginComponent } from './login/index'
+import { RegisterComponent } from './register/index'
+import { NavbarComponent } from './navbar/index'
+import { LoggedinComponent } from './loggedin/index'
+import { NoopAnimationsModule } from '@angular/platform-browser/animations'
+import 'hammerjs'
+import { FlexLayoutModule } from '@angular/flex-layout'
 import { SettingComponent } from './setting/setting.component'
 import { SearchHistoryComponent } from './search-history/search-history.component'
 import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
-import { DialogRegistrationRepository, RegistrationRepositoryComponent } from './setting/registration-repository/registration-repository.component';
+import { DialogRegistrationRepository,
+         RegistrationRepositoryComponent } from './setting/registration-repository/registration-repository.component';
 import { ProfileComponent } from './profile/profile.component';
-
+import {
+            MatSlideToggleModule,
+            MatProgressSpinnerModule,
+            MatMenuModule,
+            MatSelectModule,
+            MatButtonModule,
+            MatDatepickerModule,
+            MatToolbarModule,
+            MatCardModule,
+            MatInputModule,
+            MatIconModule,
+            MatTooltipModule } from '@angular/material';
+import { SnackBarComponentComponent } from './snack-bar-component/snack-bar-component.component';
 
 
 @NgModule({
@@ -34,9 +45,18 @@ import { ProfileComponent } from './profile/profile.component';
         SearchModule,
         AppRoutingModule,
         NoopAnimationsModule,
-        MaterialModule,
-        MdNativeDateModule,
-        FlexLayoutModule
+        FlexLayoutModule,
+        MatSlideToggleModule,
+        MatProgressSpinnerModule,
+        MatMenuModule,
+        MatSelectModule,
+        MatButtonModule,
+        MatDatepickerModule,
+        MatToolbarModule,
+        MatCardModule,
+        MatInputModule,
+        MatIconModule,
+        MatTooltipModule
     ],
     declarations: [
         AppComponent,
@@ -44,7 +64,6 @@ import { ProfileComponent } from './profile/profile.component';
         HomeComponent,
         LoginComponent,
         RegisterComponent,
-        SidebarComponent,
         NavbarComponent,
         LoggedinComponent,
         SettingComponent,
@@ -52,7 +71,8 @@ import { ProfileComponent } from './profile/profile.component';
         BreadcrumbComponent,
         DialogRegistrationRepository,
         RegistrationRepositoryComponent,
-        ProfileComponent
+        ProfileComponent,
+        SnackBarComponentComponent
     ],
     providers: [
         AuthGuard,
@@ -63,7 +83,6 @@ import { ProfileComponent } from './profile/profile.component';
         UserRepositoryService,
         BookmarkService,
         HistorysearchService
-        //PagerService
     ],
     entryComponents: [RegistrationRepositoryComponent,DialogRegistrationRepository],  
     bootstrap: [AppComponent]

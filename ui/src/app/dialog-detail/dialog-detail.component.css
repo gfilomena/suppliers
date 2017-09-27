@@ -75,3 +75,7 @@
     bottom: 0;
     left: 5px;
 }
+snack-bar-container.success-snackbar{
+    background-color: #73FF00 !important;  
+    color:green;
+  }

@@ -9,19 +9,30 @@ import { User } from '../_models/user';
 import { SearchService } from './search.service';
 import { BookmarkService } from '../_services/bookmark.service';
 import { MultimediaContent } from '../_models/multimediaContent';
-import { MdDialog, MdDialogRef, DateAdapter, MdSnackBar } from '@angular/material';
+import { 
+        MatDialog,
+        MatDialogRef,
+        DateAdapter,
+        MatSnackBar,
+        MdNativeDateModule,
+        MatDatepickerModule,
+        MD_DATE_FORMATS   } from '@angular/material';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
 import { CustomDateAdapter } from './custom-date-adapter'
 import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
 import { Filter } from '../_models/filter';
-
+import { MY_DATE_FORMATS } from './mydateformats'
 
 @Component({
     selector: 'app-search-form',
     //issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter 
-    providers: [{ provide: DateAdapter, useClass: CustomDateAdapter }],
+    providers: [
+        //{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+        {provide: DateAdapter, useClass: CustomDateAdapter},
+        {provide: MD_DATE_FORMATS, useValue: MY_DATE_FORMATS}
+      ],
     templateUrl: './search-form.component.html',
     styleUrls: ['./search-form.component.css']
 })
@@ -46,8 +57,8 @@ export class SearchFormComponent {
     constructor(private searchService: SearchService, private route: ActivatedRoute,
         private router: Router, private BookmarkService: BookmarkService,
         private dateAdapter: DateAdapter<Date>,
-        private dialog: MdDialog,
-        public snackBar: MdSnackBar,
+        private dialog: MatDialog,
+        public snackBar: MatSnackBar,
         private userRepositoryService: UserRepositoryService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
         const historyform = JSON.parse(localStorage.getItem('searchForm'))
@@ -87,10 +98,10 @@ export class SearchFormComponent {
     openDialog(mc) {
 
 
-        let dialogRef = this.dialog.open(DialogDetail, {
+        const dialogRef = this.dialog.open(DialogDetail, {
             height: 'auto',
             width: '600px',
-            position: { top: '0', left: '30%', right: '30%', bottom: '0' }
+            position: { top: '0', left: '30%', right: '30%', bottom: '0'}
         });
 
 
@@ -218,7 +229,7 @@ export class SearchFormComponent {
             res => {
                 console.log('saveMC - subscribe OK:', res);
                 const element = document.getElementById(mc.uri);
-                element.innerText = 'star'
+                element.innerText = 'star';
             },
             error => {
                 console.log('saveMC - subscribe - error:', error);
@@ -228,7 +239,8 @@ export class SearchFormComponent {
 
     openSnackBar(message: string, action: string) {
         this.snackBar.open(message, action, {
-            duration: 2000,
+            duration: 50000,
+            extraClasses: ['success-snackbar']
         });
     }
 
@@ -236,7 +248,7 @@ export class SearchFormComponent {
        if (mc.thumbnail) {
             return mc.thumbnail;
         } else {
-            return '../assets/images/logo_producer_511x103.jpg'
+            return '../assets/images/logo_producer_511x103.jpg';
         }
     }
 

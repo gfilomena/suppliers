@@ -5,7 +5,7 @@
   <div  fxFlex class="container">
       <md-progress-bar  mode="indeterminate"  *ngIf="loading"></md-progress-bar>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
-        <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All History" md-fab color="primary" (click)="deleteAll()"><md-icon>delete</md-icon></button></div>
+        <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All History" md-fab color="primary" (click)="deleteAll()"><i class="material-icons md-24">delete</i></button></div>
         <h3 align="end" *ngIf="nResults == 0">No history available.</h3>
          <!--
           alternative view 

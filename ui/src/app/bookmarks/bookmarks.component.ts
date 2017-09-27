@@ -1,17 +1,17 @@
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Component, OnInit } from '@angular/core';
-import { Bookmark } from "../_models/bookmark";
-import { BookmarkService, AlertService } from "../_services/index";
-import { DialogDetail } from "../dialog-detail/dialog-detail.component";
-import { MdDialog } from "@angular/material";
-import { UserRepositoryService, RepositoryService } from "../_services/index";
+import { Bookmark } from '../_models/bookmark';
+import { BookmarkService, AlertService } from '../_services/index';
+import { DialogDetail } from '../dialog-detail/dialog-detail.component';
+import { MdDialog } from '@angular/material';
+import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
 import { Filter } from '../_models/filter';
 
 @Component({
-  selector: 'app-bookmarks',
-  templateUrl: './bookmarks.component.html',
-  styleUrls: ['./bookmarks.component.css']
+    selector: 'app-bookmarks',
+    templateUrl: './bookmarks.component.html',
+    styleUrls: ['./bookmarks.component.css']
 })
 export class BookmarksComponent implements OnInit {
 
@@ -25,48 +25,48 @@ export class BookmarksComponent implements OnInit {
     activeRepositories: Filter[];
     activeType: Filter[];
 
-  constructor( private BookmarkService:BookmarkService,
-               private alertService: AlertService,
-               private dialog: MdDialog,
-               private userRepositoryService: UserRepositoryService ) { }
+    constructor(private BookmarkService: BookmarkService,
+        private alertService: AlertService,
+        private dialog: MdDialog,
+        private userRepositoryService: UserRepositoryService) { }
 
-  ngOnInit() {
-    this.getAllBookmarks();
-  }
+    ngOnInit() {
+        this.getAllBookmarks();
+    }
 
-  setSidebar(showSidebar) {
-    this.showSidebar = showSidebar;
-}
+    setSidebar(showSidebar) {
+        this.showSidebar = showSidebar;
+    }
 
-openDialog(item:MultimediaContent) {
-    console.log('item sr',item);
+    openDialog(item: MultimediaContent) {
+        console.log('item sr', item);
         let dialogRef = this.dialog.open(DialogDetail, {
-        height: 'auto',
-        width: '600px',
-        position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+            height: 'auto',
+            width: '600px',
+            position: { top: '0', left: '30%', right: '30%', bottom: '0' }
         });
 
-    dialogRef.componentInstance.data = item;
-}
+        dialogRef.componentInstance.data = item;
+    }
 
 
-    getAllBookmarks(){
-    this.submitted = true
-    this.BookmarkService.getAll()
+    getAllBookmarks() {
+        this.submitted = true
+        this.BookmarkService.getAll()
             .subscribe(
-                data => {
-                    this.bookmarks = data.reverse()
-                    this.counter(data)
-                    this.getUserRepositories()
-                    this.submitted = false
-                    this.nResults = data.length
-                    localStorage.setItem("bookmarks",JSON.stringify(this.bookmarks));
-                    console.log(' this.bookmarks', this.bookmarks);
-                },
-                error => {
-                    this.alertService.error(error._body)
-                     this.submitted = false
-                })
+            data => {
+                this.bookmarks = data.reverse()
+                this.counter(data)
+                this.getUserRepositories()
+                this.submitted = false
+                this.nResults = data.length
+                localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
+                console.log(' this.bookmarks', this.bookmarks);
+            },
+            error => {
+                this.alertService.error(error._body)
+                this.submitted = false
+            })
     }
 
     getUserRepositories() {
@@ -83,8 +83,8 @@ openDialog(item:MultimediaContent) {
             })
     }
 
-    incRepo(bookmarks:Bookmark[]) {
-        
+    incRepo(bookmarks: Bookmark[]) {
+
         let i: number;
         let repository: string;
 
@@ -94,9 +94,9 @@ openDialog(item:MultimediaContent) {
 
             if (this.activeRepositories) {
                 let index = this.activeRepositories.findIndex(obj => obj.name == repository)
-                //console.log("this.activeRepositories",this.activeRepositories)
-                //console.log("repository",repository)
-                //console.log("item",index)
+                // console.log('this.activeRepositories',this.activeRepositories)
+                // console.log('repository',repository)
+                // console.log('item',index)
                 if (index > -1) {
                     this.activeRepositories[index].count = this.activeRepositories[index].count + 1;
                 }
@@ -111,22 +111,22 @@ openDialog(item:MultimediaContent) {
         let repository: string;
         this.activeRepositories = [];
         for (i = 0; i < array.length; i++) {
-            let enabled = array[i].enabled;
+            const enabled = array[i].enabled;
             if (enabled) {
                 repository = array[i].repository;
-                //console.log("repository::",repository);
+                // console.log('repository::',repository);
                 this.activeRepositories.push(new Filter(repository));
             }
         }
-        //console.log("end initRepo",this.activeRepositories)
+        // console.log('end initRepo',this.activeRepositories)
     }
 
     filterRepository(item: MultimediaContent): boolean {
-        // console.log("this.activeRepositories",this.activeRepositories);
-        let repository = item.source.name;
-        // console.log("repository->",repository);
+        // console.log('this.activeRepositories',this.activeRepositories);
+        const repository = item.source.name;
+        // console.log('repository->',repository);
         if (this.activeRepositories) {
-            let index = this.activeRepositories.findIndex(obj => obj.name == repository)
+            const index = this.activeRepositories.findIndex(obj => obj.name === repository);
 
             if (index > -1) {
                 return this.activeRepositories[index].enabled;
@@ -140,7 +140,7 @@ openDialog(item:MultimediaContent) {
     }
 
     counter(array) {
-        const activeType: Filter[] = [ new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text') ];
+        const activeType: Filter[] = [new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text')];
         let i: number;
         // this.activeRepositories = [];
         for (i = 0; i < array.length; i++) {
@@ -149,45 +149,45 @@ openDialog(item:MultimediaContent) {
             const index = activeType.findIndex(obj => obj.name === type);
             // increment type counter
             activeType[index].count = activeType[index].count + 1;
-            }
-            this.activeType = activeType;
+        }
+        this.activeType = activeType;
     }
 
-     removeBookmark(id:string){
+    removeBookmark(id: string) {
         this.BookmarkService.delete(id)
             .subscribe(
-                data => {
-                     console.log('data',data);
-                     this.getAllBookmarks();
-                },
-                error => {
-                    this.alertService.error(error._body)
-                })
+            data => {
+                console.log('data', data);
+                this.getAllBookmarks();
+            },
+            error => {
+                this.alertService.error(error._body)
+            })
     }
 
-    deleteAllByUser(){
+    deleteAllByUser() {
         this.submitted = true;
         this.BookmarkService.deleteAllByUser()
-                .subscribe(
-                        res => {
-                            console.log('delete all Bookmarks - subscribe OK:',res)
-                            this.bookmarks.splice(0,this.bookmarks.length)
-                            this.nResults = this.bookmarks.length;
-                            this.submitted = false;
-                        },
-                        error => {
-                            console.log('delete all Bookmarks - subscribe - error:',error)
-                            this.submitted = false;
-                        }
-                        )
+            .subscribe(
+            res => {
+                console.log('delete all Bookmarks - subscribe OK:', res)
+                this.bookmarks.splice(0, this.bookmarks.length)
+                this.nResults = this.bookmarks.length;
+                this.submitted = false;
+            },
+            error => {
+                console.log('delete all Bookmarks - subscribe - error:', error)
+                this.submitted = false;
+            }
+            )
     }
 
     filter(item: MultimediaContent): any {
         if (this.filterRepository(item)) {
             if (this.activeType) {
                 const index = this.activeType.findIndex(obj => obj.name === item.type);
-                if ( index !== -1) {
-                    return  this.activeType[index].enabled;
+                if (index !== -1) {
+                    return this.activeType[index].enabled;
                 }
             }
             return false;
@@ -195,25 +195,25 @@ openDialog(item:MultimediaContent) {
     }
 
 
-sidebar(size:number):number {
-  if(this.showSidebar){
-       return 0;
-  }else{
-      return size;
-  }
-}
+    sidebar(size: number): number {
+        if (this.showSidebar) {
+            return 0;
+        } else {
+            return size;
+        }
+    }
 
 
-getDate(date: string): string {
-    return new Date(date).toLocaleDateString();
-}
+    getDate(date: string): string {
+        return new Date(date).toLocaleDateString();
+    }
 
-getImage(mc: MultimediaContent): string {
-    if (mc.thumbnail) {
-         return mc.thumbnail
-     } else {
-         return "../assets/images/logo_producer_511x103.jpg"
-     }
- }
+    getImage(mc: MultimediaContent): string {
+        if (mc.thumbnail) {
+            return mc.thumbnail;
+        } else {
+            return '../assets/images/logo_producer_511x103.jpg';
+        }
+    }
 
 }

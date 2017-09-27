@@ -4,18 +4,18 @@
   <form name="form" (ngSubmit)="f.form.valid && update()" #f="ngForm" novalidate>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
                 <h3>Edit Profile</h3>
-                <md-input-container  fxFlex> 
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="user.username"  #username="ngModel" disabled >
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="user.firstName"  #firstName="ngModel" required >
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="user.lastName"  #lastName="ngModel" required >
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="user.email"  #email="ngModel" [email]="true" required>
-                </md-input-container>
+                </md-form-field>
         <div align="end">
          <button md-raised-button  type="submit" >Update</button>
           <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>

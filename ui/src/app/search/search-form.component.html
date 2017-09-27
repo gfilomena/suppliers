@@ -1,6 +1,6 @@
 
 <div class="container">
-  <button class="filter" mdTooltip="Filter" md-fab mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
+  <button class="filter" mdTooltip="Filter" md-fab mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><i class="material-icons">tune</i></button>
   <div class="container-sidebar">
       <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event) ></app-filterbar>
   </div>
@@ -10,10 +10,10 @@
           <md-progress-bar mode="indeterminate" *ngIf="submitted"></md-progress-bar>
         <md-card class="form">
           <div>
-            <md-input-container fxFlex>
+            <md-form-field fxFlex>
               <input mdInput placeholder="Are you searching for" value="" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText"
                 name="freeText" required>
-            </md-input-container>
+            </md-form-field>
           </div>
           <div>
           <!--<div class="typefield">
@@ -23,18 +23,23 @@
                 </md-option>
             </md-select>
           </div>-->
-            <md-input-container fxFlex>
+    
+
+          
+            <md-form-field fxFlex>
               <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
-                [max]="searchForm.endDate" required disabled>
-              <button mdSuffix [mdDatepickerToggle]="startdate"></button>
-            </md-input-container>
+                [max]="searchForm.endDate" required>
+              <md-datepicker-toggle mdSuffix [for]="startdate"></md-datepicker-toggle>
+            </md-form-field>
             <md-datepicker #startdate></md-datepicker>
-            <md-input-container fxFlex fxFlexOffset="2">
+            <md-form-field fxFlex fxFlexOffset="2">
               <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
-                [min]="searchForm.inDate" required disabled>
-              <button mdSuffix [mdDatepickerToggle]="enddate"></button>
-            </md-input-container>
+                [min]="searchForm.inDate" required>
+                <md-datepicker-toggle mdSuffix [for]="enddate"></md-datepicker-toggle>
+            </md-form-field>
             <md-datepicker #enddate></md-datepicker>
+
+              
           </div>
           <div align="end">
             <button md-raised-button type="button" (click)="clear()">Clear</button>

@@ -4,21 +4,21 @@
       
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
                 <h3>Register</h3>
-                <md-input-container  fxFlex> 
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="model.firstName" #firstName="ngModel" required >
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="model.lastName" #lastName="ngModel" required >
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="model.email"  #email="ngModel" [email]="true" required>
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="model.username" #username="ngModel" required>
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="Password" type="password" value="" id="password" name="password" [(ngModel)]="model.password" #password="ngModel" required>
-                </md-input-container>
+                </md-form-field>
        
         <div align="end">
          <button md-raised-button  type="submit" >Register</button>

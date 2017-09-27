@@ -1,11 +1,11 @@
 <md-card>
   <md-card-header>
     <md-card-title>
-          <md-input-container>
+          <md-form-field>
             <input mdInput  [(ngModel)]="data.name"   [disabled]="isDisabled()" class="title">
             <md-icon mdSuffix (click)="toggle()">mode_edit</md-icon>
             <button mdSuffix md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(data)"><md-icon id="({{data.uri}})">star_border</md-icon></button>
-          </md-input-container>
+          </md-form-field>
     </md-card-title>
   </md-card-header>
 <div [ngSwitch]="data.type">
@@ -56,29 +56,30 @@
         <h5></h5>
       </div>
     <md-chip-list fxLayout="row" >
-      <md-basic-chip *ngFor="let tag of data.metadata" class="badge">
+      <md-chip *ngFor="let tag of data.metadata" class="badge">
               {{tag}}
               <md-icon class="removeTag" (click)="removeTag(data,tag)">clear</md-icon> 
-      </md-basic-chip>
+      </md-chip>
     </md-chip-list>
 <table>
   <tr><td> {{data.description}}</td></tr>
 </table>
-<md-input-container>
+   <md-form-field>
     <input #newtag mdInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)" >
-  </md-input-container>
+  </md-form-field>
+  <md-select placeholder="select format" *ngIf="formats" [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
+    <md-option *ngFor="let file of formats" [value]="file.name">
+        {{getExt(file.name)}}  ({{getMB(file.size)}}MB)
+    </md-option>
+  </md-select>
 </div>
-    <md-select placeholder="select format" *ngIf="formats" [(ngModel)]="data.name" (ngModelChange)="onChange($event)">
-      <md-option *ngFor="let file of formats" [value]="file.name">
-          {{getExt(file.name)}}  ({{getMB(file.size)}}MB)
-      </md-option>
-    </md-select>
+  
     
   </md-card-content>
    <md-card-actions align="end">
     <a class="logo" [href]="data.uri"><img src="../assets/ui/assets/images/{{data.source.name}}.png"/></a>
     <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
-    <button md-button (click)="sendMcssr(data)">Send to MCSSR</button>
-    <button md-button  [md-dialog-close]="true">Close</button>
+    <button md-button *ngIf="selectedFormat !== '' " (click)="sendMcssr(data)">Send to MCSSR</button>
+    <button md-button md-dialog-close>Close</button>
   </md-card-actions>
 </md-card>

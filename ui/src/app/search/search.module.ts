@@ -7,19 +7,29 @@ import { SearchService } from './search.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import 'hammerjs';
-import { MaterialModule,
-         MdMenuModule,
-         MdButtonModule,
-         MdIconModule,
-         MdTabsModule,
-         MdInputModule,
-         MdSelectModule,
-         MdDatepickerModule,
+import { 
          MdNativeDateModule,
          DateAdapter,
          MdDateFormats,
-         MdDialog,
-         MdDialogRef } from '@angular/material';
+        //material 2.0.0.beta11
+        MatProgressBarModule,
+        MatDatepickerModule,
+        MatTooltipModule,
+        MatProgressSpinnerModule,
+        MatDialogModule,
+        MatChipsModule,
+        MatSelectModule,
+        MatCheckboxModule,
+        MatInputModule,
+        MatSlideToggleModule,
+        MatSnackBarModule,
+        NativeDateAdapter,
+        MatCardModule,
+        MatIconModule,
+        MatButtonModule,
+        MatMenuModule,
+        MatListModule
+                          } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogRepositoryComponent, DialogRepositoryDetail } from '../dialog-repository/dialog-repository.component';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
@@ -34,8 +44,23 @@ import { FilterbarComponent } from '../filterbar/filterbar.component';
     FormsModule,
     NgxPaginationModule,
     NoopAnimationsModule,
-    MaterialModule,
-    FlexLayoutModule
+    FlexLayoutModule,
+    MatProgressBarModule,
+    MatDatepickerModule,
+    MatTooltipModule,
+    MatProgressSpinnerModule,
+    MatDialogModule,
+    MatChipsModule,
+    MatSelectModule,
+    MatCheckboxModule,
+    MatInputModule,
+    MatSlideToggleModule,
+    MatSnackBarModule,
+    MatCardModule,
+    MatIconModule,
+    MatButtonModule,
+    MatMenuModule,
+    MatListModule
   ],
   declarations: [
     SearchFormComponent,
@@ -46,7 +71,7 @@ import { FilterbarComponent } from '../filterbar/filterbar.component';
     FilterbarComponent
   ],
   // entryComponents declare Components created manually
-  entryComponents: [DialogDetail,DialogRepositoryDetail],
+  entryComponents: [DialogDetail, DialogRepositoryDetail],
   providers: [ SearchService, McssrService, InternetArchiveService ]
 })
 export class SearchModule {
