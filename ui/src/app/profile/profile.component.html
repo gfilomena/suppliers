@@ -1,6 +1,5 @@
-
-<div align="center">
- <md-card class="card">
+<div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
+ <md-card class="container">
   <form name="form" (ngSubmit)="f.form.valid && update()" #f="ngForm" novalidate>
     <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
                 <h3>Edit Profile</h3>
@@ -18,10 +17,9 @@
                 </md-form-field>
         <div align="end">
          <button md-raised-button  type="submit" >Update</button>
-          <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
+           <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
          <button md-raised-button [routerLink]="['/']"  >Cancel</button>  
         </div>
-      
        </div>
        </form>
        </md-card>

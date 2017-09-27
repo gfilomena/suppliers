@@ -17,8 +17,7 @@ export class BookmarksComponent implements OnInit {
 
     bookmarks: Bookmark[];
     nResults: number;
-    filterbar = true;
-    showSidebar = true;
+    showSidebar = false;
     submitted = false;
 
     userRepositories: UserRepository[];

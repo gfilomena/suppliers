@@ -1,38 +1,13 @@
-
- 
 <div>
-    
-  <div  fxFlex class="container">
-      <md-progress-bar  mode="indeterminate"  *ngIf="loading"></md-progress-bar>
-    <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
-        <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All History" md-fab color="primary" (click)="deleteAll()"><i class="material-icons md-24">delete</i></button></div>
-        <h3 align="end" *ngIf="nResults == 0">No history available.</h3>
-         <!--
-          alternative view 
-          <div *ngFor="let sr of searchResult">
-         <md-card class="card" (click)="goToSearchForm(sr)">
-              <md-input-container  fxFlex> 
-              <span mdPrefix>Keywords:&nbsp;</span>
-              <input mdInput value="{{sr.keywords}}" id="keywords"  name="keywords" disabled>
-              <span mdSuffix class="date" >{{isoDateToHtmlDate(sr.date)}}</span>
-              </md-input-container>
-         </md-card>
-          </div>-->
-
-        
-        <md-list *ngFor="let sr of searchResult">
-          <md-list-item  mdTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.freeText}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></md-list-item>
-        </md-list>
-      
+  <div fxFlex class="container">
+    <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+      <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All History" mdTooltipPosition="above" md-fab (click)="deleteAll()"><i class="material-icons md-24">delete</i></button></div>
+      <h3 align="end" *ngIf="nResults == 0">No history available.</h3>
+      <h3 align="center" *ngIf="nResults > 0">search history</h3>
+      <md-list *ngFor="let sr of searchResult">
+        <md-list-item mdTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.freeText}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></md-list-item>
+      </md-list>
     </div>
-
-<!--
-
-                <md-input-container  fxFlex> 
-                <span mdPrefix>Keywords:&nbsp;</span>
-                <input mdInput placeholder="Best Football Player" value="1" id="history" name="history" #spy>
-                <span mdSuffix><button md-icon-button><md-icon>navigate_next</md-icon></button></span>
-                </md-input-container>
--->
   </div>
 </div>

@@ -3,7 +3,7 @@ import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs, RequestOptions, Headers } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogRef, MD_DIALOG_DATA, MatChipsModule, MatSnackBar, MatProgressSpinnerModule } from '@angular/material';
+import { MatDialog, MatDialogRef, MD_DIALOG_DATA, MatChipsModule, MatSnackBar, MdSnackBar, MatProgressSpinnerModule } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { Bookmark } from './../_models/bookmark';
@@ -43,7 +43,7 @@ export class DialogDetail implements OnInit {
         public http: Http,
         private BookmarkService: BookmarkService,
         private McssrService: McssrService,
-        public snackBar: MatSnackBar,
+        public snackBar: MdSnackBar,
         private InternetArchiveService: InternetArchiveService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     }
@@ -221,8 +221,10 @@ export class DialogDetail implements OnInit {
 
     openSnackBar(message: string, action: string) {
         this.snackBar.open(message, action, {
-            duration: 5000,
+            duration: 50000,
             verticalPosition: 'bottom',
+            extraClasses: ['success-snackbar']
+
         });
     }
 

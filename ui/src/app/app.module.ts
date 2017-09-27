@@ -33,8 +33,9 @@ import {
             MatCardModule,
             MatInputModule,
             MatIconModule,
-            MatTooltipModule } from '@angular/material';
-import { SnackBarComponentComponent } from './snack-bar-component/snack-bar-component.component';
+            MatTooltipModule,
+            MatListModule } from '@angular/material';
+
 
 
 @NgModule({
@@ -56,7 +57,8 @@ import { SnackBarComponentComponent } from './snack-bar-component/snack-bar-comp
         MatCardModule,
         MatInputModule,
         MatIconModule,
-        MatTooltipModule
+        MatTooltipModule,
+        MatListModule
     ],
     declarations: [
         AppComponent,
@@ -71,8 +73,7 @@ import { SnackBarComponentComponent } from './snack-bar-component/snack-bar-comp
         BreadcrumbComponent,
         DialogRegistrationRepository,
         RegistrationRepositoryComponent,
-        ProfileComponent,
-        SnackBarComponentComponent
+        ProfileComponent
     ],
     providers: [
         AuthGuard,

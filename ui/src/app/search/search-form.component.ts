@@ -9,7 +9,7 @@ import { User } from '../_models/user';
 import { SearchService } from './search.service';
 import { BookmarkService } from '../_services/bookmark.service';
 import { MultimediaContent } from '../_models/multimediaContent';
-import { 
+import {
         MatDialog,
         MatDialogRef,
         DateAdapter,
@@ -23,7 +23,8 @@ import { CustomDateAdapter } from './custom-date-adapter'
 import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
 import { Filter } from '../_models/filter';
-import { MY_DATE_FORMATS } from './mydateformats'
+import { MY_DATE_FORMATS } from './mydateformats';
+
 
 @Component({
     selector: 'app-search-form',
@@ -239,7 +240,7 @@ export class SearchFormComponent {
 
     openSnackBar(message: string, action: string) {
         this.snackBar.open(message, action, {
-            duration: 50000,
+            duration: 5000,
             extraClasses: ['success-snackbar']
         });
     }
@@ -341,5 +342,17 @@ export class SearchFormComponent {
 
 }
 
+
+export class DemoFabSpeedDial {
+    open: boolean = false;
+    fixed: boolean = false;
+    spin: boolean = false;
+    direction: string = 'up';
+    animationMode: string = 'fling';
+    
+    _click(event: any) {
+        console.log(event);
+    }
+}
 
 

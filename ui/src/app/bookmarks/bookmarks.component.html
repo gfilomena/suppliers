@@ -1,45 +1,46 @@
-
-
-  <div class="container-sidebar">
-      <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event) ></app-filterbar>
-  </div>
-
-
-
-<div  fxFlex>
-    
-<div class="container-card"  fxflex>
+<div class="container-sidebar">
+  <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event)></app-filterbar>
+</div>
+<div fxFlex>
+  <div class="container-card" fxflex>
     <h3 align="end" *ngIf="nResults == 0">No bookmarks available.</h3>
-    <md-progress-bar  mode="indeterminate"  *ngIf="submitted"></md-progress-bar>
-     <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All Bookmarks" mdTooltipPosition="above" md-fab  (click)="deleteAllByUser()"><md-icon>delete</md-icon></button></div>
-     <button class="filter" mdTooltip="Filter" md-fab mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
-     <div class="sub_container-card" *ngFor="let item of bookmarks">
-       <div *ngIf="filter(item.multimediaContent)">
+    <md-progress-bar mode="indeterminate" *ngIf="submitted"></md-progress-bar>
+    <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All Bookmarks" mdTooltipPosition="above" md-fab (click)="deleteAllByUser()"><md-icon>delete</md-icon></button></div>
+    <button class="filter" mdTooltip="Filter" md-fab mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
+    <div class="sub_container-card" *ngFor="let item of bookmarks">
+      <div *ngIf="filter(item.multimediaContent)">
         <md-card class="card">
           <div class="image-card">
-              <img md-card-image [src]="getImage(item.multimediaContent)" (click)="openDialog(item.multimediaContent)">
-          <div class="bar">
-            <div [ngSwitch]="item.multimediaContent.type" class="type">
-              <div *ngSwitchCase="'video'"><md-icon>videocam</md-icon></div>
-              <div *ngSwitchCase="'image'"><md-icon>photo</md-icon></div>
-              <div *ngSwitchCase="'audio'"><md-icon>audiotrack</md-icon></div>
-              <div *ngSwitchCase="'text'" ><md-icon>textsms</md-icon></div>
-            </div>
-            <div (click)="openDialog(item.multimediaContent)" class="title" [mdTooltip]="item.multimediaContent.name">{{item.multimediaContent.name}}</div>
-            <button class="del" md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>cancel</md-icon></button> 
-            <!--<button class="info" md-icon-button mdTooltip="Click for more info." (click)="openDialog(sr)"><md-icon>info</md-icon></button>-->
-          </div>
-       </div>
-              <md-card-content class="content-card">
-                <div class="detail-card" fxLayout="column" >
-                  <div class="description">{{item.multimediaContent.description}}</div>
-                  <div><img class="logo-card" src="../assets/ui/assets/images/{{item.multimediaContent.source.name}}.png"/></div>
-                  <div class="date-card">{{getDate(item.multimediaContent.date)}}</div>
+            <img md-card-image [src]="getImage(item.multimediaContent)" (click)="openDialog(item.multimediaContent)">
+            <div class="bar">
+              <div [ngSwitch]="item.multimediaContent.type" class="type">
+                <div *ngSwitchCase="'video'">
+                  <md-icon>videocam</md-icon>
                 </div>
-              </md-card-content>
+                <div *ngSwitchCase="'image'">
+                  <md-icon>photo</md-icon>
+                </div>
+                <div *ngSwitchCase="'audio'">
+                  <md-icon>audiotrack</md-icon>
+                </div>
+                <div *ngSwitchCase="'text'">
+                  <md-icon>textsms</md-icon>
+                </div>
+              </div>
+              <div (click)="openDialog(item.multimediaContent)" class="title" [mdTooltip]="item.multimediaContent.name">{{item.multimediaContent.name}}</div>
+              <button class="del" md-icon-button mdTooltip="Delete Bookmark" (click)="removeBookmark(item.id)"><md-icon>cancel</md-icon></button>
+              <!--<button class="info" md-icon-button mdTooltip="Click for more info." (click)="openDialog(sr)"><md-icon>info</md-icon></button>-->
+            </div>
+          </div>
+          <md-card-content class="content-card">
+            <div class="detail-card" fxLayout="column">
+              <div class="description">{{item.multimediaContent.description}}</div>
+              <div><img class="logo-card" src="../assets/ui/assets/images/{{item.multimediaContent.source.name}}.png" /></div>
+              <div class="date-card">{{getDate(item.multimediaContent.date)}}</div>
+            </div>
+          </md-card-content>
         </md-card>
-       </div>
       </div>
     </div>
   </div>
-
+</div>
