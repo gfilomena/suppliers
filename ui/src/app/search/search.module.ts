@@ -7,7 +7,7 @@ import { SearchService } from './search.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import 'hammerjs';
-import { 
+import {
          MdNativeDateModule,
          DateAdapter,
          MdDateFormats,
@@ -36,7 +36,7 @@ import { DialogDetail } from '../dialog-detail/dialog-detail.component';
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
 import { InternetArchiveService} from '../_services/internetarchive.service';
 import { FilterbarComponent } from '../filterbar/filterbar.component';
-
+import { ComponentsModule } from '../shared/components.module';
 
 @NgModule({
   imports: [
@@ -60,7 +60,8 @@ import { FilterbarComponent } from '../filterbar/filterbar.component';
     MatIconModule,
     MatButtonModule,
     MatMenuModule,
-    MatListModule
+    MatListModule,
+    ComponentsModule
   ],
   declarations: [
     SearchFormComponent,

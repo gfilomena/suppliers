@@ -1,48 +1,44 @@
-
 .card {
-    /*display:inline-block;
+  /*display:inline-block;
     display: inline-table;*/
-    display:flow-root;
-    width: 195px;
-    height: 250px;
-    margin: 3.77px;
-   /* vertical-align: top;
+  display: flow-root;
+  width: 195px;
+  height: 250px;
+  margin: 3.77px;
+  /* vertical-align: top;
     cursor: pointer;
     overflow: visible; */
 }
-.card:hover{
-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-z-index: 1;
-}
-.deleteall{
-  position: fixed;
-  bottom:40px;
-  right:110px;
-}
-.deleteall:hover{
+
+.card:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   z-index: 1;
 }
+
 .detail-card {
-    font-size: 11px;
-    overflow-x: hidden;
-    overflow-y: hidden;
-    height: 100px;
-    margin-top: 15px;
+  font-size: 11px;
+  overflow-x: hidden;
+  overflow-y: hidden;
+  height: 100px;
+  margin-top: 15px;
 }
+
 .image-card {
-    height: 150px;
-    width:195px;
-    display: flex;
-    justify-content: center; /* align horizontal */
-    align-items: center; /* align vertical */
+  height: 150px;
+  width: 195px;
+  display: flex;
+  justify-content: center;
+  /* align horizontal */
+  align-items: center;
+  /* align vertical */
 }
 
 .image-card img {
-   max-height: 150px;
-   max-width: 243px; /* image-card width:195px + 24px padding = 243px */
-   object-fit: cover;
-   -o-object-fit: cover;
+  max-height: 150px;
+  max-width: 243px;
+  /* image-card width:195px + 24px padding = 243px */
+  object-fit: cover;
+  -o-object-fit: cover;
 }
 
 .title-card {
@@ -54,7 +50,6 @@ z-index: 1;
 }
 
 .description {
-
   /*white-space: nowrap;*/
   overflow: hidden;
   text-overflow: ellipsis;
@@ -62,98 +57,97 @@ z-index: 1;
   margin-top: 5px;
   height: 60px;
 }
-  
-  .logo-card {
-    height: 25px;
-    position: absolute;
-    bottom: 5px;
-    left: 5px;
-  }
-  
-  .date-card {
-    position: absolute;
-    bottom: 5px;
-    right: 5px;
-    font-style: italic;
-  }
 
-.sidebar{
-    position: fixed;
-    z-index: 1;
-    width: 140px; /* sum padding */
-    padding:15px;  /*left: -130px;    hide*/
-    background-color: rgba(255,255,255,0.6);
-  }
-  
-.sidebar:hover{
-    background-color: rgb(255, 255, 255);
+.logo-card {
+  height: 25px;
+  position: absolute;
+  bottom: 5px;
+  left: 5px;
+}
+
+.date-card {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-style: italic;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 2;
+  width: 140px;
+  /* sum padding */
+  padding: 15px;
+  /*left: -130px;    hide*/
+  background-color: rgba(255, 255, 255, 0.6);
+}
+
+.sidebar:hover {
+  background-color: rgb(255, 255, 255);
 }
 
 .subfilter_button {
-    background-color: #fd9a7a;
-    width: 30px;
-    height: 30px;
-    top: 0;
-    position: absolute;
-  }
+  background-color: #fd9a7a;
+  width: 30px;
+  height: 30px;
+  top: 0;
+  position: absolute;
+}
 
 .list-item {
-    font-size: 12px;
-    height: 22px;
-    /*display: initial;
+  font-size: 12px;
+  height: 22px;
+  /*display: initial;
       font-size: 12px;
     */
 }
-  
+
 md-checkbox {
-    min-height: 100%;
-    align-items: center;
+  min-height: 100%;
+  align-items: center;
 }
 
-.filter{
+.filter {
   bottom: 40px;
   right: 40px;
   position: fixed;
-  z-index: 2;
+  z-index: 1;
 }
 
-
-
 .filter_button {
-    width: auto;
-    height: auto;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    /*left: 130px;  move button outside*/
+  width: auto;
+  height: auto;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /*left: 130px;  move button outside*/
 }
 
 .label {
-    font-weight: bolder;
-    font-size: 12px;
-  }
-  
-  .nitem{
-    font-size: 10px;
-    font-weight: 800;
-    color:red;
-  }
-  
+  font-weight: bolder;
+  font-size: 12px;
+}
+
+.nitem {
+  font-size: 10px;
+  font-weight: 800;
+  color: red;
+}
+
 .close_button {
-    width: 40px;
-    height: 40px;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    /*left: 130px;  move button outside*/
+  width: 40px;
+  height: 40px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  /*left: 130px;  move button outside*/
 }
 
 .close_icon {
-    vertical-align: sub;
+  vertical-align: sub;
 }
-
 
 .container-card {
   display: flex;
@@ -167,48 +161,37 @@ md-checkbox {
   height: 100%
 }
 
-
 .typefield {
-    margin-top: 16px;
+  margin-top: 16px;
 }
-
-
 
 @media (min-width: 0px) and (max-width: 800px) {
- 
-
-    .container-sidebar {
-      display:none;
-      margin-top: 64px;
-    }
+  .container-sidebar {
+    display: none;
+    margin-top: 64px;
+  }
 }
-
 
 @media (min-width: 800px) and (max-width: 3000px) {
- 
-
-    .container-sidebar {
-      display:flex;
-      margin-top: 64px;
-    }
+  .container-sidebar {
+    display: flex;
+    margin-top: 64px;
+  }
 }
 
-
-.type{
+.type {
   position: absolute;
   bottom: 4px;
   left: 8px;
 }
 
-
-.del{
+.del {
   position: absolute;
   right: 0;
   bottom: 0;
-  
 }
 
-.bar{
+.bar {
   position: absolute;
   height: 40px;
   top: 115px;
@@ -216,7 +199,7 @@ md-checkbox {
   background-color: rgba(189, 189, 189, 0.50);
 }
 
-.title{
+.title {
   position: absolute;
   color: white;
   bottom: 14px;
@@ -230,7 +213,8 @@ md-checkbox {
   text-overflow: ellipsis;
   word-wrap: break-word;
 }
-.title:hover{
-  color:grey;
+
+.title:hover {
+  color: grey;
   cursor: pointer;
 }

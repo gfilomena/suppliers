@@ -24,6 +24,17 @@ export class BookmarksComponent implements OnInit {
     activeRepositories: Filter[];
     activeType: Filter[];
 
+    // init param smd-fab-speed-dial
+    open: boolean = false;
+    fixed: boolean = false;
+    spin: boolean = false;
+    direction: string = 'up';
+    animationMode: string = 'fling';
+
+    // _click(event: any) {
+    //    console.log(event);
+    // }
+
     constructor(private BookmarkService: BookmarkService,
         private alertService: AlertService,
         private dialog: MdDialog,

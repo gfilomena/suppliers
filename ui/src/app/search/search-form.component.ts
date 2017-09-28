@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs/Observable';
-import { OnInit, OnDestroy  } from '@angular/core';
+import { OnInit, OnDestroy } from '@angular/core';
 import { Repository } from './../_models/repository';
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
@@ -10,13 +10,14 @@ import { SearchService } from './search.service';
 import { BookmarkService } from '../_services/bookmark.service';
 import { MultimediaContent } from '../_models/multimediaContent';
 import {
-        MatDialog,
-        MatDialogRef,
-        DateAdapter,
-        MatSnackBar,
-        MdNativeDateModule,
-        MatDatepickerModule,
-        MD_DATE_FORMATS   } from '@angular/material';
+    MatDialog,
+    MatDialogRef,
+    DateAdapter,
+    MatSnackBar,
+    MdNativeDateModule,
+    MatDatepickerModule,
+    MD_DATE_FORMATS
+} from '@angular/material';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
 import { CustomDateAdapter } from './custom-date-adapter'
@@ -31,9 +32,9 @@ import { MY_DATE_FORMATS } from './mydateformats';
     //issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter 
     providers: [
         //{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
-        {provide: DateAdapter, useClass: CustomDateAdapter},
-        {provide: MD_DATE_FORMATS, useValue: MY_DATE_FORMATS}
-      ],
+        { provide: DateAdapter, useClass: CustomDateAdapter },
+        { provide: MD_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+    ],
     templateUrl: './search-form.component.html',
     styleUrls: ['./search-form.component.css']
 })
@@ -52,6 +53,17 @@ export class SearchFormComponent {
     userRepositories: UserRepository[];
     activeRepositories: Filter[];
     activeType: Filter[];
+
+    // init param smd-fab-speed-dial
+    open: boolean = false;
+    fixed: boolean = false;
+    spin: boolean = false;
+    direction: string = 'up';
+    animationMode: string = 'fling';
+
+    // _click(event: any) {
+    //    console.log(event);
+    // }
 
 
 
@@ -78,17 +90,17 @@ export class SearchFormComponent {
             this.nOfResults = this.searchResult.length;
         }
 
-            // console.log('historyform',historyform);
-            if (historyform === undefined || historyform === null) {
-               // console.log('undefined - this.searchForm', this.searchForm)
-               // console.log('NEW searchForm')
-                this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
-            } else {
-                this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
-                this.searchForm.freeText = historyform.freeText;
-                this.searchForm.inDate = new Date(historyform.inDate)
-                this.searchForm.endDate = new Date(historyform.endDate)
-            }
+        // console.log('historyform',historyform);
+        if (historyform === undefined || historyform === null) {
+            // console.log('undefined - this.searchForm', this.searchForm)
+            // console.log('NEW searchForm')
+            this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
+        } else {
+            this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
+            this.searchForm.freeText = historyform.freeText;
+            this.searchForm.inDate = new Date(historyform.inDate)
+            this.searchForm.endDate = new Date(historyform.endDate)
+        }
     }
 
     setSidebar(showSidebar) {
@@ -102,7 +114,7 @@ export class SearchFormComponent {
         const dialogRef = this.dialog.open(DialogDetail, {
             height: 'auto',
             width: '600px',
-            position: { top: '0', left: '30%', right: '30%', bottom: '0'}
+            position: { top: '0', left: '30%', right: '30%', bottom: '0' }
         });
 
 
@@ -246,7 +258,7 @@ export class SearchFormComponent {
     }
 
     getImage(mc: MultimediaContent): string {
-       if (mc.thumbnail) {
+        if (mc.thumbnail) {
             return mc.thumbnail;
         } else {
             return '../assets/images/logo_producer_511x103.jpg';
@@ -255,7 +267,7 @@ export class SearchFormComponent {
 
     counter(array) {
         // console.log('array',array)
-        const activeType: Filter[] = [ new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text') ];
+        const activeType: Filter[] = [new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text')];
         //  console.log('  activeType',  activeType)
         let i: number;
         // this.activeRepositories = [];
@@ -265,8 +277,8 @@ export class SearchFormComponent {
             const index = activeType.findIndex(obj => obj.name === type);
             // increment type counter
             activeType[index].count = activeType[index].count + 1;
-            }
-            this.activeType = activeType;
+        }
+        this.activeType = activeType;
     }
 
     incRepo(array) {
@@ -320,8 +332,8 @@ export class SearchFormComponent {
         if (this.filterRepository(item)) {
             if (this.activeType) {
                 const index = this.activeType.findIndex(obj => obj.name === item.type);
-                if ( index !== -1) {
-                    return  this.activeType[index].enabled;
+                if (index !== -1) {
+                    return this.activeType[index].enabled;
                 }
             }
             return false;
@@ -341,18 +353,4 @@ export class SearchFormComponent {
     }
 
 }
-
-
-export class DemoFabSpeedDial {
-    open: boolean = false;
-    fixed: boolean = false;
-    spin: boolean = false;
-    direction: string = 'up';
-    animationMode: string = 'fling';
-    
-    _click(event: any) {
-        console.log(event);
-    }
-}
-
 

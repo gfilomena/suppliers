@@ -5,8 +5,15 @@
   <div class="container-card" fxflex>
     <h3 align="end" *ngIf="nResults == 0">No bookmarks available.</h3>
     <md-progress-bar mode="indeterminate" *ngIf="submitted"></md-progress-bar>
-    <div *ngIf="nResults > 0"><button class="deleteall" mdTooltip="Delete All Bookmarks" mdTooltipPosition="above" md-fab (click)="deleteAllByUser()"><md-icon>delete</md-icon></button></div>
-    <button class="filter" mdTooltip="Filter" md-fab mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
+    <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+        <smd-fab-trigger [spin]="spin">
+            <button md-fab><md-icon>apps</md-icon></button>
+        </smd-fab-trigger>
+        <smd-fab-actions>
+            <button md-mini-fab  mdTooltip="Filter" mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
+            <button md-mini-fab  mdTooltip="Delete All Bookmarks" mdTooltipPosition="above" (click)="deleteAllByUser()"><md-icon>delete</md-icon></button>
+          </smd-fab-actions>
+    </smd-fab-speed-dial>
     <div class="sub_container-card" *ngFor="let item of bookmarks">
       <div *ngIf="filter(item.multimediaContent)">
         <md-card class="card">

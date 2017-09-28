@@ -1,6 +1,13 @@
 
 <div class="container">
-  <button class="filter" mdTooltip="Filter" md-fab mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><i class="material-icons">tune</i></button>
+    <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+        <smd-fab-trigger [spin]="spin">
+            <button md-fab><md-icon>apps</md-icon></button>
+        </smd-fab-trigger>
+        <smd-fab-actions>
+            <button md-mini-fab  mdTooltip="Filter" mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
+        </smd-fab-actions>
+    </smd-fab-speed-dial>
   <div class="container-sidebar">
       <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event) ></app-filterbar>
   </div>
