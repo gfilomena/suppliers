@@ -2,9 +2,10 @@
   <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event)></app-filterbar>
 </div>
 <div fxFlex>
-  <div class="container-card" fxflex>
-    <h3 align="end" *ngIf="nResults == 0">No bookmarks available.</h3>
+  <div class="container"> <h3 align="center" *ngIf="nResults == 0">No bookmarks available.</h3></div>
+  <div class="container-card">
     <md-progress-bar mode="indeterminate" *ngIf="submitted"></md-progress-bar>
+   
     <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
         <smd-fab-trigger [spin]="spin">
             <button md-fab><md-icon>apps</md-icon></button>

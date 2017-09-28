@@ -148,13 +148,15 @@ md-checkbox {
 .close_icon {
   vertical-align: sub;
 }
+.container{
+  margin-top: 64px;
+}
 
 .container-card {
   display: flex;
   flex-flow: row wrap;
   align-content: space-between;
   justify-content: flex-start;
-  margin-top: 64px;
 }
 
 .sub_container-card {

@@ -9,9 +9,8 @@
     </smd-fab-speed-dial>
   <div fxFlex class="container">
     <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+    <h3 align="center" *ngIf="nResults == 0">No history available.</h3>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-      <h3 align="end" *ngIf="nResults == 0">No history available.</h3>
-      <h3 align="center" *ngIf="nResults > 0">search history</h3>
       <md-list *ngFor="let sr of searchResult">
         <md-list-item mdTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.freeText}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></md-list-item>
       </md-list>
