@@ -1,6 +1,6 @@
 
 <md-card>
-<form name="form" (ngSubmit)="f.form.valid && upsert(data.userRepository)" #f="ngForm" novalidate>
+<form name="form" #f="ngForm" novalidate>
   <md-card-content>
                 <h3>Register Repository on User</h3>
             <div  fxLayout="column"  fxLayoutAlign="start" fxLayoutGap="5px">
@@ -12,28 +12,28 @@
                 </md-select>
               </div> 
               <div  class="repository" *ngIf="data.userRepository.id" >
-              <md-input-container  fxFlex> 
+              <md-form-field  fxFlex> 
                 <input mdInput placeholder="repository" value=" " id="repository" name="repository" [(ngModel)]="data.userRepository.repository" disabled>
-                </md-input-container>
+                </md-form-field>
               </div> 
-                <md-input-container  fxFlex> 
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
-                </md-input-container>
-                <md-input-container  fxFlex> 
+                </md-form-field>
+                <md-form-field  fxFlex> 
                 <input mdInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token">
-                </md-input-container>
+                </md-form-field>
             </div>      
   </md-card-content>
    <md-card-actions align="end">
-    <button md-button type="submit">OK</button>
-    <img *ngIf="loading" src="data:image/gif;base64,R0lGODlhEAAQAPIAAP///wAAAMLCwkJCQgAAAGJiYoKCgpKSkiH/C05FVFNDQVBFMi4wAwEAAAAh/hpDcmVhdGVkIHdpdGggYWpheGxvYWQuaW5mbwAh+QQJCgAAACwAAAAAEAAQAAADMwi63P4wyklrE2MIOggZnAdOmGYJRbExwroUmcG2LmDEwnHQLVsYOd2mBzkYDAdKa+dIAAAh+QQJCgAAACwAAAAAEAAQAAADNAi63P5OjCEgG4QMu7DmikRxQlFUYDEZIGBMRVsaqHwctXXf7WEYB4Ag1xjihkMZsiUkKhIAIfkECQoAAAAsAAAAABAAEAAAAzYIujIjK8pByJDMlFYvBoVjHA70GU7xSUJhmKtwHPAKzLO9HMaoKwJZ7Rf8AYPDDzKpZBqfvwQAIfkECQoAAAAsAAAAABAAEAAAAzMIumIlK8oyhpHsnFZfhYumCYUhDAQxRIdhHBGqRoKw0R8DYlJd8z0fMDgsGo/IpHI5TAAAIfkECQoAAAAsAAAAABAAEAAAAzIIunInK0rnZBTwGPNMgQwmdsNgXGJUlIWEuR5oWUIpz8pAEAMe6TwfwyYsGo/IpFKSAAAh+QQJCgAAACwAAAAAEAAQAAADMwi6IMKQORfjdOe82p4wGccc4CEuQradylesojEMBgsUc2G7sDX3lQGBMLAJibufbSlKAAAh+QQJCgAAACwAAAAAEAAQAAADMgi63P7wCRHZnFVdmgHu2nFwlWCI3WGc3TSWhUFGxTAUkGCbtgENBMJAEJsxgMLWzpEAACH5BAkKAAAALAAAAAAQABAAAAMyCLrc/jDKSatlQtScKdceCAjDII7HcQ4EMTCpyrCuUBjCYRgHVtqlAiB1YhiCnlsRkAAAOwAAAAAAAAAAAA==" />
-    <button md-button md-dialog-close>Cancel</button>
+      <button md-button (click)="f.form.valid && upsert(data.userRepository)">OK</button>
+      <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
+      <button md-button (click)="onClose()">Cancel</button>
   </md-card-actions>
     </form>
 </md-card>

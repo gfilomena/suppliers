@@ -5,7 +5,7 @@
     <md-card-title></md-card-title>
   </md-card-header>
 
-<form name="form" (ngSubmit)="f.form.valid && upsert(data.repository)" #f="ngForm" novalidate>
+<form name="form"  #f="ngForm" novalidate>
   <md-card-content>
                 <h3>Register Repository</h3>
             <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
@@ -21,9 +21,9 @@
             </div>      
   </md-card-content>
    <md-card-actions align="end">
-    <button md-button type="submit">OK</button>
-        <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
-    <button md-button  md-dialog-close>Cancel</button>
+    <button md-button (click)="f.form.valid && upsert(data.repository)">OK</button>
+    <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
+    <button md-button md-dialog-close>Cancel</button>
   </md-card-actions>
     </form>
 </md-card>

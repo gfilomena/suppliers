@@ -74,9 +74,10 @@ delete(id:string) {
                 })
 }
 
+
   create() {
-    
-    let dialogRef = this.dialog.open(DialogRegistrationRepository, {
+
+    const dialogRef = this.dialog.open(DialogRegistrationRepository, {
       data: {userRepository:this.userRepository},
       height: 'auto',
       width: '40%',
@@ -195,6 +196,10 @@ export class DialogRegistrationRepository {
    console.log('Selected value is: ', value);
  }
 
+ onClose(): void {
+    this.dialogRef.close();
+  }
+
 
   onSubmit() {
         this.submitted = true;
@@ -224,20 +229,19 @@ if(userRepository.id) {
 
     this.userRepositoryService.create(userRepository)
             .subscribe(
-                data => {                 
+                data => {
                     console.log('new UserRepository',userRepository);
                     this.onChange.emit();
-                    this.dialogRef.close();     
+                    this.dialogRef.close();
                 },
                 error => {
                     this.alertService.error(error._body)
                     this.loading = false
                 })
 
+        }
 }
 
-}   
-      
    getDate(date:string):string{
     return new Date(date).toString().slice(0,15);
   }
