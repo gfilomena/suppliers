@@ -19,73 +19,79 @@ export class McssrService {
     getParam(mc: MultimediaContent): JSON {
 
         let mimeType: String;
-        let filename: String;
         let type: String;
         let folder: String;
         let charset: String;
+        let licenseType: String | null | undefined;
+        let metadata: String | null | undefined;
+        let description: String | null | undefined;
+
+        mc.licenseType = 'freeware';
+        licenseType = mc.licenseType || '';
+        description = mc.description || '';
+        metadata = mc.metadata ? mc.metadata.join() : '';
+
         if (!mc.fileExtension) {
-            mimeType = mime.lookup(mc.downloadURI)
+            mimeType = mime.lookup(mc.downloadURI);
         } else {
             mimeType = mc.fileExtension;
         }
 
-        console.log('mcssrService-mimeType', mimeType)
+        console.log('mcssrService-mimeType', mimeType);
         // charset = mime.charset(mimeType) // 'UTF-8'
         // console.log('charset:',charset)
         charset = 'UTF-8';
-        console.log('mimeType:', mimeType)
+        console.log('mimeType:', mimeType);
 
 
 
 
         switch (mc.type) {
             case 'video': {
-                folder = 'Video'
-                type = 'Video'
+                folder = 'Video';
+                type = 'Video';
                 break;
             }
             case 'audio': {
-                folder = 'Audio'
-                type = 'Audio'
+                folder = 'Audio';
+                type = 'Audio';
                 break;
             }
             case 'image': {
-                folder = 'Image'
-                type = 'Picture'
+                folder = 'Image';
+                type = 'Picture';
                 break;
             }
             case 'text': {
-                folder = 'Text'
-                type = 'File'
-                mimeType = 'text/html'
+                folder = 'Text';
+                type = 'File';
+                mimeType = 'text/html';
                 break;
             }
             default: {
                 break;
             }
         }
+//type= 'WebTemplateSource';
 
 
-        let params = '{ '
+        const params: string = '{ '
             + ' "params" : {'
             + ' "path":"/Producer_Repository/workspaces/' + folder + '", '
             + ' "url":"' + mc.downloadURI + '", '
             + ' "encoding":"' + charset + '", '
             + ' "fileName":"' + mc.name + '", '
-            + ' "description":"' + mc.description + '", '
-            + ' "mimeType":"' + mimeType + '", ';
+            + ' "description":"' + description + '", '
+            + ' "mimeType":"' + mimeType + '", '
+            + ' "license":"' + licenseType + '", '
+            + ' "repository":"' + mc.source.name  + '", '
+            + ' "tags":"' + metadata + '", '
+            + ' "type":"' + type + '"'
+            + '}}';
 
-        if (mc.metadata) {
-            params += ' "tags":"' + mc.metadata + '", ';
-        } else {
-            params += ' "tags":"", ';
-        }
-        params += ' "type":"' + type + '"';
-        params += '}}';
+        console.log('to Nuxeo:' , params);
 
-        console.log('to Nuxeo:' , params)
-
-        let obj = JSON.parse(params);
+        const obj = JSON.parse(params);
 
         return obj;
     }
