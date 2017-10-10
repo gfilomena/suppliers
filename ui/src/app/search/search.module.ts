@@ -8,9 +8,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import 'hammerjs';
 import {
-         MdNativeDateModule,
+         MatNativeDateModule,
          DateAdapter,
-         MdDateFormats,
+         MatDateFormats,
         //material 2.0.0.beta11
         MatProgressBarModule,
         MatDatepickerModule,

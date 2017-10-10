@@ -1,5 +1,5 @@
 smd-datatable {
-    .smd-table-container {
+    .smat-table-container {
         max-width: 100%;
         display: block;
         overflow-x: auto;
@@ -139,7 +139,7 @@ smd-datatable {
                     height: 56px;
                     text-align: center;
                     td {
-                        smd-paginator {
+                        smat-paginator {
                             float: right;
                         }
                     }
@@ -165,7 +165,7 @@ smd-datatable {
                         text-transform: uppercase;
                     }
                 }
-                md-input-container {
+                mat-form-field {
                     & .mat-input-wrapper {
                         margin: 0;
                     }

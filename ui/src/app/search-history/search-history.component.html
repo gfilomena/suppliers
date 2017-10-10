@@ -1,19 +1,19 @@
 <div>
-    <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
-        <smd-fab-trigger [spin]="spin">
-            <button md-fab><md-icon>apps</md-icon></button>
-        </smd-fab-trigger>
-        <smd-fab-actions>
-            <button md-mini-fab mdTooltip="Delete All History" mdTooltipPosition="above"(click)="deleteAll()"><md-icon>delete</md-icon></button>
-        </smd-fab-actions>
-    </smd-fab-speed-dial>
+    <smat-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+        <smat-fab-trigger [spin]="spin">
+            <button mat-fab><mat-icon>apps</mat-icon></button>
+        </smat-fab-trigger>
+        <smat-fab-actions>
+            <button mat-mini-fab matTooltip="Delete All History" matTooltipPosition="above"(click)="deleteAll()"><mat-icon>delete</mat-icon></button>
+        </smat-fab-actions>
+    </smat-fab-speed-dial>
   <div fxFlex class="container">
-    <md-progress-bar mode="indeterminate" *ngIf="loading"></md-progress-bar>
+    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     <h3 align="center" *ngIf="nResults == 0">No history available.</h3>
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-      <md-list *ngFor="let sr of searchResult">
-        <md-list-item mdTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.freeText}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></md-list-item>
-      </md-list>
+      <mat-list *ngFor="let sr of searchResult">
+        <mat-list-item matTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.freeText}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></mat-list-item>
+      </mat-list>
     </div>
   </div>
 </div>

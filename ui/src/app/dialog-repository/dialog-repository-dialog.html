@@ -1,29 +1,29 @@
 
 
-<md-card>
-  <md-card-header>
-    <md-card-title></md-card-title>
-  </md-card-header>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title></mat-card-title>
+  </mat-card-header>
 
 <form name="form"  #f="ngForm" novalidate>
-  <md-card-content>
+  <mat-card-content>
                 <h3>Register Repository</h3>
             <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
-                <md-input-container  fxFlex> 
-                <input mdInput placeholder="Name" value=" " id="name" name="name" required  [(ngModel)]="data.repository.name">
-                </md-input-container>
-                <md-input-container  fxFlex> 
-                <input mdInput placeholder="URI" value=" " id="URI" name="URI"  required [(ngModel)]="data.repository.URI">
-                </md-input-container>
-                <md-input-container  fxFlex> 
-                <input mdInput placeholder="urlPrefix" value="" id="urlPrefix" name="urlPrefix" [(ngModel)]="data.repository.urlPrefix">
-                </md-input-container>
+                <mat-form-field  fxFlex> 
+                <input matInput placeholder="Name" value=" " id="name" name="name" required  [(ngModel)]="data.repository.name">
+                </mat-form-field>
+                <mat-form-field  fxFlex> 
+                <input matInput placeholder="URI" value=" " id="URI" name="URI"  required [(ngModel)]="data.repository.URI">
+                </mat-form-field>
+                <mat-form-field  fxFlex> 
+                <input matInput placeholder="urlPrefix" value="" id="urlPrefix" name="urlPrefix" [(ngModel)]="data.repository.urlPrefix">
+                </mat-form-field>
             </div>      
-  </md-card-content>
-   <md-card-actions align="end">
-    <button md-button (click)="f.form.valid && upsert(data.repository)">OK</button>
-    <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
-    <button md-button md-dialog-close>Cancel</button>
-  </md-card-actions>
+  </mat-card-content>
+   <mat-card-actions align="end">
+    <button mat-button (click)="f.form.valid && upsert(data.repository)">OK</button>
+    <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
+    <button mat-button matDialogClose>Cancel</button>
+  </mat-card-actions>
     </form>
-</md-card>
+</mat-card>

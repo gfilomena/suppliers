@@ -1,4 +1,4 @@
-.smd-paginator {
+.smat-paginator {
   display:flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -6,7 +6,7 @@
   align-content: center;
   align-items: center;
 
-  & .smd-paginator-range {
+  & .smat-paginator-range {
     display:flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -21,12 +21,12 @@
     }
   }
 
-  .smd-paginator-current-page {
+  .smat-paginator-current-page {
     margin-left: 5px;
     min-width: 100px;
   }
 
-  .smd-paginator-navigation {
+  .smat-paginator-navigation {
     margin-left: 5px;
     display:flex;
     flex-direction: row;

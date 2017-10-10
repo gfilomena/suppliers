@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Repository } from '../_models/repository';
 import { User } from '../_models/user';
 import { UserService, AlertService } from "../_services/index";
-import {MdSnackBar} from '@angular/material';
+import {MatSnackBar} from '@angular/material';
 import { Validators } from '@angular/forms';
 
 @Component({
@@ -20,7 +20,7 @@ user;
   constructor(     
       private UserService: UserService,
       private alertService: AlertService,
-      public snackBar: MdSnackBar
+      public snackBar: MatSnackBar
       ) { }
 
   ngOnInit() {

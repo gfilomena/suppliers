@@ -1,7 +1,7 @@
 ﻿import { Component } from "@angular/core"
 import { Router } from "@angular/router"
 import { AlertService, UserService } from "../_services/index"
-import { MdSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material';
 import { Validators } from '@angular/forms';
 @Component({
     templateUrl: "./register.component.html",
@@ -16,7 +16,7 @@ export class RegisterComponent {
         private router: Router,
         private userService: UserService,
         private alertService: AlertService,
-        public snackBar: MdSnackBar ) { }
+        public snackBar: MatSnackBar ) { }
 
     register() {
         this.loading = true

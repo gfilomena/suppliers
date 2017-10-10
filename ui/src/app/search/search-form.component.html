@@ -1,88 +1,88 @@
 
 <div class="container">
-    <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
-        <smd-fab-trigger [spin]="spin">
-            <button md-fab><md-icon>apps</md-icon></button>
-        </smd-fab-trigger>
-        <smd-fab-actions>
-            <button md-mini-fab  mdTooltip="Filter" mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
-        </smd-fab-actions>
-    </smd-fab-speed-dial>
+    <smat-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+        <smat-fab-trigger [spin]="spin">
+            <button mat-fab><mat-icon>apps</mat-icon></button>
+        </smat-fab-trigger>
+        <smat-fab-actions>
+            <button mat-mini-fab  matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><mat-icon>tune</mat-icon></button>
+        </smat-fab-actions>
+    </smat-fab-speed-dial>
   <div class="container-sidebar">
       <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event) ></app-filterbar>
   </div>
   <div fxFlex>
     <form name="form" #f="ngForm">
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <md-progress-bar mode="indeterminate" *ngIf="submitted"></md-progress-bar>
-        <md-card class="form">
+          <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+        <mat-card class="form">
           <div>
-            <md-form-field fxFlex>
-              <input mdInput placeholder="Are you searching for" value="" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText"
+            <mat-form-field fxFlex>
+              <input matInput placeholder="Are you searching for" value="" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText"
                 name="freeText" required>
-            </md-form-field>
+            </mat-form-field>
           </div>
           <div>
           <!--<div class="typefield">
-              <md-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex fxFlexOffset="2">
-                <md-option *ngFor="let type of types" [value]="type">
+              <mat-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex fxFlexOffset="2">
+                <mat-option *ngFor="let type of types" [value]="type">
                   {{ type }}
-                </md-option>
-            </md-select>
+                </mat-option>
+            </mat-select>
           </div>-->
     
 
           
-            <md-form-field fxFlex>
-              <input mdInput [mdDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
+            <mat-form-field fxFlex>
+              <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                 [max]="searchForm.endDate" required>
-              <md-datepicker-toggle mdSuffix [for]="startdate"></md-datepicker-toggle>
-            </md-form-field>
-            <md-datepicker #startdate></md-datepicker>
-            <md-form-field fxFlex fxFlexOffset="2">
-              <input mdInput [mdDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
+              <mat-datepicker-toggle matSuffix [for]="startdate"></mat-datepicker-toggle>
+            </mat-form-field>
+            <mat-datepicker #startdate></mat-datepicker>
+            <mat-form-field fxFlex fxFlexOffset="2">
+              <input matInput [matDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
                 [min]="searchForm.inDate" required>
-                <md-datepicker-toggle mdSuffix [for]="enddate"></md-datepicker-toggle>
-            </md-form-field>
-            <md-datepicker #enddate></md-datepicker>
+                <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
+            </mat-form-field>
+            <mat-datepicker #enddate></mat-datepicker>
 
               
           </div>
           <div align="end">
-            <button md-raised-button type="button" (click)="clear()">Clear</button>
-            <button md-raised-button (click)="f.form.valid && onSubmit()">Search</button>
+            <button mat-raised-button type="button" (click)="clear()">Clear</button>
+            <button mat-raised-button (click)="f.form.valid && onSubmit()">Search</button>
           </div>
-        </md-card>
+        </mat-card>
       </div>
     </form>
     <div class="container-card" fxflex>
       <h2 *ngIf="nOfResults == 0">No results found!</h2>
       <div class="sub_container-card" *ngFor="let sr of searchResult">
         <div *ngIf="filter(sr)">
-          <md-card class="card">
+          <mat-card class="card">
             <div class="image-card">
-              <img md-card-image [src]="getImage(sr)" (click)="openDialog(sr)">
+              <img mat-card-image [src]="getImage(sr)" (click)="openDialog(sr)">
               <div class="bar">
                 <div [ngSwitch]="sr.type" class="type">
-                  <div *ngSwitchCase="'video'"><md-icon>videocam</md-icon></div>
-                  <div *ngSwitchCase="'image'"><md-icon>photo</md-icon></div>
-                  <div *ngSwitchCase="'audio'"><md-icon>audiotrack</md-icon></div>
-                  <div *ngSwitchCase="'text'" ><md-icon>textsms</md-icon></div>
+                  <div *ngSwitchCase="'video'"><mat-icon>videocam</mat-icon></div>
+                  <div *ngSwitchCase="'image'"><mat-icon>photo</mat-icon></div>
+                  <div *ngSwitchCase="'audio'"><mat-icon>audiotrack</mat-icon></div>
+                  <div *ngSwitchCase="'text'" ><mat-icon>textsms</mat-icon></div>
                 </div>
-                <div (click)="openDialog(sr)" class="title" [mdTooltip]="sr.name">{{sr.name}}</div>
-                <button class="save" md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition="above" (click)="checkSaveBookmark(sr)"><md-icon id="{{sr.uri}}">star_border</md-icon></button>
-                  <!--<button class="info" md-icon-button mdTooltip="Click for more info." (click)="openDialog(sr)"><md-icon>info</md-icon></button>-->
+                <div (click)="openDialog(sr)" class="title" [matTooltip]="sr.name">{{sr.name}}</div>
+                <button class="save" mat-icon-button matTooltip="Save Bookmark" matTooltipPosition="above" (click)="checkSaveBookmark(sr)"><mat-icon id="{{sr.uri}}">star_border</mat-icon></button>
+                  <!--<button class="info" mat-icon-button matTooltip="Click for more info." (click)="openDialog(sr)"><mat-icon>info</mat-icon></button>-->
               </div>
             </div>
-            <md-card-content class="content-card">
+            <mat-card-content class="content-card">
                 <div class="detail-card" fxLayout="column">
                  <!-- <div class="title-card">{{sr.name}}</div>-->
                   <div class="description">{{sr.description}}</div>
                   <div ><img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png"/></div>
                   <div class="date-card">{{getDate(sr.date)}}</div>
                 </div>
-            </md-card-content>
-          </md-card>
+            </mat-card-content>
+          </mat-card>
         </div>
       </div>
     </div>

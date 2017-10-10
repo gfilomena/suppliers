@@ -15,14 +15,14 @@ import {
     HostBinding,
     HostListener
 } from "@angular/core";
-import {MdButton} from "@angular/material";
+import {MatButton} from "@angular/material";
 
 const Z_INDEX_ITEM: number = 23;
 
 @Component({
     selector: 'smd-fab-trigger',
     template: `
-        <ng-content select="[md-fab], [mat-fab]"></ng-content>
+        <ng-content select="[mat-fab], [mat-fab]"></ng-content>
     `
 })
 export class SmdFabSpeedDialTrigger {
@@ -49,12 +49,12 @@ export class SmdFabSpeedDialTrigger {
 @Component({
     selector: 'smd-fab-actions',
     template: `
-        <ng-content select="[md-mini-fab], [mat-mini-fab]"></ng-content>
+        <ng-content select="[mat-mini-fab], [mat-mini-fab]"></ng-content>
     `
 })
 export class SmdFabSpeedDialActions implements AfterContentInit {
 
-    @ContentChildren(MdButton) _buttons: QueryList<MdButton>;
+    @ContentChildren(MatButton) _buttons: QueryList<MatButton>;
 
     constructor(@Inject(forwardRef(() => SmdFabSpeedDialComponent)) private _parent: SmdFabSpeedDialComponent, private renderer: Renderer) {
     }
@@ -70,7 +70,7 @@ export class SmdFabSpeedDialActions implements AfterContentInit {
 
     private initButtonStates() {
         this._buttons.toArray().forEach((button, i) => {
-            this.renderer.setElementClass(button._getHostElement(), 'smd-fab-action-item', true);
+            this.renderer.setElementClass(button._getHostElement(), 'smat-fab-action-item', true);
             this.changeElementStyle(button._getHostElement(), 'z-index', '' + (Z_INDEX_ITEM - i));
         })
     }
@@ -130,9 +130,9 @@ export class SmdFabSpeedDialActions implements AfterContentInit {
 @Component({
     selector: 'smd-fab-speed-dial',
     template: `
-        <div class="smd-fab-speed-dial-container">
-            <ng-content select="smd-fab-trigger"></ng-content>
-            <ng-content select="smd-fab-actions"></ng-content>
+        <div class="smat-fab-speed-dial-container">
+            <ng-content select="smat-fab-trigger"></ng-content>
+            <ng-content select="smat-fab-actions"></ng-content>
         </div>
     `,
     styleUrls: ['fab-speed-dial.scss'],

@@ -1,13 +1,13 @@
-<md-card>
-  <md-card-header>
-    <md-card-title>
-          <md-form-field>
-            <input mdInput  [(ngModel)]="data.name"   [disabled]="isDisabled()" class="title">
-            <md-icon mdSuffix (click)="toggle()">mode_edit</md-icon>
-            <button mdSuffix md-icon-button mdTooltip="Save Bookmark" mdTooltipPosition ="above" (click)="checkSaveBookmark(data)"><md-icon id="({{data.uri}})">star_border</md-icon></button>
-          </md-form-field>
-    </md-card-title>
-  </md-card-header>
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>
+          <mat-form-field>
+            <input matInput  [(ngModel)]="data.name"   [disabled]="isDisabled()" class="title">
+            <mat-icon matSuffix (click)="toggle()">mode_edit</mat-icon>
+            <button matSuffix mat-icon-button matTooltip="Save Bookmark" matTooltipPosition ="above" (click)="checkSaveBookmark(data)"><mat-icon id="({{data.uri}})">star_border</mat-icon></button>
+          </mat-form-field>
+    </mat-card-title>
+  </mat-card-header>
 <div [ngSwitch]="data.type">
   <div *ngSwitchCase="'video'">
         <div  *ngIf="data.source.name == 'InternetArchive'; else defaultvideo">
@@ -49,37 +49,37 @@
 
 
 
-  <md-card-content>
+  <mat-card-content>
 <div fxLayout="column" fxLayoutAlign="space-around none" fxFlexOffset="2">
 
       <div>
         <h5></h5>
       </div>
-    <md-chip-list fxLayout="row" >
-      <md-chip *ngFor="let tag of data.metadata" class="badge">
+    <mat-chip-list fxLayout="row" >
+      <mat-chip *ngFor="let tag of data.metadata" class="badge">
               {{tag}}
-              <md-icon class="removeTag" (click)="removeTag(data,tag)">clear</md-icon> 
-      </md-chip>
-    </md-chip-list>
+              <mat-icon class="removeTag" (click)="removeTag(data,tag)">clear</mat-icon> 
+      </mat-chip>
+    </mat-chip-list>
 <table>
   <tr><td> {{data.description}}</td></tr>
 </table>
-   <md-form-field>
-    <input #newtag mdInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)" >
-  </md-form-field>
-  <md-select placeholder="select format" *ngIf="formats" [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
-    <md-option *ngFor="let file of formats" [value]="file.name">
+   <mat-form-field>
+    <input #newtag matInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)" >
+  </mat-form-field>
+  <mat-select placeholder="select format" *ngIf="formats" [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
+    <mat-option *ngFor="let file of formats" [value]="file.name">
         {{getExt(file.name)}}  ({{getMB(file.size)}}MB)
-    </md-option>
-  </md-select>
+    </mat-option>
+  </mat-select>
 </div>
   
     
-  </md-card-content>
-   <md-card-actions align="end">
+  </mat-card-content>
+   <mat-card-actions align="end">
     <a class="logo" [href]="data.uri"><img src="../assets/ui/assets/images/{{data.source.name}}.png"/></a>
-    <md-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></md-progress-spinner>
-    <button md-button *ngIf="selectedFormat !== '' " (click)="sendMcssr(data)">Send to MCSSR</button>
-    <button md-button md-dialog-close>Close</button>
-  </md-card-actions>
-</md-card>
+    <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
+    <button mat-button *ngIf="selectedFormat !== '' " (click)="sendMcssr(data)">Send to MCSSR</button>
+    <button mat-button matDialogClose>Close</button>
+  </mat-card-actions>
+</mat-card>

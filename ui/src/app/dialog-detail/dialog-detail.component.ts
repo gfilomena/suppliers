@@ -3,7 +3,7 @@ import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs, RequestOptions, Headers } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
-import { MatDialog, MatDialogRef, MD_DIALOG_DATA, MatChipsModule, MatSnackBar, MdSnackBar, MatProgressSpinnerModule } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatChipsModule, MatSnackBar, MatProgressSpinnerModule } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { Bookmark } from './../_models/bookmark';
@@ -43,7 +43,7 @@ export class DialogDetail implements OnInit {
         public http: Http,
         private BookmarkService: BookmarkService,
         private McssrService: McssrService,
-        public snackBar: MdSnackBar,
+        public snackBar: MatSnackBar,
         private InternetArchiveService: InternetArchiveService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     }

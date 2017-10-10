@@ -1,12 +1,12 @@
 import { Repository } from '../../_models/repository';
 import { UserRepository } from '../../_models/user-repository';
 import { Component, OnInit, Input, Output,EventEmitter, Inject } from '@angular/core';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from "@angular/material";
 import { DomSanitizer,SafeResourceUrl } from '@angular/platform-browser';
 import { User } from "../../_models/user";
 import { UserRepositoryService, RepositoryService, AlertService } from "../../_services/index";
 import { Router } from "@angular/router"
-import {MdSnackBar} from '@angular/material'
+import {MatSnackBar} from '@angular/material'
 
 
 
@@ -24,10 +24,10 @@ userRepositories: UserRepository[];
 loading = false;
 
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     private userRepositoryService:UserRepositoryService,
     private alertService: AlertService,
-    public snackBar: MdSnackBar ) {
+    public snackBar: MatSnackBar ) {
     // this.repository=new Repository('Youtube','www.youtube.com','prefix');
     this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     this.userRepository = new UserRepository();
@@ -163,8 +163,8 @@ export class DialogRegistrationRepository {
     @Output() onChange = new EventEmitter();
 
   constructor(
-      public dialogRef: MdDialogRef<DialogRegistrationRepository>,
-      @Inject(MD_DIALOG_DATA) public data: any,
+      public dialogRef: MatDialogRef<DialogRegistrationRepository>,
+      @Inject(MAT_DIALOG_DATA) public data: any,
       private router: Router,
       private userRepositoryService:UserRepositoryService,
       private RepositoryService:RepositoryService,

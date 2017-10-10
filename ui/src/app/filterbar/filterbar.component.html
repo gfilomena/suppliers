@@ -1,31 +1,31 @@
-<md-card class="sidebar" *ngIf="showSidebar">
-    <!-- <button [style.right.px]="sidebar(170)" md-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon class="close_icon">tune</md-icon></button>-->
-     <button class="close_button" md-icon-button (click)="setSidebar()"><md-icon>close</md-icon></button>
-     <md-list>
+<mat-card class="sidebar" *ngIf="showSidebar">
+    <!-- <button [style.right.px]="sidebar(170)" mat-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><mat-icon class="close_icon">tune</mat-icon></button>-->
+     <button class="close_button" mat-icon-button (click)="setSidebar()"><mat-icon>close</mat-icon></button>
+     <mat-list>
        <p class="label">Types</p>
-       <md-list-item class="list-item" *ngFor="let elem of activeType">
-          <md-checkbox [(ngModel)]="elem.enabled" [checked]="elem.enabled">{{elem.name}}<i class="nitem">({{elem.count}})</i></md-checkbox>
-        </md-list-item>
+       <mat-list-item class="list-item" *ngFor="let elem of activeType">
+          <mat-checkbox [(ngModel)]="elem.enabled" [checked]="elem.enabled">{{elem.name}}<i class="nitem">({{elem.count}})</i></mat-checkbox>
+        </mat-list-item>
        <p class="label">Repositories</p>
-       <md-list-item class="list-item" *ngFor="let item of activeRepositories">
-         <md-checkbox [(ngModel)]="item.enabled" [checked]="item.enabled">{{item.name}}<i class="nitem">({{item.count}})</i></md-checkbox>
-       </md-list-item>
-     </md-list>
-</md-card>
+       <mat-list-item class="list-item" *ngFor="let item of activeRepositories">
+         <mat-checkbox [(ngModel)]="item.enabled" [checked]="item.enabled">{{item.name}}<i class="nitem">({{item.count}})</i></mat-checkbox>
+       </mat-list-item>
+     </mat-list>
+</mat-card>
 
 
 
 
 
-         <!-- <md-list-item class="list-item">
-         <md-checkbox [(ngModel)]="videofilter" [checked]="videofilter">Video<i class="nitem"> ({{VideoResult}})</i></md-checkbox>
-       </md-list-item>
-       <md-list-item class="list-item">
-         <md-checkbox [(ngModel)]="audiofilter" [checked]="audiofilter">Audio<i class="nitem"> ({{AudioResult}})</i></md-checkbox>
-       </md-list-item>
-       <md-list-item class="list-item">
-         <md-checkbox [(ngModel)]="textfilter" [checked]="textfilter">Text<i class="nitem"> ({{TextResult}})</i></md-checkbox>
-       </md-list-item>
-       <md-list-item class="list-item">
-         <md-checkbox [(ngModel)]="imagefilter" [checked]="imagefilter">Image<i class="nitem"> ({{ImageResult}})</i></md-checkbox>
-       </md-list-item> -->
+         <!-- <mat-list-item class="list-item">
+         <mat-checkbox [(ngModel)]="videofilter" [checked]="videofilter">Video<i class="nitem"> ({{VideoResult}})</i></mat-checkbox>
+       </mat-list-item>
+       <mat-list-item class="list-item">
+         <mat-checkbox [(ngModel)]="audiofilter" [checked]="audiofilter">Audio<i class="nitem"> ({{AudioResult}})</i></mat-checkbox>
+       </mat-list-item>
+       <mat-list-item class="list-item">
+         <mat-checkbox [(ngModel)]="textfilter" [checked]="textfilter">Text<i class="nitem"> ({{TextResult}})</i></mat-checkbox>
+       </mat-list-item>
+       <mat-list-item class="list-item">
+         <mat-checkbox [(ngModel)]="imagefilter" [checked]="imagefilter">Image<i class="nitem"> ({{ImageResult}})</i></mat-checkbox>
+       </mat-list-item> -->

@@ -1,4 +1,4 @@
-<div class="smd-table-container">
+<div class="smat-table-container">
     <table class="smd-data-table full-width">
         <caption>
             <ng-content select="smd-datatable-header"></ng-content>
@@ -6,25 +6,25 @@
         <thead>
             <tr>
                 <th *ngIf="_shouldRenderCheckbox()">
-                    <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
-                    </md-checkbox>
+                    <mat-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
+                    </mat-checkbox>
                 </th>
                 <th *ngFor="let column of columns" [class.smd-datatable-column-sortable]="column.sortable" [class.smd-numeric-column]="column.numeric" [class.smd-searchable]="column.searchable" (click)="_sortColumn(column)">
-                    <span *ngIf="!column.searchable || column.searchable == 'false'" mdTooltip="{{column.titleTooltip}}" [class.smd-sorted-asc]="column.sortDir == 'asc'" [class.smd-sorted-desc]="column.sortDir == 'desc'">{{column.title}}</span>
-                    <md-input-container floatPlaceholder="never" *ngIf="column.searchable == 'true'">
-                        <input mdInput [placeholder]="column.title" [(ngModel)]="column.search" (ngModelChange)="_onSearchChange($event, column.title);" type="text">
-                        <md-icon mdSuffix class="material-icons">search</md-icon>
-                    </md-input-container>
+                    <span *ngIf="!column.searchable || column.searchable == 'false'" matTooltip="{{column.titleTooltip}}" [class.smd-sorted-asc]="column.sortDir == 'asc'" [class.smd-sorted-desc]="column.sortDir == 'desc'">{{column.title}}</span>
+                    <mat-form-field floatPlaceholder="never" *ngIf="column.searchable == 'true'">
+                        <input matInput [placeholder]="column.title" [(ngModel)]="column.search" (ngModelChange)="_onSearchChange($event, column.title);" type="text">
+                        <mat-icon matSuffix class="material-icons">search</mat-icon>
+                    </mat-form-field>
                 </th>
             </tr>
             <tr *ngIf="responsive && _shouldRenderCheckbox()" class="smd-datatable-responsive-header">
                 <th [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
-                    <md-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
-                    </md-checkbox>
-                    <md-input-container floatPlaceholder="never" *ngIf="responsiveSearch">
-                        <input mdInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
-                        <md-icon mdSuffix class="material-icons">search</md-icon>
-                    </md-input-container>
+                    <mat-checkbox [(ngModel)]="checked" (change)="_onMasterCheckChange()">
+                    </mat-checkbox>
+                    <mat-form-field floatPlaceholder="never" *ngIf="responsiveSearch">
+                        <input matInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
+                        <mat-icon matSuffix class="material-icons">search</mat-icon>
+                    </mat-form-field>
                 </th>
             </tr>
         </thead>
@@ -36,20 +36,20 @@
             <tr [hidden]="!paginated || rows.length == 0">
                 <td [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
                     <span>
-                        <smd-paginator
+                        <smat-paginator
                                 [count]="rowCount"
                                 [ranges]="paginatorRanges"
                                 (pageChange)="_onPageChange($event)">
-                        </smd-paginator>
+                        </smat-paginator>
                     </span>
                 </td>
             </tr>
             <tr *ngIf="rows.length == 0 && responsive">
                 <th [attr.colspan]="columns.length + (_shouldRenderCheckbox() ? 1 : 0)">
-                    <md-input-container floatPlaceholder="never">
-                        <input mdInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
-                        <md-icon mdSuffix class="material-icons">search</md-icon>
-                    </md-input-container>
+                    <mat-form-field floatPlaceholder="never">
+                        <input matInput [(ngModel)]="search" (ngModelChange)="_onSearchChange($event, responsiveSearch);" type="text">
+                        <mat-icon matSuffix class="material-icons">search</mat-icon>
+                    </mat-form-field>
                 </th>
             </tr>
             <tr *ngIf="rows.length == 0">
