@@ -262,19 +262,22 @@ export class DialogDetail implements OnInit {
                 this.McssrService.updateTags(mc, uid)
                     .subscribe(
                     resTag => {
-                        console.log('pdate Tags to Mcssr - subscribe OK:', resTag);
+                        console.log('update Tags to Mcssr - subscribe OK:', resTag);
                         this.loading = false;
                         this.openSnackBar('The Multimedia Item has been sent correctly to Mcssr', 'Successful!');
                     },
                     errorTag => {
                         console.log('Send to Mcssr - subscribe - error:', errorTag);
                         this.loading = false;
-                        this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'error!');
+                        this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'Error!');
                     }
                     )
-            },
+            this.loading=false;
+                },
             error => {
                 console.log('Send to Mcssr - subscribe - error:', error);
+                this.loading = false;
+                this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'Error!');
             }
             )
     }

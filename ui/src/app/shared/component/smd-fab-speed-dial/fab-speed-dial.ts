@@ -70,7 +70,7 @@ export class SmdFabSpeedDialActions implements AfterContentInit {
 
     private initButtonStates() {
         this._buttons.toArray().forEach((button, i) => {
-            this.renderer.setElementClass(button._getHostElement(), 'smat-fab-action-item', true);
+            this.renderer.setElementClass(button._getHostElement(), 'smd-fab-action-item', true);
             this.changeElementStyle(button._getHostElement(), 'z-index', '' + (Z_INDEX_ITEM - i));
         })
     }
@@ -130,9 +130,9 @@ export class SmdFabSpeedDialActions implements AfterContentInit {
 @Component({
     selector: 'smd-fab-speed-dial',
     template: `
-        <div class="smat-fab-speed-dial-container">
-            <ng-content select="smat-fab-trigger"></ng-content>
-            <ng-content select="smat-fab-actions"></ng-content>
+        <div class="smd-fab-speed-dial-container">
+            <ng-content select="smd-fab-trigger"></ng-content>
+            <ng-content select="smd-fab-actions"></ng-content>
         </div>
     `,
     styleUrls: ['fab-speed-dial.scss'],

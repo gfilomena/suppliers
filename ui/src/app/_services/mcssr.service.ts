@@ -17,7 +17,7 @@ export class McssrService {
     }
 
     updateTags(mc: MultimediaContent, uid: String) {
-        return this.http.post(environment.serviceUrl + '/mcssr/tags', this.getParamTags(mc,uid), this.jwt())
+        return this.http.post(environment.serviceUrl + '/mcssr/tag', this.getParamTags(mc,uid), this.jwt())
     }
 
     getParam(mc: MultimediaContent): JSON {
@@ -94,11 +94,11 @@ export class McssrService {
             + ' "name":"' + licenseType + '", '
             + ' "type":"' + licenseType + '", '
             + ' "version": "1", '
-            + ' "url":"http://licenseurl.org", '
+            + ' "url":"http://licenseurl.org" '
             +'}'
             +'}'
             +'},'
-            + ' "input":"/Producer_Repository/workspaces/' + type + '", '
+            + ' "input":"/Producer_Repository/workspaces/' + folder + '", '
             +'"context": {}'
             + '}';
 
@@ -117,7 +117,7 @@ export class McssrService {
         
                 const params: string = '{ '
                     + ' "params" : {'
-                    + ' "tags":"' + metadata + '", '
+                    + ' "tags":"' + metadata + '" '
                     +'},'
                     + ' "input":"' + uid + '", '
                     +'"context": {}'

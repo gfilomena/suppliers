@@ -1,12 +1,12 @@
 <div>
-    <smat-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
-        <smat-fab-trigger [spin]="spin">
+    <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+        <smd-fab-trigger [spin]="spin">
             <button mat-fab><mat-icon>apps</mat-icon></button>
-        </smat-fab-trigger>
-        <smat-fab-actions>
+        </smd-fab-trigger>
+        <smd-fab-actions>
             <button mat-mini-fab matTooltip="Delete All History" matTooltipPosition="above"(click)="deleteAll()"><mat-icon>delete</mat-icon></button>
-        </smat-fab-actions>
-    </smat-fab-speed-dial>
+        </smd-fab-actions>
+    </smd-fab-speed-dial>
   <div fxFlex class="container">
     <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
     <h3 align="center" *ngIf="nResults == 0">No history available.</h3>

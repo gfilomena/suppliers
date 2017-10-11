@@ -1,5 +1,5 @@
-<div class="smat-paginator">
-    <div class="smat-paginator-range">
+<div class="smd-paginator">
+    <div class="smd-paginator-range">
         Rows per page:
         <mat-select [(ngModel)]="selectedRange">
             <mat-option *ngFor="let range of ranges" [value]="range">
@@ -7,10 +7,10 @@
             </mat-option>
         </mat-select>
     </div>
-    <div class="smat-paginator-current-page">
+    <div class="smd-paginator-current-page">
         {{pageStart}}-{{pageEnd}} of {{count}}
     </div>
-    <div class="smat-paginator-navigation">
+    <div class="smd-paginator-navigation">
         <button (click)="onPreviousClick($event)" [disabled]="pageStart == 1">
             <i class="material-icons">arrow_left</i>
         </button>

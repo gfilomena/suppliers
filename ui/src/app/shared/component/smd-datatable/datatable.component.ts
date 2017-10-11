@@ -112,7 +112,7 @@ export class SmdDataTableCellComponent implements OnInit, OnDestroy {
     selector: "[smd-datatable-row]",
     template: `
         <td *ngIf="renderCheckbox" class="smd-datatable-body-checkbox">
-            <div class="smat-checkbox">
+            <div class="smd-checkbox">
                 <mat-checkbox [(ngModel)]="row.checked" (change)="_parent._onRowCheckChange(row)">
                 </mat-checkbox>
             </div>
@@ -124,7 +124,7 @@ export class SmdDataTableCellComponent implements OnInit, OnDestroy {
             <span class="smd-column-title">
                 {{column.title}}
             </span>
-            <span class="smat-cell-data">
+            <span class="smd-cell-data">
                 <ng-template smd-data-cell [column]="column" [data]="row.model" [templ]="column.template"></ng-template>
                 <span class="smd-editable-field-placeholder" *ngIf="column.editable && !row.model[column.field]">{{column.editablePlaceholder}}</span>
             </span>

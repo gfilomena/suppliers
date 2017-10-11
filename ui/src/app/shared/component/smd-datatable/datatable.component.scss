@@ -1,5 +1,5 @@
 smd-datatable {
-    .smat-table-container {
+    .smd-table-container {
         max-width: 100%;
         display: block;
         overflow-x: auto;
@@ -139,7 +139,7 @@ smd-datatable {
                     height: 56px;
                     text-align: center;
                     td {
-                        smat-paginator {
+                        smd-paginator {
                             float: right;
                         }
                     }
