@@ -31,9 +31,9 @@ public class NuxeoService {
 		Response response = nuxeoClient.post(mcssrUri+ConfigFactory.load().getString("mcssr.createDocumentWSUri"), body.toString());
 		try {
 			String json = response.body().string();
-
+			JsonNode document = (JsonNode) nuxeoClient.getConverterFactory().readJSON(json, JsonNode.class);
 			if(json != null) {
-				return CompletableFuture.supplyAsync(() -> Json.toJson(json));
+				return CompletableFuture.supplyAsync(() -> document);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -49,9 +49,9 @@ public class NuxeoService {
 		Response response = nuxeoClient.post(mcssrUri+ConfigFactory.load().getString("mcssr.updateTagsWSUri"), body.toString());
 		try {
 			String json = response.body().string();
-
+			JsonNode document = (JsonNode) nuxeoClient.getConverterFactory().readJSON(json, JsonNode.class);
 			if(json != null) {
-				return CompletableFuture.supplyAsync(() -> Json.toJson(json));
+				return CompletableFuture.supplyAsync(() -> document);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
