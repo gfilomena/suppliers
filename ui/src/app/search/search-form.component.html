@@ -5,7 +5,7 @@
             <button md-fab><md-icon>apps</md-icon></button>
         </smd-fab-trigger>
         <smd-fab-actions>
-            <button md-mini-fab  mdTooltip="Filter" mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><md-icon>tune</md-icon></button>
+            <button md-mini-fab  mdTooltip="Filter" mdTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0"><md-icon>tune</md-icon></button>
         </smd-fab-actions>
     </smd-fab-speed-dial>
   <div class="container-sidebar">

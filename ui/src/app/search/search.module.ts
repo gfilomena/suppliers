@@ -32,7 +32,7 @@ import {
                           } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogRepositoryComponent, DialogRepositoryDetail } from '../dialog-repository/dialog-repository.component';
-import { DialogDetail } from '../dialog-detail/dialog-detail.component';
+import { DialogDetail, SafePipe } from '../dialog-detail/dialog-detail.component';
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
 import { InternetArchiveService} from '../_services/internetarchive.service';
 import { FilterbarComponent } from '../filterbar/filterbar.component';
@@ -69,7 +69,8 @@ import { ComponentsModule } from '../shared/components.module';
     DialogRepositoryDetail,
     DialogDetail,
     BookmarksComponent,
-    FilterbarComponent
+    FilterbarComponent,
+    SafePipe
   ],
   // entryComponents declare Components created manually
   entryComponents: [DialogDetail, DialogRepositoryDetail],

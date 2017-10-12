@@ -2,7 +2,7 @@ import { element } from 'protractor';
 import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs, RequestOptions, Headers } from '@angular/http';
-import { Component, OnInit, Input, Inject, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Inject, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
 import { MatDialog, MatDialogRef, MD_DIALOG_DATA, MatChipsModule, MatSnackBar, MdSnackBar, MatProgressSpinnerModule } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
@@ -13,6 +13,13 @@ import { mediafile, File } from './../_models/mediafile';
 import * as mime from 'mime-types';
 
 
+@Pipe({ name: 'safe' })
+export class SafePipe implements PipeTransform {
+  constructor(private sanitizer: DomSanitizer) {}
+  transform(url) {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+  }
+}
 
 @Component({
     selector: 'dialog-detail-dialog',
@@ -53,16 +60,16 @@ export class DialogDetail implements OnInit {
         console.log('init mc:', this.data)
         // this.uriValidation(this.getVideoSource(this.data.downloadURI));
         if (this.data.source.name === 'InternetArchive') {
-            this.getInternetArchiveformat(this.data.uri)
+            this.getInternetArchiveformat(this.data.uri);
         }else{
             this.selectedFormat = this.data.downloadURI;
         }
     }
 
     getVideoSource(URI: string): any {
-        console.log('getVideoSource:', URI)
+        console.log('getVideoSource:', URI);
         const link = this.sanitizer.bypassSecurityTrustResourceUrl(URI);
-        console.log('link:', link)
+        console.log('link:', link);
         return link;
     }
 
