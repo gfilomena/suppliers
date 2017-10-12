@@ -102,7 +102,7 @@
     */
 }
 
-md-checkbox {
+mat-checkbox {
   min-height: 100%;
   align-items: center;
 }

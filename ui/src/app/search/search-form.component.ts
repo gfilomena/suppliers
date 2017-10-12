@@ -14,9 +14,9 @@ import {
     MatDialogRef,
     DateAdapter,
     MatSnackBar,
-    MdNativeDateModule,
+    MatNativeDateModule,
     MatDatepickerModule,
-    MD_DATE_FORMATS
+    MAT_DATE_FORMATS
 } from '@angular/material';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
@@ -33,7 +33,7 @@ import { MY_DATE_FORMATS } from './mydateformats';
     providers: [
         //{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
         { provide: DateAdapter, useClass: CustomDateAdapter },
-        { provide: MD_DATE_FORMATS, useValue: MY_DATE_FORMATS }
+        { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
     ],
     templateUrl: './search-form.component.html',
     styleUrls: ['./search-form.component.css']

@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Bookmark } from '../_models/bookmark';
 import { BookmarkService, AlertService } from '../_services/index';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
-import { MdDialog } from '@angular/material';
+import { MatDialog } from '@angular/material';
 import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
 import { Filter } from '../_models/filter';
@@ -37,7 +37,7 @@ export class BookmarksComponent implements OnInit {
 
     constructor(private BookmarkService: BookmarkService,
         private alertService: AlertService,
-        private dialog: MdDialog,
+        private dialog: MatDialog,
         private userRepositoryService: UserRepositoryService) { }
 
     ngOnInit() {

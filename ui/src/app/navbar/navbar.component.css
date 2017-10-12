@@ -28,7 +28,7 @@
 }
 
 
-md-toolbar,md-toolbar-row{
+mat-toolbar,mat-toolbar-row{
         display: contents;
         position: fixed;
         z-index: 2;

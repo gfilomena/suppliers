@@ -3,7 +3,7 @@ import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs, RequestOptions, Headers } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
-import { MatDialog, MatDialogRef, MD_DIALOG_DATA, MatChipsModule, MatSnackBar, MdSnackBar, MatProgressSpinnerModule } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatChipsModule, MatSnackBar, MatProgressSpinnerModule } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { Bookmark } from './../_models/bookmark';
@@ -50,7 +50,7 @@ export class DialogDetail implements OnInit {
         public http: Http,
         private BookmarkService: BookmarkService,
         private McssrService: McssrService,
-        public snackBar: MdSnackBar,
+        public snackBar: MatSnackBar,
         private InternetArchiveService: InternetArchiveService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     }
@@ -264,16 +264,29 @@ export class DialogDetail implements OnInit {
             .subscribe(
             res => {
                 console.log('Send to Mcssr - subscribe OK:', res);
-                this.loading = false;
-                this.openSnackBar('The Multimedia Item has been sent correctly to Mcssr', 'Successful!');
-            },
+                let creationResponse = res.json();
+                let uid = creationResponse.uid;
+                this.McssrService.updateTags(mc, uid)
+                    .subscribe(
+                    resTag => {
+                        console.log('update Tags to Mcssr - subscribe OK:', resTag);
+                        this.loading = false;
+                        this.openSnackBar('The Multimedia Item has been sent correctly to Mcssr', 'Successful!');
+                    },
+                    errorTag => {
+                        console.log('Send to Mcssr - subscribe - error:', errorTag);
+                        this.loading = false;
+                        this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'Error!');
+                    }
+                    )
+            this.loading=false;
+                },
             error => {
                 console.log('Send to Mcssr - subscribe - error:', error);
                 this.loading = false;
-                this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'error!');
+                this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'Error!');
             }
             )
-
     }
 
     uriValidation(uri: string) {

@@ -16,6 +16,10 @@ export class McssrService {
         return this.http.post(environment.serviceUrl + '/mcssr', this.getParam(mc), this.jwt())
     }
 
+    updateTags(mc: MultimediaContent, uid: String) {
+        return this.http.post(environment.serviceUrl + '/mcssr/tag', this.getParamTags(mc,uid), this.jwt())
+    }
+
     getParam(mc: MultimediaContent): JSON {
 
         let mimeType: String;
@@ -77,17 +81,26 @@ export class McssrService {
 
         const params: string = '{ '
             + ' "params" : {'
-            + ' "path":"/Producer_Repository/workspaces/' + folder + '", '
-            + ' "url":"' + mc.downloadURI + '", '
-            + ' "encoding":"' + charset + '", '
-            + ' "fileName":"' + mc.name + '", '
-            + ' "description":"' + description + '", '
-            + ' "mimeType":"' + mimeType + '", '
-            + ' "license":"' + licenseType + '", '
-            + ' "repository":"' + mc.source.name  + '", '
-            + ' "tags":"' + metadata + '", '
-            + ' "type":"' + type + '"'
-            + '}}';
+            + ' "type":"' + type + '", '
+            + ' "name":"' + mc.name + '", '
+            + ' "properties" : {'
+            + ' "dc:title":"' + mc.name + '", '
+            + ' "dc:description":"' + description + '", '
+            + ' "dc:source":"' + mc.source.name + '", '
+            + ' "mul:url":"' + mc.downloadURI + '", '
+            + ' "mul:encoding":"' + charset + '", '
+            + ' "mul:mime-type":"' + mimeType + '", '
+            + ' "mul:License" : {'
+            + ' "name":"' + licenseType + '", '
+            + ' "type":"' + licenseType + '", '
+            + ' "version": "1", '
+            + ' "url":"http://licenseurl.org" '
+            +'}'
+            +'}'
+            +'},'
+            + ' "input":"/Producer_Repository/workspaces/' + folder + '", '
+            +'"context": {}'
+            + '}';
 
         console.log('to Nuxeo:' , params);
 
@@ -96,6 +109,26 @@ export class McssrService {
         return obj;
     }
 
+    getParamTags(mc: MultimediaContent, uid: String): JSON {
+        
+        let metadata: String | null | undefined;
+        
+        metadata = mc.metadata ? mc.metadata.join() : '';        
+        
+                const params: string = '{ '
+                    + ' "params" : {'
+                    + ' "tags":"' + metadata + '" '
+                    +'},'
+                    + ' "input":"' + uid + '", '
+                    +'"context": {}'
+                    + '}';
+        
+                console.log('to Nuxeo:' , params);
+        
+                const obj = JSON.parse(params);
+        
+                return obj;
+            }
     // private helper methods
 
     private jwt() {

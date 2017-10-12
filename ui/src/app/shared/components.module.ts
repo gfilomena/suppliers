@@ -16,7 +16,7 @@ import {
     MatIconModule,
     MatTooltipModule,
     MatListModule,
-    MdRippleModule } from '@angular/material';
+    MatRippleModule } from '@angular/material';
 
 import {
     SmdDataTable,
@@ -76,7 +76,7 @@ let IMPORTS = [
     MatIconModule,
     MatTooltipModule,
     MatListModule,
-    MdRippleModule
+    MatRippleModule
 
 ];
 

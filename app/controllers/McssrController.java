@@ -40,7 +40,7 @@ public class McssrController extends Controller{
         String body;
         CompletionStage<JsonNode> r;
         
-        if (json.findPath("params").isMissingNode()) {
+        /*if (json.findPath("params").isMissingNode()) {
             return CompletableFuture.supplyAsync(() -> badRequest("params not presents!"));
         }else {
         	params = json.findPath("params");
@@ -57,13 +57,52 @@ public class McssrController extends Controller{
             if(params.findPath("type").isMissingNode()){
                 return CompletableFuture.supplyAsync(() -> badRequest("type not present!"));
             }
-            //Logger.info("create->"+ws.create(json));
+            //Logger.info("create->"+ws.create(json));*/
         r = ws.create(json);
         if(r != null) {
             return r.thenApply(( p ) -> ok(p));
         }
         else{
             return CompletableFuture.supplyAsync(() -> badRequest("ws.create(json) -> error!"));
+        }
+    }
+
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> updateTags() {
+        JsonNode json = request().body().asJson();
+        Logger.info("json:"+json);
+        //Logger.info("params->"+params);
+        JsonNode user = json.findPath("user");
+        //Logger.info("user->"+user);
+        NuxeoService ws = new NuxeoService();
+        String url;
+        String body;
+        CompletionStage<JsonNode> r;
+
+        /*if (json.findPath("params").isMissingNode()) {
+            return CompletableFuture.supplyAsync(() -> badRequest("params not presents!"));
+        }else {
+        	params = json.findPath("params");
+        }
+            if(params.findPath("url").isMissingNode()){
+                return CompletableFuture.supplyAsync(() -> badRequest("url not present!"));
+            }
+            if(params.findPath("fileName").isMissingNode()){
+                return CompletableFuture.supplyAsync(() -> badRequest("fileName not present!"));
+            }
+            if(params.findPath("mimeType").isMissingNode()){
+                return CompletableFuture.supplyAsync(() -> badRequest("mimeType not present!"));
+            }
+            if(params.findPath("type").isMissingNode()){
+                return CompletableFuture.supplyAsync(() -> badRequest("type not present!"));
+            }
+            //Logger.info("create->"+ws.create(json));*/
+        r = ws.updateTags(json);
+        if(r != null) {
+            return r.thenApply(( p ) -> ok(p));
+        }
+        else{
+            return CompletableFuture.supplyAsync(() -> badRequest("ws.updateTags(json) -> error!"));
         }
     }
 

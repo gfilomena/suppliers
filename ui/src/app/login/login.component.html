@@ -29,21 +29,21 @@
     </div>
 </div-->
 <div align="center">
- <md-card class="card">
+ <mat-card class="card">
     <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
    <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
        <h3>Login</h3>
-      <md-form-field>
-        <input mdInput type="text" placeholder="username" required name="username" [(ngModel)]="model.username" id="username">
-      </md-form-field>
-      <md-form-field>
-        <input mdInput type="password" placeholder="password" required name="password" [(ngModel)]="model.password" id="password">
-      </md-form-field>
-      <button md-raised-button  type="submit" name="login">LOGIN</button>
+      <mat-form-field>
+        <input matInput type="text" placeholder="username" required name="username" [(ngModel)]="model.username" id="username">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput type="password" placeholder="password" required name="password" [(ngModel)]="model.password" id="password">
+      </mat-form-field>
+      <button mat-raised-button  type="submit" name="login">LOGIN</button>
       <span id="err"><small>{{errorMsg}}</small></span>
-      <md-slide-toggle color="primary"><small>Remember me!</small></md-slide-toggle>
-      <button md-raised-button  [routerLink]="['/register']" name="register">REGISTER</button>
+      <mat-slide-toggle color="primary"><small>Remember me!</small></mat-slide-toggle>
+      <button mat-raised-button  [routerLink]="['/register']" name="register">REGISTER</button>
    </div>
     </form >
- </md-card>
+ </mat-card>
 </div>

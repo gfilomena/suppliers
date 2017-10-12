@@ -1,11 +1,11 @@
 <div class="smd-paginator">
     <div class="smd-paginator-range">
         Rows per page:
-        <md-select [(ngModel)]="selectedRange">
-            <md-option *ngFor="let range of ranges" [value]="range">
+        <mat-select [(ngModel)]="selectedRange">
+            <mat-option *ngFor="let range of ranges" [value]="range">
                 {{range}}
-            </md-option>
-        </md-select>
+            </mat-option>
+        </mat-select>
     </div>
     <div class="smd-paginator-current-page">
         {{pageStart}}-{{pageEnd}} of {{count}}

@@ -1,6 +1,6 @@
 import { Repository } from './../_models/repository';
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { RepositoryService, AlertService } from '../_services/index';
@@ -19,7 +19,7 @@ export class DialogRepositoryComponent implements OnInit {
   loading = false;
 
   constructor(
-    public dialog: MdDialog,
+    public dialog: MatDialog,
     private RepositoryService: RepositoryService,
     private alertService: AlertService) {
   }
@@ -119,8 +119,8 @@ export class DialogRepositoryDetail {
   @Output() onChange = new EventEmitter();
 
   constructor(
-    public dialogRef: MdDialogRef<DialogRepositoryDetail>,
-    @Inject(MD_DIALOG_DATA) public data: any,
+    public dialogRef: MatDialogRef<DialogRepositoryDetail>,
+    @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
     private RepositoryService: RepositoryService,
     private alertService: AlertService) { }

@@ -25,14 +25,33 @@ public class NuxeoService {
 	}
 	
 	public CompletionStage<JsonNode> create(JsonNode body) {
-		Logger.info("create - body->"+body.toString());	
+		Logger.info("create - body->"+body.toString());
+		Logger.debug("MCSSR CreateDocumentWSUri="+ConfigFactory.load().getString("mcssr.createDocumentWSUri"));
 		// POST Method and Deserialize Json Response Payload
-		Response response = nuxeoClient.post(mcssrUri+ConfigFactory.load().getString("mcssr.downloadWSUri"), body.toString());
+		Response response = nuxeoClient.post(mcssrUri+ConfigFactory.load().getString("mcssr.createDocumentWSUri"), body.toString());
 		try {
 			String json = response.body().string();
-			
+			JsonNode document = (JsonNode) nuxeoClient.getConverterFactory().readJSON(json, JsonNode.class);
 			if(json != null) {
-				return CompletableFuture.supplyAsync(() -> Json.toJson(json));
+				return CompletableFuture.supplyAsync(() -> document);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	public CompletionStage<JsonNode> updateTags(JsonNode body) {
+		Logger.info("udateTags - body->"+body.toString());
+		Logger.debug("MCSSR UpdateTagWS="+ConfigFactory.load().getString("mcssr.updateTagsWSUri"));
+		// POST Method and Deserialize Json Response Payload
+		Response response = nuxeoClient.post(mcssrUri+ConfigFactory.load().getString("mcssr.updateTagsWSUri"), body.toString());
+		try {
+			String json = response.body().string();
+			JsonNode document = (JsonNode) nuxeoClient.getConverterFactory().readJSON(json, JsonNode.class);
+			if(json != null) {
+				return CompletableFuture.supplyAsync(() -> document);
 			}
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
