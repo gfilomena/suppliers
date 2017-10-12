@@ -16,7 +16,7 @@ import {
     MatSnackBar,
     MatNativeDateModule,
     MatDatepickerModule,
-    MAT_DATE_FORMATS
+    MAT_DATE_FORMATS,
 } from '@angular/material';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
@@ -55,11 +55,13 @@ export class SearchFormComponent {
     activeType: Filter[];
 
     // init param smd-fab-speed-dial
-    open: boolean = false;
-    fixed: boolean = false;
-    spin: boolean = false;
-    direction: string = 'up';
-    animationMode: string = 'fling';
+    open = false;
+    fixed = false;
+    spin = false;
+    direction = 'up';
+    animationMode = 'fling';
+
+
 
     // _click(event: any) {
     //    console.log(event);
@@ -73,9 +75,9 @@ export class SearchFormComponent {
         private dialog: MatDialog,
         public snackBar: MatSnackBar,
         private userRepositoryService: UserRepositoryService) {
-        this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
-        const historyform = JSON.parse(localStorage.getItem('searchForm'))
-        const lastresearch = JSON.parse(localStorage.getItem('lastresearch'))
+        this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        const historyform = JSON.parse(localStorage.getItem('searchForm'));
+        const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
         this.dateAdapter.setLocale('ll');
         //initialize
 
@@ -84,9 +86,9 @@ export class SearchFormComponent {
             //progress bar ON
             this.submitted = true;
 
-            this.searchResult = lastresearch
-            this.counter(this.searchResult)
-            this.getUserRepositories()
+            this.searchResult = lastresearch;
+            this.counter(this.searchResult);
+            this.getUserRepositories();
             this.nOfResults = this.searchResult.length;
         }
 
@@ -98,13 +100,17 @@ export class SearchFormComponent {
         } else {
             this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
             this.searchForm.freeText = historyform.freeText;
-            this.searchForm.inDate = new Date(historyform.inDate)
-            this.searchForm.endDate = new Date(historyform.endDate)
+            this.searchForm.inDate = new Date(historyform.inDate);
+            this.searchForm.endDate = new Date(historyform.endDate);
         }
     }
 
     setSidebar(showSidebar) {
         this.showSidebar = showSidebar;
+    }
+
+    change_placeholder(changes: any) {
+        console.log('changes',changes)
     }
 
 
@@ -215,8 +221,8 @@ export class SearchFormComponent {
                 for (let item of res) {
 
                     if (mc.uri == item.multimediaContent.uri) {
-                        console.log('mc:', mc.uri)
-                        console.log('item:', item.multimediaContent.uri)
+                        console.log('mc:', mc.uri);
+                        console.log('item:', item.multimediaContent.uri);
                         exist = true;
                     }
                 }
@@ -320,7 +326,7 @@ export class SearchFormComponent {
         const repository = item.source.name;
         // console.log('repository->',repository);
         if (this.activeRepositories) {
-            const index = this.activeRepositories.findIndex(obj => obj.name === repository)
+            const index = this.activeRepositories.findIndex(obj => obj.name === repository);
             if (index !== -1) {
                 return this.activeRepositories[index].enabled;
             }

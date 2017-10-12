@@ -17,9 +17,9 @@
           <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
         <mat-card class="form">
           <div>
-            <mat-form-field fxFlex>
-              <input matInput placeholder="Are you searching for" value="" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText"
-                name="freeText" required>
+            <mat-form-field floatPlaceholder="never" fxFlex>
+              <input matInput  placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText"
+                name="freeText">
             </mat-form-field>
           </div>
           <div>
@@ -33,13 +33,13 @@
     
 
           
-            <mat-form-field fxFlex>
+            <mat-form-field floatPlaceholder="never" fxFlex>
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                 [max]="searchForm.endDate" required>
               <mat-datepicker-toggle matSuffix [for]="startdate"></mat-datepicker-toggle>
             </mat-form-field>
             <mat-datepicker #startdate></mat-datepicker>
-            <mat-form-field fxFlex fxFlexOffset="2">
+            <mat-form-field floatPlaceholder="never" fxFlex fxFlexOffset="2">
               <input matInput [matDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
                 [min]="searchForm.inDate" required>
                 <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
