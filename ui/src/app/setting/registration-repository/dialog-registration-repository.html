@@ -1,39 +1,40 @@
-
 <mat-card>
-<form name="form" #f="ngForm" novalidate>
-  <mat-card-content>
-                <h3>Register Repository on User</h3>
-            <div  fxLayout="column"  fxLayoutAlign="start" fxLayoutGap="5px">
-              <div  *ngIf="!data.userRepository.id" >
-               <mat-select placeholder="Repository"  id="repository"  [(ngModel)]="data.userRepository.repository" name="repository" required fxflex>
-                  <mat-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
-                    {{ rep.name }}
-                  </mat-option>
-                </mat-select>
-              </div> 
-              <div  class="repository" *ngIf="data.userRepository.id" >
-              <mat-form-field  fxFlex> 
-                <input matInput placeholder="repository" value=" " id="repository" name="repository" [(ngModel)]="data.userRepository.repository" disabled>
-                </mat-form-field>
-              </div> 
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
-                </mat-form-field>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">
-                </mat-form-field>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
-                </mat-form-field>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token">
-                </mat-form-field>
-            </div>      
-  </mat-card-content>
-   <mat-card-actions align="end">
+  <form name="form" #f="ngForm" novalidate>
+    <mat-card-content>
+      <h3>Register Repository on User</h3>
+      <div fxLayout="column" fxLayoutAlign="start" fxLayoutGap="5px">
+        <div *ngIf="!data.userRepository.id">
+          <mat-select floatPlaceholder="never" placeholder="Repository" id="repository" [(ngModel)]="data.userRepository.repository"
+            name="repository" required fxflex>
+            <mat-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
+              {{ rep.name }}
+            </mat-option>
+          </mat-select>
+        </div>
+        <div class="repository" *ngIf="data.userRepository.id">
+          <mat-form-field floatPlaceholder="never" fxFlex>
+            <input matInput placeholder="repository" value=" " id="repository" name="repository" [(ngModel)]="data.userRepository.repository"
+              disabled>
+          </mat-form-field>
+        </div>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token">
+        </mat-form-field>
+      </div>
+    </mat-card-content>
+    <mat-card-actions align="end">
       <button mat-button (click)="f.form.valid && upsert(data.userRepository)">OK</button>
       <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
       <button mat-button (click)="onClose()">Cancel</button>
-  </mat-card-actions>
-    </form>
+    </mat-card-actions>
+  </form>
 </mat-card>

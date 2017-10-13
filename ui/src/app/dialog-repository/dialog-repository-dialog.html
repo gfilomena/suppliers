@@ -9,13 +9,13 @@
   <mat-card-content>
                 <h3>Register Repository</h3>
             <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
-                <mat-form-field  fxFlex> 
+                <mat-form-field floatPlaceholder="never" fxFlex> 
                 <input matInput placeholder="Name" value=" " id="name" name="name" required  [(ngModel)]="data.repository.name">
                 </mat-form-field>
-                <mat-form-field  fxFlex> 
+                <mat-form-field floatPlaceholder="never" fxFlex> 
                 <input matInput placeholder="URI" value=" " id="URI" name="URI"  required [(ngModel)]="data.repository.URI">
                 </mat-form-field>
-                <mat-form-field  fxFlex> 
+                <mat-form-field floatPlaceholder="never" fxFlex> 
                 <input matInput placeholder="urlPrefix" value="" id="urlPrefix" name="urlPrefix" [(ngModel)]="data.repository.urlPrefix">
                 </mat-form-field>
             </div>      

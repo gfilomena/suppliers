@@ -1,38 +1,36 @@
-
 <div class="container">
-    <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
-        <smd-fab-trigger [spin]="spin">
-            <button mat-fab><mat-icon>apps</mat-icon></button>
-        </smd-fab-trigger>
-        <smd-fab-actions>
-            <button mat-mini-fab  matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0"><mat-icon>tune</mat-icon></button>
-        </smd-fab-actions>
-    </smd-fab-speed-dial>
+  <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+    <smd-fab-trigger [spin]="spin">
+      <button mat-fab><mat-icon>apps</mat-icon></button>
+    </smd-fab-trigger>
+    <smd-fab-actions>
+      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0"><mat-icon>tune</mat-icon></button>
+    </smd-fab-actions>
+  </smd-fab-speed-dial>
   <div class="container-sidebar">
-      <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event) ></app-filterbar>
+    <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event)></app-filterbar>
   </div>
   <div fxFlex>
     <form name="form" #f="ngForm">
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-          <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+        <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
         <mat-card class="form">
           <div>
             <mat-form-field floatPlaceholder="never" fxFlex>
-              <input matInput  placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText"
-                name="freeText">
+              <input matInput placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText">
             </mat-form-field>
           </div>
           <div>
-          <!--<div class="typefield">
+            <!--<div class="typefield">
               <mat-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex fxFlexOffset="2">
                 <mat-option *ngFor="let type of types" [value]="type">
                   {{ type }}
                 </mat-option>
             </mat-select>
           </div>-->
-    
 
-          
+
+
             <mat-form-field floatPlaceholder="never" fxFlex>
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                 [max]="searchForm.endDate" required>
@@ -42,11 +40,11 @@
             <mat-form-field floatPlaceholder="never" fxFlex fxFlexOffset="2">
               <input matInput [matDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
                 [min]="searchForm.inDate" required>
-                <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
+              <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
             </mat-form-field>
             <mat-datepicker #enddate></mat-datepicker>
 
-              
+
           </div>
           <div align="end">
             <button mat-raised-button type="button" (click)="clear()">Clear</button>
@@ -64,23 +62,31 @@
               <img mat-card-image [src]="getImage(sr)" (click)="openDialog(sr)">
               <div class="bar">
                 <div [ngSwitch]="sr.type" class="type">
-                  <div *ngSwitchCase="'video'"><mat-icon>videocam</mat-icon></div>
-                  <div *ngSwitchCase="'image'"><mat-icon>photo</mat-icon></div>
-                  <div *ngSwitchCase="'audio'"><mat-icon>audiotrack</mat-icon></div>
-                  <div *ngSwitchCase="'text'" ><mat-icon>textsms</mat-icon></div>
+                  <div *ngSwitchCase="'video'">
+                    <mat-icon>videocam</mat-icon>
+                  </div>
+                  <div *ngSwitchCase="'image'">
+                    <mat-icon>photo</mat-icon>
+                  </div>
+                  <div *ngSwitchCase="'audio'">
+                    <mat-icon>audiotrack</mat-icon>
+                  </div>
+                  <div *ngSwitchCase="'text'">
+                    <mat-icon>textsms</mat-icon>
+                  </div>
                 </div>
                 <div (click)="openDialog(sr)" class="title" [matTooltip]="sr.name">{{sr.name}}</div>
                 <button class="save" mat-icon-button matTooltip="Save Bookmark" matTooltipPosition="above" (click)="checkSaveBookmark(sr)"><mat-icon id="{{sr.uri}}">star_border</mat-icon></button>
-                  <!--<button class="info" mat-icon-button matTooltip="Click for more info." (click)="openDialog(sr)"><mat-icon>info</mat-icon></button>-->
+                <!--<button class="info" mat-icon-button matTooltip="Click for more info." (click)="openDialog(sr)"><mat-icon>info</mat-icon></button>-->
               </div>
             </div>
             <mat-card-content class="content-card">
-                <div class="detail-card" fxLayout="column">
-                 <!-- <div class="title-card">{{sr.name}}</div>-->
-                  <div class="description">{{sr.description}}</div>
-                  <div ><img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png"/></div>
-                  <div class="date-card">{{getDate(sr.date)}}</div>
-                </div>
+              <div class="detail-card" fxLayout="column">
+                <!-- <div class="title-card">{{sr.name}}</div>-->
+                <div class="description">{{sr.description}}</div>
+                <div><img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png" /></div>
+                <div class="date-card">{{getDate(sr.date)}}</div>
+              </div>
             </mat-card-content>
           </mat-card>
         </div>

@@ -1,32 +1,34 @@
 ﻿<div align="center">
- <mat-card class="card">
-  <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm">
-      
-    <div fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
-                <h3>Register</h3>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="model.firstName" #firstName="ngModel" required >
-                </mat-form-field>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="model.lastName" #lastName="ngModel" required >
-                </mat-form-field>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="model.email"  #email="ngModel" [email]="true" required>
-                </mat-form-field>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="model.username" #username="ngModel" required>
-                </mat-form-field>
-                <mat-form-field  fxFlex> 
-                <input matInput placeholder="Password" type="password" value="" id="password" name="password" [(ngModel)]="model.password" #password="ngModel" required>
-                </mat-form-field>
-       
+  <mat-card class="card">
+    <form name="form" (ngSubmit)="f.form.valid && register()" #f="ngForm">
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+        <h3>Register</h3>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="model.firstName" #firstName="ngModel"
+            required>
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="model.lastName" #lastName="ngModel"
+            required>
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="model.email" #email="ngModel"
+            [email]="true" required>
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="model.username" #username="ngModel"
+            required>
+        </mat-form-field>
+        <mat-form-field floatPlaceholder="never" fxFlex>
+          <input matInput placeholder="Password" type="password" value="" id="password" name="password" [(ngModel)]="model.password"
+            #password="ngModel" required>
+        </mat-form-field>
         <div align="end">
-         <button mat-raised-button  type="submit" >Register</button>
-         <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
-         <button mat-raised-button [routerLink]="['/login']">Cancel</button>  
+          <button mat-raised-button type="submit">Register</button>
+          <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
+          <button mat-raised-button [routerLink]="['/login']">Cancel</button>
         </div>
-      
-       </div>
-       </form>
-       </mat-card>
+      </div>
+    </form>
+  </mat-card>
 </div>
