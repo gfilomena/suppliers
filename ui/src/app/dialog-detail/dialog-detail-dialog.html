@@ -47,25 +47,31 @@
           <td> {{data.description}}</td>
         </tr>
       </table>
-      <mat-chip-list fxLayout="row">
-        <mat-chip *ngFor="let tag of data.metadata" class="badge">
-          {{tag}}
-          <mat-icon class="removeTag" (click)="removeTag(data,tag)">clear</mat-icon>
-        </mat-chip>
-      </mat-chip-list>
-      <mat-form-field floatPlaceholder="never">
-        <input #newtag matInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)">
-      </mat-form-field>
-      <mat-select placeholder="select format" *ngIf="formats" [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
-        <mat-option *ngFor="let file of formats" [value]="file.name">
-          {{getExt(file.name)}} ({{getMB(file.size)}}MB)
-        </mat-option>
-      </mat-select>
     </div>
+      <div  fxLayout="column"  fxFlex="33">
+     
+        <mat-chip-list >
+          <mat-chip *ngFor="let tag of data.metadata" class="badge">
+            {{tag}}
+            <mat-icon class="removeTag" (click)="removeTag(data,tag)">clear</mat-icon>
+          </mat-chip>
+        </mat-chip-list>
+      <mat-form-field floatPlaceholder="never">
+          <input #newtag matInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)">
+      </mat-form-field>
+      <mat-form-field *ngIf="formats" floatPlaceholder="never">
+        <mat-select placeholder="select format"  [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
+          <mat-option *ngFor="let file of formats" [value]="file.name">
+            {{getExt(file.name)}} ({{getMB(file.size)}}MB)
+          </mat-option>
+        </mat-select>
+      </mat-form-field >
+     </div>
   </mat-card-content>
   <mat-card-actions align="end">
     <a class="logo" [href]="data.uri"><img src="../assets/ui/assets/images/{{data.source.name}}.png"/></a>
-    <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
+    <!-- <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner> -->
+    <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
     <button mat-button *ngIf="selectedFormat !== '' " (click)="sendMcssr(data)">Send to MCSSR</button>
     <button mat-button matDialogClose>Close</button>
   </mat-card-actions>

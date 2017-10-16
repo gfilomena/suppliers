@@ -3,7 +3,7 @@ import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs, RequestOptions, Headers } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatChipsModule, MatSnackBar, MatProgressSpinnerModule } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatChipsModule, MatSnackBar, MatSnackBarModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCheckboxModule} from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { Bookmark } from './../_models/bookmark';
@@ -11,6 +11,8 @@ import { BookmarkService } from '../_services/bookmark.service';
 import { InternetArchiveService } from '../_services/internetarchive.service';
 import { mediafile, File } from './../_models/mediafile';
 import * as mime from 'mime-types';
+import { CommonModule } from '@angular/common';
+import {CdkTableModule} from "@angular/cdk/table";
 
 
 @Pipe({ name: 'safe' })
@@ -78,7 +80,7 @@ export class DialogDetail implements OnInit {
     }
 
     toggle() {
-        this.title = !this.title;;
+        this.title = !this.title;
     }
 
 
@@ -191,8 +193,8 @@ export class DialogDetail implements OnInit {
                 for (const item of res) {
 
                     if (mc.uri === item.multimediaContent.uri) {
-                        console.log('mc:', mc.uri)
-                        console.log('item:', item.multimediaContent.uri)
+                        console.log('mc:', mc.uri);
+                        console.log('item:', item.multimediaContent.uri);
                         exist = true;
                     }
                 }
@@ -227,10 +229,18 @@ export class DialogDetail implements OnInit {
     }
 
     openSnackBar(message: string, action: string) {
+        let cssclasses;
+        if (action === 'Successful!') {
+            cssclasses = 'success-snackbar';
+        }else {
+            cssclasses = 'errorSnackBar';
+        }
+        console.log('cssclasses',cssclasses);
+
         this.snackBar.open(message, action, {
-            duration: 50000,
+            duration: 30000,
             verticalPosition: 'bottom',
-            extraClasses: ['success-snackbar']
+            extraClasses: [cssclasses]
 
         });
     }
