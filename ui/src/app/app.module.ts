@@ -10,6 +10,7 @@ import { AuthGuard } from './_guards/index';
 import {
     AlertService,
     AuthenticationService,
+    AuthService,
     UserService,
     RepositoryService,
     UserRepositoryService,
@@ -92,6 +93,7 @@ import { ComponentsModule } from './shared/components.module';
         AuthGuard,
         AlertService,
         AuthenticationService,
+        AuthService,
         UserService,
         RepositoryService,
         UserRepositoryService,
