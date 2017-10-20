@@ -17,6 +17,11 @@ import services.db.MongoDBService;
 import views.html.index;
 
 import java.io.UnsupportedEncodingException;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.time.temporal.TemporalUnit;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -48,10 +53,14 @@ public class UserController extends Controller {
         } else {
             User user = userDAO.authenticate(username,password);
             if (user != null) {
+                String token=null;
                 try {
                     Algorithm algorithm = Algorithm.HMAC256(ConfigFactory.load().getString("play.crypto.secret"));
-                    String token = JWT.create()
-                            .withIssuer(user.getUsername())
+                    token = JWT.create()
+                            .withIssuer("Producer OCD ")
+                            .withSubject(user.getUsername())
+                            .withIssuedAt(Date.from(Instant.now()))
+                            .withExpiresAt(Date.from(Instant.now().plus(2,ChronoUnit.HOURS)))
                             .sign(algorithm);
                     user.setToken(token);
                 } catch (UnsupportedEncodingException exception) {
@@ -59,15 +68,15 @@ public class UserController extends Controller {
                 } catch (JWTCreationException exception) {
                     return badRequest("Invalid Signing configuration / Couldn't convert Claims.");//Invalid Signing configuration / Couldn't convert Claims.
                 }
-                session("currentUser", user.getUsername());
+                /*session("currentUser", user.getUsername());
                 ObjectNode authTokenJson = Json.newObject();
                 authTokenJson.put("_id", user.getId().toString());
                 authTokenJson.put("username", user.getUsername());
                 authTokenJson.put("firstName", user.getFirstName());
                 authTokenJson.put("lastName", user.getLastName());
-                authTokenJson.put("token", user.getToken());
+                authTokenJson.put("token", user.getToken());*/
                 //response().setCookie(Http.Cookie.builder(AUTH_TOKEN, user.getToken()).withSecure(ctx().request().secure()).build());
-                return ok(authTokenJson);
+                return ok(token);
             } else {
                 return badRequest("No User available with such username.");
             }

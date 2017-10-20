@@ -18,7 +18,6 @@ import {
     HistorysearchService
     /*PagerService*/
 } from './_services/index';
-import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { NavbarComponent } from './navbar/index';
@@ -77,7 +76,6 @@ import { ComponentsModule } from './shared/components.module';
     declarations: [
         AppComponent,
         AlertComponent,
-        HomeComponent,
         LoginComponent,
         RegisterComponent,
         NavbarComponent,

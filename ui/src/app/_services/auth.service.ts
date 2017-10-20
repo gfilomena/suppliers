@@ -52,7 +52,7 @@ export class AuthService {
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
     // Go back to the home route
-    this.router.navigate(['/']);
+    // this.router.navigate(['/']);
   }
 
   public isAuthenticated(): boolean {
@@ -68,10 +68,10 @@ export class AuthService {
     // create authorization header with jwt token
     let access_token = localStorage.getItem("access_token");
     if (access_token) {
-        let headers = new Headers({ "Authorization": "Bearer " + access_token })
+        let headers = new Headers({ "Authorization": "Bearer " + access_token });
         return new RequestOptions({ headers: headers })
     }
-    return null
+    return null;
 }
 
 }
