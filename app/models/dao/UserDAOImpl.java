@@ -44,4 +44,9 @@ public class UserDAOImpl extends BasicDAO<User, ObjectId> implements UserDAO {
             return null;
         }
     }
+
+    @Override
+    public User findByToken(String token) {
+        return this.findOne("access_token", token);
+    }
 }

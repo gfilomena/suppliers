@@ -24,6 +24,8 @@ public class User extends BaseEntity{
 
     private String token;
 
+    private String access_token;
+
     private RoleType role;
 
     public User(){
@@ -85,6 +87,14 @@ public class User extends BaseEntity{
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 
     public RoleType getRole() {

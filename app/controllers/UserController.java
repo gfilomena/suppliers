@@ -14,6 +14,7 @@ import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 import services.db.MongoDBService;
+import services.user.UserService;
 import views.html.index;
 
 import java.io.UnsupportedEncodingException;
@@ -22,6 +23,7 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.concurrent.CompletionStage;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -141,5 +143,12 @@ public class UserController extends Controller {
         MongoDBService.getDatastore().save(u);
         session().clear();
         return redirect("/");
+    }
+
+    public CompletionStage<Result> authorize(){
+        /*UserService userservice=new UserService();
+        return userservice.authorize().thenApply(p -> red(p.asJson()));*/
+        return null;
+
     }
 }

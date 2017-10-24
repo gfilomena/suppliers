@@ -19,4 +19,6 @@ public interface UserDAO extends DAO<User, ObjectId>{
 
     User authenticate(String username, String password);
 
+    User findByToken(String token);
+
 }

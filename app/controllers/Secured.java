@@ -37,7 +37,7 @@ public class Secured extends Security.Authenticator {
 
 
     public static User getUser(Context ctx) {
-        String[] authTokenHeaderValues = ctx.request().headers().get(UserController.AUTH_TOKEN_HEADER);
+        /*String[] authTokenHeaderValues = ctx.request().headers().get(UserController.AUTH_TOKEN_HEADER);
         if ((authTokenHeaderValues != null) && (authTokenHeaderValues.length == 1) && (authTokenHeaderValues[0] != null)) {
             String token = authTokenHeaderValues[0].split(" ")[1];
             try {
@@ -55,6 +55,13 @@ public class Secured extends Security.Authenticator {
             } catch (JWTVerificationException exception) {
                 return null;
             }
+        }
+        return null;*/
+        String[] authTokenHeaderValues = ctx.request().headers().get(UserController.AUTH_TOKEN_HEADER);
+        if ((authTokenHeaderValues != null) && (authTokenHeaderValues.length == 1) && (authTokenHeaderValues[0] != null)) {
+            String token = authTokenHeaderValues[0].split(" ")[1];
+            User user = userDAO.findByToken(token);
+            return user;
         }
         return null;
     }

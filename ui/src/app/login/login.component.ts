@@ -25,10 +25,10 @@ export class LoginComponent implements OnInit {
     ngOnInit() {
         // reset login status
         this.authenticationService.logout()
-        //this.auth.logout();
+        // this.auth.logout();
 
         // get return url from route parameters or default to '/'
-        this.returnUrl = this.route.snapshot.queryParams["returnUrl"] || "/"
+        this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/';
     }
 
     login() {
@@ -40,9 +40,9 @@ export class LoginComponent implements OnInit {
                 },
                 error => {
                     this.alertService.error(error._body)
-                    this.loading = false
+                    this.loading = false;
                     this.errorMsg = 'Failed to login';
-                })
+                });
     }
 
     loginSSO() {
@@ -50,6 +50,6 @@ export class LoginComponent implements OnInit {
     }
 
     showForm(){
-        this.loginFormEnabled=true;
+        this.loginFormEnabled = true;
     }
 }
