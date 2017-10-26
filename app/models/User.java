@@ -20,6 +20,8 @@ public class User extends BaseEntity{
 
     private String lastName;
 
+    private String userId;
+
     private String email;
 
     private String token;
@@ -79,6 +81,14 @@ public class User extends BaseEntity{
 
     public void setToken(String token) {
         this.token = token;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public String getEmail() {

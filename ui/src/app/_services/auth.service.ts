@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AUTH_CONFIG } from './auth0-variables';
 import { Router } from '@angular/router';
-import { Headers, RequestOptions } from "@angular/http"
+import { Headers, RequestOptions } from '@angular/http'
 import * as auth0 from 'auth0-js';
 
 @Injectable()
@@ -12,7 +12,7 @@ export class AuthService {
     domain: AUTH_CONFIG.domain,
     responseType: 'token id_token',
     audience: `https://${AUTH_CONFIG.domain}/userinfo`,
-    redirectUri: 'http://localhost:9000/',
+    redirectUri: AUTH_CONFIG.callbackURL,
     scope: 'openid'
   });
 

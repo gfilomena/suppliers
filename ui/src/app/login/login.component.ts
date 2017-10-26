@@ -33,7 +33,7 @@ export class LoginComponent implements OnInit {
 
     login() {
         this.loading = true
-        this.authenticationService.login(this.model.username, this.model.password)
+        /*this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
                     this.router.navigate([this.returnUrl])
@@ -42,7 +42,8 @@ export class LoginComponent implements OnInit {
                     this.alertService.error(error._body)
                     this.loading = false;
                     this.errorMsg = 'Failed to login';
-                });
+                });*/
+                
     }
 
     loginSSO() {

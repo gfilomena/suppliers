@@ -15,7 +15,8 @@ import {
     RepositoryService,
     UserRepositoryService,
     BookmarkService,
-    HistorysearchService
+    HistorysearchService,
+    McssrService
     /*PagerService*/
 } from './_services/index';
 import { LoginComponent } from './login/index';
@@ -96,7 +97,8 @@ import { ComponentsModule } from './shared/components.module';
         RepositoryService,
         UserRepositoryService,
         BookmarkService,
-        HistorysearchService
+        HistorysearchService,
+        McssrService
     ],
     entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository],
     bootstrap: [AppComponent]

@@ -14,7 +14,9 @@ libraryDependencies ++= Seq(
   cache,
   javaWs,
   "org.mongodb.morphia" % "morphia" % "1.3.2",
-  "com.auth0" % "java-jwt" % "3.0.1",
+  "com.auth0" % "java-jwt" % "3.2.0",
+  "com.auth0" % "auth0" % "1.3.0",
+  "com.auth0" % "jwks-rsa" % "0.1.0",
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.apache.commons" % "commons-lang3" % "3.5",
   "org.nuxeo.client" % "nuxeo-java-client" % "2.6"

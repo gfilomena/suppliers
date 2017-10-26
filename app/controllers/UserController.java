@@ -1,10 +1,16 @@
 package controllers;
 
+import com.auth0.client.auth.AuthAPI;
+import com.auth0.exception.APIException;
+import com.auth0.exception.Auth0Exception;
+import com.auth0.json.auth.TokenHolder;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
+import com.auth0.net.AuthRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
+import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import models.RoleType;
 import models.User;
@@ -23,6 +29,8 @@ import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalUnit;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -32,6 +40,8 @@ import java.util.concurrent.CompletionStage;
 public class UserController extends Controller {
 
     public final static String AUTH_TOKEN_HEADER = "Authorization";
+
+    public static com.typesafe.config.Config CONFIG=ConfigFactory.load();
 
     public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
 
@@ -150,5 +160,41 @@ public class UserController extends Controller {
         return userservice.authorize().thenApply(p -> red(p.asJson()));*/
         return null;
 
+    }
+
+    public CompletionStage<Result> login(){
+        AuthAPI authAPI=new AuthAPI(CONFIG.getString("auth0.domain"),CONFIG.getString("auth0.clientID"),CONFIG.getString("auth0.clientSecret"));
+        String url = authAPI.authorizeUrl("http://localhost:9000/callback")
+                .withAudience("https://pasquydomain.eu.auth0.com/api/v2/")
+                .withScope("openid")
+                .withState("STATE")
+                .withResponseType("code")
+                .build();
+        Logger.debug("Redirected to: "+url);
+        return CompletableFuture.supplyAsync(() -> redirect(url));
+    }
+
+    public CompletionStage<Result> callback(String code, String state){
+        AuthAPI authAPI=new AuthAPI(CONFIG.getString("auth0.domain"),CONFIG.getString("auth0.clientID"),CONFIG.getString("auth0.clientSecret"));
+        AuthRequest request = authAPI.exchangeCode(code, "http://localhost:9000/callback")
+                .setAudience("https://pasquydomain.eu.auth0.com/api/v2/")
+                .setScope("openid");
+        HashMap<String,Object> response=new HashMap<>();
+        try {
+            TokenHolder holder = request.execute();
+            response.put("access_token",holder.getAccessToken());
+            response.put("id_token",holder.getIdToken());
+            response.put("expires_in",holder.getExpiresIn());
+            response.put("token_type",holder.getTokenType());
+            session("access_token",holder.getAccessToken());
+            session("id_token",holder.getIdToken());
+            session("expires_in",String.valueOf(holder.getExpiresIn()));
+            session("token_type",holder.getTokenType());
+        } catch (APIException exception) {
+            // api error
+        } catch (Auth0Exception exception) {
+            // request error
+        }
+        return CompletableFuture.supplyAsync(() -> redirect(routes.UserController.index()));
     }
 }
