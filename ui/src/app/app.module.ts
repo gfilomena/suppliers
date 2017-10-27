@@ -49,6 +49,7 @@ import {
     MatListModule
 } from '@angular/material';
 import { ComponentsModule } from './shared/components.module';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -72,7 +73,8 @@ import { ComponentsModule } from './shared/components.module';
         MatIconModule,
         MatTooltipModule,
         MatListModule,
-        ComponentsModule
+        ComponentsModule,
+        NgxPaginationModule
     ],
     declarations: [
         AppComponent,

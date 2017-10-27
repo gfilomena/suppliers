@@ -29,9 +29,9 @@ import { MY_DATE_FORMATS } from './mydateformats';
 
 @Component({
     selector: 'app-search-form',
-    //issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter 
+    // issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter
     providers: [
-        //{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+        // {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
         { provide: DateAdapter, useClass: CustomDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
     ],
@@ -79,6 +79,7 @@ export class SearchFormComponent {
         const historyform = JSON.parse(localStorage.getItem('searchForm'));
         const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
         this.dateAdapter.setLocale('ll');
+
         //initialize
 
 
@@ -110,7 +111,7 @@ export class SearchFormComponent {
     }
 
     change_placeholder(changes: any) {
-        console.log('changes',changes)
+        console.log('changes', changes)
     }
 
 
@@ -169,7 +170,7 @@ export class SearchFormComponent {
         this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
         this.searchResult = [];
         this.counter(this.searchResult);
-        this.getUserRepositories()
+        this.getUserRepositories();
     }
 
     search() {

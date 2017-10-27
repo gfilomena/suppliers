@@ -1,10 +1,14 @@
 <div class="container">
   <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
-      <button mat-fab><mat-icon>apps</mat-icon></button>
+      <button mat-fab>
+        <mat-icon>apps</mat-icon>
+      </button>
     </smd-fab-trigger>
     <smd-fab-actions>
-      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0"><mat-icon>tune</mat-icon></button>
+      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0">
+        <mat-icon>tune</mat-icon>
+      </button>
     </smd-fab-actions>
   </smd-fab-speed-dial>
   <div class="container-sidebar">
@@ -55,7 +59,7 @@
     </form>
     <div class="container-card" fxflex>
       <h2 *ngIf="nOfResults == 0">No results found!</h2>
-      <div class="sub_container-card" *ngFor="let sr of searchResult">
+      <div class="sub_container-card" *ngFor="let sr of searchResult | paginate: { itemsPerPage: 20, currentPage: p }">
         <div *ngIf="filter(sr)">
           <mat-card class="card">
             <div class="image-card">
@@ -76,7 +80,9 @@
                   </div>
                 </div>
                 <div (click)="openDialog(sr)" class="title" [matTooltip]="sr.name">{{sr.name}}</div>
-                <button class="save" mat-icon-button matTooltip="Save Bookmark" matTooltipPosition="above" (click)="checkSaveBookmark(sr)"><mat-icon id="{{sr.uri}}">star_border</mat-icon></button>
+                <button class="save" mat-icon-button matTooltip="Save Bookmark" matTooltipPosition="above" (click)="checkSaveBookmark(sr)">
+                  <mat-icon id="{{sr.uri}}">star_border</mat-icon>
+                </button>
                 <!--<button class="info" mat-icon-button matTooltip="Click for more info." (click)="openDialog(sr)"><mat-icon>info</mat-icon></button>-->
               </div>
             </div>
@@ -84,13 +90,18 @@
               <div class="detail-card" fxLayout="column">
                 <!-- <div class="title-card">{{sr.name}}</div>-->
                 <div class="description">{{sr.description}}</div>
-                <div><img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png" /></div>
+                <div>
+                  <img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png" />
+                </div>
                 <div class="date-card">{{getDate(sr.date)}}</div>
               </div>
             </mat-card-content>
           </mat-card>
         </div>
       </div>
+    </div>
+    <div class="center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
     </div>
   </div>
 </div>
