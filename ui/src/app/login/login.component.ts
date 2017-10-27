@@ -24,7 +24,7 @@ export class LoginComponent implements OnInit {
 
     ngOnInit() {
         // reset login status
-        this.authenticationService.logout()
+        this.authenticationService.logout();
         // this.auth.logout();
 
         // get return url from route parameters or default to '/'
@@ -32,21 +32,21 @@ export class LoginComponent implements OnInit {
     }
 
     login() {
-        this.loading = true
-        /*this.authenticationService.login(this.model.username, this.model.password)
+        this.loading = true;
+        this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    this.router.navigate([this.returnUrl])
+                    this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                    this.alertService.error(error._body)
+                    this.alertService.error(error._body);
                     this.loading = false;
                     this.errorMsg = 'Failed to login';
-                });*/
-                
+                });
     }
 
     loginSSO() {
+        this.loading = true;
         this.auth.login();
     }
 

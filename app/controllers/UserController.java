@@ -12,6 +12,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
+import common.ConfigObj;
 import models.RoleType;
 import models.User;
 import models.dao.UserDAO;
@@ -66,13 +67,15 @@ public class UserController extends Controller {
             User user = userDAO.authenticate(username,password);
             if (user != null) {
                 String token=null;
+                Date now=Date.from(Instant.now());
+                Date expires_at=Date.from(now.toInstant().plus(2,ChronoUnit.HOURS));
                 try {
-                    Algorithm algorithm = Algorithm.HMAC256(ConfigFactory.load().getString("play.crypto.secret"));
+                    Algorithm algorithm = Algorithm.HMAC256(ConfigObj.configuration.getString("play.crypto.secret"));
                     token = JWT.create()
-                            .withIssuer("Producer OCD ")
-                            .withSubject(user.getUsername())
-                            .withIssuedAt(Date.from(Instant.now()))
-                            .withExpiresAt(Date.from(Instant.now().plus(2,ChronoUnit.HOURS)))
+                            .withIssuer(ConfigObj.configuration.getString("authentication.ocd.issuer"))
+                            .withSubject(user.getUserId())
+                            .withIssuedAt(now)
+                            .withExpiresAt(expires_at)
                             .sign(algorithm);
                     user.setToken(token);
                 } catch (UnsupportedEncodingException exception) {
@@ -88,7 +91,11 @@ public class UserController extends Controller {
                 authTokenJson.put("lastName", user.getLastName());
                 authTokenJson.put("token", user.getToken());*/
                 //response().setCookie(Http.Cookie.builder(AUTH_TOKEN, user.getToken()).withSecure(ctx().request().secure()).build());
-                return ok(token);
+                ObjectNode authTokenJson = Json.newObject();
+                authTokenJson.put("accessToken", token);
+                authTokenJson.put("idToken", token);
+                authTokenJson.put("expiresAt", expires_at.getTime());
+                return ok(Json.toJson(authTokenJson));
             } else {
                 return badRequest("No User available with such username.");
             }
@@ -106,6 +113,7 @@ public class UserController extends Controller {
                 return badRequest("Username already taken.");
             } else {
                 User user=new User(json.findPath("username").textValue(),json.findPath("password").textValue(),json.findPath("firstName").textValue(),json.findPath("lastName").textValue(),json.findPath("email").textValue(), RoleType.USER );
+                user.setUserId(json.findPath("username").textValue());
                 userDAO.save(user);
                 return created();
             }
@@ -162,7 +170,7 @@ public class UserController extends Controller {
 
     }
 
-    public CompletionStage<Result> login(){
+    /*public CompletionStage<Result> login(){
         AuthAPI authAPI=new AuthAPI(CONFIG.getString("auth0.domain"),CONFIG.getString("auth0.clientID"),CONFIG.getString("auth0.clientSecret"));
         String url = authAPI.authorizeUrl("http://localhost:9000/callback")
                 .withAudience("https://pasquydomain.eu.auth0.com/api/v2/")
@@ -196,5 +204,5 @@ public class UserController extends Controller {
             // request error
         }
         return CompletableFuture.supplyAsync(() -> redirect(routes.UserController.index()));
-    }
+    }*/
 }

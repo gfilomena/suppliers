@@ -1,7 +1,8 @@
-﻿import { Injectable } from "@angular/core"
-import { Http, Headers, Response } from "@angular/http"
-import { Observable } from "rxjs/Observable"
-import "rxjs/add/operator/map"
+﻿import { Injectable } from '@angular/core';
+import { Http, Headers, Response } from '@angular/http';
+import { Observable } from 'rxjs/Observable';
+import 'rxjs/add/operator/map';
+import { JwtHelper } from 'angular2-jwt';
 
 import { environment } from '../../environments/environment';
 
@@ -13,12 +14,13 @@ export class AuthenticationService {
         return this.http.post(environment.serviceUrl + '/users/authenticate', { username: username, password: password })
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
-                let user = response.json()
-                if (user && user.token) {
+                const authResult = response.json();
+                if (authResult && authResult.accessToken && authResult.idToken && authResult.expiresAt) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
-                    localStorage.setItem('currentUser', JSON.stringify(user))
+                    // localStorage.setItem('currentUser', JSON.stringify(user));
+                    this.setSession(authResult);
                 }
-            })
+            });
     }
 
     logout() {
@@ -29,14 +31,24 @@ export class AuthenticationService {
         localStorage.removeItem('access_token');
         localStorage.removeItem('id_token');
         localStorage.removeItem('expires_at');
+        localStorage.removeItem('currentUser');
+        localStorage.removeItem('bookmarks');
+        localStorage.removeItem('repositories');
     }
 
     private setSession(authResult): void {
+        const jwtHelper: JwtHelper = new JwtHelper();
+        console.log(
+            jwtHelper.decodeToken(authResult.idToken));
         console.log('Set session');
         // Set the time that the access token will expire at
-        const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
-        localStorage.setItem('expires_at', expiresAt);
-      }
+        localStorage.setItem('expires_at', authResult.expiresAt);
+        const params: string = '{ '
+            + ' "username":"' + jwtHelper.decodeToken(authResult.idToken).sub + '" '
+            + '}';
+        const obj = JSON.parse(params);
+        localStorage.setItem('currentUser', params);
+    }
 }

@@ -3,6 +3,7 @@ import { AUTH_CONFIG } from './auth0-variables';
 import { Router } from '@angular/router';
 import { Headers, RequestOptions } from '@angular/http'
 import * as auth0 from 'auth0-js';
+import {JwtHelper} from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
@@ -39,11 +40,18 @@ export class AuthService {
 
   private setSession(authResult): void {
     console.log('Set session');
+    const jwtHelper: JwtHelper = new JwtHelper();
+    console.log('Set session');
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
     localStorage.setItem('id_token', authResult.idToken);
     localStorage.setItem('expires_at', expiresAt);
+    const params: string = '{ '
+    + ' "username":"' + jwtHelper.decodeToken(authResult.idToken).sub + '" '
+    + '}';
+    const obj = JSON.parse(params);
+    localStorage.setItem('currentUser', params );
   }
 
   public logout(): void {
@@ -51,6 +59,11 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('searchForm');
+    localStorage.removeItem('lastresearch');
+    localStorage.removeItem('currentUser');
+    localStorage.removeItem('bookmarks');
+    localStorage.removeItem('repositories');
     // Go back to the home route
     // this.router.navigate(['/']);
   }
@@ -66,7 +79,7 @@ export class AuthService {
 
   public jwt() {
     // create authorization header with jwt token
-    let access_token = localStorage.getItem("access_token");
+    let access_token = localStorage.getItem("id_token");
     if (access_token) {
         let headers = new Headers({ "Authorization": "Bearer " + access_token });
         return new RequestOptions({ headers: headers })

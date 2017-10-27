@@ -8,7 +8,9 @@ import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import com.typesafe.config.ConfigFactory;
+import common.ConfigObj;
 import exceptions.ValidationJWTException;
+import models.RoleType;
 import models.User;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
@@ -39,7 +41,7 @@ public class Secured extends Security.Authenticator {
 
     @Override
     public Result onUnauthorized(Context ctx) {
-        return unauthorized();
+        return unauthorized("The access_token is invalid!");
     }
 
 
@@ -49,7 +51,7 @@ public class Secured extends Security.Authenticator {
             String token = authTokenHeaderValues[0].split(" ")[1];
             DecodedJWT jwt= null;
             try {
-                jwt = SecurityUtils.verifyAndDecodeJWTToken(token,"https://pasquydomain.eu.auth0.com/","auth0");
+                jwt = SecurityUtils.verifyAndDecodeJWTToken(token);
             } catch (ValidationJWTException e) {
                 return null;
             }
@@ -63,6 +65,7 @@ public class Secured extends Security.Authenticator {
                     newUser.setUserId(subject);
                     newUser.setUsername(subject); // TODO set properly the Username of the User if possible. Leave here for testing purpose
                     newUser.setAccess_token(token);
+                    newUser.setRole(RoleType.USER);
                     userDAO.save(newUser);
                     return newUser;
                 }
