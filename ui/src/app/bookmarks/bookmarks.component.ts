@@ -50,7 +50,7 @@ export class BookmarksComponent implements OnInit {
 
     openDialog(item: MultimediaContent) {
         console.log('item sr', item);
-        let dialogRef = this.dialog.open(DialogDetail, {
+        const dialogRef = this.dialog.open(DialogDetail, {
             height: 'auto',
             width: '600px',
             position: { top: '0', left: '30%', right: '30%', bottom: '0' }
@@ -61,22 +61,22 @@ export class BookmarksComponent implements OnInit {
 
 
     getAllBookmarks() {
-        this.submitted = true
-        this.BookmarkService.getAll()
+        this.submitted = true;
+        this.BookmarkService.findByUser()
             .subscribe(
             data => {
-                this.bookmarks = data.reverse()
-                this.counter(data)
-                this.getUserRepositories()
-                this.submitted = false
-                this.nResults = data.length
+                this.bookmarks = data.reverse();
+                this.counter(data);
+                this.getUserRepositories();
+                this.submitted = false;
+                this.nResults = data.length;
                 localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
                 console.log(' this.bookmarks', this.bookmarks);
             },
             error => {
-                this.alertService.error(error._body)
-                this.submitted = false
-            })
+                this.alertService.error(error._body);
+                this.submitted = false;
+            });
     }
 
     getUserRepositories() {
@@ -85,12 +85,12 @@ export class BookmarksComponent implements OnInit {
             data => {
                 this.userRepositories = data;
                 this.initRepo(this.userRepositories);
-                this.incRepo(this.bookmarks)
+                this.incRepo(this.bookmarks);
                 console.log(' this.userRepositories', this.userRepositories);
             },
             error => {
                 console.log('getUserRepositories -> error:', error);
-            })
+            });
     }
 
     incRepo(bookmarks: Bookmark[]) {
@@ -103,7 +103,7 @@ export class BookmarksComponent implements OnInit {
             repository = bookmarks[i].multimediaContent.source.name;
 
             if (this.activeRepositories) {
-                let index = this.activeRepositories.findIndex(obj => obj.name == repository)
+                const index = this.activeRepositories.findIndex(obj => obj.name == repository);
                 // console.log('this.activeRepositories',this.activeRepositories)
                 // console.log('repository',repository)
                 // console.log('item',index)
@@ -171,8 +171,8 @@ export class BookmarksComponent implements OnInit {
                 this.getAllBookmarks();
             },
             error => {
-                this.alertService.error(error._body)
-            })
+                this.alertService.error(error._body);
+            });
     }
 
     deleteAllByUser() {
@@ -180,16 +180,16 @@ export class BookmarksComponent implements OnInit {
         this.BookmarkService.deleteAllByUser()
             .subscribe(
             res => {
-                console.log('delete all Bookmarks - subscribe OK:', res)
-                this.bookmarks.splice(0, this.bookmarks.length)
+                console.log('delete all Bookmarks - subscribe OK:', res);
+                this.bookmarks.splice(0, this.bookmarks.length);
                 this.nResults = this.bookmarks.length;
                 this.submitted = false;
             },
             error => {
-                console.log('delete all Bookmarks - subscribe - error:', error)
+                console.log('delete all Bookmarks - subscribe - error:', error);
                 this.submitted = false;
             }
-            )
+            );
     }
 
     filter(item: MultimediaContent): any {
