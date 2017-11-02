@@ -29,6 +29,9 @@
   <logger name="play.libs.ws" level="DEBUG" />
   <logger name="play.api.libs.ws.ssl" value="DEBUG"/>
 
+  <!-- AKK JOBS -->
+  <logger name="com.github.tuxBurner.jobs.JobModule" level="Debug" />
+
   <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
   <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />
   <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF" />

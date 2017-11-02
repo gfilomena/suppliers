@@ -8,8 +8,8 @@ interface AuthConfig {
   }
 
   export const AUTH_CONFIG: AuthConfig = {
-    clientID: 'XYQEF1J7DXFJYD2gOkpjz5ZsuNAbZ0o7',
-    domain: 'pasquydomain.eu.auth0.com',
+    clientID: 'chMO60cB8YoeG0PCSisJ6WZA73WOaya7',
+    domain: 'producer-account.eu.auth0.com',
     callbackURL: environment.serviceUrl + '/',
-    apiUrl: 'https://pasquydomain.eu.auth0.com/api/v2/'
+    apiUrl: 'https://producer-account.eu.auth0.com/api/v2/'
   };

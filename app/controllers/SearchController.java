@@ -58,6 +58,10 @@ public class SearchController extends Controller {
         Logger.info("OCD search received: " + jsonRequest.toString());
 
         List<String> keywords=getKeyWords(jsonRequest);
+        List<SearchResult> fetchedResults=fetchCachedSearch(keywords);
+        if(!fetchedResults.isEmpty() && fetchedResults.size()==1){
+            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(fetchedResults.get(0))));
+        }
         SearchManager searchManager=new SearchManager();
         searchManager.setKeyWords(keywords);
         // TODO dinamically read repository that are enabled
@@ -89,10 +93,15 @@ public class SearchController extends Controller {
         });
         //SearchResultDAOImpl searchResultDAO=new SearchResultDAOImpl(SearchResult.class,MongoDBService.getDatastore());
         CompletionStage<JsonNode> jsonResult=transformedQuery.thenApply(p -> p.asJson());
-        transformedQuery.thenApply(p -> {p.setMultimediaContents(null);
+        transformedQuery.thenApply(p -> {/*p.setMultimediaContents(null);*/
         return searchResultDAO.save(p);});
         CompletionStage<Result> promiseOfResult = jsonResult.thenApply(( p ) -> ok(p));
         return promiseOfResult;
+    }
+
+    private List<SearchResult> fetchCachedSearch(List<String> keywords) {
+        SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
+        return searchResultDAO.findByKeywords(keywords);
     }
 
     public CompletionStage<Result> getSearchResults(String username){

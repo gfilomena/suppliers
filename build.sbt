@@ -19,10 +19,13 @@ libraryDependencies ++= Seq(
   "com.auth0" % "jwks-rsa" % "0.1.0",
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.apache.commons" % "commons-lang3" % "3.5",
-  "org.nuxeo.client" % "nuxeo-java-client" % "2.6"
+  "org.nuxeo.client" % "nuxeo-java-client" % "2.6",
+  "com.github.tuxBurner" %% "play-akkajobs" % "1.0.1"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
+resolvers += "tuxburner.github.io" at "http://tuxburner.github.io/repo"
 
 /*resolvers += "maven-nuxeo" at "http://maven.nuxeo.com/nexus/content/repositories/public-releases/"*/
 

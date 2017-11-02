@@ -22,17 +22,17 @@ export class NavbarComponent implements OnInit {
 
   isLoggedIn() {
     if(this.auth.isAuthenticated()){
-        console.log('nav bar authenticated');
+        // console.log('nav bar authenticated');
         return true;
     }
     else{
-        console.log('nav bar not authenticated');
+        // console.log('nav bar not authenticated');
       return false;
     }
   }
 
   getLoggedUser() {
-      var user = JSON.parse(localStorage.getItem('currentUser'));
+      let user = JSON.parse(localStorage.getItem('currentUser'));
       if (user && user.firstName) {
           return user.firstName;
       }

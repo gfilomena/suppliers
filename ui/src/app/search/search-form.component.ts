@@ -158,7 +158,7 @@ export class SearchFormComponent {
     onSubmit() {
 
         this.submitted = true;
-        console.log('this.searchForm', this.searchForm);
+        // console.log('this.searchForm', this.searchForm);
         localStorage.setItem('searchForm', JSON.stringify(this.searchForm));
         this.search();
 
@@ -178,10 +178,12 @@ export class SearchFormComponent {
             .subscribe(
             res => {
                 this.searchResult = res.json().multimediaContents;
-                console.log(res);
+                // console.log(res);
+                // console.log('search result:');
+                // console.log(this.searchResult);
                 localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
-                this.counter(this.searchResult)
+                this.counter(this.searchResult);
                 this.getUserRepositories()
                 // this.validator(this.searchResult)
                 this.nOfResults = this.searchResult.length;

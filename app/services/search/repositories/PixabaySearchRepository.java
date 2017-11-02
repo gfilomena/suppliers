@@ -76,6 +76,7 @@ public class PixabaySearchRepository implements SearchRepository {
             CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
                     setQueryParameter("key", registration.getApiKey()).
                     setQueryParameter("q", query).
+                    setQueryParameter("per_page", "200").
                     get().
                     thenApply(WSResponse::asJson);
             try {

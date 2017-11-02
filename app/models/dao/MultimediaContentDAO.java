@@ -18,4 +18,6 @@ public interface MultimediaContentDAO extends DAO<MultimediaContent, ObjectId> {
     List<MultimediaContent> findByType(String type);
 
     void saveAll(List<MultimediaContent> multimediaContents);
+
+    void deleteAll();
 }
