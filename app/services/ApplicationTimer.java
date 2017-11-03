@@ -4,8 +4,16 @@ import java.time.Clock;
 import java.time.Instant;
 import java.util.concurrent.CompletableFuture;
 import javax.inject.*;
+
+import models.MultimediaContent;
+import models.SearchResult;
+import models.dao.MultimediaContentDAO;
+import models.dao.MultimediaContentDAOImpl;
+import models.dao.SearchResultDAO;
+import models.dao.SearchResultDAOImpl;
 import play.Logger;
 import play.inject.ApplicationLifecycle;
+import services.db.MongoDBService;
 
 /**
  * This class demonstrates how to run code when the
@@ -35,7 +43,10 @@ public class ApplicationTimer {
         // This code is called when the application starts.
         start = clock.instant();
         Logger.info("ApplicationTimer demo: Starting application at " + start);
-
+        SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
+        searchResultDAO.deleteAll();
+        MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class,MongoDBService.getDatastore());
+        multimediaContentDAO.deleteAll();
         // When the application starts, register a stop hook with the
         // ApplicationLifecycle object. The code inside the stop hook will
         // be run when the application stops.

@@ -178,9 +178,9 @@ public class PixabaySearchRepository implements SearchRepository {
                 m.setDownloadURI(i.get("videos").get("tiny").get("url").asText());
             }
             m.setSource(registration.getRepository());
-            m.setThumbnail(i.get("userImageURL").asText());
+            m.setThumbnail("https://i.vimeocdn.com/video/"+i.get("picture_id").asText()+"_295x166.jpg");
             m.setMetadata(i.get("tags").asText().split(","));
-            m.setName(i.get("picture_id").asText());
+            m.setName(i.get("id").asText());
 
         }
     }
