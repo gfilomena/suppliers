@@ -9,21 +9,6 @@ import java.lang.reflect.Constructor;
  */
 public class SearchRepositoryFactory {
 
-    /*public SearchRepository create(String name, WSClient wsClient){
-        SearchRepository searchRepo=null;
-        try {
-            Class c = Class.forName("services.search.repositories." + name + "SearchRepository");
-            searchRepo = (SearchRepository) c.newInstance();
-        }catch (ClassNotFoundException cnfe){
-            cnfe.printStackTrace();
-        }catch(IllegalAccessException iae){
-            iae.printStackTrace();
-        }catch(InstantiationException ie){
-            ie.printStackTrace();
-        }
-        return searchRepo;
-    }*/
-
     public SearchRepository newInstance(String abstractName, Class<?>[] paramTypes,
                               Object[] params) {
         SearchRepository obj = null;

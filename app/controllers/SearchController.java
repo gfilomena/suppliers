@@ -56,15 +56,19 @@ public class SearchController extends Controller {
         JsonNode jsonRequest = request().body().asJson();
         User user=Secured.getUser(ctx());
         Logger.info("OCD search received: " + jsonRequest.toString());
-
         List<String> keywords=getKeyWords(jsonRequest);
+
+        // fetch cached data if any
         List<SearchResult> fetchedResults=fetchCachedSearch(keywords);
         if(!fetchedResults.isEmpty() && fetchedResults.size()==1){
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(fetchedResults.get(0))));
         }
+
+
         SearchManager searchManager=new SearchManager();
         searchManager.setKeyWords(keywords);
-        // TODO dinamically read repository that are enabled
+
+        // load dinamically registered and enabled repositories
         SearchRepositoryFactory srf=new SearchRepositoryFactory();
         Stream<Registration> userRepositories=registrationDAO.findRegistrationByUser(Secured.getUser(ctx())).stream();
         List<SearchRepository> repositories=userRepositories.
@@ -74,6 +78,8 @@ public class SearchController extends Controller {
             Object[] values={wsclient, r};
             return srf.newInstance(r.getRepository().getName(), params,values);
         }).collect(Collectors.toList());
+
+
         List<CompletionStage<RepositoryResponseMapping>> dispatched=searchManager.dispatch(repositories);
         CompletionStage<List<MultimediaContent>> aggregated=searchManager.aggregate(dispatched);
         CompletionStage<SearchResult> transformedQuery=aggregated.thenApply(l -> {

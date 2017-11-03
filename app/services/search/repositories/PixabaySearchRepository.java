@@ -52,11 +52,7 @@ public class PixabaySearchRepository implements SearchRepository {
 
         @Override
         public CompletionStage<JsonNode> executeQuery( List<String> keyWords ) {
-            String query="";
-            for(String s : keyWords){
-                query+=s;
-                query+="+";
-            }
+            String query=String.join(" ", keyWords);
             Logger.info("Pixabay search: "+query);
             
             CompletionStage<JsonNode> jsonPromiseImage= ws.url(registration.getRepository().getURI()).

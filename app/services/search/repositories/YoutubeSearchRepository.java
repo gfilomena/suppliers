@@ -36,11 +36,7 @@ public class YoutubeSearchRepository implements SearchRepository {
 
     @Override
     public CompletionStage<JsonNode> executeQuery( List<String> keyWords){
-        String query="";
-        for(String s : keyWords){
-            query+=s;
-            query+="+";
-        }
+        String query=String.join(" ", keyWords);
         Logger.info("Youtube search: "+query);
         CompletionStage<JsonNode> jsonPromise;
         jsonPromise = ws.url(reg.getRepository().getURI()).
@@ -108,7 +104,6 @@ public class YoutubeSearchRepository implements SearchRepository {
         } catch (ParseException e) {
             e.printStackTrace();
         }
-        // TODO: Modify to find SearchRepository from DB
         m.setSource(reg.getRepository());
         //Logger.debug("Debug multimedia enum:"+m.toString());
         return m;
