@@ -21,7 +21,6 @@ import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 import services.db.MongoDBService;
-import services.user.UserService;
 import views.html.index;
 
 import java.io.UnsupportedEncodingException;

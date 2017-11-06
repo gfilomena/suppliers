@@ -81,7 +81,7 @@
                 </div>
                 <div (click)="openDialog(sr)" class="title" [matTooltip]="sr.name">{{sr.name}}</div>
                 <button class="save" mat-icon-button matTooltip="Save Bookmark" matTooltipPosition="above" (click)="checkSaveBookmark(sr)">
-                  <mat-icon id="{{sr.uri}}">star_border</mat-icon>
+                  <mat-icon id="{{sr.uri}}">{{stateBookmark(sr)}}</mat-icon>
                 </button>
                 <!--<button class="info" mat-icon-button matTooltip="Click for more info." (click)="openDialog(sr)"><mat-icon>info</mat-icon></button>-->
               </div>

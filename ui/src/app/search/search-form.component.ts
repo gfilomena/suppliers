@@ -128,8 +128,8 @@ export class SearchFormComponent {
         dialogRef.componentInstance.data = mc;
 
         const sub = dialogRef.componentInstance.mcupdate.subscribe(() => {
-            console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc)
-
+            console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc);
+            this.UpdateMC(mc);
         });
         dialogRef.afterClosed().subscribe(() => {
             sub.unsubscribe();
@@ -163,6 +163,7 @@ export class SearchFormComponent {
         this.search();
 
     }
+
     clear() {
         console.log('clear')
         localStorage.removeItem('searchForm');
@@ -221,9 +222,9 @@ export class SearchFormComponent {
             res => {
                 console.log('getBookmarks- subscribe - ok:', res);
                 bookmarks = res;
-                for (let item of res) {
+                for (const item of res) {
 
-                    if (mc.uri == item.multimediaContent.uri) {
+                    if (mc.uri === item.multimediaContent.uri) {
                         console.log('mc:', mc.uri);
                         console.log('item:', item.multimediaContent.uri);
                         exist = true;
@@ -241,6 +242,16 @@ export class SearchFormComponent {
         )
     }
 
+
+    UpdateMC(mc: MultimediaContent) {
+        const newSearchResult: MultimediaContent[] = [];
+        for (const item of this.searchResult) {
+             const index = this.searchResult.findIndex(obj => obj.uri === mc.uri);
+             this.searchResult[index] = mc;
+        }
+        localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
+    }
+
     saveMC(mc: MultimediaContent) {
 
         const bookmark = new Bookmark(this.currentUser.username, mc);
@@ -250,13 +261,24 @@ export class SearchFormComponent {
             .subscribe(
             res => {
                 console.log('saveMC - subscribe OK:', res);
-                const element = document.getElementById(mc.uri);
-                element.innerText = 'star';
+                //const element = document.getElementById(mc.uri);
+                //element.innerText = 'star';
+                mc.bookmark = true;
+                this.UpdateMC(mc);
             },
             error => {
                 console.log('saveMC - subscribe - error:', error);
             }
             )
+    }
+
+    stateBookmark(mc: MultimediaContent): string {
+       // console.log('mc.bookmark', mc.bookmark);
+        if (mc.bookmark) {
+            return 'star';
+        }else {
+            return 'star_border';
+        }
     }
 
     openSnackBar(message: string, action: string) {

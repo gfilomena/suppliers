@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Component, OnInit } from '@angular/core';
 import { Bookmark } from '../_models/bookmark';
@@ -103,7 +104,7 @@ export class BookmarksComponent implements OnInit {
             repository = bookmarks[i].multimediaContent.source.name;
 
             if (this.activeRepositories) {
-                const index = this.activeRepositories.findIndex(obj => obj.name == repository);
+                const index = this.activeRepositories.findIndex(obj => obj.name === repository);
                 // console.log('this.activeRepositories',this.activeRepositories)
                 // console.log('repository',repository)
                 // console.log('item',index)
@@ -163,11 +164,12 @@ export class BookmarksComponent implements OnInit {
         this.activeType = activeType;
     }
 
-    removeBookmark(id: string) {
-        this.BookmarkService.delete(id)
+    removeBookmark(item: Bookmark) {
+        this.BookmarkService.delete(item.id)
             .subscribe(
             data => {
                 console.log('data', data);
+                this.UpdateBookmark(item);
                 this.getAllBookmarks();
             },
             error => {
@@ -181,6 +183,7 @@ export class BookmarksComponent implements OnInit {
             .subscribe(
             res => {
                 console.log('delete all Bookmarks - subscribe OK:', res);
+                this.UpdateBookmarks();
                 this.bookmarks.splice(0, this.bookmarks.length);
                 this.nResults = this.bookmarks.length;
                 this.submitted = false;
@@ -190,6 +193,22 @@ export class BookmarksComponent implements OnInit {
                 this.submitted = false;
             }
             );
+    }
+
+    UpdateBookmarks() {
+        const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
+        for (const item of  this.bookmarks) {
+            const index = lastresearch.findIndex(obj => obj.uri === item.multimediaContent.uri);
+            lastresearch[index].bookmark = item.multimediaContent.bookmark;
+        }
+        localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
+    }
+
+    UpdateBookmark(bm: Bookmark) {
+           const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
+           const index = lastresearch.findIndex(obj => obj.uri === bm.multimediaContent.uri);
+           lastresearch[index].bookmark = bm.multimediaContent.bookmark;
+           localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
     }
 
     filter(item: MultimediaContent): any {
