@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 })
 export class DialogRepositoryComponent implements OnInit {
 
-  repository = new Repository();
+
   repositories: Repository[];
   loading = false;
 
@@ -22,6 +22,7 @@ export class DialogRepositoryComponent implements OnInit {
     public dialog: MatDialog,
     private RepositoryService: RepositoryService,
     private alertService: AlertService) {
+    let repository = new Repository();
   }
 
   ngOnInit() {

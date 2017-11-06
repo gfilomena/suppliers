@@ -80,8 +80,7 @@ delete(id:string) {
     const dialogRef = this.dialog.open(DialogRegistrationRepository, {
       data: {userRepository:this.userRepository},
       height: 'auto',
-      width: '40%',
-      position:  {top: '0', left: '30%',right:'30%', bottom:'0'}
+      width: '315px',
     });
 
     const sub = dialogRef.componentInstance.onChange.subscribe(() => {
