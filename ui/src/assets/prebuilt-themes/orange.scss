@@ -1,0 +1,16 @@
+@import '~@angular/material/theming';
+
+// Common styles for Angular Material.
+// Side note: make sure you include this only ONCE inside the app.
+@include mat-core();
+
+// Custom color palettes: change those to modify the theme
+// Remeber to pass new declared palettes to the theme creator at the bottom.
+$ocd-app-primary: mat-palette($mat-deep-orange, A100);
+$ocd-app-accent:  mat-palette($mat-amber, A200, A100, A400);
+
+// Create the theme objects with the defined palettes.
+$ocd-app-theme: mat-light-theme($ocd-app-primary, $ocd-app-accent);
+
+// Include the theme.
+@include angular-material-theme($ocd-app-theme);
