@@ -46,7 +46,7 @@
             <mat-icon class="removeTag" (click)="removeTag(data,tag)">clear</mat-icon>
           </mat-chip>
       </mat-chip-list>
-      <mat-form-field class="newtag" floatPlaceholder="never">
+      <mat-form-field class="newtag">
           <input #newtag matInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)">
       </mat-form-field>
       <mat-progress-spinner *ngIf="!formats && data.source.name === 'InternetArchive'" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
