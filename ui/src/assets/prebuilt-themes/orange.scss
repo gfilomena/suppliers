@@ -5,7 +5,7 @@
 @include mat-core();
 
 // Custom color palettes: change those to modify the theme
-// Remeber to pass new declared palettes to the theme creator at the bottom.
+// Remember to pass new declared palettes to the theme creator at the bottom.
 $ocd-app-primary: mat-palette($mat-deep-orange, A100);
 $ocd-app-accent:  mat-palette($mat-amber, A200, A100, A400);
 
