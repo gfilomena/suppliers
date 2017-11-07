@@ -1,0 +1,29 @@
+<div class="semantic-search">
+  <mat-card>
+    <form [formGroup]="form"
+          (ngSubmit)="onSubmit(form.value)">
+
+      <mat-card-title>Don't know what you are looking for?</mat-card-title>
+      <mat-card-subtitle>Enter a URL or upload a document, and let us find some keywords for you!</mat-card-subtitle>
+
+      <div fxLayout="row" fxLayoutAlign="space-between center">
+
+        <mat-form-field fxFlex="75">
+          <input matInput
+                 type="text"
+                 placeholder="Your URL"
+                 name="url"
+                 [formControl]="form.controls['url']"
+                 ngModel>
+        </mat-form-field>
+
+        <button mat-raised-button color="accent" type="submit">
+          SUBMIT
+        </button>
+
+      </div>
+      <!--<mat-card-content>or</mat-card-content>-->
+      <!--<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">-->
+    </form>
+  </mat-card>
+</div>

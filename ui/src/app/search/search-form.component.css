@@ -195,7 +195,7 @@ form{
   position: absolute;
   right: 0;
   bottom: 0;
-  
+
 }
 
 .bar{
@@ -227,4 +227,8 @@ form{
 
 .success-snackbar{
   background-color: #73FF00;
+}
+
+.search-container {
+  padding: 16px;
 }

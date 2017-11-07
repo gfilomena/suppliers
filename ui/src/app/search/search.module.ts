@@ -1,9 +1,10 @@
 import { McssrService } from './../_services/mcssr.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SearchFormComponent } from './search-form.component';
 import { SearchService } from './search.service';
+import { SemanticService } from './../semantic-search/semantic.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import 'hammerjs';
@@ -52,6 +53,7 @@ import { BookmarksComponent } from '../bookmarks/bookmarks.component';
 import { InternetArchiveService} from '../_services/internetarchive.service';
 import { FilterbarComponent } from '../filterbar/filterbar.component';
 import { ComponentsModule } from '../shared/components.module';
+import { SemanticSearchComponent } from "../semantic-search/semantic-search.component";
 
 import { CdkTableModule } from '@angular/cdk/table';
 import { A11yModule } from '@angular/cdk/a11y';
@@ -61,10 +63,12 @@ import { PlatformModule } from '@angular/cdk/platform';
 import { ObserversModule } from '@angular/cdk/observers';
 import { PortalModule } from '@angular/cdk/portal';
 
+
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     NgxPaginationModule,
     NoopAnimationsModule,
     FlexLayoutModule,
@@ -123,7 +127,7 @@ import { PortalModule } from '@angular/cdk/portal';
     ObserversModule,
     OverlayModule,
     PlatformModule,
-    PortalModule,
+    PortalModule
   ],
   declarations: [
     SearchFormComponent,
@@ -132,11 +136,12 @@ import { PortalModule } from '@angular/cdk/portal';
     DialogDetail,
     BookmarksComponent,
     FilterbarComponent,
-    SafePipe
+    SafePipe,
+    SemanticSearchComponent
   ],
   // entryComponents declare Components created manually
   entryComponents: [DialogDetail, DialogRepositoryDetail],
-  providers: [ SearchService, McssrService, InternetArchiveService ]
+  providers: [ SearchService, McssrService, InternetArchiveService, SemanticService ]
 })
 export class SearchModule {
 

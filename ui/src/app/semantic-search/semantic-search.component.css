@@ -1,0 +1,8 @@
+.semantic-search {
+  display: flex;
+  flex-direction: column;
+}
+
+.semantic-search > * {
+  width: 100%;
+}
