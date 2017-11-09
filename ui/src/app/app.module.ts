@@ -48,6 +48,7 @@ import {
     MatListModule
 } from '@angular/material';
 import { ComponentsModule } from './shared/components.module';
+// import { SemanticSearchComponent } from './semantic-search/semantic-search.component';
 
 
 @NgModule({
@@ -87,6 +88,7 @@ import { ComponentsModule } from './shared/components.module';
         DialogRegistrationRepository,
         RegistrationRepositoryComponent,
         ProfileComponent
+        // SemanticSearchComponent
     ],
     providers: [
         AuthGuard,

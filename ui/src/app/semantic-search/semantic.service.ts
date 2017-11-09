@@ -7,7 +7,7 @@ export class SemanticService {
 
   constructor(private http: Http) { }
 
-  searchUrlAnnotations(url: object) {
+  searchUrlAnnotations(url: Object) {
     return this.http.post(environment.serviceUrl + "/annotations/url", url, this.jwt())
   }
 
