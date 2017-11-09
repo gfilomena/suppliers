@@ -62,6 +62,8 @@ export class SemanticSearchComponent {
 
   // submit the url in the input field of the form to the GATE api
   onSubmit(value: Object): void {
+
+    this.orderedAnn = [];
     console.log("Url received:", value['url']);
 
     this.semanticService.searchUrlAnnotations(value)
