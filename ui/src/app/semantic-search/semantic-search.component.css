@@ -6,3 +6,7 @@
 .semantic-search > * {
   width: 100%;
 }
+
+.mat-form-field {
+  padding-right: 16px;
+}

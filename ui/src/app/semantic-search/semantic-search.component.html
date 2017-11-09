@@ -1,5 +1,5 @@
 <div class="semantic-search">
-  <mat-card>
+  <mat-card fxLayout="column">
     <form [formGroup]="form"
           (ngSubmit)="onSubmit(form.value)">
 
@@ -8,7 +8,7 @@
 
       <div fxLayout="row" fxLayoutAlign="space-between center">
 
-        <mat-form-field fxFlex="75">
+        <mat-form-field fxFlex="grow">
           <input matInput
                  type="text"
                  placeholder="Your URL"
@@ -22,8 +22,19 @@
         </button>
 
       </div>
+
       <!--<mat-card-content>or</mat-card-content>-->
       <!--<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">-->
+
     </form>
+
+    <mat-chip-list>
+        <mat-chip *ngFor="let annotation of this.orderedAnn"
+                  class="badge"
+                  color="primary">
+          {{annotation}}
+        </mat-chip>
+    </mat-chip-list>
+
   </mat-card>
 </div>
