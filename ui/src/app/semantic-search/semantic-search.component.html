@@ -1,7 +1,7 @@
 <div class="semantic-search">
   <mat-card fxLayout="column">
     <form [formGroup]="form"
-          (ngSubmit)="onSubmit(form.value)">
+          (submit)="onSubmit(form.value)">
 
       <mat-card-title>Don't know what you are looking for?</mat-card-title>
       <mat-card-subtitle>Enter a URL or upload a document, and let us find some keywords for you!</mat-card-subtitle>
@@ -30,8 +30,10 @@
 
     <mat-chip-list>
         <mat-chip *ngFor="let annotation of this.orderedAnn"
+                  (click)="searchForAnnot(annotation)"
                   class="badge"
-                  color="primary">
+                  color="primary"
+                  selected="true">
           {{annotation}}
         </mat-chip>
     </mat-chip-list>
