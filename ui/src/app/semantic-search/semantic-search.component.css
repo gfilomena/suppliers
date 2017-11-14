@@ -1,20 +1,23 @@
-.semantic-search {
-  display: flex;
-  flex-direction: column;
+.annotations-list {
+  width: inherit;
 }
 
-.semantic-search > * {
-  width: 100%;
-}
-
-.mat-form-field {
-  padding-right: 16px;
+.badge {
+  margin-left: 8px;
 }
 
 .badge:hover {
   cursor: pointer;
 }
 
-.badge {
-  margin-left: 8px;
+.mat-form-field {
+  padding-right: 16px;
+}
+
+.semantic-search {
+  width: 38vw;
+}
+
+.semantic-search > * {
+  width: 100%;
 }
