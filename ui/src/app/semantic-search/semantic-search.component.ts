@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
 import { SemanticService } from './semantic.service';
@@ -12,19 +12,23 @@ import { SemanticService } from './semantic.service';
 export class SemanticSearchComponent {
 
   // obj that defines the form structure
-  form: FormGroup;
+  private form: FormGroup;
 
   // annotations ordered by estimated importance
-  orderedAnn: string[];
+  private orderedAnnotations: string[];
 
   // maximum number of annotations we want to display
   // should be at least bigger than the expected number of returned annotation types
   private max = 10;
 
+  // tells the parent search-form component what annotation to put in the search form
+  @Output()
+  onAnnotationClicked: EventEmitter<string> = new EventEmitter<string>();
+
   constructor(fb: FormBuilder,
               private semanticService: SemanticService) {
 
-    this.orderedAnn = [];
+    this.orderedAnnotations = [];
 
     // default form
     this.form = fb.group({
@@ -32,6 +36,7 @@ export class SemanticSearchComponent {
     });
 
   }
+
 
   // create the annotation array ordered by estimated importance
   private indexAnnotations(annotations: Object): void {
@@ -42,28 +47,27 @@ export class SemanticSearchComponent {
     // variable used to exit the loop in case we cannot find any other annotation
     let l: number = -1;
 
-    for (let i = 0; this.orderedAnn.length < this.max && this.orderedAnn.length !== l ; i++)  {
-      l = this.orderedAnn.length;
+    for (let i = 0; this.orderedAnnotations.length < this.max && this.orderedAnnotations.length !== l ; i++)  {
+      l = this.orderedAnnotations.length;
       console.log('types:' + types);
-      for (let t of types) {
-        // take the i-th annotation if it occurs more than once
+      for (let t of types) { // take the i-th annotation if it occurs more than once
         console.log('t:' + t);
         console.log(annotations[t]);
         let annotation: string = annotations[t][i];
-        if (annotation && annotation['occurrences'] > 1 && this.orderedAnn.length <= this.max) {
-          this.orderedAnn.push(annotation['content']);
+        if (annotation && annotation['occurrences'] > 1 && this.orderedAnnotations.length <= this.max) {
+          this.orderedAnnotations.push(annotation['content']);
         }
       }
     }
 
-    console.log('First 10 annotations: ' + this.orderedAnn);
+    console.log('First 10 annotations: ' + this.orderedAnnotations);
   }
 
 
   // submit the url in the input field of the form to the GATE api
-  onSubmit(value: Object): void {
+  protected onSubmit(value: Object): void {
 
-    this.orderedAnn = [];
+    this.orderedAnnotations = [];
     console.log("Url received:", value['url']);
 
     this.semanticService.searchUrlAnnotations(value)
@@ -71,17 +75,18 @@ export class SemanticSearchComponent {
           let annotations: Object = res.json();
           console.log(annotations);
           this.indexAnnotations(annotations);
-
         },
         error => {
           console.log('Semantic Search error:', error);
         });
   }
 
+  // send the annotation to the parent search form
+  protected searchForAnnotation(annotation: string): void {
 
+    this.onAnnotationClicked.emit(annotation);
 
-
-
+  }
 
 
   /*

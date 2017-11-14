@@ -29,7 +29,7 @@ import { MY_DATE_FORMATS } from './mydateformats';
 
 @Component({
     selector: 'app-search-form',
-    //issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter 
+    //issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter
     providers: [
         //{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
         { provide: DateAdapter, useClass: CustomDateAdapter },
@@ -357,6 +357,13 @@ export class SearchFormComponent {
     getDate(date: string): string {
         return new Date(date).toLocaleDateString();
     }
+
+  addAnnotationToSearchForm(annotation: string): void {
+
+      (this.searchForm.freeText !== "") ? this.searchForm.freeText += " " : null;
+      this.searchForm.freeText += annotation;
+
+  }
 
 }
 

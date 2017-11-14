@@ -1,5 +1,6 @@
 <div class="semantic-search">
-  <mat-card fxLayout="column">
+  <mat-card fxLayout="column" fxFlex="0 0 auto">
+
     <form [formGroup]="form"
           (submit)="onSubmit(form.value)">
 
@@ -28,9 +29,9 @@
 
     </form>
 
-    <mat-chip-list>
-        <mat-chip *ngFor="let annotation of this.orderedAnn"
-                  (click)="searchForAnnot(annotation)"
+    <mat-chip-list fxLayout="wrap">
+        <mat-chip *ngFor="let annotation of this.orderedAnnotations"
+                  (click)="searchForAnnotation(annotation)"
                   class="badge"
                   color="primary"
                   selected="true">
