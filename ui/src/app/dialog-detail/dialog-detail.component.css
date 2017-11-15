@@ -1,3 +1,6 @@
+.card{
+    height: stretch;
+}
 
 .image-card {
     height: 60%;
@@ -88,4 +91,8 @@
 bookmarked{
     width: 24px;
     height: 24px;
+}
+
+mat-dialog-container{
+    height: stretch;
 }

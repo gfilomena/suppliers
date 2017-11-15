@@ -52,9 +52,8 @@ export class BookmarksComponent implements OnInit {
     openDialog(item: MultimediaContent) {
         console.log('item sr', item);
         const dialogRef = this.dialog.open(DialogDetail, {
-            height: 'auto',
             width: '600px',
-            position: { top: '0', left: '30%', right: '30%', bottom: '0' }
+           // position: {left: '30%', right: '30%' }
         });
 
         dialogRef.componentInstance.data = item;
