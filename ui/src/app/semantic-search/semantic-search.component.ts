@@ -25,6 +25,12 @@ export class SemanticSearchComponent {
   @Output()
   onAnnotationClicked: EventEmitter<string> = new EventEmitter<string>();
 
+  @Output()
+  onGATESubmit: EventEmitter<null> = new EventEmitter<null>();
+
+  @Output()
+  onGATEResponse: EventEmitter<null> = new EventEmitter<null>();
+
   constructor(fb: FormBuilder,
               private semanticService: SemanticService) {
 
@@ -75,9 +81,11 @@ export class SemanticSearchComponent {
           let annotations: Object = res.json();
           console.log(annotations);
           this.indexAnnotations(annotations);
+          this.onGATEResponse.emit();
         },
         error => {
           console.log('Semantic Search error:', error);
+          this.onGATEResponse.emit();
         });
   }
 

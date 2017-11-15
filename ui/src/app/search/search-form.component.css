@@ -118,6 +118,10 @@ mat-checkbox {
   /*left: 130px;  move button outside*/
 }
 
+.form-container {
+  padding: 16px;
+}
+
 .label {
   font-size: 13px;
   font-weight: 800;
@@ -182,6 +186,7 @@ form{
 }
 .form {
   height: 150px;
+  padding-top: 16px;
 }
 
 .type{

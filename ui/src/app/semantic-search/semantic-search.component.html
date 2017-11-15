@@ -18,7 +18,9 @@
                  ngModel>
         </mat-form-field>
 
-        <button mat-raised-button color="accent" type="submit">
+        <button mat-raised-button color="accent"
+                type="submit"
+                (click)="this.onGATESubmit.emit()">
           SUBMIT
         </button>
 
@@ -30,13 +32,13 @@
     </form>
 
     <mat-chip-list fxLayout="wrap">
-        <mat-chip *ngFor="let annotation of this.orderedAnnotations"
+      <mat-chip *ngFor="let annotation of this.orderedAnnotations"
                   (click)="searchForAnnotation(annotation)"
                   class="badge"
                   color="primary"
-                  selected="true">
-          {{annotation}}
-        </mat-chip>
+                  selected="false">
+        {{annotation}}
+      </mat-chip>
     </mat-chip-list>
 
   </mat-card>

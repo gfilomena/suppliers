@@ -360,8 +360,9 @@ export class SearchFormComponent {
 
   addAnnotationToSearchForm(annotation: string): void {
 
-      (this.searchForm.freeText !== "") ? this.searchForm.freeText += " " : null;
-      this.searchForm.freeText += annotation;
+      (this.searchForm.freeText !== "") ?
+        this.searchForm.freeText += " " + annotation :
+        this.searchForm.freeText += annotation;
 
   }
 
