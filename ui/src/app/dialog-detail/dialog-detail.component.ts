@@ -248,7 +248,7 @@ export class DialogDetail implements OnInit {
     }
 
     stateBookmark(mc: MultimediaContent): string {
-        console.log('mc.bookmark', mc.bookmark);
+        // console.log('mc.bookmark', mc.bookmark);
         if (mc.bookmark) {
             return 'star';
         }else {
