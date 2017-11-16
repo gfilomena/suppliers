@@ -12,8 +12,8 @@
   </div>
   <div fxFlex>
     <form name="form" #f="ngForm">
-      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-        <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+      <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+      <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="16px" class="form-container">
         <mat-card class="form">
           <div>
             <mat-form-field floatPlaceholder="never" fxFlex>
@@ -51,6 +51,13 @@
             <button mat-raised-button (click)="f.form.valid && onSubmit()">Search</button>
           </div>
         </mat-card>
+
+        <semantic-search (onAnnotationClicked)="addAnnotationToSearchForm($event)"
+                         (onGATESubmit)="this.submitted = true"
+                         (onGATEResponse)="this.submitted = false">
+
+        </semantic-search>
+
       </div>
     </form>
     <div class="container-card" fxflex>
