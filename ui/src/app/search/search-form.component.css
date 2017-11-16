@@ -237,3 +237,11 @@ form{
 .search-container {
   padding: 16px;
 }
+
+@media (max-width: 800px) {
+
+  .form {
+    max-width: 100%;
+  }
+
+}
