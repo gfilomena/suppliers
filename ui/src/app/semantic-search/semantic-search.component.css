@@ -10,6 +10,15 @@
   cursor: pointer;
 }
 
+.custom-divider {
+  display: block;
+  border: 0;
+  border-top-style: solid;
+  border-top-width: 1px;
+  border-top-color: rgba(0, 0, 0, 0.12);
+  margin-bottom: 20px;
+}
+
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
