@@ -13,13 +13,17 @@
   <div fxFlex>
     <form name="form" #f="ngForm">
       <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+
       <div fxLayout="row" fxLayoutAlign="center start" fxLayoutGap="16px" class="form-container">
+
         <mat-card class="form">
+
           <div>
-            <mat-form-field floatPlaceholder="never" fxFlex>
+            <mat-form-field fxFlex>
               <input matInput placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText">
             </mat-form-field>
           </div>
+
           <div>
             <!--<div class="typefield">
               <mat-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex fxFlexOffset="2">
@@ -29,34 +33,35 @@
             </mat-select>
           </div>-->
 
-
-
-            <mat-form-field floatPlaceholder="never" fxFlex>
+            <mat-form-field fxFlex>
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                 [max]="searchForm.endDate" required>
               <mat-datepicker-toggle matSuffix [for]="startdate"></mat-datepicker-toggle>
             </mat-form-field>
+
             <mat-datepicker #startdate></mat-datepicker>
-            <mat-form-field floatPlaceholder="never" fxFlex fxFlexOffset="2">
+
+            <mat-form-field fxFlex fxFlexOffset="2">
               <input matInput [matDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
                 [min]="searchForm.inDate" required>
               <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
             </mat-form-field>
+
             <mat-datepicker #enddate></mat-datepicker>
 
-
           </div>
-          <div align="end">
+
+          <div align="end" style="margin-bottom: 20px">
             <button mat-raised-button type="button" (click)="clear()">Clear</button>
             <button mat-raised-button (click)="f.form.valid && onSubmit()">Search</button>
           </div>
+
+          <semantic-search (onAnnotationClicked)="addAnnotationToSearchForm($event)"
+                           (onGATESubmit)="this.submitted = true"
+                           (onGATEResponse)="this.submitted = false">
+          </semantic-search>
+
         </mat-card>
-
-        <semantic-search (onAnnotationClicked)="addAnnotationToSearchForm($event)"
-                         (onGATESubmit)="this.submitted = true"
-                         (onGATEResponse)="this.submitted = false">
-
-        </semantic-search>
 
       </div>
     </form>

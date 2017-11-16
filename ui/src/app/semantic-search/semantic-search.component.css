@@ -19,7 +19,7 @@ input:-webkit-autofill {
 }
 
 .semantic-search {
-  width: 38vw;
+  width: 100%;
 }
 
 .semantic-search > * {

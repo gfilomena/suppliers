@@ -46,23 +46,6 @@ public class SemanticAnalyzer {
         double t;
         long t0  = System.currentTimeMillis();
 
-        /*
-
-        // retrieve GATE home and GATE plugins
-        if(Gate.getGateHome() == null)
-            Gate.setGateHome(new File("/Applications/GATE_Developer_8.4.1"));
-        if(Gate.getPluginsHome() == null)
-            Gate.setPluginsHome(new File("/Applications/GATE_Developer_8.4.1/plugins"));
-
-        // initialize GATE
-        Gate.init();
-
-        // load the application from the default plugins
-        File pluginsHome = Gate.getPluginsHome();
-        File anniePlugin = new File(pluginsHome,"ANNIE");
-        File applicationFile = new File(anniePlugin,"ANNIE_with_extras.gapp");
-        */
-
         // retrieve GATE home and GATE plugins
         if(Gate.getGateHome() == null)
             Gate.setGateHome(Play.application().getFile("conf/semantic"));

@@ -1,45 +1,42 @@
-<div class="semantic-search">
-  <mat-card fxLayout="column" fxFlex="0 0 auto">
+<div class="semantic-search" fxLayout="column" fxFlex="0 0 auto">
 
-    <form [formGroup]="form"
-          (submit)="onSubmit(form.value)">
+  <form [formGroup]="form"
+        (submit)="onSubmit(form.value)">
 
-      <mat-card-title>Don't know what you are looking for?</mat-card-title>
-      <mat-card-subtitle>Enter a URL or upload a document, and let us find some keywords for you!</mat-card-subtitle>
+    <mat-card-subtitle>Don't know what you are looking for? Enter a URL or upload a document, and let us find some keywords for you!</mat-card-subtitle>
 
-      <div fxLayout="row" fxLayoutAlign="space-between center">
+    <div fxLayout="row" fxLayoutAlign="space-between center">
 
-        <mat-form-field fxFlex="grow">
-          <input matInput
-                 type="text"
-                 placeholder="Your URL"
-                 name="url"
-                 [formControl]="form.controls['url']"
-                 ngModel>
-        </mat-form-field>
+      <mat-form-field fxFlex="grow">
+        <input matInput
+               type="text"
+               placeholder="Your URL"
+               name="url"
+               [formControl]="form.controls['url']"
+               ngModel>
+      </mat-form-field>
 
-        <button mat-raised-button color="accent"
-                type="submit"
-                (click)="this.onGATESubmit.emit()">
-          SUBMIT
-        </button>
+      <button mat-raised-button color="accent"
+              type="submit"
+              (click)="this.onGATESubmit.emit()">
+        SUBMIT
+      </button>
 
-      </div>
+    </div>
 
-      <!--<mat-card-content>or</mat-card-content>-->
-      <!--<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">-->
+    <!--<mat-card-content>or</mat-card-content>-->
+    <!--<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">-->
 
-    </form>
+  </form>
 
-    <mat-chip-list fxLayout="wrap">
-      <mat-chip *ngFor="let annotation of this.orderedAnnotations"
-                  (click)="searchForAnnotation(annotation)"
-                  class="badge"
-                  color="primary"
-                  selected="false">
-        {{annotation}}
-      </mat-chip>
-    </mat-chip-list>
+  <mat-chip-list fxLayout="wrap">
+    <mat-chip *ngFor="let annotation of this.orderedAnnotations"
+                (click)="searchForAnnotation(annotation)"
+                class="badge"
+                color="primary"
+                selected="false">
+      {{annotation}}
+    </mat-chip>
+  </mat-chip-list>
 
-  </mat-card>
 </div>

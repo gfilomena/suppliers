@@ -184,9 +184,9 @@ mat-checkbox {
 form{
   margin-top: 64px;
 }
+
 .form {
-  height: 150px;
-  padding-top: 16px;
+  max-width: 40vw;
 }
 
 .type{
