@@ -1,0 +1,16 @@
+Phase: Animal
+Input: Token Lookup
+Options: control = appelt
+
+Rule: Animal1
+Priority: 100
+(
+  {Lookup.majorType == animal}
+):animal
+-->
+{
+gate.AnnotationSet animal = (gate.AnnotationSet) bindings.get("animal");
+gate.FeatureMap features = Factory.newFeatureMap();
+features.put("rule ", "Animal1");
+outputAS.add(animal.firstNode(), animal.lastNode(), "Animal", features);
+}
