@@ -12,9 +12,8 @@
   </div>
   <div fxFlex>
     <form name="form" #f="ngForm">
+      <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px" class="form-container">
-
-        <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
 
         <mat-card class="form">
 
