@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { SearchFormComponent } from './search-form.component';
 import { SearchService } from './search.service';
-import { SemanticService } from './../semantic-search/semantic.service';
+import { SemanticService } from '../semantic-search/semantic.service';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import 'hammerjs';
@@ -54,6 +54,7 @@ import { InternetArchiveService} from '../_services/internetarchive.service';
 import { FilterbarComponent } from '../filterbar/filterbar.component';
 import { ComponentsModule } from '../shared/components.module';
 import { SemanticSearchComponent } from "../semantic-search/semantic-search.component";
+import { InputFileComponent } from "../input-file/input-file.component";
 
 import { CdkTableModule } from '@angular/cdk/table';
 import { A11yModule } from '@angular/cdk/a11y';
@@ -137,7 +138,8 @@ import { PortalModule } from '@angular/cdk/portal';
     BookmarksComponent,
     FilterbarComponent,
     SafePipe,
-    SemanticSearchComponent
+    SemanticSearchComponent,
+    InputFileComponent
   ],
   // entryComponents declare Components created manually
   entryComponents: [DialogDetail, DialogRepositoryDetail],

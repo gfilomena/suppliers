@@ -1,3 +1,4 @@
+
 .annotations-list {
   width: inherit;
 }
@@ -8,6 +9,10 @@
 
 .badge:hover {
   cursor: pointer;
+}
+
+.buttons-wrapper {
+  margin-bottom: 20px;
 }
 
 .custom-divider {
@@ -25,6 +30,7 @@ input:-webkit-autofill {
 
 .mat-form-field {
   padding-right: 16px;
+  width: 100%;
 }
 
 .semantic-search {

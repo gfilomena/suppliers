@@ -15,26 +15,30 @@ export class SemanticSearchComponent {
   private form: FormGroup;
 
   // annotations ordered by estimated importance
-  private orderedAnnotations: string[];
+  private _orderedAnnotations: string[];
 
   // maximum number of annotations we want to display
   // should be at least bigger than the expected number of returned annotation types
-  private max = 10;
+  private _max: number = 10;
+
+  // file to be analysed by GATE
+  private _file: File;
 
   // tells the parent search-form component what annotation to put in the search form
   @Output()
   onAnnotationClicked: EventEmitter<string> = new EventEmitter<string>();
 
+  // emitters used to toggle the progressbar
   @Output()
   onGATESubmit: EventEmitter<null> = new EventEmitter<null>();
-
   @Output()
   onGATEResponse: EventEmitter<null> = new EventEmitter<null>();
+
 
   constructor(fb: FormBuilder,
               private semanticService: SemanticService) {
 
-    this.orderedAnnotations = [];
+    this._orderedAnnotations = [];
 
     // default form
     this.form = fb.group({
@@ -43,50 +47,48 @@ export class SemanticSearchComponent {
 
   }
 
-
   // create the annotation array ordered by estimated importance
   private indexAnnotations(annotations: Object): void {
 
     // array of types of retrieved annotations
     let types: string[] = Object.keys(annotations);
 
-    // variable used to exit the loop in case we cannot find any other annotation
+    // used to exit the loop if we cannot find any other annotation
     let l: number = -1;
 
-    for (let i = 0; this.orderedAnnotations.length < this.max && this.orderedAnnotations.length !== l ; i++)  {
-      l = this.orderedAnnotations.length;
-      console.log('types:' + types);
+    for (let i = 0; this._orderedAnnotations.length < this._max && this._orderedAnnotations.length !== l ; i++)  {
+      l = this._orderedAnnotations.length;
       for (let t of types) { // take the i-th annotation if it occurs more than once
-        console.log('t:' + t);
-        console.log(annotations[t]);
         let annotation: string = annotations[t][i];
-        if (annotation && annotation['occurrences'] > 1 && this.orderedAnnotations.length <= this.max) {
-          this.orderedAnnotations.push(annotation['content']);
+        if (annotation && annotation['occurrences'] > 1 && this._orderedAnnotations.length <= this._max) {
+          this._orderedAnnotations.push(annotation['content']);
         }
       }
     }
 
-    console.log('First 10 annotations: ' + this.orderedAnnotations);
   }
 
-
-  // submit the url in the input field of the form to the GATE api
+  // submit the url in the input field of the form of the uploaded file to the GATE api
   protected onSubmit(value: Object): void {
 
-    this.orderedAnnotations = [];
-    console.log("Url received:", value['url']);
+    this._orderedAnnotations = [];
 
-    this.semanticService.searchUrlAnnotations(value)
-      .subscribe(res => {
-          let annotations: Object = res.json();
-          console.log(annotations);
-          this.indexAnnotations(annotations);
-          this.onGATEResponse.emit();
-        },
-        error => {
-          console.log('Semantic Search error:', error);
-          this.onGATEResponse.emit();
-        });
+    if (value['url']) { // url has precedence over file
+
+      this.semanticService.searchUrlAnnotations(value)
+        .subscribe(res => this.handleGATEResponse(res), err => this.handleGATEError(err))
+
+    } else if (this._file) { // file case
+
+      this.semanticService.searchFileAnnotations(this._file)
+        .subscribe( res => this.handleGATEResponse(res), err => this.handleGATEError(err))
+
+    } else {
+
+      this.onGATEResponse.emit()
+
+    }
+
   }
 
   // send the annotation to the parent search form
@@ -96,26 +98,28 @@ export class SemanticSearchComponent {
 
   }
 
+  // a file has been uploaded
+  protected onFileSelect($event: File[]): void {
 
-  /*
-  // Retrieve the uploaded file
-  fileChange(event) {
-    let fileList: FileList = event.target.files;
-    if(fileList.length > 0) {
-      let file: File = fileList[0];
-      let formData: FormData = new FormData();
-      formData.append('uploadFile', file, file.name);
+    this._file = $event[0];
 
-      // REST call
-      let headers = new Headers();
-      headers.append('Content-Type', 'multipart/form-data');
-      headers.append('Accept', 'application/json');
-      let body = new Body;
-      body
-      let options = new RequestOptions({ headers: headers });
-
-    }
   }
-  */
+
+  // callback function to handle the annotations received
+  private handleGATEResponse(res: any) {
+
+    let annotations: Object = res.json();
+    this.indexAnnotations(annotations);
+    this.onGATEResponse.emit();
+
+  }
+
+  // callback function to handle internal server GATE errors
+  private handleGATEError(error: any) {
+
+    console.log('Semantic Search error:', error);
+    this.onGATEResponse.emit();
+
+  }
 
 }

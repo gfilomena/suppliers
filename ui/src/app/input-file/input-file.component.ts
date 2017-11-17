@@ -26,5 +26,4 @@ export class InputFileComponent {
     this.nativeInputFile.nativeElement.click();
   }
 
-
 }

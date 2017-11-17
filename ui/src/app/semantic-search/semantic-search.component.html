@@ -7,16 +7,19 @@
 
     <mat-card-subtitle>Don't know what you are looking for? Enter a URL or upload a document, and let us find some keywords for you!</mat-card-subtitle>
 
-    <div fxLayout="row" fxLayoutAlign="space-between center">
-
-      <mat-form-field fxFlex="grow">
+      <mat-form-field>
         <input matInput
                type="text"
-               placeholder="Your URL"
+               placeholder="URL"
                name="url"
                [formControl]="form.controls['url']"
                ngModel>
       </mat-form-field>
+
+    <div fxLayout="row" fxLayoutAlign="space-between center" class="buttons-wrapper">
+
+      <input-file (onFileSelect)="onFileSelect($event)">
+      </input-file>
 
       <button mat-raised-button color="accent"
               type="submit"
@@ -26,13 +29,10 @@
 
     </div>
 
-    <!--<mat-card-content>or</mat-card-content>-->
-    <!--<input type="file" (change)="fileChange($event)" placeholder="Upload file" accept=".pdf,.doc,.docx">-->
-
   </form>
 
-  <mat-chip-list fxLayout="wrap">
-    <mat-chip *ngFor="let annotation of this.orderedAnnotations"
+  <mat-chip-list fxLayout="wrap" class="annotations-container">
+    <mat-chip *ngFor="let annotation of this._orderedAnnotations"
                 (click)="searchForAnnotation(annotation)"
                 class="badge"
                 color="primary"
