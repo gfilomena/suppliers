@@ -21,6 +21,10 @@
       <input-file (onFileSelect)="onFileSelect($event)">
       </input-file>
 
+      <span class="file-name" *ngIf="(_file)">
+        {{this._file.name}}
+      </span>
+
       <button mat-raised-button color="accent"
               type="submit"
               (click)="this.onGATESubmit.emit()">

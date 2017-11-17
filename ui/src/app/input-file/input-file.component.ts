@@ -15,8 +15,6 @@ export class InputFileComponent {
 
   private _files: File[];
 
-  get fileCount(): number { return this._files && this._files.length || 0; }
-
   onNativeInputFileSelect($event) {
     this._files = $event.srcElement.files;
     this.onFileSelect.emit(this._files);

@@ -24,6 +24,11 @@
   margin-bottom: 20px;
 }
 
+.file-name {
+  color: rgba(0, 0, 0, 0.54);
+  font-size: 0.9em;
+}
+
 input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
