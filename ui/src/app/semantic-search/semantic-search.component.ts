@@ -24,6 +24,9 @@ export class SemanticSearchComponent {
   // file to be analysed by GATE
   private _file: File;
 
+  // error message displayed by the form
+  private _error: string;
+
   // tells the parent search-form component what annotation to put in the search form
   @Output()
   onAnnotationClicked: EventEmitter<string> = new EventEmitter<string>();
@@ -71,6 +74,8 @@ export class SemanticSearchComponent {
   // submit the url in the input field of the form of the uploaded file to the GATE api
   protected onSubmit(value: Object): void {
 
+    this._error = "";
+
     this._orderedAnnotations = [];
 
     if (value['url']) { // url has precedence over file
@@ -85,6 +90,7 @@ export class SemanticSearchComponent {
 
     } else {
 
+      this._error = "No file nor URL specified";
       this.onGATEResponse.emit()
 
     }

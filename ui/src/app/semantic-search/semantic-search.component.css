@@ -24,6 +24,10 @@
   margin-bottom: 20px;
 }
 
+.error {
+  color: #FF1100;
+}
+
 .file-name {
   color: rgba(0, 0, 0, 0.54);
   font-size: 0.9em;
