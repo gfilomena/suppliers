@@ -107,7 +107,8 @@ export class SemanticSearchComponent {
   // a file has been uploaded
   protected onFileSelect($event: File[]): void {
 
-    this._file = $event[0];
+    this._file = $event[0] || this._file;
+    console.log("file: " + this._file);
 
   }
 
@@ -125,6 +126,15 @@ export class SemanticSearchComponent {
 
     console.log('Semantic Search error:', error);
     this.onGATEResponse.emit();
+
+  }
+
+  // delete uploaded file
+  removeFile(): void {
+
+    console.log("Deleting file");
+    this._file = null;
+    console.log("File: " + this._file);
 
   }
 

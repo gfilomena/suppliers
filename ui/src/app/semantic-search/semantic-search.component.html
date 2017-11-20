@@ -21,12 +21,24 @@
       <input-file (onFileSelect)="onFileSelect($event)">
       </input-file>
 
-      <span class="file-name" *ngIf="_file">
-        {{_file.name}}
-      </span>
+      <!--<div class="file-group">-->
+
+        <span class="file-name" *ngIf="_file">
+          {{_file.name}}
+        </span>
+
+        <button mat-icon-button
+                *ngIf="_file"
+                (click)="removeFile(null)"
+                class="file-delete-button">
+          <mat-icon>delete</mat-icon>
+        </button>
+
+      <!--</div>-->
 
       <button mat-raised-button color="accent"
               type="submit"
+              class="submit-button"
               (click)="this.onGATESubmit.emit()">
         SUBMIT
       </button>
@@ -37,12 +49,12 @@
 
   <mat-card-content *ngIf="_error" class="error">{{_error}}</mat-card-content>
 
-  <mat-chip-list fxLayout="wrap" class="annotations-container">
+  <mat-chip-list fxLayout="wrap" class="annotations-container" *ngIf="this._orderedAnnotations.length > 0">
     <mat-chip *ngFor="let annotation of this._orderedAnnotations"
-                (click)="searchForAnnotation(annotation)"
-                class="badge"
-                color="primary"
-                selected="false">
+              (click)="searchForAnnotation(annotation)"
+              class="badge"
+              color="primary"
+              selected="false">
       {{annotation}}
     </mat-chip>
   </mat-chip-list>

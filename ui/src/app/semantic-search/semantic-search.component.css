@@ -1,4 +1,8 @@
 
+.annotations-container {
+  padding-top: 20px;
+}
+
 .annotations-list {
   width: inherit;
 }
@@ -12,7 +16,9 @@
 }
 
 .buttons-wrapper {
-  margin-bottom: 20px;
+  height: 40px;
+  align-content: center;
+  justify-content: flex-start;
 }
 
 .custom-divider {
@@ -21,16 +27,23 @@
   border-top-style: solid;
   border-top-width: 1px;
   border-top-color: rgba(0, 0, 0, 0.12);
-  margin-bottom: 20px;
 }
 
 .error {
   color: #FF1100;
 }
 
+.file-delete-button {
+  margin-right: 16px;
+}
+
 .file-name {
   color: rgba(0, 0, 0, 0.54);
   font-size: 0.9em;
+  padding: 12px 0 11px 16px;
+  min-width: 0;
+  margin-right: 16px;
+  overflow: hidden;
 }
 
 input:-webkit-autofill {
@@ -48,4 +61,8 @@ input:-webkit-autofill {
 
 .semantic-search > * {
   width: 100%;
+}
+
+.submit-button {
+  margin-left: auto;
 }
