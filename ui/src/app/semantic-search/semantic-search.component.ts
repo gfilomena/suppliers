@@ -132,6 +132,7 @@ export class SemanticSearchComponent {
   private handleGATEError(error: any) {
 
     console.log('Semantic Search error:', error);
+    this._error = "Server error";
     this.onGATEResponse.emit();
 
   }
