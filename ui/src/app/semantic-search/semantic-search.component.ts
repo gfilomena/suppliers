@@ -107,8 +107,13 @@ export class SemanticSearchComponent {
   // a file has been uploaded
   protected onFileSelect($event: File[]): void {
 
-    this._file = $event[0] || this._file;
-    console.log("file: " + this._file);
+    if ($event === null)
+      this._error = "File type not accepted";
+    else {
+      this._error = null;
+      this._file = $event[0] || this._file;
+      console.log("file: " + this._file);
+    }
 
   }
 
