@@ -21,8 +21,6 @@
       <input-file (onFileSelect)="onFileSelect($event)">
       </input-file>
 
-      <!--<div class="file-group">-->
-
         <span class="file-name" *ngIf="_file">
           {{_file.name}}
         </span>
@@ -34,7 +32,7 @@
           <mat-icon>delete</mat-icon>
         </button>
 
-      <!--</div>-->
+        <span *ngIf="_error" class="error">{{_error}}</span>
 
       <button mat-raised-button color="accent"
               type="submit"
@@ -46,8 +44,6 @@
     </div>
 
   </form>
-
-  <mat-card-content *ngIf="_error" class="error">{{_error}}</mat-card-content>
 
   <mat-chip-list fxLayout="wrap" class="annotations-container" *ngIf="this._orderedAnnotations.length > 0">
     <mat-chip *ngFor="let annotation of this._orderedAnnotations"

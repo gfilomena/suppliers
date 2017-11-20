@@ -31,6 +31,8 @@
 
 .error {
   color: #FF1100;
+  padding: 20px 16px;
+  margin-bottom: 0;
 }
 
 .file-delete-button {
