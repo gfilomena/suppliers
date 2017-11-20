@@ -80,6 +80,8 @@ export class SemanticSearchComponent {
 
     if (value['url']) { // url has precedence over file
 
+      this._file = null;
+
       this.semanticService.searchUrlAnnotations(value)
         .subscribe(res => this.handleGATEResponse(res), err => this.handleGATEError(err))
 
