@@ -7,6 +7,8 @@ import services.search.semantic.SemanticAnalyzer;
 
 import java.io.File;
 
+import static services.search.semantic.SemanticAnalyzer.getSemanticAnalyzer;
+
 /**
  * This controller contains an action to handle HTTP requests
  * to the application's home page.
@@ -22,7 +24,7 @@ public class SemanticController extends Controller {
             return badRequest("Missing json parameter: url");
         else {
             try {
-                SemanticAnalyzer semAnalyzer = new SemanticAnalyzer();
+                SemanticAnalyzer semAnalyzer = getSemanticAnalyzer();
                 return ok(semAnalyzer.getUrlAnnotations(url));
             } catch (java.lang.Exception e) {
                 return internalServerError("Semantic Analyzer failure: " + e);
@@ -37,7 +39,7 @@ public class SemanticController extends Controller {
         Http.MultipartFormData.FilePart<File> doc = body.getFile("doc");
         if (doc != null) {
             try {
-                SemanticAnalyzer semAnalyzer = new SemanticAnalyzer();
+                SemanticAnalyzer semAnalyzer = getSemanticAnalyzer();
                 return ok(semAnalyzer.getFileAnnotations(doc.getFile()));
             } catch (java.lang.Exception e) {
                 e.printStackTrace();

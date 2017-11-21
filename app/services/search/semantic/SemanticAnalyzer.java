@@ -18,10 +18,15 @@ import java.util.*;
  * itself can be modified with the GATE software and reloaded as necessary. Furthermore, the semantic analyzer is
  * compatible with URLs, and is able to analyse the HTM content of web-pages.
  *
- * The ANNIE application used is defined in the "ANNIE_with_extras.gapp" file, nad has some additional features like
+ * The ANNIE application used is defined in the "ANNIE_with_extras.gapp" file, and has some additional features like
  * basic animal annotation.
+ *
+ * The Class is designed as a Singleton since there needs to be only one initialized Semantic Analyzer.
  */
 public class SemanticAnalyzer {
+
+    /** Singleton instance */
+    private static SemanticAnalyzer semanticAnalyzer = null;
 
     /** List of annotation types to write out. */
     private List<String> annotationsTypesToWrite = null;
@@ -38,9 +43,10 @@ public class SemanticAnalyzer {
     private long t3;
 
     /**
+     *  Singleton constructor.
      *  Initialize a semantic tool with the default application.
      */
-    public SemanticAnalyzer() throws Exception {
+    private SemanticAnalyzer() throws Exception {
 
         // performance timestamps variables
         double t;
@@ -75,6 +81,21 @@ public class SemanticAnalyzer {
         t = ((double) (t1 - t0))/1000;
         System.out.println("SemanticAnalyser: " + t + "s to initialize GATE application");
 
+    }
+
+    /**
+     * Singleton getter.
+     * @return the Semantic Analyzer instance
+     */
+    public static synchronized SemanticAnalyzer getSemanticAnalyzer() {
+        if (semanticAnalyzer == null) {
+            try {
+                semanticAnalyzer = new SemanticAnalyzer();
+            } catch (Exception e) {
+                System.out.println("Failed initializing Semantic Analyzer singleton: " + e);
+            }
+        }
+        return semanticAnalyzer;
     }
 
     /**

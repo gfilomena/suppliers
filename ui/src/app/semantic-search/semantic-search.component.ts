@@ -57,12 +57,13 @@ export class SemanticSearchComponent {
     // array of types of retrieved annotations
     let types: string[] = Object.keys(annotations);
 
+    // initialise the annotations categories array used to color the annotation chips
     this._annotationsTypes = [];
 
     // used to exit the loop if we cannot find any other annotation
     let l: number = -1;
 
-    for (let i = 0; this._orderedAnnotations.length < this._max && this._orderedAnnotations.length !== l ; i++)  {
+    for (let i = 0  ; this._orderedAnnotations.length < this._max && this._orderedAnnotations.length !== l ; i++)  {
       l = this._orderedAnnotations.length;
       for (let t of types) { // take the i-th annotation if it occurs more than once
         let annotation: string = annotations[t][i];
