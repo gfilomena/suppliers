@@ -15,6 +15,26 @@
   cursor: pointer;
 }
 
+.badge.animal {
+  background-color: #FFFF8D;
+}
+
+.badge.date {
+    background-color: #FFD180;
+}
+
+.badge.location {
+  background-color: #CCFF90;
+}
+
+.badge.organization {
+  background-color: #82B1FF;
+}
+
+.badge.person {
+  background-color: #FF80AB;
+}
+
 .buttons-wrapper {
   height: 40px;
   align-content: center;

@@ -46,9 +46,9 @@
   </form>
 
   <mat-chip-list fxLayout="wrap" class="annotations-container" *ngIf="this._orderedAnnotations.length > 0">
-    <mat-chip *ngFor="let annotation of this._orderedAnnotations"
+    <mat-chip *ngFor="let annotation of this._orderedAnnotations; let i = index"
               (click)="searchForAnnotation(annotation)"
-              class="badge"
+              class="badge {{this._annotationsTypes[i]}}"
               color="primary"
               selected="false">
       {{annotation}}

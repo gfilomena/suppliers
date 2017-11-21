@@ -16,6 +16,7 @@ export class SemanticSearchComponent {
 
   // annotations ordered by estimated importance
   private _orderedAnnotations: string[];
+  private _annotationsTypes: string[];
 
   // maximum number of annotations we want to display
   // should be at least bigger than the expected number of returned annotation types
@@ -56,6 +57,8 @@ export class SemanticSearchComponent {
     // array of types of retrieved annotations
     let types: string[] = Object.keys(annotations);
 
+    this._annotationsTypes = [];
+
     // used to exit the loop if we cannot find any other annotation
     let l: number = -1;
 
@@ -64,6 +67,7 @@ export class SemanticSearchComponent {
       for (let t of types) { // take the i-th annotation if it occurs more than once
         let annotation: string = annotations[t][i];
         if (annotation && annotation['occurrences'] > 1 && this._orderedAnnotations.length <= this._max) {
+          this._annotationsTypes.push(t.toLowerCase());
           this._orderedAnnotations.push(annotation['content']);
         }
       }
