@@ -12,9 +12,7 @@
     <button mat-button routerLinkActive="active" [routerLink]="['/setting']"> Settings </button>
   </span>
 
-  <span class="example-spacer"></span>
-
-  <span>
+  <span class="user-menu">
     <button mat-icon-button [matMenuTriggerFor]="appMenu" >
       <mat-icon>account_circle</mat-icon>
     </button>
@@ -24,7 +22,7 @@
       <button mat-menu-item [routerLink]="['/login']"> Logout </button>
     </mat-menu>
   </span>
-  
+
 </mat-toolbar>
 
 

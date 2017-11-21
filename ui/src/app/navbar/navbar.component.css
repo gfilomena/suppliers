@@ -14,10 +14,6 @@
   padding: 0 14px;
 }
 
-.example-spacer {
-  flex: 1 1 auto;
-}
-
 .logo{
     height: 25px;
     width: 128px;
@@ -25,6 +21,7 @@
 
 .span-logo{
   display: flex;
+  margin-right: auto;
 }
 
 
@@ -34,9 +31,6 @@ mat-toolbar,mat-toolbar-row{
         z-index: 2;
 }
 
-.menu{
-  margin-left: 24%;
-}
 .menu button{
       font-size: x-large;
       font-size: 16px;
@@ -49,9 +43,13 @@ mat-toolbar,mat-toolbar-row{
 }
 
 .breadcrumbs{
-   display: flex;
-    box-sizing: border-box;
-    flex-direction: row;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-  } 
+  display: flex;
+  box-sizing: border-box;
+  flex-direction: row;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+}
+
+.user-menu {
+  margin-left: auto;
+}
