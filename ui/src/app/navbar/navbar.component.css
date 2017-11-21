@@ -1,13 +1,11 @@
 .account{
-    text-align: right;
+  text-align: right;
 }
 
-
 .flex-spacer{
-
-    -webkit-box-flex: 1;
-    -ms-flex-positive: 1;
-    flex-grow: 1;
+  -webkit-box-flex: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .example-icon {
@@ -15,8 +13,8 @@
 }
 
 .logo{
-    height: 25px;
-    width: 128px;
+  height: 25px;
+  width: 128px;
 }
 
 .span-logo{
@@ -24,17 +22,10 @@
   margin-right: auto;
 }
 
-
 mat-toolbar,mat-toolbar-row{
-        display: contents;
-        position: fixed;
-        z-index: 2;
-}
-
-.menu button{
-      font-size: x-large;
-      font-size: 16px;
-      font-weight: 600;
+  display: contents;
+  position: fixed;
+  z-index: 2;
 }
 
 .active{
