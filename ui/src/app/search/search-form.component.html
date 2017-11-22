@@ -67,7 +67,7 @@
 
     <div class="container-card" fxflex>
 
-      <h2 *ngIf="nOfResults == 0">No results found!</h2>
+      <h1 class="mat-h1" *ngIf="nOfResults == 0">No results found!</h1>
 
       <div class="sub_container-card" *ngFor="let sr of searchResult">
 
@@ -77,7 +77,7 @@
 
             <div class="image-card">
 
-              <img mat-card-image [src]="getImage(sr)" (click)="openDialog(sr)">
+              <img mat-card-image class="thumbnail" [src]="getImage(sr)" (click)="openDialog(sr)">
 
               <div class="bar">
                 <div [ngSwitch]="sr.type" class="type">

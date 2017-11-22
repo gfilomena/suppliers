@@ -27,10 +27,12 @@
 }
 
 .image-card img {
-  max-height: 150px;
+  max-height: 164px;
   max-width: 243px; /* image-card width:195px + 24px padding = 243px */
   object-fit: cover;
   -o-object-fit: cover;
+  cursor: pointer;
+  border-radius: 2px 2px 0 0;
 }
 
 mat-progress-bar {
@@ -53,8 +55,7 @@ mat-progress-bar {
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
-  margin-top: 5px;
-  height: 60px;
+  height: 90px;
 }
 
 .logo-card {
@@ -153,7 +154,7 @@ mat-checkbox {
   display: flex;
   flex-flow: row wrap;
   align-content: space-between;
-  justify-content: space-evenly;
+  justify-content: center;
   margin: 0 16px 16px 16px;
 }
 
@@ -208,7 +209,7 @@ form{
 .bar{
   position: absolute;
   height: 40px;
-  top: 115px;
+  top: 121px;
   width: 243px;
   background-color: rgba(189, 189, 189, 0.50);
 }
