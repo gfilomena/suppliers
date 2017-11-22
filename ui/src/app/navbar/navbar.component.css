@@ -1,45 +1,27 @@
-.account{
-  text-align: right;
-}
-
-.flex-spacer{
-  -webkit-box-flex: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-}
-
-.example-icon {
-  padding: 0 14px;
-}
-
-.logo{
+#logo {
   height: 25px;
   width: 128px;
-}
-
-.span-logo{
-  display: flex;
   margin-right: auto;
 }
 
-mat-toolbar,mat-toolbar-row{
+mat-toolbar, mat-toolbar-row {
   display: contents;
   position: fixed;
   z-index: 2;
 }
 
-.active{
+.active {
   background-color: transparent;
   color: slategrey;
 }
 
-.breadcrumbs{
+/*.breadcrumbs{
   display: flex;
   box-sizing: border-box;
   flex-direction: row;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
-}
+}*/
 
 .user-menu {
   margin-left: auto;

@@ -162,6 +162,7 @@ export class SearchFormComponent {
         this.search();
 
     }
+
     clear() {
         console.log('clear')
         localStorage.removeItem('searchForm');

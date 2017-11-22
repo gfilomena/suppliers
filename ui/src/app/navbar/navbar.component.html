@@ -1,24 +1,19 @@
-<mat-toolbar *ngIf="isLoggedIn()" color="primary" class="mat-elevation-z6">
+<mat-toolbar *ngIf="isLoggedIn()" color="primary" class="mat-elevation-z6" fxFlex>
 
-  <span class="span-logo">
-    <img class="logo" src="../assets/images/logo_producer_511x103.jpg">
-    <!--<breadcrumb class="breadcrumbs"></breadcrumb>-->
-  </span>
+  <img id="logo" src="../assets/images/logo_producer_511x103.jpg">
 
-  <span class="menu">
-    <button mat-button routerLinkActive="active" [routerLink]="['/home']"> Home </button>
-    <button mat-button routerLinkActive="active" [routerLink]="['/search-history']"> Search History </button>
-    <button mat-button routerLinkActive="active" [routerLink]="['/bookmarks']"> Bookmarks </button>
-    <button mat-button routerLinkActive="active" [routerLink]="['/setting']"> Settings </button>
-  </span>
+  <button mat-button routerLinkActive="active" [routerLink]="['/home']"> Home </button>
+  <button mat-button routerLinkActive="active" [routerLink]="['/search-history']"> Search History </button>
+  <button mat-button routerLinkActive="active" [routerLink]="['/bookmarks']"> Bookmarks </button>
+  <button mat-button routerLinkActive="active" [routerLink]="['/setting']"> Settings </button>
 
   <span class="user-menu">
     <button mat-icon-button [matMenuTriggerFor]="appMenu" >
-      <mat-icon>account_circle</mat-icon>
+      <mat-icon> account_circle </mat-icon>
     </button>
     <mat-menu #appMenu="matMenu" >
-      <button mat-menu-item  [routerLink]="['/profile']"> Profile </button>
-      <button mat-menu-item  [routerLink]="['/setting-rep']"> Setting </button>
+      <button mat-menu-item [routerLink]="['/profile']"> Profile </button>
+      <button mat-menu-item [routerLink]="['/setting-rep']"> Setting </button>
       <button mat-menu-item [routerLink]="['/login']"> Logout </button>
     </mat-menu>
   </span>
