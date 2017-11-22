@@ -1,7 +1,9 @@
 #logo {
   height: 25px;
   width: 128px;
-  margin-right: auto;
+  margin-right: 16px;
+  outline: none;
+  cursor: pointer;
 }
 
 mat-toolbar, mat-toolbar-row {
