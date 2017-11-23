@@ -1,19 +1,41 @@
 <div>
-    <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
-        <smd-fab-trigger [spin]="spin">
-            <button mat-fab><mat-icon>apps</mat-icon></button>
-        </smd-fab-trigger>
-        <smd-fab-actions>
-            <button mat-mini-fab matTooltip="Delete All History" matTooltipPosition="above"(click)="deleteAll()"><mat-icon>delete</mat-icon></button>
-        </smd-fab-actions>
-    </smd-fab-speed-dial>
+
+  <smd-fab-speed-dial class="filter"
+                      [(open)]="open"
+                      [direction]="direction"
+                      [animationMode]="animationMode"
+                      [fixed]="fixed">
+
+    <smd-fab-trigger [spin]="spin">
+      <button mat-fab>
+        <mat-icon>apps</mat-icon>
+      </button>
+    </smd-fab-trigger>
+
+    <smd-fab-actions>
+      <button mat-mini-fab matTooltip="Delete All History" matTooltipPosition="above"(click)="deleteAll()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </smd-fab-actions>
+
+  </smd-fab-speed-dial>
+
   <div fxFlex class="container">
+
     <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+
     <h3 align="center" *ngIf="nResults == 0">No history available.</h3>
+
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
       <mat-list *ngFor="let sr of searchResult">
-        <mat-list-item matTooltip="Search again." (click)="goToSearchForm(sr)"><em class="keywords">Keywords:</em> {{sr.freeText}} <span class="date">{{isoDateToHtmlDate(sr.date)}}</span></mat-list-item>
+        <mat-list-item matTooltip="Search again." (click)="goToSearchForm(sr)">
+          <em class="keywords">Keywords:</em>
+          {{sr.freeText}}
+          <span class="date">{{isoDateToHtmlDate(sr.date)}}</span>
+        </mat-list-item>
       </mat-list>
     </div>
+
   </div>
+
 </div>
