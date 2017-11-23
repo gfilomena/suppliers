@@ -1,128 +1,25 @@
-.container{
-    margin-top: 64px;
-}
-.card {
-    height: 100px;
-}
-.card:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-.filter{
-    bottom: 40px;
-    right: 40px;
-    position: fixed;
-    z-index: 2;
-  }
-  .deleteall:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-    z-index: 1;
-  }
-
-mat-list-item:hover{
-     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+.container {
+  margin: 80px 16px 16px 16px;
+  height: 100%;
 }
 
-.detail-card {
-    font-size: 70%;
-    overflow-x: hidden;
-}
-.image-card {
-    height: 150px;
-}
-
-.title-card {
-    font-size: 100%;
- 
-}
-
-.delete {
-    width: fit-content;
-    border-radius: 5%;
-}
-.delete:hover{
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
-}
-
-
-.sidebar{
+.filter {
+  bottom: 40px;
+  right: 40px;
   position: fixed;
-  z-index: 1;
-  width: 120px; /* sum padding */
-  padding:15px;
-  /*left: -130px;    hide*/
+  z-index: 2;
 }
 
-
-
-.filter_button {
-    width: auto;
-    height: auto;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    /*left: 130px;  move button outside*/
+h3 {
+  margin-top: 64px;
 }
 
-.close_button {
-    width: auto;
-    height: auto;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    position: absolute;
-    /*left: 130px;  move button outside*/
+.query:hover {
+  cursor: pointer;
 }
 
-
-
-.container-card {
-  display: flex;
-  flex-flow: row wrap;
-  align-content: space-between;
-  justify-content: flex-start;
-}
-
-.sub_container-card {
-  height: 100%
-}
-
-
-.typefield {
-    margin-top: 16px;
-}
-
-
-
-@media (min-width: 0px) and (max-width: 800px) {
- 
-
-    .container-sidebar {
-      display:none;
-      margin-top: 64px;
-    }
-}
-
-
-@media (min-width: 800px) and (max-width: 3000px) {
- 
-
-    .container-sidebar {
-      display:flex;
-      margin-top: 64px;
-    }
-}
-
-.board {
-    align-content: flex-end;
-}
-
-.date{
-    font-size: x-small;
-    margin-left: 30px;
-}
-
-.keywords{
-    font-size: x-small;
-    margin-right: 5px;
+.date {
+  font-size: small;
+  margin-right: 16px;
+  width: 120px;
 }

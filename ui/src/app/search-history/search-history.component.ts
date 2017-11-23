@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MultimediaContent } from "../_models/multimediaContent";
 import { HistorysearchService } from "../_services/historysearch.service";
 import { User } from "../_models/user";
 import { SearchForm } from '../_models/search-form';
@@ -45,7 +44,6 @@ export class SearchHistoryComponent implements OnInit {
         this.searchResult = this.arrToString(res.reverse())
         this.nResults = this.searchResult.length;
         console.log('this.searchResult', this.searchResult)
-        this.loading = false;
       },
       error => {
         console.log('get all history - subscribe - error:', error)

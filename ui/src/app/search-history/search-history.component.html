@@ -13,29 +13,30 @@
     </smd-fab-trigger>
 
     <smd-fab-actions>
-      <button mat-mini-fab matTooltip="Delete All History" matTooltipPosition="above"(click)="deleteAll()">
+      <button mat-mini-fab matTooltip="Clear history" matTooltipPosition="above"(click)="deleteAll()">
         <mat-icon>delete</mat-icon>
       </button>
     </smd-fab-actions>
 
   </smd-fab-speed-dial>
 
-  <div fxFlex class="container">
+  <mat-card fxFlex class="container">
 
-    <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
-
-    <h3 align="center" *ngIf="nResults == 0">No history available.</h3>
+    <h3 class="mat-h3" align="center" *ngIf="nResults == 0">No history available.</h3>
 
     <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
       <mat-list *ngFor="let sr of searchResult">
-        <mat-list-item matTooltip="Search again." (click)="goToSearchForm(sr)">
-          <em class="keywords">Keywords:</em>
-          {{sr.freeText}}
-          <span class="date">{{isoDateToHtmlDate(sr.date)}}</span>
+        <mat-list-item matTooltip="Search again.">
+          <span class="date">
+            {{isoDateToHtmlDate(sr.date)}}
+          </span>
+          <span class="query" (click)="goToSearchForm(sr)">
+            {{sr.freeText}}
+          </span>
         </mat-list-item>
       </mat-list>
     </div>
 
-  </div>
+  </mat-card>
 
 </div>
