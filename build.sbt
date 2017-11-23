@@ -20,7 +20,7 @@ libraryDependencies ++= Seq(
   "org.mindrot" % "jbcrypt" % "0.3m",
   "org.apache.commons" % "commons-lang3" % "3.5",
   "org.nuxeo.client" % "nuxeo-java-client" % "2.6",
-  "uk.ac.gate" % "gate-core" % "8.4.1"
+  "uk.ac.gate" % "gate-core" % "8.4.1",
   "com.github.tuxBurner" %% "play-akkajobs" % "1.0.1"
 )
 
