@@ -218,9 +218,11 @@ export class DialogDetail implements OnInit {
             .subscribe(
             res => {
                 console.log('saveMC - subscribe OK:', res);
-                const element = document.getElementById('(' + mc.uri + ')');
-                console.log('element ', element);
-                element.innerText = 'star';
+                //const element = document.getElementById('(' + mc.uri + ')');
+                //console.log('element ', element);
+                //element.innerText = 'star';
+                mc.bookmark = true;
+                this.mcupdate.emit(mc);
             },
             error => {
                 console.log('saveMC - subscribe - error:', error);
@@ -245,7 +247,14 @@ export class DialogDetail implements OnInit {
         });
     }
 
-
+    stateBookmark(mc: MultimediaContent): string {
+        // console.log('mc.bookmark', mc.bookmark);
+        if (mc.bookmark) {
+            return 'star';
+        }else {
+            return 'star_border';
+        }
+    }
 
 
     saveTag(mc: MultimediaContent, newtag: string) {
@@ -258,7 +267,7 @@ export class DialogDetail implements OnInit {
             (<HTMLInputElement>document.getElementById('newtag')).value = '';
 
         }
-        // this.mcupdate.emit(mc);
+         this.mcupdate.emit(mc);
     }
 
     removeTag(mc: MultimediaContent, tag: string) {

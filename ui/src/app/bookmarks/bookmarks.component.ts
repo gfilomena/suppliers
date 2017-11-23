@@ -1,3 +1,4 @@
+import { forEach } from '@angular/router/src/utils/collection';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Component, OnInit } from '@angular/core';
 import { Bookmark } from '../_models/bookmark';
@@ -50,10 +51,9 @@ export class BookmarksComponent implements OnInit {
 
     openDialog(item: MultimediaContent) {
         console.log('item sr', item);
-        let dialogRef = this.dialog.open(DialogDetail, {
-            height: 'auto',
+        const dialogRef = this.dialog.open(DialogDetail, {
             width: '600px',
-            position: { top: '0', left: '30%', right: '30%', bottom: '0' }
+           // position: {left: '30%', right: '30%' }
         });
 
         dialogRef.componentInstance.data = item;
@@ -61,22 +61,22 @@ export class BookmarksComponent implements OnInit {
 
 
     getAllBookmarks() {
-        this.submitted = true
-        this.BookmarkService.getAll()
+        this.submitted = true;
+        this.BookmarkService.findByUser()
             .subscribe(
             data => {
-                this.bookmarks = data.reverse()
-                this.counter(data)
-                this.getUserRepositories()
-                this.submitted = false
-                this.nResults = data.length
+                this.bookmarks = data.reverse();
+                this.counter(data);
+                this.getUserRepositories();
+                this.submitted = false;
+                this.nResults = data.length;
                 localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
                 console.log(' this.bookmarks', this.bookmarks);
             },
             error => {
-                this.alertService.error(error._body)
-                this.submitted = false
-            })
+                this.alertService.error(error._body);
+                this.submitted = false;
+            });
     }
 
     getUserRepositories() {
@@ -85,12 +85,12 @@ export class BookmarksComponent implements OnInit {
             data => {
                 this.userRepositories = data;
                 this.initRepo(this.userRepositories);
-                this.incRepo(this.bookmarks)
+                this.incRepo(this.bookmarks);
                 console.log(' this.userRepositories', this.userRepositories);
             },
             error => {
                 console.log('getUserRepositories -> error:', error);
-            })
+            });
     }
 
     incRepo(bookmarks: Bookmark[]) {
@@ -103,7 +103,7 @@ export class BookmarksComponent implements OnInit {
             repository = bookmarks[i].multimediaContent.source.name;
 
             if (this.activeRepositories) {
-                let index = this.activeRepositories.findIndex(obj => obj.name == repository)
+                const index = this.activeRepositories.findIndex(obj => obj.name === repository);
                 // console.log('this.activeRepositories',this.activeRepositories)
                 // console.log('repository',repository)
                 // console.log('item',index)
@@ -163,16 +163,17 @@ export class BookmarksComponent implements OnInit {
         this.activeType = activeType;
     }
 
-    removeBookmark(id: string) {
-        this.BookmarkService.delete(id)
+    removeBookmark(item: Bookmark) {
+        this.BookmarkService.delete(item.id)
             .subscribe(
             data => {
                 console.log('data', data);
+                this.UpdateBookmark(item);
                 this.getAllBookmarks();
             },
             error => {
-                this.alertService.error(error._body)
-            })
+                this.alertService.error(error._body);
+            });
     }
 
     deleteAllByUser() {
@@ -180,16 +181,33 @@ export class BookmarksComponent implements OnInit {
         this.BookmarkService.deleteAllByUser()
             .subscribe(
             res => {
-                console.log('delete all Bookmarks - subscribe OK:', res)
-                this.bookmarks.splice(0, this.bookmarks.length)
+                console.log('delete all Bookmarks - subscribe OK:', res);
+                this.UpdateBookmarks();
+                this.bookmarks.splice(0, this.bookmarks.length);
                 this.nResults = this.bookmarks.length;
                 this.submitted = false;
             },
             error => {
-                console.log('delete all Bookmarks - subscribe - error:', error)
+                console.log('delete all Bookmarks - subscribe - error:', error);
                 this.submitted = false;
             }
-            )
+            );
+    }
+
+    UpdateBookmarks() {
+        const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
+        for (const item of  this.bookmarks) {
+            const index = lastresearch.findIndex(obj => obj.uri === item.multimediaContent.uri);
+            lastresearch[index].bookmark = item.multimediaContent.bookmark;
+        }
+        localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
+    }
+
+    UpdateBookmark(bm: Bookmark) {
+           const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
+           const index = lastresearch.findIndex(obj => obj.uri === bm.multimediaContent.uri);
+           lastresearch[index].bookmark = bm.multimediaContent.bookmark;
+           localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
     }
 
     filter(item: MultimediaContent): any {

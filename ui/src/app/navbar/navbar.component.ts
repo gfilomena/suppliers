@@ -1,5 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Http } from '@angular/http';
+import { AuthService } from "../_services/index";
 
 
 @Component({
@@ -11,7 +12,7 @@ export class NavbarComponent implements OnInit {
 
     api:string;
 
-  constructor( public http: Http) {
+  constructor( public http: Http, public auth:AuthService) {
   }
 
   ngOnInit() {
@@ -20,14 +21,18 @@ export class NavbarComponent implements OnInit {
 
 
   isLoggedIn() {
-      if (localStorage.getItem('currentUser')) {
-          return true;
-      }
+    if(this.auth.isAuthenticated()){
+        // console.log('nav bar authenticated');
+        return true;
+    }
+    else{
+        // console.log('nav bar not authenticated');
       return false;
+    }
   }
 
   getLoggedUser() {
-      var user = JSON.parse(localStorage.getItem('currentUser'));
+      let user = JSON.parse(localStorage.getItem('currentUser'));
       if (user && user.firstName) {
           return user.firstName;
       }
@@ -43,5 +48,6 @@ export class NavbarComponent implements OnInit {
 
 
   }
+
 
 }

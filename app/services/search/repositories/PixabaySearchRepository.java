@@ -52,11 +52,7 @@ public class PixabaySearchRepository implements SearchRepository {
 
         @Override
         public CompletionStage<JsonNode> executeQuery( List<String> keyWords ) {
-            String query="";
-            for(String s : keyWords){
-                query+=s;
-                query+="+";
-            }
+            String query=String.join(" ", keyWords);
             Logger.info("Pixabay search: "+query);
             
             CompletionStage<JsonNode> jsonPromiseImage= ws.url(registration.getRepository().getURI()).
@@ -76,6 +72,7 @@ public class PixabaySearchRepository implements SearchRepository {
             CompletionStage<JsonNode> jsonPromiseVideo = ws.url(registration.getRepository().getURI()+"videos/").
                     setQueryParameter("key", registration.getApiKey()).
                     setQueryParameter("q", query).
+                    setQueryParameter("per_page", "200").
                     get().
                     thenApply(WSResponse::asJson);
             try {
@@ -181,9 +178,9 @@ public class PixabaySearchRepository implements SearchRepository {
                 m.setDownloadURI(i.get("videos").get("tiny").get("url").asText());
             }
             m.setSource(registration.getRepository());
-            m.setThumbnail(i.get("userImageURL").asText());
+            m.setThumbnail("https://i.vimeocdn.com/video/"+i.get("picture_id").asText()+"_295x166.jpg");
             m.setMetadata(i.get("tags").asText().split(","));
-            m.setName(i.get("picture_id").asText());
+            m.setName(i.get("id").asText());
 
         }
     }

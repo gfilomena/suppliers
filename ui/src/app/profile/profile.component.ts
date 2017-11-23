@@ -14,10 +14,10 @@ import { Validators } from '@angular/forms';
 export class ProfileComponent implements OnInit {
 
 
-submitted:boolean = false;
+submitted = false;
 user;
 
-  constructor(     
+  constructor(
       private UserService: UserService,
       private alertService: AlertService,
       public snackBar: MatSnackBar

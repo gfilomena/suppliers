@@ -1,3 +1,6 @@
+.card{
+    height: stretch;
+}
 
 .image-card {
     height: 60%;
@@ -68,7 +71,7 @@
 }
 
 .title{
-    width:479px;
+   width:500px;
 }
 
 .logo{
@@ -77,4 +80,19 @@
     left: 5px;
 }
 
+.newtag{
+    width: 33%;
+}
 
+.formats{
+    width: 33%;
+}
+
+bookmarked{
+    width: 24px;
+    height: 24px;
+}
+
+mat-dialog-container{
+    height: stretch;
+}

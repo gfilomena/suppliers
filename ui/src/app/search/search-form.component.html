@@ -2,10 +2,14 @@
 
   <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
-      <button mat-fab><mat-icon>apps</mat-icon></button>
+      <button mat-fab>
+        <mat-icon>apps</mat-icon>
+      </button>
     </smd-fab-trigger>
     <smd-fab-actions>
-      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0"><mat-icon>tune</mat-icon></button>
+      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0">
+        <mat-icon>tune</mat-icon>
+      </button>
     </smd-fab-actions>
   </smd-fab-speed-dial>
 
@@ -28,9 +32,14 @@
               <input matInput placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText">
             </mat-form-field>
           </div>
-
           <div>
-
+            <!--<div class="typefield">
+              <mat-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex fxFlexOffset="2">
+                <mat-option *ngFor="let type of types" [value]="type">
+                  {{ type }}
+                </mat-option>
+            </mat-select>
+          </div>-->
             <mat-form-field fxFlex>
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                 [max]="searchForm.endDate" required>
@@ -38,15 +47,12 @@
             </mat-form-field>
 
             <mat-datepicker #startdate></mat-datepicker>
-
             <mat-form-field fxFlex fxFlexOffset="2">
               <input matInput [matDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
                 [min]="searchForm.inDate" required>
               <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
             </mat-form-field>
-
             <mat-datepicker #enddate></mat-datepicker>
-
           </div>
 
           <div align="end" style="margin-bottom: 20px">
@@ -69,8 +75,7 @@
 
       <h1 class="mat-h1" *ngIf="nOfResults == 0">No results found!</h1>
 
-      <div class="sub_container-card" *ngFor="let sr of searchResult">
-
+      <div class="sub_container-card" *ngFor="let sr of searchResult | paginate: { itemsPerPage: 20, currentPage: p }">
         <div *ngIf="filter(sr)">
 
           <mat-card class="card">
@@ -103,7 +108,9 @@
             <mat-card-content class="content-card">
               <div class="detail-card" fxLayout="column">
                 <div class="description">{{sr.description}}</div>
-                <div><img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png" /></div>
+                <div>
+                  <img class="logo-card" src="../assets/ui/assets/images/{{sr.source.name}}.png" />
+                </div>
                 <div class="date-card">{{getDate(sr.date)}}</div>
               </div>
             </mat-card-content>
@@ -115,7 +122,9 @@
       </div>
 
     </div>
-
+    <div class="center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+    </div>
   </div>
 
 </div>

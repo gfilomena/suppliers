@@ -1,6 +1,5 @@
 ﻿import { Routes, RouterModule } from '@angular/router';
 import { NgModule, ModuleWithProviders } from '@angular/core';
-import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { SearchFormComponent } from './search/search-form.component';

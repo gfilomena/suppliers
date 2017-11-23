@@ -10,14 +10,15 @@ import { AuthGuard } from './_guards/index';
 import {
     AlertService,
     AuthenticationService,
+    AuthService,
     UserService,
     RepositoryService,
     UserRepositoryService,
     BookmarkService,
-    HistorysearchService
+    HistorysearchService,
+    McssrService
     /*PagerService*/
 } from './_services/index';
-import { HomeComponent } from './home/index';
 import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { NavbarComponent } from './navbar/index';
@@ -45,10 +46,12 @@ import {
     MatInputModule,
     MatIconModule,
     MatTooltipModule,
-    MatListModule
+    MatListModule,
+    MatDialogModule
 } from '@angular/material';
 import { ComponentsModule } from './shared/components.module';
 // import { SemanticSearchComponent } from './semantic-search/semantic-search.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 
 @NgModule({
@@ -72,12 +75,13 @@ import { ComponentsModule } from './shared/components.module';
         MatIconModule,
         MatTooltipModule,
         MatListModule,
-        ComponentsModule
+        MatDialogModule,
+        ComponentsModule,
+        NgxPaginationModule
     ],
     declarations: [
         AppComponent,
         AlertComponent,
-        HomeComponent,
         LoginComponent,
         RegisterComponent,
         NavbarComponent,
@@ -94,11 +98,13 @@ import { ComponentsModule } from './shared/components.module';
         AuthGuard,
         AlertService,
         AuthenticationService,
+        AuthService,
         UserService,
         RepositoryService,
         UserRepositoryService,
         BookmarkService,
-        HistorysearchService
+        HistorysearchService,
+        McssrService
     ],
     entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository],
     bootstrap: [AppComponent]

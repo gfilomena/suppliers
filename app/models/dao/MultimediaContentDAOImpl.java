@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
+import org.mongodb.morphia.query.Query;
 import services.db.MongoDBService;
 
 import java.util.List;
@@ -37,5 +38,10 @@ public class MultimediaContentDAOImpl extends BasicDAO<MultimediaContent,ObjectI
     @Override
     public void saveAll(List<MultimediaContent> multimediaContents) {
         multimediaContents.stream().forEach(l -> this.save(l));
+    }
+
+    @Override
+    public void deleteAll() {
+        Query<MultimediaContent> query=MongoDBService.getDatastore().createQuery(MultimediaContent.class);
     }
 }

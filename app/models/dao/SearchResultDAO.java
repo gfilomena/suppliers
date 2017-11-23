@@ -16,10 +16,12 @@ public interface SearchResultDAO extends DAO<SearchResult, ObjectId> {
 
     List<SearchResult> findByUser(User user);
 
-    List<SearchResult> findByKeywords(String keywords);
+    List<SearchResult> findByKeywords(List<String> keywords);
 
     void saveAll(List<SearchResult> searchResults);
 
     void deleteAllByUser(User user);
+
+    void deleteAll();
 
 }

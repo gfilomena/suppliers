@@ -47,11 +47,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
 
     @Override
     public CompletionStage<JsonNode> executeQuery( List<String> keyWords ) {
-        String query="";
-        for(String s : keyWords){
-            query+=s;
-            query+="+";
-        }
+        String query=String.join(" ", keyWords);
         Logger.info("InternetArchive search: "+query);
         CompletionStage<JsonNode> jsonPromise;
         jsonPromise = ws.url(registration.getRepository().getURI()).
@@ -69,7 +65,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
 
     @Override
     public RepositoryResponseMapping transform(JsonNode clientResponse ) {
-        Logger.debug("Internet Archive Response: "+clientResponse.toString());
+        //Logger.debug("Internet Archive Response: "+clientResponse.toString());
         List<MultimediaContent> stages=new ArrayList<>();
         InternetArchiveRepositoryResponseMapping respMap=new InternetArchiveRepositoryResponseMapping();
         if(clientResponse.get("count")!=null){
@@ -86,8 +82,8 @@ public class InternetArchiveSearchRepository implements SearchRepository {
         if(clientResponse.get("items")==null) {
             Logger.error("tag items is missing");
         }
-            ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
-            Logger.debug("clientResponse.get(items)" + clientResponse.get("items"));
+        ArrayNode itemsArray = (ArrayNode) clientResponse.get("items");
+        //Logger.debug("clientResponse.get(items)" + clientResponse.get("items"));
 
         Iterator<JsonNode> itemsIterator = itemsArray.elements();
 

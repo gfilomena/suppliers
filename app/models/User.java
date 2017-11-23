@@ -20,9 +20,13 @@ public class User extends BaseEntity{
 
     private String lastName;
 
+    private String userId;
+
     private String email;
 
     private String token;
+
+    private String access_token;
 
     private RoleType role;
 
@@ -79,12 +83,28 @@ public class User extends BaseEntity{
         this.token = token;
     }
 
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getEmail() {
         return email;
     }
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getAccess_token() {
+        return access_token;
+    }
+
+    public void setAccess_token(String access_token) {
+        this.access_token = access_token;
     }
 
     public RoleType getRole() {

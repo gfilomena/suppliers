@@ -29,9 +29,9 @@ import { MY_DATE_FORMATS } from './mydateformats';
 
 @Component({
     selector: 'app-search-form',
-    //issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter
+    // issue #datepicker with the format date, CustomDateAdapter customize the native DateAdapter
     providers: [
-        //{provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
+        // {provide: MAT_DATE_LOCALE, useValue: 'en-GB'},
         { provide: DateAdapter, useClass: CustomDateAdapter },
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
     ],
@@ -79,6 +79,7 @@ export class SearchFormComponent {
         const historyform = JSON.parse(localStorage.getItem('searchForm'));
         const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
         this.dateAdapter.setLocale('ll');
+
         //initialize
 
 
@@ -110,7 +111,7 @@ export class SearchFormComponent {
     }
 
     change_placeholder(changes: any) {
-        console.log('changes',changes)
+        console.log('changes', changes)
     }
 
 
@@ -127,8 +128,8 @@ export class SearchFormComponent {
         dialogRef.componentInstance.data = mc;
 
         const sub = dialogRef.componentInstance.mcupdate.subscribe(() => {
-            console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc)
-
+            console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc);
+            this.UpdateMC(mc);
         });
         dialogRef.afterClosed().subscribe(() => {
             sub.unsubscribe();
@@ -157,7 +158,7 @@ export class SearchFormComponent {
     onSubmit() {
 
         this.submitted = true;
-        console.log('this.searchForm', this.searchForm);
+        // console.log('this.searchForm', this.searchForm);
         localStorage.setItem('searchForm', JSON.stringify(this.searchForm));
         this.search();
 
@@ -170,7 +171,7 @@ export class SearchFormComponent {
         this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
         this.searchResult = [];
         this.counter(this.searchResult);
-        this.getUserRepositories()
+        this.getUserRepositories();
     }
 
     search() {
@@ -178,10 +179,12 @@ export class SearchFormComponent {
             .subscribe(
             res => {
                 this.searchResult = res.json().multimediaContents;
-                console.log(res);
+                // console.log(res);
+                // console.log('search result:');
+                // console.log(this.searchResult);
                 localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
-                this.counter(this.searchResult)
+                this.counter(this.searchResult);
                 this.getUserRepositories()
                 // this.validator(this.searchResult)
                 this.nOfResults = this.searchResult.length;
@@ -219,9 +222,9 @@ export class SearchFormComponent {
             res => {
                 console.log('getBookmarks- subscribe - ok:', res);
                 bookmarks = res;
-                for (let item of res) {
+                for (const item of res) {
 
-                    if (mc.uri == item.multimediaContent.uri) {
+                    if (mc.uri === item.multimediaContent.uri) {
                         console.log('mc:', mc.uri);
                         console.log('item:', item.multimediaContent.uri);
                         exist = true;
@@ -239,6 +242,16 @@ export class SearchFormComponent {
         )
     }
 
+
+    UpdateMC(mc: MultimediaContent) {
+        const newSearchResult: MultimediaContent[] = [];
+        for (const item of this.searchResult) {
+             const index = this.searchResult.findIndex(obj => obj.uri === mc.uri);
+             this.searchResult[index] = mc;
+        }
+        localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
+    }
+
     saveMC(mc: MultimediaContent) {
 
         const bookmark = new Bookmark(this.currentUser.username, mc);
@@ -248,13 +261,24 @@ export class SearchFormComponent {
             .subscribe(
             res => {
                 console.log('saveMC - subscribe OK:', res);
-                const element = document.getElementById(mc.uri);
-                element.innerText = 'star';
+                //const element = document.getElementById(mc.uri);
+                //element.innerText = 'star';
+                mc.bookmark = true;
+                this.UpdateMC(mc);
             },
             error => {
                 console.log('saveMC - subscribe - error:', error);
             }
             )
+    }
+
+    stateBookmark(mc: MultimediaContent): string {
+       // console.log('mc.bookmark', mc.bookmark);
+        if (mc.bookmark) {
+            return 'star';
+        }else {
+            return 'star_border';
+        }
     }
 
     openSnackBar(message: string, action: string) {

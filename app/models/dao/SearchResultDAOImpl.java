@@ -37,10 +37,10 @@ public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> impleme
     }
 
     @Override
-    public List<SearchResult> findByKeywords(String keywords) {
+    public List<SearchResult> findByKeywords(List<String> keywords) {
         return MongoDBService.getDatastore().createQuery(SearchResult.class)
-                .search("keywords")
-                .order("date")
+                .field("keyWords")
+                .hasAllOf(keywords)
                 .asList();
     }
 
@@ -52,6 +52,12 @@ public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> impleme
     @Override
     public void deleteAllByUser(User user) {
         Query<SearchResult> query=MongoDBService.getDatastore().createQuery(SearchResult.class).filter("user = ", user);
+        MongoDBService.getDatastore().delete(query);
+    }
+
+    @Override
+    public void deleteAll() {
+        Query<SearchResult> query=MongoDBService.getDatastore().createQuery(SearchResult.class);
         MongoDBService.getDatastore().delete(query);
     }
 }
