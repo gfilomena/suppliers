@@ -22,20 +22,27 @@
 
   <mat-card fxFlex class="container">
 
-    <h3 class="mat-h3" align="center" *ngIf="nResults == 0">No history available.</h3>
+    <mat-list class="list">
 
-    <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-      <mat-list *ngFor="let sr of searchResult">
-        <mat-list-item matTooltip="Search again.">
-          <span class="date">
-            {{isoDateToHtmlDate(sr.date)}}
-          </span>
-          <span class="query" (click)="goToSearchForm(sr)">
-            {{sr.freeText}}
-          </span>
-        </mat-list-item>
-      </mat-list>
-    </div>
+      <h3 class="mat-subheader">  
+        History
+      </h3>
+
+      <mat-list-item class="mat-h3" align="center" *ngIf="nResults == 0">
+        No history available.
+      </mat-list-item>
+
+      <mat-list-item *ngFor="let sr of searchResult">
+        <mat-checkbox></mat-checkbox>
+        <span class="date">
+          {{isoDateToHtmlDate(sr.date)}}
+        </span>
+        <span class="query" (click)="goToSearchForm(sr)">
+          {{sr.freeText}}
+        </span>
+      </mat-list-item>
+
+    </mat-list>
 
   </mat-card>
 

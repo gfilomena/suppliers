@@ -1,5 +1,5 @@
 .container {
-  margin: 80px 16px 16px 16px;
+  margin: 88px 24px 24px 24px;
   height: 100%;
 }
 
@@ -22,4 +22,8 @@ h3 {
   font-size: small;
   margin-right: 16px;
   width: 120px;
+}
+
+.list {
+  width: 100%;
 }
