@@ -9,27 +9,27 @@ export class UserRepositoryService {
     constructor(private http: Http) { }
 
     getAll() {
-        return this.http.get(environment.serviceUrl + "/registration", this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/registrations", this.jwt()).map((response: Response) => response.json())
     }
 
     get(id: string) {
-        return this.http.get(environment.serviceUrl + "/registration/" + id, this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/registrations/" + id, this.jwt()).map((response: Response) => response.json())
     }
 
     create(userRepository: UserRepository) {
-        return this.http.post(environment.serviceUrl + "/registration", userRepository, this.jwt())
+        return this.http.post(environment.serviceUrl + "/registrations", userRepository, this.jwt())
     }
 
     findByUser() {
-        return this.http.get(environment.serviceUrl + "/registration/me/", this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/registrations/me/", this.jwt()).map((response: Response) => response.json())
     }
 
     update(userRepository: UserRepository) {
-        return this.http.put(environment.serviceUrl + "/registration/" + userRepository.id ,userRepository, this.jwt())
+        return this.http.put(environment.serviceUrl + "/registrations/" + userRepository.id ,userRepository, this.jwt())
     }
 
     delete(id: string) {
-        return this.http.delete(environment.serviceUrl + "/registration/" + id, this.jwt())
+        return this.http.delete(environment.serviceUrl + "/registrations/" + id, this.jwt())
     }
 
     // private helper methods
