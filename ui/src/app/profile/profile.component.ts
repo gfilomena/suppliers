@@ -29,23 +29,37 @@ user;
      this.user.id = this.user._id;
   }
 
-  
+  getUser(){
+
+    this.UserService.getById(this.user)
+            .subscribe(
+                data => {
+                    console.log('data',data);
+                    localStorage.setItem("currentUser",JSON.stringify(this.user));
+                    this.openSnackBar('The User has been updated!','update')
+
+                },
+                error => {
+                    this.alertService.error(error._body)
+                    this.openSnackBar('The User has not been updated correctly!','error')
+
+                })
+  }
 
   update(){
     this.submitted = true
     this.UserService.update(this.user)
             .subscribe(
                 data => {
-                    console.log('data',data);
-                    localStorage.setItem("currentUser",JSON.stringify(this.user));
-                    this.openSnackBar('The User has been updated!','update')
-                    this.submitted = false
+                    console.log('data', data);
+                    this.openSnackBar('The User has been updated!', 'update');
+                    this.submitted = false;
                     
                 },
                 error => {
-                    this.alertService.error(error._body)
-                    this.openSnackBar('The User has not been updated correctly!','error')
-                    this.submitted = false
+                    this.alertService.error(error._body);
+                    this.openSnackBar('The User has not been updated correctly!', 'error');
+                    this.submitted = false;
                 })
     }
 
@@ -54,8 +68,6 @@ user;
       duration: 2000,
     });
   }
-            
-      
   }
 
 

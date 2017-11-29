@@ -89,7 +89,7 @@ export class DialogDetail implements OnInit {
         // let url = 'https://archive.org/download/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml';
         // let url = 'https://ia801600.us.archive.org/26/items/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml';
         url = encodeURI(url)
-
+        console.log('url', url)
         this.InternetArchiveService.getDetails(url).subscribe(
             res => {
                 this.details = res;

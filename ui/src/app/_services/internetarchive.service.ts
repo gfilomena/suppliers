@@ -7,15 +7,12 @@ import { mediafile } from './../_models/mediafile';
 @Injectable()
 export class InternetArchiveService {
 
-constructor(private http: Http) { }
+    constructor(private http: Http) { }
 
-listfiles:mediafile[];
+    getDetails(url: string) {
+        return this.http.get(url)
+            .map((response: Response) => response.json());
 
-getDetails(url:string) {
-
-    return this.http.get(url)
-    .map((response: Response) => response.json())
-
-}
+    }
 
 }

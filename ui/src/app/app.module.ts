@@ -26,13 +26,14 @@ import { LoggedinComponent } from './loggedin/index';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 import { FlexLayoutModule } from '@angular/flex-layout';
-import { SettingComponent } from './setting/setting.component';
+import { SettingComponent } from './profile/setting/setting.component';
 import { SearchHistoryComponent } from './search-history/search-history.component';
 import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
 import {
     DialogRegistrationRepository,
-    RegistrationRepositoryComponent
-} from './setting/registration-repository/registration-repository.component';
+    RegistrationRepositoryComponent,
+    DialogRegistrationDialog
+} from './profile/setting/registration-repository/registration-repository.component';
 import { ProfileComponent } from './profile/profile.component';
 import {
     MatSlideToggleModule,
@@ -91,7 +92,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
         BreadcrumbComponent,
         DialogRegistrationRepository,
         RegistrationRepositoryComponent,
-        ProfileComponent
+        ProfileComponent,
+        DialogRegistrationDialog
         // SemanticSearchComponent
     ],
     providers: [
@@ -106,7 +108,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
         HistorysearchService,
         McssrService
     ],
-    entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository],
+    entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog],
     bootstrap: [AppComponent]
 })
 
