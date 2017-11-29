@@ -11,8 +11,8 @@ export class UserService {
         return this.http.get(environment.serviceUrl + "/users", this.jwt()).map((response: Response) => response.json())
     }
 
-    getById(id: string) {
-        return this.http.get(environment.serviceUrl + "/users/" + id, this.jwt()).map((response: Response) => response.json())
+    getByUsername(username: string) {
+        return this.http.get(environment.serviceUrl + "/users/" + username, this.jwt()).map((response: Response) => response.json())
     }
 
     create(user: User) {

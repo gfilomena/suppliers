@@ -1,113 +1,119 @@
 package controllers;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.*;
-import models.dao.*;
-import org.bson.types.ObjectId;
-import play.libs.Json;
+import models.User;
+import models.dao.UserDAO;
+import models.dao.UserDAOImpl;
+import play.Logger;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
 import services.db.MongoDBService;
-import play.Logger;
+import services.nuxeo.NuxeoService;
 
-import java.io.IOException;
-import java.util.Date;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
-import services.nuxeo.NuxeoService;
+
 /**
  * Created by Giuseppe on 01/09/2017.
  */
-public class McssrController extends Controller{
+public class McssrController extends Controller {
 
 
-    public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
+    public static UserDAO userDAO = new UserDAOImpl(User.class, MongoDBService.getDatastore());
 
 
-
-
-	@Security.Authenticated(Secured.class)
+    @Security.Authenticated(Secured.class)
     public CompletionStage<Result> create() {
         JsonNode json = request().body().asJson();
-        Logger.info("json:"+json);
-        JsonNode params = json.findPath("params");
-        //Logger.info("params->"+params);
-        JsonNode user = json.findPath("user");
-        //Logger.info("user->"+user);
+        Logger.info("json:" + json);
         NuxeoService ws = new NuxeoService();
-        String url;
-        String body;
         CompletionStage<JsonNode> r;
-        
-        /*if (json.findPath("params").isMissingNode()) {
-            return CompletableFuture.supplyAsync(() -> badRequest("params not presents!"));
-        }else {
-        	params = json.findPath("params");
-        }
-            if(params.findPath("url").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("url not present!"));
-            }
-            if(params.findPath("fileName").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("fileName not present!"));
-            }
-            if(params.findPath("mimeType").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("mimeType not present!"));
-            }
-            if(params.findPath("type").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("type not present!"));
-            }
-            //Logger.info("create->"+ws.create(json));*/
         r = ws.create(json);
-        if(r != null) {
-            return r.thenApply(( p ) -> ok(p));
-        }
-        else{
-            return CompletableFuture.supplyAsync(() -> badRequest("ws.create(json) -> error!"));
+        if (r != null) {
+            return r.thenApply((p) -> {
+                        Logger.debug("Json response from Nuxeo:\n" + p);
+                        if (isPositiveResponse(p)) {
+                            if (isResponseDocumentType(p)) {
+                                return ok(p);
+                            } else if (isResponseExceptionType(p)) {
+                                String exceptionRespMessage = getExceptionResponseMessage(p);
+                                return badRequest(exceptionRespMessage);
+                            }
+                        }
+                        return badRequest(p);
+                    }
+            );
+        } else {
+            return CompletableFuture.supplyAsync(() -> badRequest("Error during the Connection with MCSSR: No response received!"));
         }
     }
 
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> updateTags() {
         JsonNode json = request().body().asJson();
-        Logger.info("json:"+json);
-        //Logger.info("params->"+params);
-        JsonNode user = json.findPath("user");
-        //Logger.info("user->"+user);
+        Logger.info("json:" + json);
         NuxeoService ws = new NuxeoService();
-        String url;
-        String body;
         CompletionStage<JsonNode> r;
-
-        /*if (json.findPath("params").isMissingNode()) {
-            return CompletableFuture.supplyAsync(() -> badRequest("params not presents!"));
-        }else {
-        	params = json.findPath("params");
-        }
-            if(params.findPath("url").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("url not present!"));
-            }
-            if(params.findPath("fileName").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("fileName not present!"));
-            }
-            if(params.findPath("mimeType").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("mimeType not present!"));
-            }
-            if(params.findPath("type").isMissingNode()){
-                return CompletableFuture.supplyAsync(() -> badRequest("type not present!"));
-            }
-            //Logger.info("create->"+ws.create(json));*/
         r = ws.updateTags(json);
-        if(r != null) {
-            return r.thenApply(( p ) -> ok(p));
-        }
-        else{
-            return CompletableFuture.supplyAsync(() -> badRequest("ws.updateTags(json) -> error!"));
+        if (r != null) {
+            return r.thenApply((p) -> {
+                        Logger.debug("Json response from Nuxeo:\n" + p);
+                        if (isPositiveResponse(p)) {
+                            if (isResponseDocumentType(p)) {
+                                return ok(p);
+                            } else if (isResponseExceptionType(p)) {
+                                String exceptionRespMessage = getExceptionResponseMessage(p);
+                                return badRequest(exceptionRespMessage);
+                            }
+                        }
+                        return badRequest(p);
+                    }
+            );
+        } else {
+            return CompletableFuture.supplyAsync(() -> badRequest("Error during the Connection with MCSSR: No response received!"));
         }
     }
 
 
-    
+    private String getExceptionResponseMessage(JsonNode p) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Exception: ");
+        sb.append(p.get("code").textValue() + "\n");
 
+        if (!p.findPath("exception").isMissingNode()) {
+            JsonNode excNode = p.findPath("exception");
+            if (!excNode.findPath("cause").isMissingNode()) {
+                JsonNode causeNode = excNode.findPath("cause");
+                sb.append("Cause: ");
+                sb.append(causeNode.get("className") + "\n");
+                sb.append("Message: ");
+                sb.append(causeNode.get("message") + "\n");
+            }
+        }
+        return sb.toString();
+    }
+
+    private boolean isPositiveResponse(JsonNode p) {
+        if (p.get("entity-type") == null || p.get("entity-type").textValue().isEmpty()) {
+            return false;
+        }
+        return true;
+    }
+
+    private boolean isResponseDocumentType(JsonNode p) {
+        if (p.get("entity-type").textValue().equals("document")) {
+            return true;
+        }
+        return false;
+    }
+
+    private boolean isResponseExceptionType(JsonNode p) {
+        if (p.get("entity-type").textValue().equals("exception")) {
+            return true;
+        }
+        return false;
+    }
 
 }
+
