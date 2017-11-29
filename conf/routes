@@ -22,8 +22,8 @@ POST   /users/authenticate          controllers.UserController.authenticate
 POST   /users/register              controllers.UserController.register
 POST   /users/logout                controllers.UserController.logout
 GET    /users                       controllers.UserController.getAll
-GET    /users/:id                   controllers.UserController.get(id: String)
-PUT    /users/:id                   controllers.UserController.update(id: String)
+GET    /users/:username             controllers.UserController.get(username: String)
+PUT    /users/:username             controllers.UserController.update(username: String)
 DELETE /users/:username             controllers.UserController.delete(username: String)
 GET    /users/authorize             controllers.UserController.authorize
 
