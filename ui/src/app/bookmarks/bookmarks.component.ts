@@ -168,8 +168,9 @@ export class BookmarksComponent implements OnInit {
             .subscribe(
             data => {
                 console.log('data', data);
-                this.UpdateBookmark(item);
-                this.getAllBookmarks();
+                const index = this.bookmarks.findIndex(obj => obj.id === item.id);
+                this.bookmarks.splice(index, 1);
+                localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
             },
             error => {
                 this.alertService.error(error._body);
@@ -182,7 +183,6 @@ export class BookmarksComponent implements OnInit {
             .subscribe(
             res => {
                 console.log('delete all Bookmarks - subscribe OK:', res);
-                this.UpdateBookmarks();
                 this.bookmarks.splice(0, this.bookmarks.length);
                 this.nResults = this.bookmarks.length;
                 this.submitted = false;

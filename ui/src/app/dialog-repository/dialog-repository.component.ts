@@ -18,6 +18,7 @@ export class DialogRepositoryComponent implements OnInit {
   repositories: Repository[];
   loading = false;
 
+
   constructor(
     public dialog: MatDialog,
     private RepositoryService: RepositoryService,

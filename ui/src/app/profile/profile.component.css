@@ -5,3 +5,7 @@
 .name,.uri{
         padding: 0 40px 0;
 }
+
+.border{
+        padding:5px;
+}

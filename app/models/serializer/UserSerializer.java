@@ -29,7 +29,7 @@ public class UserSerializer extends StdSerializer<User> {
         jgen.writeStartObject();
         jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeStringField("username", value.getUsername());
-        jgen.writeStringField("firtName", value.getFirstName());
+        jgen.writeStringField("firstName", value.getFirstName());
         jgen.writeStringField("lastName", value.getLastName());
         jgen.writeStringField("email", value.getEmail());
         jgen.writeStringField("token", value.getToken());
