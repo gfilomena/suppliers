@@ -10,7 +10,7 @@ export class BookmarkService {
     constructor(private http: Http) { }
 
     getAll() {
-        return this.http.get(environment.serviceUrl + '/bookmark', this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + '/bookmarks', this.jwt()).map((response: Response) => response.json())
     }
 
     get(id: string) {
@@ -18,7 +18,7 @@ export class BookmarkService {
     }
 
     findByUser() {
-        return this.http.get(environment.serviceUrl + '/bookmark/me/', this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + '/bookmarks/me/', this.jwt()).map((response: Response) => response.json())
     }
 
     create(bookmark: Bookmark) {
@@ -30,7 +30,7 @@ export class BookmarkService {
     }
 
     deleteAllByUser() {
-        return this.http.delete(environment.serviceUrl + '/bookmark/me/', this.jwt()).map((response: Response) => response);
+        return this.http.delete(environment.serviceUrl + '/bookmarks/me/', this.jwt()).map((response: Response) => response);
     }
 
     // private helper methods

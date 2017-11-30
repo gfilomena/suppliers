@@ -145,7 +145,10 @@ public class BookmarkController extends Controller{
                 return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
             }
         }else{
-            return CompletableFuture.supplyAsync(() -> noContent());
+            return CompletableFuture.supplyAsync(() -> {
+                idsToRemove.stream()
+                        .forEach(id-> bookmarkDAO.deleteById(new ObjectId(id)));
+                return noContent();});
         }
     }
 
