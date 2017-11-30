@@ -1,13 +1,17 @@
+
+
 <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
- <div class="container">
+ <!--<div class="container">-->
     <h3>Repositories Registration</h3>
     <table  >
       <tr *ngFor="let ur of userRepositories">
         <td><mat-slide-toggle [checked]="ur.enabled" (change)="toggle(ur)" >{{ur.repository}}</mat-slide-toggle></td>
         <td><button class="item" mat-icon-button (click)="update(ur)"><mat-icon>create</mat-icon></button></td>
-        <td><button class="item" mat-icon-button (click)="delete(ur.id)"><mat-icon>delete</mat-icon></button></td>
+        <td><button class="item" mat-icon-button (click)="delete(ur)"><mat-icon>delete</mat-icon></button></td>
       </tr>  
     </table>
     <button class="add" matTooltip="Register Repository" mat-fab matTooltipPosition="above" (click)="create()"><mat-icon>add circle</mat-icon></button>
- </div>
+<!-- </div>  -->
 </div>
+
+

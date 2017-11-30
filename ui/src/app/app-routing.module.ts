@@ -4,7 +4,7 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { SearchFormComponent } from './search/search-form.component';
 import { AuthGuard } from './_guards/index';
-import { SettingComponent } from './setting/index';
+import { SettingComponent } from './profile/setting/index';
 import { BookmarksComponent } from './bookmarks/index';
 import { SearchHistoryComponent } from './search-history/index';
 import { DialogRepositoryComponent } from './dialog-repository/index';
