@@ -14,7 +14,7 @@ export class BookmarkService {
     }
 
     get(id: string) {
-        return this.http.get(environment.serviceUrl + '/bookmark/' + id, this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + '/bookmarks/' + id, this.jwt()).map((response: Response) => response.json())
     }
 
     findByUser() {
@@ -22,11 +22,11 @@ export class BookmarkService {
     }
 
     create(bookmark: Bookmark) {
-        return this.http.post(environment.serviceUrl + '/bookmark', bookmark, this.jwt());
+        return this.http.post(environment.serviceUrl + '/bookmarks', bookmark, this.jwt());
     }
 
     delete(id: string) {
-        return this.http.delete(environment.serviceUrl + '/bookmark/' + id, this.jwt())
+        return this.http.delete(environment.serviceUrl + '/bookmarks/' + id, this.jwt())
     }
 
     deleteAllByUser() {
