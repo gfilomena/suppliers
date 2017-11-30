@@ -11,10 +11,11 @@ import { SearchForm } from '../_models/search-form';
 })
 export class SearchHistoryComponent implements OnInit {
 
-  searchResult: any[]
-  currentUser: User
-  nResults: number
+  searchResult: any[];
+  currentUser: User;
+  nResults: number;
   loading: Boolean = false;
+  dates: Date[];
 
   //init param smd-fab-speed-dial
   open: boolean = false;
@@ -40,13 +41,14 @@ export class SearchHistoryComponent implements OnInit {
     this.historysearchService.getSearchResults(this.currentUser.username)
       .subscribe(
       res => {
-        console.log('get all history - subscribe OK:', res)
-        this.searchResult = this.arrToString(res.reverse())
+        console.log('get all history - subscribe OK:', res);
+        this.searchResult = this.arrToString(res.reverse());
         this.nResults = this.searchResult.length;
+        this.dates = this.retrieveDates(this.searchResult);
         console.log('this.searchResult', this.searchResult)
       },
       error => {
-        console.log('get all history - subscribe - error:', error)
+        console.log('get all history - subscribe - error:', error);
         this.loading = false;
       }
       )
@@ -57,20 +59,20 @@ export class SearchHistoryComponent implements OnInit {
     this.historysearchService.deleteAll(this.currentUser.username)
       .subscribe(
       res => {
-        console.log('delete all history - subscribe OK:', res)
-        this.searchResult.splice(0, this.searchResult.length)
+        console.log('delete all history - subscribe OK:', res);
+        this.searchResult.splice(0, this.searchResult.length);
         this.nResults = this.searchResult.length;
         this.loading = false;
       },
       error => {
-        console.log('delete all history - subscribe - error:', error)
+        console.log('delete all history - subscribe - error:', error);
         this.loading = false;
       }
       )
   }
 
   arrToString(array: any[]) {
-    var i: number
+    let i: number;
     for (i = 0; i < array.length; i++) {
       array[i].freeText = array[i].freeText.join(" ")
     }
@@ -78,35 +80,75 @@ export class SearchHistoryComponent implements OnInit {
   }
 
   goToSearchForm(searchForm: SearchForm) {
-    console.log(searchForm)
+    console.log(searchForm);
     localStorage.removeItem("lastresearch");
     this.searchResult = [];
     localStorage.setItem("searchForm", JSON.stringify(searchForm));
     this.router.navigate(['/']);
   }
 
+  public getTime(isoDate: string): string {
+    let date: Date = new Date(isoDate);
+    return date.getHours() + ':' + date.getMinutes();
+  }
 
-  isoDateToHtmlDate(isoDate) {
-    let date = new Date(isoDate);
-    let years = date.getFullYear()
-    let dtString = ''
-    let monthString = ''
-    let hourString = date.getHours()
-    let minString = date.getMinutes()
-    let secString = date.getSeconds()
-    if (date.getDate() < 10) {
-      dtString = '0' + date.getDate();
-    } else {
-      dtString = String(date.getDate())
+  private retrieveDates(searchResult: any[]): Date[] {
+
+    let distinctDates: Date[] = [];
+    let currentDate: Date = new Date(searchResult[0]['date']);
+    distinctDates.push(currentDate);
+    for (let sr of searchResult) {
+      let srDate: Date = new Date(sr['date']);
+      if (srDate.getFullYear() != currentDate.getFullYear() ||
+          srDate.getMonth() != currentDate.getMonth() ||
+          srDate.getDate() != currentDate.getDate()) {
+        distinctDates.push(srDate);
+        currentDate = srDate;
+      }
     }
-    if (date.getMonth() + 1 < 10) {
-      monthString = '0' + Number(date.getMonth() + 1);
-    } else {
-      monthString = String(date.getMonth() + 1);
-    }
+    console.log("distinct dates: " + distinctDates);
+    return distinctDates;
+  }
 
+  formatDate(date: Date): string {
 
-    return years + '-' + monthString + '-' + dtString + ' ' + hourString + ':' + minString + ':' + secString;
+    let dateString: string = "";
+
+    let months: string[] = [
+      "January",
+      "February",
+      "March",
+      "April",
+      "May",
+      "June",
+      "July",
+      "August",
+      "September",
+      "October",
+      "November",
+      "December"
+    ];
+
+    let days: string[] = [
+      "Monday",
+      "Tuesday",
+      "Wednesday",
+      "Thursday",
+      "Friday",
+      "Saturday",
+      "Sunday"
+    ];
+
+    let today: Date = new Date(Date.now());
+    if (date.getFullYear() == today.getFullYear() &&
+        date.getMonth()    == today.getMonth()    &&
+        date.getDate()     == today.getDate())
+      dateString += "Today - ";
+
+    return dateString + days[date.getDay()]     + ', '
+                      + date.getDate()          + ' '
+                      + months[date.getMonth()] + ' '
+                      + date.getFullYear();
   }
 
 }

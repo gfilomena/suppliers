@@ -20,12 +20,12 @@
 
   </smd-fab-speed-dial>
 
-  <mat-card fxFlex class="container">
+  <mat-card fxFlex class="container" *ngFor="let date of dates">
 
     <mat-list class="list">
 
-      <h3 class="mat-subheader">  
-        History
+      <h3 class="mat-subheader">
+        {{formatDate(date)}}
       </h3>
 
       <mat-list-item class="mat-h3" align="center" *ngIf="nResults == 0">
@@ -35,7 +35,7 @@
       <mat-list-item *ngFor="let sr of searchResult">
         <mat-checkbox></mat-checkbox>
         <span class="date">
-          {{isoDateToHtmlDate(sr.date)}}
+          {{getTime(sr.date)}}
         </span>
         <span class="query" (click)="goToSearchForm(sr)">
           {{sr.freeText}}

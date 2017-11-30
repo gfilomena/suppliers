@@ -28,7 +28,7 @@ resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
 
 resolvers += "tuxburner.github.io" at "http://tuxburner.github.io/repo"
 
-/*resolvers += "maven-nuxeo" at "http://maven.nuxeo.com/nexus/content/repositories/public-releases/"*/
+resolvers += "maven-nuxeo" at "http://maven.nuxeo.com/nexus/content/repositories/public-releases/"
 
 
 fork in run := true
