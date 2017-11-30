@@ -2,23 +2,25 @@
   <div class="container">
   <h3 align="center">Repositories</h3>
   <table>
-    <thead>
+   <!-- <thead>
        <tr>
         <th class="name">Name</th>
         <th class="uri">URI</th>
         <th>Modify</th>
         <th>Delete</th>
        </tr>  
-    </thead>
+    </thead> -->
       <tbody>
         <tr *ngFor="let rep of repositories">
-          <td class="name">{{rep.name}}</td>
-          <td class="uri">{{rep.URI}}</td>
-          <td><button class="item" mat-icon-button (click)="update(rep)"><mat-icon>create</mat-icon></button></td>
-          <td><button class="item" mat-icon-button (click)="delete(rep.id)"><mat-icon>delete</mat-icon></button></td>
+          <td class="name" (click)="update(rep)">{{rep.name}}</td>
+          <td><button mat-icon-button (click)="update(rep)"><mat-icon>create</mat-icon></button></td>
+          <td><button mat-icon-button (click)="delete(rep)"><mat-icon>delete</mat-icon></button></td>
         </tr>  
       </tbody>
   </table>
   <button class="add" matTooltip="Add new Repository" mat-fab matTooltipPosition="above" (click)="create()"><mat-icon>add circle</mat-icon></button>
 </div>
 </div>
+
+
+

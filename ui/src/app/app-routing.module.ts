@@ -4,7 +4,7 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { SearchFormComponent } from './search/search-form.component';
 import { AuthGuard } from './_guards/index';
-import { SettingComponent } from './setting/index';
+import { SettingComponent } from './profile/setting/index';
 import { BookmarksComponent } from './bookmarks/index';
 import { SearchHistoryComponent } from './search-history/index';
 import { DialogRepositoryComponent } from './dialog-repository/index';
@@ -32,7 +32,6 @@ const appRoutes: Routes = [
     { path: 'home', component: SearchFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'home' } },
     { path: 'login', component: LoginComponent, data: { breadcrumb: 'login' } },
     { path: 'register', component: RegisterComponent, data: { breadcrumb: 'register' } },
-    { path: 'setting', component: SettingComponent, canActivate: [AuthGuard], data: { breadcrumb: 'setting' } },
     { path: 'bookmarks', component: BookmarksComponent, canActivate: [AuthGuard], data: { breadcrumb: 'bookmarks' } },
     { path: 'search-history', component: SearchHistoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'search history' } },
     { path: 'setting-rep', component: DialogRepositoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'setting repository' } },

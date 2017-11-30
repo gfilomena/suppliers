@@ -18,6 +18,7 @@ export class DialogRepositoryComponent implements OnInit {
   repositories: Repository[];
   loading = false;
 
+
   constructor(
     public dialog: MatDialog,
     private RepositoryService: RepositoryService,
@@ -48,20 +49,26 @@ export class DialogRepositoryComponent implements OnInit {
 
 
 
-
-  delete(id: string) {
+  delete(rep: Repository) {
     this.loading = true;
-    console.log('id:', id)
+    const dialogc = this.dialog.open(DialogConfirmationDialog, {
+      data: { name: rep.name },
+      height: 'auto'
+    });
 
-    this.RepositoryService.delete(id)
-      .subscribe(
-      data => {
-        this.getAllRepositories();
-      },
-      error => {
-        this.alertService.error(error._body)
-        this.loading = false;
-      })
+    dialogc.afterClosed().subscribe(confirm => {
+      if (confirm) {
+        this.RepositoryService.delete(rep.id)
+          .subscribe(
+          data => {
+            this.getAllRepositories();
+          },
+          error => {
+            this.alertService.error(error._body);
+            this.loading = false;
+          })
+      }
+    });
   }
 
   create() {
@@ -104,6 +111,14 @@ export class DialogRepositoryComponent implements OnInit {
 
   }
 
+}
+
+@Component({
+  selector: 'dialog-confirmation-dialog',
+  templateUrl: 'dialog-confirmation-dialog.html',
+})
+export class DialogConfirmationDialog {
+  constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
 }
 
 

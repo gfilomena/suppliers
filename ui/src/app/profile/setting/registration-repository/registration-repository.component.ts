@@ -1,11 +1,11 @@
 
-import { Repository } from '../../_models/repository';
-import { UserRepository } from '../../_models/user-repository';
+import { Repository } from '../../../_models/repository';
+import { UserRepository } from '../../../_models/user-repository';
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
-import { User } from '../../_models/user';
-import { UserRepositoryService, RepositoryService, AlertService } from '../../_services/index';
+import { User } from '../../../_models/user';
+import { UserRepositoryService, RepositoryService, AlertService } from '../../../_services/index';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 
@@ -60,21 +60,29 @@ export class RegistrationRepositoryComponent implements OnInit {
 
 
 
-    delete(id: string) {
+    delete(reg: UserRepository) {
         this.loading = true;
-        console.log('id:', id)
+        const dialogc = this.dialog.open(DialogRegistrationDialog, {
+            data: { name: reg.repository },
+            height: 'auto'
+        });
 
-        this.userRepositoryService.delete(id)
-            .subscribe(
-            data => {
-                this.getUserRepositories();
-            },
-            error => {
-                this.alertService.error(error._body);
-                this.loading = false;
-            })
+        dialogc.afterClosed().subscribe(confirm => {
+            console.log("confirm", confirm);
+            if (confirm) {
+                this.userRepositoryService.delete(reg.id)
+                    .subscribe(
+                    data => {
+                        this.getUserRepositories();
+                    },
+                    error => {
+                        this.alertService.error(error._body);
+                        this.loading = false;
+                    })
+             }  
+        })
+
     }
-
 
     create() {
 
@@ -86,35 +94,30 @@ export class RegistrationRepositoryComponent implements OnInit {
 
         const sub = dialogRef.componentInstance.onChange.subscribe(() => {
             this.getUserRepositories();
-            console.log('onChange.subscribe->run');
         });
         dialogRef.afterClosed().subscribe(() => {
             // unsubscribe onChange
             this.userRepository = new UserRepository();
             this.userRepository.user = this.currentUser.username;
-            console.log('onChange.UNsubscribe->run');
         });
 
     }
 
     toggle(userRepository: UserRepository) {
 
-        console.log('1 userRepository', userRepository);
         const enabled = !userRepository.enabled;
-        console.log('1 enabled', enabled);
         userRepository.enabled = enabled;
-        console.log('2 userRepository', userRepository);
         const name = userRepository.repository;
         this.userRepositoryService.update(userRepository)
             .subscribe(
             data => {
                 console.log('respose update:', data);
-                this.openSnackBar('The Repository ' + name + ' has been switch ' + enabled, 'OK');
+                this.openSnackBar('The Repository ' + name + ' has been switched to ' + enabled, 'OK');
             },
             error => {
                 this.alertService.error(error._body);
-                this.openSnackBar('The Repository ' + name + ' has not been switched ' + enabled, 'OK');
-            })
+                this.openSnackBar('The Repository ' + name + ' has not been switched to ' + enabled, 'OK');
+            });
 
     }
 
@@ -146,7 +149,13 @@ export class RegistrationRepositoryComponent implements OnInit {
 
 }
 
-
+@Component({
+    selector: 'dialog-confirmation-dialog',
+    templateUrl: 'dialog-confirmation-dialog.html',
+})
+export class DialogRegistrationDialog {
+    constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
+}
 
 
 @Component({
@@ -154,7 +163,7 @@ export class RegistrationRepositoryComponent implements OnInit {
     templateUrl: 'dialog-registration-repository.html',
     styleUrls: ['./registration-repository.component.css']
 })
-export class DialogRegistrationRepository {
+export class DialogRegistrationRepository implements OnInit {
 
 
     submitted = false;
@@ -181,15 +190,13 @@ export class DialogRegistrationRepository {
         this.RepositoryService.getAll()
             .subscribe(
             data => {
-                console.log('data', data);
                 this.repositories = data;
                 localStorage.setItem('repositories', JSON.stringify(this.repositories));
-                console.log('this.repositories', this.repositories);
             },
             error => {
                 this.alertService.error(error._body);
                 this.loading = false;
-            })
+            });
     }
 
     private change(value: any) {
@@ -208,7 +215,6 @@ export class DialogRegistrationRepository {
 
 
     upsert(userRepository: UserRepository) {
-        console.log('UserRepository::', userRepository);
         this.loading = true;
 
         if (userRepository.id) {
@@ -223,21 +229,20 @@ export class DialogRegistrationRepository {
                 error => {
                     this.alertService.error(error._body);
                     this.loading = false;
-                })
+                });
 
         } else {
 
             this.userRepositoryService.create(userRepository)
                 .subscribe(
                 data => {
-                    console.log('new UserRepository', userRepository);
                     this.onChange.emit();
                     this.dialogRef.close();
                 },
                 error => {
                     this.alertService.error(error._body);
                     this.loading = false;
-                })
+                });
 
         }
     }

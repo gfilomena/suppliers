@@ -130,15 +130,15 @@ public class UserController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public Result get(String id){
-        return ok(Json.toJson(userDAO.get(id)));
+    public Result get(String username){
+        return ok(Json.toJson(userDAO.findByUsername(username)));
     }
 
     @Security.Authenticated(Secured.class)
     @BodyParser.Of(BodyParser.Json.class)
-    public Result update(String id){
+    public Result update(String username){
         JsonNode json = request().body().asJson();
-        User userToUpdate=userDAO.get(id);
+        User userToUpdate=userDAO.findByUsername(username);
         if(!json.findPath("firstName").isMissingNode()) userToUpdate.setFirstName(json.findPath("firstName").textValue());
         if(!json.findPath("lastName").isMissingNode()) userToUpdate.setLastName(json.findPath("lastName").textValue());
         if(!json.findPath("email").isMissingNode()) userToUpdate.setEmail(json.findPath("email").textValue());

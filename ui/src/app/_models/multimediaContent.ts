@@ -9,6 +9,7 @@ export class MultimediaContent {
     downloadURI: string
     source: {
         name:string
+        urlPrefix:string
     }
     uri: string
     licenseType: string

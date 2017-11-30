@@ -11,8 +11,8 @@ export class UserService {
         return this.http.get(environment.serviceUrl + "/users", this.jwt()).map((response: Response) => response.json())
     }
 
-    getById(id: string) {
-        return this.http.get(environment.serviceUrl + "/users/" + id, this.jwt()).map((response: Response) => response.json())
+    getByUsername(username: string) {
+        return this.http.get(environment.serviceUrl + "/users/" + username, this.jwt()).map((response: Response) => response.json())
     }
 
     create(user: User) {
@@ -20,7 +20,7 @@ export class UserService {
     }
 
     update(user: User) {
-        return this.http.put(environment.serviceUrl + "/users/" + user.id, user, this.jwt())
+        return this.http.put(environment.serviceUrl + "/users/" + user.username, user, this.jwt())
     }
 
     delete(username: string) {
