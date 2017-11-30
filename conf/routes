@@ -53,7 +53,8 @@ GET       /api/v1/bookmarks/:id              controllers.BookmarkController.get(
 GET       /api/v1/bookmarks/me/              controllers.BookmarkController.findByUser()
 DELETE    /api/v1/bookmarks/me/              controllers.BookmarkController.deleteAllByUser()
 POST      /api/v1/bookmarks                  controllers.BookmarkController.create()
-DELETE    /api/v1/bookmarks/:id              controllers.BookmarkController.delete(id: String)
+# DELETE    /api/v1/bookmarks/:id              controllers.BookmarkController.delete(id: String)
+DELETE    /api/v1/bookmarks                  controllers.BookmarkController.delete(ids: String)
 
 # MCSSR
 POST      /api/v1/mcssr                     controllers.McssrController.create()

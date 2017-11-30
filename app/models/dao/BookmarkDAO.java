@@ -22,4 +22,6 @@ public interface BookmarkDAO extends DAO<Bookmark, ObjectId> {
     boolean isPresent(User user, MultimediaContent mc);
 
     void deleteAllByUser(User user);
+
+    void deleteByIds(List<String> idsToRemove);
 }
