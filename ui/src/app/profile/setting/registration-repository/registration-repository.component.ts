@@ -112,12 +112,12 @@ export class RegistrationRepositoryComponent implements OnInit {
             .subscribe(
             data => {
                 console.log('respose update:', data);
-                this.openSnackBar('The Repository ' + name + ' has been switch ' + enabled, 'OK');
+                this.openSnackBar('The Repository ' + name + ' has been switched to ' + enabled, 'OK');
             },
             error => {
                 this.alertService.error(error._body);
-                this.openSnackBar('The Repository ' + name + ' has not been switched ' + enabled, 'OK');
-            })
+                this.openSnackBar('The Repository ' + name + ' has not been switched to ' + enabled, 'OK');
+            });
 
     }
 
@@ -163,7 +163,7 @@ export class DialogRegistrationDialog {
     templateUrl: 'dialog-registration-repository.html',
     styleUrls: ['./registration-repository.component.css']
 })
-export class DialogRegistrationRepository {
+export class DialogRegistrationRepository implements OnInit {
 
 
     submitted = false;
@@ -190,15 +190,13 @@ export class DialogRegistrationRepository {
         this.RepositoryService.getAll()
             .subscribe(
             data => {
-                console.log('data', data);
                 this.repositories = data;
                 localStorage.setItem('repositories', JSON.stringify(this.repositories));
-                console.log('this.repositories', this.repositories);
             },
             error => {
                 this.alertService.error(error._body);
                 this.loading = false;
-            })
+            });
     }
 
     private change(value: any) {
@@ -217,7 +215,6 @@ export class DialogRegistrationRepository {
 
 
     upsert(userRepository: UserRepository) {
-        console.log('UserRepository::', userRepository);
         this.loading = true;
 
         if (userRepository.id) {
@@ -232,7 +229,7 @@ export class DialogRegistrationRepository {
                 error => {
                     this.alertService.error(error._body);
                     this.loading = false;
-                })
+                });
 
         } else {
 
@@ -245,7 +242,7 @@ export class DialogRegistrationRepository {
                 error => {
                     this.alertService.error(error._body);
                     this.loading = false;
-                })
+                });
 
         }
     }

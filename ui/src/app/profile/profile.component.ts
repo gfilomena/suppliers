@@ -13,7 +13,7 @@ import { Validators } from '@angular/forms';
 })
 export class ProfileComponent implements OnInit {
 
-
+panelOpenState = false;
 submitted = false;
 user;
 
@@ -24,50 +24,46 @@ user;
       ) { }
 
   ngOnInit() {
-     this.user = JSON.parse(localStorage.getItem("currentUser"));
+     this.user = JSON.parse(localStorage.getItem('currentUser'));
      console.log('this.currentUser', this.user);
-     this.user.id = this.user._id;
+     this.getUser();
   }
 
   getUser(){
 
-    this.UserService.getById(this.user)
+    this.UserService.getByUsername(this.user.username)
             .subscribe(
                 data => {
-                    console.log('data',data);
-                    localStorage.setItem("currentUser",JSON.stringify(this.user));
-                    this.openSnackBar('The User has been updated!','update')
-
+                    console.log('getByUsername', data);
+                    this.user = data;
+                    localStorage.setItem('currentUser', JSON.stringify(data));
                 },
                 error => {
-                    this.alertService.error(error._body)
-                    this.openSnackBar('The User has not been updated correctly!','error')
-
-                })
+                    this.alertService.error(error._body);
+                });
   }
 
-  update(){
-    this.submitted = true
+  update() {
+    this.submitted = true;
     this.UserService.update(this.user)
             .subscribe(
                 data => {
                     console.log('data', data);
                     this.openSnackBar('The User has been updated!', 'update');
                     this.submitted = false;
-                    
                 },
                 error => {
-                    this.alertService.error(error._body);
-                    this.openSnackBar('The User has not been updated correctly!', 'error');
+                    console.log('error:', error);
+                    this.openSnackBar('The User has NOT been updated! ' + error, 'error');
                     this.submitted = false;
-                })
+                });
     }
 
    openSnackBar(message: string, action: string) {
     this.snackBar.open(message, action, {
-      duration: 2000,
+      duration: 5000,
     });
-  }
+   }
   }
 
 

@@ -20,7 +20,7 @@ export class UserService {
     }
 
     update(user: User) {
-        return this.http.put(environment.serviceUrl + "/users/" + user.id, user, this.jwt())
+        return this.http.put(environment.serviceUrl + "/users/" + user.username, user, this.jwt())
     }
 
     delete(username: string) {

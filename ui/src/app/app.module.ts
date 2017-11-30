@@ -53,7 +53,7 @@ import {
 import { ComponentsModule } from './shared/components.module';
 // import { SemanticSearchComponent } from './semantic-search/semantic-search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
+import {MatExpansionModule} from '@angular/material/expansion';
 
 @NgModule({
     imports: [
@@ -78,7 +78,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
         MatListModule,
         MatDialogModule,
         ComponentsModule,
-        NgxPaginationModule
+        NgxPaginationModule,
+        MatExpansionModule
     ],
     declarations: [
         AppComponent,
