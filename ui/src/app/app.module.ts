@@ -48,7 +48,8 @@ import {
     MatIconModule,
     MatTooltipModule,
     MatListModule,
-    MatDialogModule
+    MatDialogModule,
+    MatCheckboxModule
 } from '@angular/material';
 import { ComponentsModule } from './shared/components.module';
 // import { SemanticSearchComponent } from './semantic-search/semantic-search.component';
@@ -79,7 +80,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         MatDialogModule,
         ComponentsModule,
         NgxPaginationModule,
-        MatExpansionModule
+        MatExpansionModule,
+        MatCheckboxModule
     ],
     declarations: [
         AppComponent,

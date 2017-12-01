@@ -93,7 +93,6 @@ import { PortalModule } from '@angular/cdk/portal';
     MatButtonModule,
     MatButtonToggleModule,
     MatCardModule,
-    MatCheckboxModule,
     MatChipsModule,
     MatTableModule,
     MatDatepickerModule,

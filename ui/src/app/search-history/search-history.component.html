@@ -1,4 +1,4 @@
-<div>
+<div class="search-history-container">
 
   <smd-fab-speed-dial class="filter"
                       [(open)]="open"
@@ -33,16 +33,23 @@
       </h1>
 
       <mat-list-item *ngFor="let sr of resultsByDate[i]">
+
+        <mat-checkbox [checked]="saveUsername" color="primary"></mat-checkbox>
+
         <span class="hour">
           {{getTime(sr.date)}}
         </span>
+
         <span class="query" (click)="goToSearchForm(sr)">
           {{sr.freeText}}
         </span>
+
       </mat-list-item>
 
     </mat-list>
 
   </mat-card>
+
+
 
 </div>

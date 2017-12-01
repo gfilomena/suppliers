@@ -1,5 +1,5 @@
 .container {
-  margin: 88px 24px 24px 24px;
+  margin-bottom: 24px;
   height: 100%;
 }
 
@@ -50,4 +50,15 @@ h3 {
 
 /deep/ .mat-list-item .mat-list-item-content {
   height: 44px !important;
+}
+
+mat-checkbox {
+  margin-right: 12px;
+  margin-left: 6px;
+  margin-bottom: 1px;
+}
+
+.search-history-container {
+  margin-top: 64px;
+  padding: 24px;
 }
