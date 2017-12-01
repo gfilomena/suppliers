@@ -16,6 +16,7 @@ export class SearchHistoryComponent implements OnInit {
   nResults: number;
   loading: Boolean = false;
   dates: Date[];
+  resultsByDate: any[][] = [[]];
 
   //init param smd-fab-speed-dial
   open: boolean = false;
@@ -92,25 +93,35 @@ export class SearchHistoryComponent implements OnInit {
   private retrieveDates(searchResult: any[]): Date[] {
 
     if (searchResult.length > 0) {
+
       let distinctDates: Date[] = [];
       let currentDate: Date = new Date(searchResult[0]['date']);
       distinctDates.push(currentDate);
+      let dateIndex = 0;
+      this.resultsByDate.push([]);
+
       for (let sr of searchResult) {
         let srDate: Date = new Date(sr['date']);
         if (srDate.getFullYear() != currentDate.getFullYear() ||
-          srDate.getMonth() != currentDate.getMonth() ||
-          srDate.getDate() != currentDate.getDate()) {
+            srDate.getMonth() != currentDate.getMonth() ||
+            srDate.getDate() != currentDate.getDate()) {
           distinctDates.push(srDate);
           currentDate = srDate;
+          this.resultsByDate.push([]);
+          dateIndex++;
         }
+        this.resultsByDate[dateIndex].push(sr);
       }
-      console.log("distinct dates: " + distinctDates);
+
       return distinctDates;
+
     }
 
     return null;
 
   }
+
+
 
   formatDate(date: Date): string {
 

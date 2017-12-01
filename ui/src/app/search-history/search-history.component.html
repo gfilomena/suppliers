@@ -24,7 +24,7 @@
     No history available.
   </h3>
 
-  <mat-card fxFlex class="container" *ngFor="let date of dates">
+  <mat-card fxFlex class="container" *ngFor="let date of dates; let i = index" [attr.data-index]="i">
 
     <mat-list class="list">
 
@@ -32,8 +32,7 @@
         {{formatDate(date)}}
       </h1>
 
-      <mat-list-item *ngFor="let sr of searchResult">
-        <mat-checkbox></mat-checkbox>
+      <mat-list-item *ngFor="let sr of resultsByDate[i]">
         <span class="hour">
           {{getTime(sr.date)}}
         </span>
