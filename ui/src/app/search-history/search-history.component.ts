@@ -24,10 +24,6 @@ export class SearchHistoryComponent implements OnInit {
   direction: string = 'up';
   animationMode: string = 'fling';
 
-  // _click(event: any) {
-  //    console.log(event);
-  // }
-
   constructor(private historysearchService: HistorysearchService, public router: Router, public http: Http, public route: ActivatedRoute) {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
   }
