@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { Http } from '@angular/http';
 import { Router, ActivatedRoute } from '@angular/router';
 import { HistorysearchService } from "../_services/historysearch.service";
 import { User } from "../_models/user";
 import { SearchForm } from '../_models/search-form';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 @Component({
   selector: 'app-search-history',
   templateUrl: './search-history.component.html',
@@ -25,7 +26,15 @@ export class SearchHistoryComponent implements OnInit {
   direction: string = 'up';
   animationMode: string = 'fling';
 
-  constructor(private historysearchService: HistorysearchService, public router: Router, public http: Http, public route: ActivatedRoute) {
+  selected: Selected[] = [];
+  selectAll = false;
+
+  constructor(
+    private historysearchService: HistorysearchService,
+    public router: Router,
+    public http: Http,
+    public route: ActivatedRoute,
+    private dialog: MatDialog) {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
   }
 
@@ -40,6 +49,7 @@ export class SearchHistoryComponent implements OnInit {
       res => {
         console.log('get all history - subscribe OK:', res);
         this.searchResult = this.arrToString(res.reverse());
+        this.initCheckbox();
         this.nResults = this.searchResult.length;
         for (let sr of this.searchResult) sr['checked'] = false;
         this.dates = this.retrieveDates(this.searchResult);
@@ -48,10 +58,98 @@ export class SearchHistoryComponent implements OnInit {
       error => {
         console.log('get all history - subscribe - error:', error);
         this.loading = false;
-      }
-      )
+      });
   }
 
+
+  initCheckbox() {
+    this.selected = [];
+    for (let i = 0; i < this.searchResult.length; i++) {
+        const item: Selected = { id: this.searchResult[i].id, checked : false };
+        this.selected.push(item);
+    }
+   // console.log("this.selected",this.selected);
+}
+
+enableDelete(): boolean {
+    // show the delete button
+    // console.log("enableDelete()", this.selected.find(obj => obj.checked === true));
+    if (this.selected.findIndex(obj => obj.checked === true) !== -1) {
+        return true;
+    }else {
+        return false;
+    }
+}
+
+selecTo(choose: boolean) {
+  this.selected.forEach(function(element) {
+      element.checked = choose;
+  });
+}
+
+getCheckboxValue(id: string): boolean {
+  return this.selected.find(obj => obj.id === id).checked;
+}
+
+setCheckbox(id: string) {
+  const index = this.selected.findIndex(obj => obj.id === id);
+  if (index !== -1) {
+    this.selected[index].checked = !this.selected[index].checked;
+  }
+}
+
+getSelectedCount(): string {
+    const count = this.selected.filter(item => item.checked === true).length;
+    if(count === 1) {
+        return '1 item selected';
+    }else{
+        return count + ' items selected';
+    }
+}
+
+
+deleteSelected() {
+  const dialogc = this.dialog.open(HistoryConfirmationDialog, {
+      data: { message: this.getSelectedCount() },
+      height: 'auto'
+    });
+
+    dialogc.afterClosed().subscribe(confirm => {
+      if (confirm) {
+
+          let deleteList = '';
+          const checked = this.selected.filter(item => item.checked === true);
+          checked.forEach(function(i, idx, array){
+                      deleteList += array[idx].id;
+                  if (idx < array.length - 1) {
+                      deleteList += ',';
+                  }
+           });
+
+           console.log('deleteList:', deleteList);
+
+          this.historysearchService.delete(this.currentUser.username, deleteList)
+              .subscribe(
+              data => {
+                  console.log('data', data);
+                  checked.forEach( items => {
+                      // delete selected
+                      const i = this.selected.findIndex(obj => obj.id === items.id);
+                      this.selected.splice(i, 1);
+                       // delete in histories
+                      const j = this.searchResult.findIndex(obj => obj.id === items.id);
+                      this.searchResult.splice(j, 1);
+                   });
+              },
+              error => {
+                console.log(error);
+              });
+            }
+    });
+}
+
+
+/*
   deleteAll() {
     this.loading = true;
     this.historysearchService.deleteAll(this.currentUser.username)
@@ -65,10 +163,9 @@ export class SearchHistoryComponent implements OnInit {
       error => {
         console.log('delete all history - subscribe - error:', error);
         this.loading = false;
-      }
-      )
+      });
   }
-
+*/
   arrToString(array: any[]) {
     let i: number;
     for (i = 0; i < array.length; i++) {
@@ -113,7 +210,7 @@ export class SearchHistoryComponent implements OnInit {
         }
         this.resultsByDate[dateIndex].push(sr);
       }
-
+      console.log("resultsByDate",this.resultsByDate);
       return distinctDates;
 
     }
@@ -165,4 +262,17 @@ export class SearchHistoryComponent implements OnInit {
                       + date.getFullYear();
   }
 
+}
+
+export interface Selected {
+  id: string;
+  checked: boolean;
+}
+
+@Component({
+  selector: 'dialog-confirmation-dialog',
+  templateUrl: 'dialog-confirmation-dialog.html',
+})
+export class HistoryConfirmationDialog {
+  constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
 }

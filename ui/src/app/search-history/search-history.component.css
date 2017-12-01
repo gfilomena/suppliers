@@ -62,3 +62,33 @@ mat-checkbox {
   margin-top: 64px;
   padding: 24px;
 }
+
+.checkbox {
+  position: absolute;
+  left: 2px;
+  top: 6px;
+  font-size: 20px;
+  color: white;
+  opacity: 0.5;
+}
+
+.checked{
+  color:  #fd9a7a;
+  opacity: 1;
+}
+
+.card-selected{
+  transform: scale3d(0.95, 0.95, 1);
+}
+
+.historybar{
+  color: white;
+  background-color: #fd9a7a;
+  position: absolute;
+  top:0;
+  z-index: 2;
+}
+
+.spacer {
+  flex: 1 1 auto;
+}

@@ -27,14 +27,14 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SettingComponent } from './profile/setting/setting.component';
-import { SearchHistoryComponent } from './search-history/search-history.component';
+import { SearchHistoryComponent, HistoryConfirmationDialog } from './search-history/search-history.component';
 import { BreadcrumbComponent } from './navbar/breadcrumb/breadcrumb.component';
 import {
     DialogRegistrationRepository,
     RegistrationRepositoryComponent,
     DialogRegistrationDialog
 } from './profile/setting/registration-repository/registration-repository.component';
-import { DialogConfirmationDialog } from './bookmarks/bookmarks.component';
+import { BookmarkConfirmationDialog } from './bookmarks/bookmarks.component';
 import { ProfileComponent } from './profile/profile.component';
 import {
     MatSlideToggleModule,
@@ -98,7 +98,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         RegistrationRepositoryComponent,
         ProfileComponent,
         DialogRegistrationDialog,
-        DialogConfirmationDialog
+        BookmarkConfirmationDialog,
+        HistoryConfirmationDialog
         // SemanticSearchComponent
     ],
     providers: [
@@ -113,7 +114,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
         HistorysearchService,
         McssrService
     ],
-    entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog, DialogConfirmationDialog],
+    entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog, BookmarkConfirmationDialog, HistoryConfirmationDialog],
     bootstrap: [AppComponent]
 })
 

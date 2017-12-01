@@ -229,7 +229,7 @@ export class BookmarksComponent implements OnInit {
     }
 
     deleteSelected() {
-        const dialogc = this.dialog.open(DialogConfirmationDialog, {
+        const dialogc = this.dialog.open(BookmarkConfirmationDialog, {
             data: { message: this.getSelectedCount() },
             height: 'auto'
           });
@@ -355,6 +355,6 @@ export interface Selected {
     selector: 'dialog-confirmation-dialog',
     templateUrl: 'dialog-confirmation-dialog.html',
   })
-  export class DialogConfirmationDialog {
+  export class BookmarkConfirmationDialog {
     constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
   }

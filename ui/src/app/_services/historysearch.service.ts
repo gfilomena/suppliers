@@ -5,20 +5,17 @@ import { environment } from '../../environments/environment';
 
 @Injectable()
 export class HistorysearchService {
-    
+
     constructor(private http: Http) { }
 
-    
-
     getSearchResults(username:string) {
-        return this.http.get(environment.serviceUrl + "/users/" + username + "/results",  this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + '/users/' + username + '/results',  this.jwt()).map((response: Response) => response.json());
     }
 
-    deleteAll(username:string) {
-        return this.http.delete(environment.serviceUrl + "/users/" + username + "/results",  this.jwt()).map((response: Response) => response)
+    delete(username: string, id: string) {
+        return this.http.delete(environment.serviceUrl + '/users/' + username + '/results?ids=' + id,  this.jwt()).map((response: Response) => response);
     }
 
-    
     // private helper methods
 
     private jwt() {
