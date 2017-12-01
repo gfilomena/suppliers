@@ -19,7 +19,7 @@ export class SearchHistoryComponent implements OnInit {
   dates: Date[];
   resultsByDate: any[][] = [[]];
 
-  //init param smd-fab-speed-dial
+  // init param smd-fab-speed-dial
   open: boolean = false;
   fixed: boolean = false;
   spin: boolean = false;
@@ -51,7 +51,7 @@ export class SearchHistoryComponent implements OnInit {
         this.searchResult = this.arrToString(res.reverse());
         this.initCheckbox();
         this.nResults = this.searchResult.length;
-        for (let sr of this.searchResult) sr['checked'] = false;
+       // for (let sr of this.searchResult) sr['checked'] = false;    NOT USED
         this.dates = this.retrieveDates(this.searchResult);
         console.log('this.searchResult', this.searchResult);
       },
@@ -65,51 +65,51 @@ export class SearchHistoryComponent implements OnInit {
   initCheckbox() {
     this.selected = [];
     for (let i = 0; i < this.searchResult.length; i++) {
-        const item: Selected = { id: this.searchResult[i].id, checked : false };
-        this.selected.push(item);
+      const item: Selected = { id: this.searchResult[i].id, checked: false };
+      this.selected.push(item);
     }
-   // console.log("this.selected",this.selected);
-}
+    // console.log("this.selected",this.selected);
+  }
 
-enableDelete(): boolean {
+  enableDelete(): boolean {
     // show the delete button
     // console.log("enableDelete()", this.selected.find(obj => obj.checked === true));
     if (this.selected.findIndex(obj => obj.checked === true) !== -1) {
-        return true;
-    }else {
-        return false;
+      return true;
+    } else {
+      return false;
     }
-}
-
-selecTo(choose: boolean) {
-  this.selected.forEach(function(element) {
-      element.checked = choose;
-  });
-}
-
-getCheckboxValue(id: string): boolean {
-  return this.selected.find(obj => obj.id === id).checked;
-}
-
-setCheckbox(id: string) {
-  const index = this.selected.findIndex(obj => obj.id === id);
-  if (index !== -1) {
-    this.selected[index].checked = !this.selected[index].checked;
   }
-}
 
-getSelectedCount(): string {
-    const count = this.selected.filter(item => item.checked === true).length;
-    if(count === 1) {
-        return '1 item selected';
-    }else{
-        return count + ' items selected';
+  selecTo(choose: boolean) {
+    this.selected.forEach(function (element) {
+      element.checked = choose;
+    });
+  }
+
+  getCheckboxValue(id: string): boolean {
+    return this.selected.find(obj => obj.id === id).checked;
+  }
+
+  setCheckbox(id: string) {
+    const index = this.selected.findIndex(obj => obj.id === id);
+    if (index !== -1) {
+      this.selected[index].checked = !this.selected[index].checked;
     }
-}
+  }
+
+  getSelectedCount(): string {
+    const count = this.selected.filter(item => item.checked === true).length;
+    if (count === 1) {
+      return '1 item selected';
+    } else {
+      return count + ' items selected';
+    }
+  }
 
 
-deleteSelected() {
-  const dialogc = this.dialog.open(HistoryConfirmationDialog, {
+  deleteSelected() {
+    const dialogc = this.dialog.open(HistoryConfirmationDialog, {
       data: { message: this.getSelectedCount() },
       height: 'auto'
     });
@@ -117,59 +117,61 @@ deleteSelected() {
     dialogc.afterClosed().subscribe(confirm => {
       if (confirm) {
 
-          let deleteList = '';
-          const checked = this.selected.filter(item => item.checked === true);
-          checked.forEach(function(i, idx, array){
-                      deleteList += array[idx].id;
-                  if (idx < array.length - 1) {
-                      deleteList += ',';
-                  }
-           });
+        let deleteList = '';
+        const checked = this.selected.filter(item => item.checked === true);
+        checked.forEach(function (i, idx, array) {
+          deleteList += array[idx].id;
+          if (idx < array.length - 1) {
+            deleteList += ',';
+          }
+        });
 
-           console.log('deleteList:', deleteList);
+        //console.log('deleteList:', deleteList);
 
-          this.historysearchService.delete(this.currentUser.username, deleteList)
-              .subscribe(
-              data => {
-                  console.log('data', data);
-                  checked.forEach( items => {
-                      // delete selected
-                      const i = this.selected.findIndex(obj => obj.id === items.id);
-                      this.selected.splice(i, 1);
-                       // delete in histories
-                      const j = this.searchResult.findIndex(obj => obj.id === items.id);
-                      this.searchResult.splice(j, 1);
-                   });
-              },
-              error => {
-                console.log(error);
+        this.historysearchService.delete(this.currentUser.username, deleteList)
+          .subscribe(
+          data => {
+            console.log('data', data);
+            checked.forEach(element => {
+              // delete selected
+              const i = this.selected.findIndex(obj => obj.id === element.id);
+              this.selected.splice(i, 1);
+              // delete in histories
+              this.resultsByDate.forEach(items => {
+                const j = items.findIndex(obj => obj.id === element.id);
+                items.splice(j, 1);
               });
-            }
+            });
+          },
+          error => {
+            console.log(error);
+          });
+      }
     });
-}
-
-
-/*
-  deleteAll() {
-    this.loading = true;
-    this.historysearchService.deleteAll(this.currentUser.username)
-      .subscribe(
-      res => {
-        console.log('delete all history - subscribe OK:', res);
-        this.searchResult.splice(0, this.searchResult.length);
-        this.nResults = this.searchResult.length;
-        this.loading = false;
-      },
-      error => {
-        console.log('delete all history - subscribe - error:', error);
-        this.loading = false;
-      });
   }
-*/
+
+
+  /*
+    deleteAll() {
+      this.loading = true;
+      this.historysearchService.deleteAll(this.currentUser.username)
+        .subscribe(
+        res => {
+          console.log('delete all history - subscribe OK:', res);
+          this.searchResult.splice(0, this.searchResult.length);
+          this.nResults = this.searchResult.length;
+          this.loading = false;
+        },
+        error => {
+          console.log('delete all history - subscribe - error:', error);
+          this.loading = false;
+        });
+    }
+  */
   arrToString(array: any[]) {
     let i: number;
     for (i = 0; i < array.length; i++) {
-      array[i].freeText = array[i].freeText.join(" ")
+      array[i].freeText = array[i].freeText.join(' ');
     }
     return array
   }
@@ -185,7 +187,7 @@ deleteSelected() {
   public getTime(isoDate: string): string {
     let date: Date = new Date(isoDate);
     return ((date.getHours() < 10) ? '0' + date.getHours() : date.getHours()) + ':' +
-           ((date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes());
+      ((date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes());
   }
 
   private retrieveDates(searchResult: any[]): Date[] {
@@ -201,8 +203,8 @@ deleteSelected() {
       for (let sr of searchResult) {
         let srDate: Date = new Date(sr['date']);
         if (srDate.getFullYear() != currentDate.getFullYear() ||
-            srDate.getMonth() != currentDate.getMonth() ||
-            srDate.getDate() != currentDate.getDate()) {
+          srDate.getMonth() != currentDate.getMonth() ||
+          srDate.getDate() != currentDate.getDate()) {
           distinctDates.push(srDate);
           currentDate = srDate;
           this.resultsByDate.push([]);
@@ -210,7 +212,6 @@ deleteSelected() {
         }
         this.resultsByDate[dateIndex].push(sr);
       }
-      console.log("resultsByDate",this.resultsByDate);
       return distinctDates;
 
     }
@@ -252,14 +253,14 @@ deleteSelected() {
 
     let today: Date = new Date(Date.now());
     if (date.getFullYear() == today.getFullYear() &&
-        date.getMonth()    == today.getMonth()    &&
-        date.getDate()     == today.getDate())
+      date.getMonth() == today.getMonth() &&
+      date.getDate() == today.getDate())
       dateString += "Today - ";
 
-    return dateString + days[date.getDay()]     + ', '
-                      + date.getDate()          + ' '
-                      + months[date.getMonth()] + ' '
-                      + date.getFullYear();
+    return dateString + days[date.getDay()] + ', '
+      + date.getDate() + ' '
+      + months[date.getMonth()] + ' '
+      + date.getFullYear();
   }
 
 }
