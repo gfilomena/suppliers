@@ -23,6 +23,7 @@ import javax.inject.Inject;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
@@ -117,14 +118,32 @@ public class SearchController extends Controller {
     }
 
     @Security.Authenticated(Secured.class)
-    public CompletionStage<Result> delete(String username){
-        User user=userDAO.findByUsername(username);
-        if(user!=null) {
-            searchResultDAO.deleteAllByUser(user);
-            return CompletableFuture.supplyAsync(() -> ok());
+    public CompletionStage<Result> delete(String username, String ids){
+        if(username==null){
+            return CompletableFuture.supplyAsync(() -> badRequest("The Username should be specified!"));
         }
-        else{
-            return CompletableFuture.supplyAsync(() -> notFound("The Username doesn't exists!"));
+        else {
+            User user = userDAO.findByUsername(username);
+            if (user != null) {
+                List<String> idsToRemove = Arrays.asList(ids.split(","));
+                if (idsToRemove.size() == 0) {
+                    return CompletableFuture.supplyAsync(() -> badRequest("The Bookmark id should be specified as parameter!"));
+                } else if (idsToRemove.size() == 1) {
+                    if (searchResultDAO.get(idsToRemove.get(0)) != null) {
+                        return CompletableFuture.supplyAsync(() -> ok(Json.toJson(searchResultDAO.deleteById(new ObjectId(idsToRemove.get(0))))));
+                    } else {
+                        return CompletableFuture.supplyAsync(() -> notFound("The Bookmark specified doesn't exists!"));
+                    }
+                } else {
+                    return CompletableFuture.supplyAsync(() -> {
+                        idsToRemove.stream()
+                                .forEach(id -> searchResultDAO.deleteById(new ObjectId(id)));
+                        return noContent();
+                    });
+                }
+            } else {
+                return CompletableFuture.supplyAsync(() -> notFound("The Username doesn't exists!"));
+            }
         }
     }
 
