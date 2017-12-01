@@ -12,7 +12,6 @@ import { SearchForm } from '../_models/search-form';
 export class SearchHistoryComponent implements OnInit {
 
   searchResult: any[];
-  selected: boolean[];
   currentUser: User;
   nResults: number;
   loading: Boolean = false;
@@ -42,8 +41,7 @@ export class SearchHistoryComponent implements OnInit {
         console.log('get all history - subscribe OK:', res);
         this.searchResult = this.arrToString(res.reverse());
         this.nResults = this.searchResult.length;
-        this.selected = new Array(this.nResults);
-        for (let i = 0; i < this.nResults; ++i) this.selected[i] = false;
+        for (let sr of this.searchResult) sr['checked'] = false;
         this.dates = this.retrieveDates(this.searchResult);
         console.log('this.searchResult', this.searchResult);
       },

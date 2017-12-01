@@ -34,7 +34,7 @@
 
       <mat-list-item *ngFor="let sr of resultsByDate[i]">
 
-        <mat-checkbox [checked]="saveUsername" color="primary"></mat-checkbox>
+        <mat-checkbox color="primary" (change)="sr['checked'] = !sr['checked']"></mat-checkbox>
 
         <span class="hour">
           {{getTime(sr.date)}}
