@@ -10,27 +10,27 @@ export class BookmarkService {
     constructor(private http: Http) { }
 
     getAll() {
-        return this.http.get(environment.serviceUrl + '/bookmark', this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + '/bookmarks', this.jwt()).map((response: Response) => response.json())
     }
 
     get(id: string) {
-        return this.http.get(environment.serviceUrl + '/bookmark/' + id, this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + '/bookmarks/' + id, this.jwt()).map((response: Response) => response.json())
     }
 
     findByUser() {
-        return this.http.get(environment.serviceUrl + '/bookmark/me/', this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + '/bookmarks/me/', this.jwt()).map((response: Response) => response.json())
     }
 
     create(bookmark: Bookmark) {
-        return this.http.post(environment.serviceUrl + '/bookmark', bookmark, this.jwt());
+        return this.http.post(environment.serviceUrl + '/bookmarks', bookmark, this.jwt());
     }
 
     delete(id: string) {
-        return this.http.delete(environment.serviceUrl + '/bookmark/' + id, this.jwt())
+        return this.http.delete(environment.serviceUrl + '/bookmarks/' + id, this.jwt())
     }
 
     deleteAllByUser() {
-        return this.http.delete(environment.serviceUrl + '/bookmark/me/', this.jwt()).map((response: Response) => response);
+        return this.http.delete(environment.serviceUrl + '/bookmarks/me/', this.jwt()).map((response: Response) => response);
     }
 
     // private helper methods

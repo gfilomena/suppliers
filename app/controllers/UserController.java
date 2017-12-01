@@ -150,7 +150,7 @@ public class UserController extends Controller {
     public Result delete(String username){
         Logger.debug("delete user with username:"+username);
         userDAO.delete(userDAO.findByUsername(username));
-        return ok();
+        return noContent();
     }
 
     @Security.Authenticated(Secured.class)

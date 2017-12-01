@@ -10,7 +10,9 @@ import play.mvc.Result;
 import play.mvc.Security;
 import services.db.MongoDBService;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
@@ -117,7 +119,7 @@ public class BookmarkController extends Controller{
     }
 
 
-    @Security.Authenticated(Secured.class)
+    /*@Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String id){
         if(bookmarkDAO.get(id)!=null) {
             // TODO also delete Multimedia Content related
@@ -125,6 +127,28 @@ public class BookmarkController extends Controller{
         }
         else{
             return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
+        }
+    }*/
+
+    @Security.Authenticated(Secured.class)
+    public CompletionStage<Result> delete(String ids){
+        List<String> idsToRemove=Arrays.asList(ids.split(","));
+        if(idsToRemove.size()==0){
+            return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
+        }
+        else if(idsToRemove.size()==1) {
+            if (bookmarkDAO.get(idsToRemove.get(0)) != null) {
+                // TODO also delete Multimedia Content related
+                return CompletableFuture.supplyAsync(() -> ok(Json.toJson(bookmarkDAO.deleteById(new ObjectId(idsToRemove.get(0))))));
+            }
+            else{
+                return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
+            }
+        }else{
+            return CompletableFuture.supplyAsync(() -> {
+                idsToRemove.stream()
+                        .forEach(id-> bookmarkDAO.deleteById(new ObjectId(id)));
+                return noContent();});
         }
     }
 

@@ -9,27 +9,27 @@ export class RepositoryService {
     constructor(private http: Http) { }
 
     getAll() {
-        return this.http.get(environment.serviceUrl + "/repository", this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/repositories", this.jwt()).map((response: Response) => response.json())
     }
 
     get(id: string) {
-        return this.http.get(environment.serviceUrl + "/repository/" + id, this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/repositories/" + id, this.jwt()).map((response: Response) => response.json())
     }
 
     create(repository: Repository) {
-        return this.http.post(environment.serviceUrl + "/repository", repository, this.jwt())
+        return this.http.post(environment.serviceUrl + "/repositories", repository, this.jwt())
     }
 
     update(repository: Repository) {
-        return this.http.put(environment.serviceUrl + "/repository/" + repository.id ,repository, this.jwt())
+        return this.http.put(environment.serviceUrl + "/repositories/" + repository.id ,repository, this.jwt())
     }
 
     delete(id: string) {
-        return this.http.delete(environment.serviceUrl + "/repository/" + id, this.jwt())
+        return this.http.delete(environment.serviceUrl + "/repositories/" + id, this.jwt())
     }
 
     findRepositoriesByUser() {
-        return this.http.get(environment.serviceUrl + "/repository/me/", this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/repositories/me/", this.jwt()).map((response: Response) => response.json())
     }
 
     // private helper methods

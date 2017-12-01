@@ -11,19 +11,39 @@
 }
 
 h3 {
-  margin-top: 64px;
+  margin-top: 84px;
+  color: #8b8b8b;
+  font-size: 1.4em;
 }
 
 .query:hover {
   cursor: pointer;
 }
 
-.date {
+.hour {
   font-size: small;
-  margin-right: 16px;
-  width: 120px;
+  margin-left: 6px;
+  width: 96px;
+  color: rgb(100, 100, 100);
 }
 
 .list {
   width: 100%;
+}
+
+.container.mat-card {
+  padding: 0;
+}
+
+.mat-subheader {
+  border-bottom: solid 1px lightgray;
+  color: #212121
+}
+
+.mat-list-item:nth-of-type(0) {
+  padding-top: 8px;
+}
+
+.mat-list-item:nth-last-of-type(0) {
+  padding-bottom: 8px;
 }

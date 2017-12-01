@@ -89,25 +89,31 @@ export class SearchHistoryComponent implements OnInit {
 
   public getTime(isoDate: string): string {
     let date: Date = new Date(isoDate);
-    return date.getHours() + ':' + date.getMinutes();
+    return ((date.getHours() < 10) ? '0' + date.getHours() : date.getHours()) + ':' +
+           ((date.getMinutes() < 10) ? '0' + date.getMinutes() : date.getMinutes());
   }
 
   private retrieveDates(searchResult: any[]): Date[] {
 
-    let distinctDates: Date[] = [];
-    let currentDate: Date = new Date(searchResult[0]['date']);
-    distinctDates.push(currentDate);
-    for (let sr of searchResult) {
-      let srDate: Date = new Date(sr['date']);
-      if (srDate.getFullYear() != currentDate.getFullYear() ||
+    if (searchResult.length > 0) {
+      let distinctDates: Date[] = [];
+      let currentDate: Date = new Date(searchResult[0]['date']);
+      distinctDates.push(currentDate);
+      for (let sr of searchResult) {
+        let srDate: Date = new Date(sr['date']);
+        if (srDate.getFullYear() != currentDate.getFullYear() ||
           srDate.getMonth() != currentDate.getMonth() ||
           srDate.getDate() != currentDate.getDate()) {
-        distinctDates.push(srDate);
-        currentDate = srDate;
+          distinctDates.push(srDate);
+          currentDate = srDate;
+        }
       }
+      console.log("distinct dates: " + distinctDates);
+      return distinctDates;
     }
-    console.log("distinct dates: " + distinctDates);
-    return distinctDates;
+
+    return null;
+
   }
 
   formatDate(date: Date): string {

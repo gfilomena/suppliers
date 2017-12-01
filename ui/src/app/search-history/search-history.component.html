@@ -20,21 +20,21 @@
 
   </smd-fab-speed-dial>
 
+  <h3 class="mat-h3" align="center" *ngIf="nResults == 0">
+    No history available.
+  </h3>
+
   <mat-card fxFlex class="container" *ngFor="let date of dates">
 
     <mat-list class="list">
 
-      <h3 class="mat-subheader">
+      <h1 class="mat-subheader">
         {{formatDate(date)}}
-      </h3>
-
-      <mat-list-item class="mat-h3" align="center" *ngIf="nResults == 0">
-        No history available.
-      </mat-list-item>
+      </h1>
 
       <mat-list-item *ngFor="let sr of searchResult">
         <mat-checkbox></mat-checkbox>
-        <span class="date">
+        <span class="hour">
           {{getTime(sr.date)}}
         </span>
         <span class="query" (click)="goToSearchForm(sr)">

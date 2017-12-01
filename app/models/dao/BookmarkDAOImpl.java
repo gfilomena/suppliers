@@ -54,4 +54,10 @@ public class BookmarkDAOImpl extends BasicDAO<Bookmark,ObjectId> implements Book
         MongoDBService.getDatastore().delete(query);
     }
 
+    @Override
+    public void deleteByIds(List<String> idsToRemove) {
+        Query<Bookmark> query=MongoDBService.getDatastore().createQuery(Bookmark.class).field("id").in(idsToRemove);
+        MongoDBService.getDatastore().delete(query);
+    }
+
 }

@@ -13,55 +13,56 @@ GET     /test                       controllers.AsyncController.test
 
 # SEARCH
 GET     /query                      controllers.AsyncController.query
-POST    /search                      controllers.SearchController.search
+POST    /api/v1/search                      controllers.SearchController.search
 
 # USER
-POST   /users/authenticate          controllers.UserController.authenticate
-#GET    /users/login                 controllers.UserController.login
-#GET    /callback                    controllers.UserController.callback(code: String, state: String)
-POST   /users/register              controllers.UserController.register
-POST   /users/logout                controllers.UserController.logout
-GET    /users                       controllers.UserController.getAll
-GET    /users/:username             controllers.UserController.get(username: String)
-PUT    /users/:username             controllers.UserController.update(username: String)
-DELETE /users/:username             controllers.UserController.delete(username: String)
-GET    /users/authorize             controllers.UserController.authorize
+POST   /api/v1/users/authenticate          controllers.UserController.authenticate
+#GET   /api/v1/users/login                 controllers.UserController.login
+#GET   /api/v1/callback                    controllers.UserController.callback(code: String, state: String)
+POST   /api/v1/users/register              controllers.UserController.register
+POST   /api/v1/users/logout                controllers.UserController.logout
+GET    /api/v1/users                       controllers.UserController.getAll
+GET    /api/v1/users/:id                   controllers.UserController.get(id: String)
+PUT    /api/v1/users/:id                   controllers.UserController.update(id: String)
+DELETE /api/v1/users/:username             controllers.UserController.delete(username: String)
+GET    /api/v1/users/authorize             controllers.UserController.authorize
 
 # REGISTRATION
-GET    /registration                  controllers.RegistrationController.getAll()
-GET    /registration/:id              controllers.RegistrationController.get(id: String)
-POST   /registration                  controllers.RegistrationController.create()
-GET    /registration/me/              controllers.RegistrationController.findByUser()
-PUT    /registration/:id              controllers.RegistrationController.update(id: String)
-DELETE /registration/:id              controllers.RegistrationController.delete(id: String)
+GET    /api/v1/registrations                  controllers.RegistrationController.getAll()
+GET    /api/v1/registrations/:id              controllers.RegistrationController.get(id: String)
+POST   /api/v1/registrations                  controllers.RegistrationController.create()
+GET    /api/v1/registrations/me/              controllers.RegistrationController.findByUser()
+PUT    /api/v1/registrations/:id              controllers.RegistrationController.update(id: String)
+DELETE /api/v1/registrations/:id              controllers.RegistrationController.delete(id: String)
 
 # SEARCH RESULT
-GET       /user/:username/results       controllers.SearchController.getSearchResults(username: String)
-DELETE    /user/:username/results       controllers.SearchController.delete(username: String)
+GET       /api/v1/users/:username/results       controllers.SearchController.getSearchResults(username: String)
+DELETE    /api/v1/users/:username/results       controllers.SearchController.delete(username: String)
 
 # REPOSITORY
-GET    /repository                  controllers.RepositoryController.getAll()
-GET    /repository/:id              controllers.RepositoryController.get(id: String)
-POST   /repository                  controllers.RepositoryController.create()
-PUT    /repository/:id              controllers.RepositoryController.update(id: String)
-DELETE /repository/:id              controllers.RepositoryController.delete(id: String)
-GET    /repository/me/              controllers.RegistrationController.findRepositoriesByUser()
+GET    /api/v1/repositories                  controllers.RepositoryController.getAll()
+GET    /api/v1/repositories/:id              controllers.RepositoryController.get(id: String)
+POST   /api/v1/repositories                  controllers.RepositoryController.create()
+PUT    /api/v1/repositories/:id              controllers.RepositoryController.update(id: String)
+DELETE /api/v1/repositories/:id              controllers.RepositoryController.delete(id: String)
+GET    /api/v1/repositories/me/              controllers.RegistrationController.findRepositoriesByUser()
 
 # BOOKMARK
-GET       /bookmark                  controllers.BookmarkController.getAll()
-GET       /bookmark/:id              controllers.BookmarkController.get(id: String)
-GET       /bookmark/me/              controllers.BookmarkController.findByUser()
-DELETE    /bookmark/me/              controllers.BookmarkController.deleteAllByUser()
-POST      /bookmark                  controllers.BookmarkController.create()
-DELETE    /bookmark/:id              controllers.BookmarkController.delete(id: String)
+GET       /api/v1/bookmarks                  controllers.BookmarkController.getAll()
+GET       /api/v1/bookmarks/:id              controllers.BookmarkController.get(id: String)
+GET       /api/v1/bookmarks/me/              controllers.BookmarkController.findByUser()
+DELETE    /api/v1/bookmarks/me/              controllers.BookmarkController.deleteAllByUser()
+POST      /api/v1/bookmarks                  controllers.BookmarkController.create()
+# DELETE    /api/v1/bookmarks/:id              controllers.BookmarkController.delete(id: String)
+DELETE    /api/v1/bookmarks                  controllers.BookmarkController.delete(ids: String)
 
 # MCSSR
-POST      /mcssr                     controllers.McssrController.create()
-POST      /mcssr/tag                 controllers.McssrController.updateTags()
+POST      /api/v1/mcssr                     controllers.McssrController.create()
+POST      /api/v1/mcssr/tag                 controllers.McssrController.updateTags()
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
 # SEMANTIC SEARCH
-POST    /annotations/url            controllers.SemanticController.urlAnnotations()
-POST    /annotations/file           controllers.SemanticController.fileAnnotations()
+POST    /api/v1/annotations/url            controllers.SemanticController.urlAnnotations()
+POST    /api/v1/annotations/file           controllers.SemanticController.fileAnnotations()

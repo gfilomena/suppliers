@@ -11,11 +11,11 @@ export class HistorysearchService {
     
 
     getSearchResults(username:string) {
-        return this.http.get(environment.serviceUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response.json())
+        return this.http.get(environment.serviceUrl + "/users/" + username + "/results",  this.jwt()).map((response: Response) => response.json())
     }
 
     deleteAll(username:string) {
-        return this.http.delete(environment.serviceUrl + "/user/" + username + "/results",  this.jwt()).map((response: Response) => response)
+        return this.http.delete(environment.serviceUrl + "/users/" + username + "/results",  this.jwt()).map((response: Response) => response)
     }
 
     
