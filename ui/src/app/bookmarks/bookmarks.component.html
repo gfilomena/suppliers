@@ -3,9 +3,15 @@
 </div>
 <div fxFlex>
   <div class="container"> <h3 align="center" *ngIf="nResults == 0">No bookmarks available.</h3></div>
+  <mat-toolbar class="deletebar" *ngIf="enableDelete()">
+      <button mat-icon-button matTooltip="Deselect All" (click)="selecTo(false)"><mat-icon >close</mat-icon></button>
+      <span>{{getSelectedCount()}}</span>
+      <span class="spacer"></span>
+      <button mat-icon-button matTooltip="Select All" (click)="selecTo(true)"><mat-icon>done_all</mat-icon></button>
+      <button mat-icon-button matTooltip="Delete selected items"><mat-icon (click)="deleteSelected()">delete</mat-icon></button>
+ </mat-toolbar>
   <div class="container-card">
     <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
-   
     <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
         <smd-fab-trigger [spin]="spin">
             <button mat-fab><mat-icon>apps</mat-icon></button>
@@ -17,7 +23,9 @@
     </smd-fab-speed-dial>
     <div class="sub_container-card" *ngFor="let item of bookmarks">
       <div *ngIf="filter(item.multimediaContent)">
-        <mat-card class="card">
+        <mat-card class="card" [ngClass]="getClassCard(item.id)">
+            <mat-icon  [ngClass]="getClassCheckbox(item.id)" class="checkbox" [id]="item.id" (click)="setCheckbox(item.id)">check_circle</mat-icon>
+           <!-- <mat-checkbox class="checkbox" [id]="item.id"  [ngModel]="getCheckboxValue(item.id)" (change)="setCheckbox(item.id)"></mat-checkbox> -->
           <div class="image-card">
             <img mat-card-image [src]="getImage(item.multimediaContent)" (click)="openDialog(item.multimediaContent)">
             <div class="bar">

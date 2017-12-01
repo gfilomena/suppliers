@@ -26,7 +26,7 @@ export class BookmarkService {
     }
 
     delete(id: string) {
-        return this.http.delete(environment.serviceUrl + '/bookmarks/' + id, this.jwt())
+        return this.http.delete(environment.serviceUrl + '/bookmarks?ids=' + id, this.jwt());
     }
 
     deleteAllByUser() {
