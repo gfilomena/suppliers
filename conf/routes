@@ -37,7 +37,7 @@ DELETE /api/v1/registrations/:id              controllers.RegistrationController
 
 # SEARCH RESULT
 GET       /api/v1/users/:username/results       controllers.SearchController.getSearchResults(username: String)
-DELETE    /api/v1/users/:username/results       controllers.SearchController.delete(username: String)
+DELETE    /api/v1/users/:username/results       controllers.SearchController.delete(username: String, ids: String)
 
 # REPOSITORY
 GET    /api/v1/repositories                  controllers.RepositoryController.getAll()
