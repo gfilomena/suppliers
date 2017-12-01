@@ -34,6 +34,7 @@ import {
     RegistrationRepositoryComponent,
     DialogRegistrationDialog
 } from './profile/setting/registration-repository/registration-repository.component';
+import { DialogConfirmationDialog } from './bookmarks/bookmarks.component';
 import { ProfileComponent } from './profile/profile.component';
 import {
     MatSlideToggleModule,
@@ -94,7 +95,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         DialogRegistrationRepository,
         RegistrationRepositoryComponent,
         ProfileComponent,
-        DialogRegistrationDialog
+        DialogRegistrationDialog,
+        DialogConfirmationDialog
         // SemanticSearchComponent
     ],
     providers: [
@@ -109,7 +111,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
         HistorysearchService,
         McssrService
     ],
-    entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog],
+    entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog, DialogConfirmationDialog],
     bootstrap: [AppComponent]
 })
 
