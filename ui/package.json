@@ -13,7 +13,7 @@
     "play-e2e": "protractor",
     "test-no-watch": "ng test --single-run",
     "build": "ng build --extract-css --progress --output-path ../public/ui",
-    "build-prod": "ng build --env=prod --output-path ../public/ui"
+    "build-prod": "ng build --extract-css --env=prod --output-path ../public/ui"
   },
   "private": true,
   "dependencies": {
