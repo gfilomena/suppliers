@@ -9,7 +9,11 @@ export class HistorysearchService {
     constructor(private http: Http) { }
 
     getSearchResults(username:string) {
-        return this.http.get(environment.serviceUrl + '/users/' + username + '/results',  this.jwt()).map((response: Response) => response.json());
+        return this.http.get(environment.serviceUrl + '/users/' + username + '/results',  this.jwt()).map(res => {
+            const ret = res.json();
+            ret.sort((a,b) => a.date < b.date ? -1 : 1);
+            return ret;
+        } );
     }
 
     delete(username: string, id: string) {
