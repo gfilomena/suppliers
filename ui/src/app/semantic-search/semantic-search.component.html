@@ -5,7 +5,9 @@
   <form [formGroup]="form"
         (submit)="onSubmit(form.value)">
 
-    <mat-card-subtitle>Don't know what you are looking for? Enter a URL or upload a document, and let us find some keywords for you!</mat-card-subtitle>
+    <mat-card-subtitle>
+      Don't know what you are looking for? Enter a URL or upload a document, and let us find some keywords for you!
+    </mat-card-subtitle>
 
       <mat-form-field>
         <input matInput
@@ -18,23 +20,22 @@
 
     <div fxLayout="row" fxLayoutAlign="space-between center" class="buttons-wrapper">
 
-      <input-file (onFileSelect)="onFileSelect($event)">
-      </input-file>
+      <input-file (onFileSelect)="onFileSelect($event)"></input-file>
 
-        <span class="file-name" *ngIf="_file">
-          {{_file.name}}
-        </span>
+      <span class="file-name" *ngIf="_file">
+        {{_file.name}}
+      </span>
 
-        <button mat-icon-button
-                *ngIf="_file"
-                (click)="removeFile(null)"
-                class="file-delete-button">
-          <mat-icon>delete</mat-icon>
-        </button>
+      <button mat-icon-button
+              *ngIf="_file"
+              (click)="removeFile(null)"
+              class="file-delete-button">
+        <mat-icon>delete</mat-icon>
+      </button>
 
-        <span *ngIf="_error" class="error">{{_error}}</span>
+      <span *ngIf="_error" class="error">{{_error}}</span>
 
-      <button mat-raised-button
+      <button mat-button
               type="submit"
               class="submit-button"
               (click)="this.onGATESubmit.emit()">
