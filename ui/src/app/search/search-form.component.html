@@ -29,17 +29,17 @@
 
           <div>
             <mat-form-field fxFlex>
+              <button mat-icon-button matPrefix (click)="f.form.valid && onSubmit()">
+                <mat-icon>search</mat-icon>
+              </button>
               <input matInput placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText">
+              <button *ngIf="(searchForm.freeText.length !== 0)" mat-icon-button matSuffix (click)="clear()">
+                <mat-icon>clear</mat-icon>
+              </button>
             </mat-form-field>
           </div>
+
           <div>
-            <!--<div class="typefield">
-              <mat-select placeholder="Type"  id="type" [(ngModel)]="searchForm.type" name="type" fxFlex fxFlexOffset="2">
-                <mat-option *ngFor="let type of types" [value]="type">
-                  {{ type }}
-                </mat-option>
-            </mat-select>
-          </div>-->
             <mat-form-field fxFlex>
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                 [max]="searchForm.endDate" required>
@@ -55,10 +55,10 @@
             <mat-datepicker #enddate></mat-datepicker>
           </div>
 
-          <div align="end" style="margin-bottom: 20px">
-            <button mat-raised-button type="button" (click)="clear()">Clear</button>
-            <button mat-raised-button (click)="f.form.valid && onSubmit()">Search</button>
-          </div>
+          <!--<div align="end" style="margin-bottom: 20px">-->
+            <!--<button mat-raised-button type="button" >Clear</button>-->
+            <!--<button mat-raised-button (click)="f.form.valid && onSubmit()">Search</button>-->
+          <!--</div>-->
 
           <semantic-search (onAnnotationClicked)="addAnnotationToSearchForm($event)"
                            (onGATESubmit)="this.submitted = true"
