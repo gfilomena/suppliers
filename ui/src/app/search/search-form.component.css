@@ -184,14 +184,6 @@ mat-checkbox {
   align-content: flex-end;
 }
 
-form{
-  margin-top: 64px;
-}
-
-.form {
-  max-width: 40vw;
-}
-
 .type{
   position: absolute;
   bottom: 4px;
@@ -241,9 +233,18 @@ form{
   padding: 16px;
 }
 
+form{
+  margin-top: 64px;
+}
+
+.search-bar, .advanced-search {
+  max-width: 40vw;
+  width: 100%;
+}
+
 @media (max-width: 800px) {
 
-  .form {
+  .search-bar, .advanced-search {
     max-width: 100%;
   }
 

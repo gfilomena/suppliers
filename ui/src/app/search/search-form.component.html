@@ -25,47 +25,46 @@
 
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px" class="form-container">
 
-        <mat-card class="form">
+        <mat-form-field class="search-bar" fxFlex>
+          <button mat-icon-button matPrefix (click)="f.form.valid && onSubmit()">
+            <mat-icon>search</mat-icon>
+          </button>
+          <input matInput placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText">
+          <button *ngIf="(searchForm.freeText.length !== 0)" mat-icon-button matSuffix (click)="clear()">
+            <mat-icon>clear</mat-icon>
+          </button>
+        </mat-form-field>
+
+        <mat-expansion-panel class="advanced-search">
+
+          <mat-expansion-panel-header>
+            <mat-panel-title>Advanced search</mat-panel-title>
+          </mat-expansion-panel-header>
 
           <div>
-            <mat-form-field fxFlex>
-              <button mat-icon-button matPrefix (click)="f.form.valid && onSubmit()">
-                <mat-icon>search</mat-icon>
-              </button>
-              <input matInput placeholder="Are you searching for" minlength="1" id="freeText" [(ngModel)]="searchForm.freeText" name="freeText">
-              <button *ngIf="(searchForm.freeText.length !== 0)" mat-icon-button matSuffix (click)="clear()">
-                <mat-icon>clear</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
-
-          <div>
-            <mat-form-field fxFlex>
+            <mat-form-field fxFlex fxLayoutAlign="space-between center">
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
-                [max]="searchForm.endDate" required>
+                     [max]="searchForm.endDate" required>
               <mat-datepicker-toggle matSuffix [for]="startdate"></mat-datepicker-toggle>
             </mat-form-field>
 
             <mat-datepicker #startdate></mat-datepicker>
+
             <mat-form-field fxFlex fxFlexOffset="2">
               <input matInput [matDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
-                [min]="searchForm.inDate" required>
+                     [min]="searchForm.inDate" required>
               <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
             </mat-form-field>
+
             <mat-datepicker #enddate></mat-datepicker>
           </div>
-
-          <!--<div align="end" style="margin-bottom: 20px">-->
-            <!--<button mat-raised-button type="button" >Clear</button>-->
-            <!--<button mat-raised-button (click)="f.form.valid && onSubmit()">Search</button>-->
-          <!--</div>-->
 
           <semantic-search (onAnnotationClicked)="addAnnotationToSearchForm($event)"
                            (onGATESubmit)="this.submitted = true"
                            (onGATEResponse)="this.submitted = false">
           </semantic-search>
 
-        </mat-card>
+        </mat-expansion-panel>
 
       </div>
 
