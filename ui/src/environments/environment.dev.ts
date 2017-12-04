@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  serviceUrl: "http://producerocd.finconsgroup.com"
+  serviceUrl: "http://producerocd.finconsgroup.com/api/v1"
 };

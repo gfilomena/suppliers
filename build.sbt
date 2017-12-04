@@ -67,14 +67,14 @@ lazy val `ui-dev-build` = TaskKey[Unit]("Run UI build when developing the applic
 
 `ui-dev-build` := {
   implicit val UIroot = baseDirectory.value / "ui"
-  if (runDevBuild != Success) throw new Exception("Oops! UI Build crashed.")
+  if (runDevBuild != Success) throw new Exception("Oops! UI dev Build crashed.")
 }
 
 lazy val `ui-prod-build` = TaskKey[Unit]("Run UI build when packaging the application.")
 
 `ui-prod-build` := {
   implicit val UIroot = baseDirectory.value / "ui"
-  if (runProdBuild != Success) throw new Exception("Oops! UI Build crashed.")
+  if (runProdBuild != Success) throw new Exception("Oops! UI Prod Build crashed.")
 }
 
 lazy val `ui-test` = TaskKey[Unit]("Run UI tests when testing application.")
