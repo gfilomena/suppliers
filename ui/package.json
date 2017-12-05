@@ -13,7 +13,11 @@
     "play-e2e": "protractor",
     "test-no-watch": "ng test --single-run",
     "build": "ng build --env=dev",
+    "build-int": "ng build --env=int",
+    "build-prod": "ng build --env=prod",
     "postbuild": "npm run deploy",
+    "postbuild-int": "npm run deploy",
+    "postbuild-prod": "npm run deploy",
     "predeploy": "rimraf ../public/ui && mkdirp ../public/ui",
     "deploy": "copyfiles dist/** ../public/ui"
   },
