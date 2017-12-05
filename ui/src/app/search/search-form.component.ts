@@ -292,7 +292,7 @@ export class SearchFormComponent {
         if (mc.thumbnail) {
             return mc.thumbnail;
         } else {
-            return '../assets/images/logo_producer_511x103.jpg';
+            return '/assets/images/logo_producer_511x103.jpg';
         }
     }
 

@@ -3,7 +3,7 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.UserController.index
+GET        /             controllers.Assets.at(path="/public/ui/dist", file="index.html")
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
 # An example controller showing how to write asynchronous code
@@ -61,7 +61,7 @@ POST      /api/v1/mcssr                     controllers.McssrController.create()
 POST      /api/v1/mcssr/tag                 controllers.McssrController.updateTags()
 
 # Map static resources from the /public folder to the /assets URL path
-GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
+GET        /*file        controllers.Assets.versioned(path="/public/ui/dist", file: Asset)
 
 # SEMANTIC SEARCH
 POST    /api/v1/annotations/url            controllers.SemanticController.urlAnnotations()
