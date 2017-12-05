@@ -73,15 +73,8 @@ input:-webkit-autofill {
   -webkit-box-shadow: 0 0 0 30px white inset;
 }
 
-.mat-form-field {
-  padding-right: 16px;
-  width: 100%;
-}
-
-.semantic-search {
-  width: 100%;
-}
-
+.mat-form-field,
+.semantic-search,
 .semantic-search > * {
   width: 100%;
 }
