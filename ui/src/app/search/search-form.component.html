@@ -41,8 +41,8 @@
             <mat-panel-title>Advanced search</mat-panel-title>
           </mat-expansion-panel-header>
 
-          <div>
-            <mat-form-field fxFlex fxLayoutAlign="space-between center">
+          <div fxLayout="row">
+            <mat-form-field fxFlex>
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
                      [max]="searchForm.endDate" required>
               <mat-datepicker-toggle matSuffix [for]="startdate"></mat-datepicker-toggle>
@@ -50,7 +50,7 @@
 
             <mat-datepicker #startdate></mat-datepicker>
 
-            <mat-form-field fxFlex fxFlexOffset="2">
+            <mat-form-field fxFlex>
               <input matInput [matDatepicker]="enddate" placeholder="End Date" id="EndDate" [(ngModel)]="searchForm.endDate" name="endDate"
                      [min]="searchForm.inDate" required>
               <mat-datepicker-toggle matSuffix [for]="enddate"></mat-datepicker-toggle>
