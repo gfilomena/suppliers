@@ -12,7 +12,6 @@ import {
          MatNativeDateModule,
          DateAdapter,
          MatDateFormats,
-        //material 2.0.0.beta11
         MatProgressBarModule,
         MatDatepickerModule,
         MatTooltipModule,

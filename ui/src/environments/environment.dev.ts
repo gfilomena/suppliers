@@ -1,4 +1,4 @@
 export const environment = {
-  production: true,
-  serviceUrl: "http://producerocd.finconsgroup.com/api/v1"
-};
+    production: false,
+    serviceUrl: 'http://localhost:9000/api/v1'
+  };
