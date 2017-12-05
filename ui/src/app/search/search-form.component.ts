@@ -4,7 +4,7 @@ import { Repository } from './../_models/repository';
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
 import { Component, Inject, HostListener, Output, EventEmitter, enableProdMode } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router'
+import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../_models/user';
 import { SearchService } from './search.service';
 import { BookmarkService } from '../_services/bookmark.service';
@@ -20,7 +20,7 @@ import {
 } from '@angular/material';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
-import { CustomDateAdapter } from './custom-date-adapter'
+import { CustomDateAdapter } from './custom-date-adapter';
 import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
 import { Filter } from '../_models/filter';

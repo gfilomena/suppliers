@@ -230,6 +230,10 @@ mat-checkbox {
   opacity: 0.5;
 }
 
+.checkbox:hover{
+  opacity: 1;
+}
+
 .checked{
   color:  #fd9a7a;
   opacity: 1;
