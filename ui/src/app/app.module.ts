@@ -23,7 +23,8 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import { NavbarComponent } from './navbar/index';
 import { LoggedinComponent } from './loggedin/index';
-import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+// import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import 'hammerjs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SettingComponent } from './profile/setting/setting.component';
@@ -64,7 +65,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         HttpModule,
         SearchModule,
         AppRoutingModule,
-        NoopAnimationsModule,
+        // NoopAnimationsModule,
+        BrowserAnimationsModule,
         FlexLayoutModule,
         MatSlideToggleModule,
         MatProgressSpinnerModule,
