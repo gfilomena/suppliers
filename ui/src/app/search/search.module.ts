@@ -1,3 +1,4 @@
+import { FilterPipe } from './filter.pipe';
 import { McssrService } from './../_services/mcssr.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -136,6 +137,7 @@ import { PortalModule } from '@angular/cdk/portal';
     BookmarksComponent,
     FilterbarComponent,
     SafePipe,
+    FilterPipe,
     SemanticSearchComponent,
     InputFileComponent,
     DialogConfirmationDialog

@@ -3,7 +3,7 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { Repository } from './../_models/repository';
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
-import { Component, Inject, HostListener, Output, EventEmitter, enableProdMode } from '@angular/core';
+import { Component, Inject, HostListener, Output, EventEmitter, enableProdMode, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../_models/user';
 import { SearchService } from './search.service';
@@ -36,7 +36,8 @@ import { MY_DATE_FORMATS } from './mydateformats';
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
     ],
     templateUrl: './search-form.component.html',
-    styleUrls: ['./search-form.component.css']
+    styleUrls: ['./search-form.component.css'],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SearchFormComponent {
     submitted = false;
@@ -44,15 +45,15 @@ export class SearchFormComponent {
     currentUser: User;
     types = ['Audio', 'Video', 'Text', 'Image'];
     searchForm: SearchForm;
-    searchResult: MultimediaContent[];
+    searchResult: MultimediaContent[] = [];
     filterbar = true;
     showSidebar = false;
     history: any;
     nOfResults: number;
     bookmarks: Bookmark[];
     userRepositories: UserRepository[];
-    activeRepositories: Filter[];
-    activeType: Filter[];
+    activeRepositories: Filter[] = [];
+    activeType: Filter[] = [];
 
     // init param smd-fab-speed-dial
     open = false;
