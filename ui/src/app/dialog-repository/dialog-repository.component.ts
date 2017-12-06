@@ -92,9 +92,6 @@ export class DialogRepositoryComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DialogRepositoryDetail, {
       data: { repository: repository },
-      height: 'auto',
-      width: '40%',
-      position: { top: '0', left: '30%', right: '30%', bottom: '0' }
     });
 
     const sub = dialogRef.componentInstance.onChange.subscribe(() => {
