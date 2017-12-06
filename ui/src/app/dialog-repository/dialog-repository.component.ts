@@ -74,10 +74,7 @@ export class DialogRepositoryComponent implements OnInit {
   create() {
     const repository = new Repository();
     const dialogRef = this.dialog.open(DialogRepositoryDetail, {
-      data: { repository: repository },
-      height: 'auto',
-      width: '40%',
-      position: { top: '0', left: '30%', right: '30%', bottom: '0' }
+      data: { repository: repository }
     });
 
     const sub = dialogRef.componentInstance.onChange.subscribe(() => {
@@ -124,8 +121,7 @@ export class DialogConfirmationDialog {
 
 @Component({
   selector: 'dialog-repository-dialog',
-  templateUrl: 'dialog-repository-dialog.html',
-  styleUrls: ['./dialog-repository.component.css']
+  templateUrl: 'dialog-repository-dialog.html'
 })
 export class DialogRepositoryDetail {
   submitted = false;

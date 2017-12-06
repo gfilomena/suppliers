@@ -2,23 +2,21 @@
 
   <h1 mat-dialog-title>Register Repository</h1>
 
-  <mat-dialog-content>
-    <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px">
-      <mat-form-field floatPlaceholder="never" fxFlex>
+  <mat-dialog-content fxLayout="column">
+      <mat-form-field>
         <input matInput placeholder="Name" value=" " id="name" name="name" required  [(ngModel)]="data.repository.name">
       </mat-form-field>
-      <mat-form-field floatPlaceholder="never" fxFlex>
+      <mat-form-field>
         <input matInput placeholder="URI" value=" " id="URI" name="URI"  required [(ngModel)]="data.repository.URI">
       </mat-form-field>
-      <mat-form-field floatPlaceholder="never" fxFlex>
+      <mat-form-field>
         <input matInput placeholder="urlPrefix" value="" id="urlPrefix" name="urlPrefix" [(ngModel)]="data.repository.urlPrefix">
       </mat-form-field>
-    </div>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
-    <button mat-button (click)="f.form.valid && upsert(data.repository)">OK</button>
     <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
+    <button mat-button (click)="f.form.valid && upsert(data.repository)">OK</button>
     <button mat-button matDialogClose>Cancel</button>
   </mat-dialog-actions>
 
