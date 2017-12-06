@@ -1,19 +1,19 @@
-
-.container{
-    margin-top: 64px;
+.add {
+  position: fixed;
+  bottom: 40px;
+  right: 40px;
 }
 
-.add{
-    position: fixed;
-    bottom:40px;
-    right:40px;
+.container {
+  margin-top: 64px;
 }
 
-.spinner{
-    height:36px;
-    width:36px;
+.spinner {
+  height: 36px;
+  width: 36px;
 }
 
-.name{
-    cursor: pointer;
+.name {
+  cursor: pointer;
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

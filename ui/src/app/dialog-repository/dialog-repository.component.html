@@ -1,26 +1,17 @@
 <div  fxLayout="column"  fxLayoutAlign="center center" fxLayoutGap="5px" >
   <div class="container">
-  <h3 align="center">Repositories</h3>
-  <table>
-   <!-- <thead>
-       <tr>
-        <th class="name">Name</th>
-        <th class="uri">URI</th>
-        <th>Modify</th>
-        <th>Delete</th>
-       </tr>  
-    </thead> -->
+    <h1 align="center" class="mat-h1" style="margin-top: 24px">
+      Repositories
+    </h1>
+    <table>
       <tbody>
-        <tr *ngFor="let rep of repositories">
-          <td class="name" (click)="update(rep)">{{rep.name}}</td>
-          <td><button mat-icon-button (click)="update(rep)"><mat-icon>create</mat-icon></button></td>
-          <td><button mat-icon-button (click)="delete(rep)"><mat-icon>delete</mat-icon></button></td>
-        </tr>  
+      <tr *ngFor="let rep of repositories">
+        <td class="name" (click)="update(rep)">{{rep.name}}</td>
+        <td><button mat-icon-button (click)="update(rep)"><mat-icon>create</mat-icon></button></td>
+        <td><button mat-icon-button (click)="delete(rep)"><mat-icon>delete</mat-icon></button></td>
+      </tr>
       </tbody>
-  </table>
-  <button class="add" matTooltip="Add new Repository" mat-fab matTooltipPosition="above" (click)="create()"><mat-icon>add circle</mat-icon></button>
+    </table>
+    <button class="add" matTooltip="Add new Repository" mat-fab matTooltipPosition="above" (click)="create()"><mat-icon>add circle</mat-icon></button>
+  </div>
 </div>
-</div>
-
-
-
