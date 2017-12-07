@@ -1,5 +1,41 @@
-.card{
-    height: stretch;
+mat-icon {
+  cursor: pointer;
+}
+
+.edit-title-icon {
+  margin-left: 24px;
+}
+
+.bookmark-icon {
+  margin-left: auto;
+  margin-bottom: 20px;
+}
+
+.description {
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.7);
+}
+
+.mat-card-actions {
+  margin-bottom: 0;
+}
+
+iframe {
+  height: 40vw;
+  max-height: 350px;
+}
+
+.dialog-content {
+  max-width: 600px;
+  max-height: 90vh;
+}
+
+.dialog-container {
+  max-height: 90vh;
+}
+
+/deep/.mat-dialog-container {
+  padding-bottom: 0;
 }
 
 .image-card {
@@ -9,9 +45,9 @@
     max-width: 504px;
 }
 
-.video-iframe{
+.video-iframe {
 
-    margin: 0px;
+    margin: 0;
     background-color:transparent;
 }
 
@@ -44,7 +80,7 @@
 }
 
 .detail-button {
-    width:45px;
+  width:45px;
 }
 
 .badge{
@@ -72,6 +108,7 @@
 
 .title{
    width:500px;
+  max-width: 80%;
 }
 
 .logo{
@@ -91,8 +128,4 @@
 bookmarked{
     width: 24px;
     height: 24px;
-}
-
-mat-dialog-container{
-    height: stretch;
 }

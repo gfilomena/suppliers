@@ -119,9 +119,6 @@ export class SearchFormComponent {
 
 
         const dialogRef = this.dialog.open(DialogDetail, {
-            height: 'auto',
-            width: '600px',
-            position: { top: '0', left: '30%', right: '30%', bottom: '0' }
         });
 
 
@@ -382,6 +379,7 @@ export class SearchFormComponent {
     getDate(date: string): string {
         return new Date(date).toLocaleDateString();
     }
+
 
   addAnnotationToSearchForm(annotation: string): void {
 
