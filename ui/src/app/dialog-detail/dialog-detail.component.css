@@ -11,12 +11,17 @@ mat-icon {
   margin-bottom: 20px;
 }
 
+.bookmark-icon:hover {
+  cursor: pointer;
+}
+
 .description {
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
   color: rgba(0, 0, 0, 0.7);
 }
 
 .mat-card-actions {
+  padding-top: 16px;
   margin-bottom: 0;
 }
 
@@ -27,7 +32,8 @@ iframe {
 
 .dialog-content {
   max-width: 600px;
-  max-height: 90vh;
+  max-height: 70vh !important;
+  padding-bottom: 8px;
 }
 
 .dialog-container {
@@ -36,6 +42,14 @@ iframe {
 
 /deep/.mat-dialog-container {
   padding-bottom: 8px;
+}
+
+.mat-chip-list {
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+.tag:nth-child(1) {
+  margin-left: 0;
 }
 
 .image-card {
@@ -84,13 +98,22 @@ iframe {
 }
 
 .badge{
-    font-size: 13px;
-    font-weight: bold;
-    padding: 4px 6px;
-    border-radius: 12px;
+  margin-left: 8px;
+    /*font-size: 13px;*/
+    /*font-weight: bold;*/
+    /*padding: 4px 6px;*/
+    /*border-radius: 12px;*/
     background-color: #fd9a7a;
-    margin-top: 10px;
-    vertical-align: middle;
+    /*margin-top: 10px;*/
+    /*vertical-align: middle;*/
+}
+
+.badge:hover {
+  cursor: pointer;
+}
+
+.video-container {
+  margin-bottom: 16px;
 }
 
 .spinner{
@@ -104,6 +127,7 @@ iframe {
     width:12px;
     font-size: 13px;
     vertical-align: middle;
+    margin-left: 4px;
 }
 
 .title{
@@ -111,10 +135,9 @@ iframe {
   max-width: 80%;
 }
 
-.logo{
-    position: absolute;
-    bottom: 0;
-    left: 5px;
+.logo {
+    margin-right: auto;
+    margin-left: 8px;
 }
 
 .newtag{
