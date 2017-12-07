@@ -35,7 +35,7 @@ iframe {
 }
 
 /deep/.mat-dialog-container {
-  padding-bottom: 0;
+  padding-bottom: 8px;
 }
 
 .image-card {
