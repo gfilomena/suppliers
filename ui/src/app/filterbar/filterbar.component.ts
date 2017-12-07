@@ -39,6 +39,10 @@ export class FilterbarComponent {
     });
   }
 
+  isAllSelected(filter: Filter[]): boolean {
+    return filter.filter(obj => obj.enabled === true).length === filter.length;
+  }
+
 
 }
 
