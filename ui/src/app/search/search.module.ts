@@ -1,4 +1,4 @@
-import { FilterPipe } from './filter.pipe';
+import { FilterSearchPipe } from './filtersearch.pipe';
 import { McssrService } from './../_services/mcssr.service';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -63,7 +63,7 @@ import { OverlayModule } from '@angular/cdk/overlay';
 import { PlatformModule } from '@angular/cdk/platform';
 import { ObserversModule } from '@angular/cdk/observers';
 import { PortalModule } from '@angular/cdk/portal';
-
+import { FilterBookmarkPipe } from '../bookmarks/filterbookmark.pipe'
 
 @NgModule({
   imports: [
@@ -137,7 +137,8 @@ import { PortalModule } from '@angular/cdk/portal';
     BookmarksComponent,
     FilterbarComponent,
     SafePipe,
-    FilterPipe,
+    FilterSearchPipe,
+    FilterBookmarkPipe,
     SemanticSearchComponent,
     InputFileComponent,
     DialogConfirmationDialog

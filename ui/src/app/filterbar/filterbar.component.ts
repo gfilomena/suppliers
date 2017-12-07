@@ -18,12 +18,26 @@ export class FilterbarComponent {
 
   constructor() {
 
-   }
+  }
 
-setSidebar(){
-  this.showSidebar = !this.showSidebar;
-  this.toggle.emit(this.showSidebar);
-}
+  setSidebar() {
+    this.showSidebar = !this.showSidebar;
+    this.toggle.emit(this.showSidebar);
+  }
+
+  selectRep() {
+    const checked = this.activeRepositories.filter(obj => obj.enabled === true).length === this.activeRepositories.length;
+    this.activeRepositories.forEach(function (element) {
+      element.enabled = !checked;
+    });
+  }
+
+  selectType() {
+    const checked = this.activeType.filter(obj => obj.enabled === true).length === this.activeType.length;
+    this.activeType.forEach(function (element) {
+      element.enabled = !checked;
+    });
+  }
 
 
 }

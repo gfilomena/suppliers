@@ -1,6 +1,6 @@
 import { forEach } from '@angular/router/src/utils/collection';
 import { MultimediaContent } from './../_models/multimediaContent';
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Bookmark } from '../_models/bookmark';
 import { BookmarkService, AlertService } from '../_services/index';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
@@ -13,18 +13,19 @@ import { Filter } from '../_models/filter';
 @Component({
     selector: 'app-bookmarks',
     templateUrl: './bookmarks.component.html',
-    styleUrls: ['./bookmarks.component.css']
+    styleUrls: ['./bookmarks.component.css'],
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class BookmarksComponent implements OnInit {
 
-    bookmarks: Bookmark[];
+    bookmarks: Bookmark[] = [];
     nResults: number;
     showSidebar = false;
     submitted = false;
 
     userRepositories: UserRepository[];
-    activeRepositories: Filter[];
-    activeType: Filter[];
+    activeRepositories: Filter[] = [];
+    activeType: Filter[] = [];
 
     // init param smd-fab-speed-dial
     open = false;
@@ -54,7 +55,7 @@ export class BookmarksComponent implements OnInit {
     }
 
     openDialog(item: MultimediaContent) {
-        console.log('item sr', item);
+        //console.log('item sr', item);
         const dialogRef = this.dialog.open(DialogDetail, {
             width: '600px',
             // position: {left: '30%', right: '30%' }
@@ -122,7 +123,7 @@ export class BookmarksComponent implements OnInit {
                 this.submitted = false;
                 this.nResults = data.length;
                 localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
-                console.log(' this.bookmarks', this.bookmarks);
+                //console.log(' this.bookmarks', this.bookmarks);
             },
             error => {
                 this.alertService.error(error._body);
@@ -137,7 +138,7 @@ export class BookmarksComponent implements OnInit {
                 this.userRepositories = data;
                 this.initRepo(this.userRepositories);
                 this.incRepo(this.bookmarks);
-                console.log(' this.userRepositories', this.userRepositories);
+                //console.log(' this.userRepositories', this.userRepositories);
             },
             error => {
                 console.log('getUserRepositories -> error:', error);
@@ -218,7 +219,7 @@ export class BookmarksComponent implements OnInit {
         this.BookmarkService.delete(item.id)
             .subscribe(
             data => {
-                console.log('data', data);
+                //console.log('data', data);
                 const index = this.bookmarks.findIndex(obj => obj.id === item.id);
                 this.bookmarks.splice(index, 1);
                 localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
@@ -246,12 +247,12 @@ export class BookmarksComponent implements OnInit {
                         }
                  });
 
-                 console.log('deleteList:', deleteList);
+                 //console.log('deleteList:', deleteList);
 
                 this.BookmarkService.delete(deleteList)
                     .subscribe(
                     data => {
-                        console.log('data', data);
+                        //console.log('data', data);
                         checked.forEach( items => {
                             // delete selected
                             const i = this.selected.findIndex(obj => obj.id === items.id);
@@ -308,7 +309,7 @@ export class BookmarksComponent implements OnInit {
         lastresearch[index].bookmark = bm.multimediaContent.bookmark;
         localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
     }
-    */
+    
 
     filter(item: MultimediaContent): any {
         if (this.filterRepository(item)) {
@@ -321,7 +322,7 @@ export class BookmarksComponent implements OnInit {
             return false;
         }
     }
-
+*/
 
     sidebar(size: number): number {
         if (this.showSidebar) {
