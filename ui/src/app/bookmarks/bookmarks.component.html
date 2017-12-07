@@ -21,8 +21,8 @@
            <!-- <button mat-mini-fab  matTooltip="Delete All Bookmarks" matTooltipPosition="above" (click)="deleteAllByUser()"><mat-icon>delete</mat-icon></button> -->
           </smd-fab-actions>
     </smd-fab-speed-dial>
-    <div class="sub_container-card" *ngFor="let item of bookmarks">
-      <div *ngIf="filter(item.multimediaContent)">
+    <div class="sub_container-card" *ngFor="let item of bookmarks | filterbookmark: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: p }  ">
+    <!--  <div *ngIf="filter(item.multimediaContent)"> -->
         <mat-card class="card" [ngClass]="getClassCard(item.id)">
             <mat-icon  [ngClass]="getClassCheckbox(item.id)" class="checkbox" [id]="item.id" (click)="setCheckbox(item.id)">check_circle</mat-icon>
            <!-- <mat-checkbox class="checkbox" [id]="item.id"  [ngModel]="getCheckboxValue(item.id)" (change)="setCheckbox(item.id)"></mat-checkbox> -->
@@ -44,8 +44,7 @@
                 </div>
               </div>
               <div (click)="openDialog(item.multimediaContent)" class="title" [matTooltip]="item.multimediaContent.name">{{item.multimediaContent.name}}</div>
-              <button class="del" mat-icon-button matTooltip="Delete Bookmark" (click)="removeBookmark(item)"><mat-icon>cancel</mat-icon></button>
-              <!--<button class="info" mat-icon-button matTooltip="Click for more info." (click)="openDialog(sr)"><mat-icon>info</mat-icon></button>-->
+              <!--<button class="del" mat-icon-button matTooltip="Delete Bookmark" (click)="removeBookmark(item)"><mat-icon>cancel</mat-icon></button>-->
             </div>
           </div>
           <mat-card-content class="content-card">
@@ -56,7 +55,10 @@
             </div>
           </mat-card-content>
         </mat-card>
-      </div>
+      <!--</div>-->
     </div>
   </div>
+  <div class="center">
+      <pagination-controls (pageChange)="p = $event"></pagination-controls> 
+    </div>
 </div>

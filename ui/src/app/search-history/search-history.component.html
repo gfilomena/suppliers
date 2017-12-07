@@ -1,64 +1,48 @@
 <mat-toolbar class="historybar" *ngIf="enableDelete()">
-    <button mat-icon-button matTooltip="Deselect All" (click)="selecTo(false)"><mat-icon >close</mat-icon></button>
-    <span>{{getSelectedCount()}}</span>
-    <span class="spacer"></span>
-    <button mat-icon-button matTooltip="Select All" (click)="selecTo(true)"><mat-icon>done_all</mat-icon></button>
-    <button mat-icon-button matTooltip="Delete selected items"><mat-icon (click)="deleteSelected()">delete</mat-icon></button>
+  <button mat-icon-button matTooltip="Deselect All" (click)="selecTo(false)">
+    <mat-icon>close</mat-icon>
+  </button>
+  <span>{{getSelectedCount()}}</span>
+  <span class="spacer"></span>
+  <button mat-icon-button matTooltip="Select All" (click)="selecTo(true)">
+    <mat-icon>done_all</mat-icon>
+  </button>
+  <button mat-icon-button matTooltip="Delete selected items">
+    <mat-icon (click)="deleteSelected()">delete</mat-icon>
+  </button>
 </mat-toolbar>
 <div class="search-history-container" fxLayout="column">
 
-  <smd-fab-speed-dial class="filter"
-                      [(open)]="open"
-                      [direction]="direction"
-                      [animationMode]="animationMode"
-                      [fixed]="fixed">
-
+  <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
       <button mat-fab>
         <mat-icon>apps</mat-icon>
       </button>
     </smd-fab-trigger>
-
     <smd-fab-actions>
-      <button mat-mini-fab matTooltip="Clear history" matTooltipPosition="above"(click)="deleteAll()">
+      <button mat-mini-fab matTooltip="Clear history" matTooltipPosition="above" (click)="deleteAll()">
         <mat-icon>delete</mat-icon>
       </button>
     </smd-fab-actions>
-
   </smd-fab-speed-dial>
-
-
-
   <h3 class="mat-h3" align="center" *ngIf="nResults == 0">
     No history available.
   </h3>
-
   <mat-card fxFlex class="container" *ngFor="let date of dates; let i = index" [attr.data-index]="i">
-
     <mat-list class="list">
-
       <h1 class="mat-subheader">
         {{formatDate(date)}}
       </h1>
-
       <mat-list-item *ngFor="let sr of resultsByDate[i]">
-
         <!--<mat-checkbox color="primary" [id]="sr.id" [checked]="getCheckboxValue(sr.id)" (change)="setCheckbox(sr.id)"></mat-checkbox>-->
         <mat-checkbox color="primary" [id]="sr.id" [ngModel]="getCheckboxValue(sr.id)" (change)="setCheckbox(sr.id)"></mat-checkbox>
         <span class="hour">
           {{getTime(sr.date)}}
         </span>
-
         <span class="query" (click)="goToSearchForm(sr)">
           {{sr.freeText}}
         </span>
-
       </mat-list-item>
-
     </mat-list>
-
   </mat-card>
-
-
-
 </div>

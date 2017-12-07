@@ -3,7 +3,7 @@ import { OnInit, OnDestroy } from '@angular/core';
 import { Repository } from './../_models/repository';
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
-import { Component, Inject, HostListener, Output, EventEmitter, enableProdMode } from '@angular/core';
+import { Component, Inject, HostListener, Output, EventEmitter, enableProdMode, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { User } from '../_models/user';
 import { SearchService } from './search.service';
@@ -36,7 +36,8 @@ import { MY_DATE_FORMATS } from './mydateformats';
         { provide: MAT_DATE_FORMATS, useValue: MY_DATE_FORMATS }
     ],
     templateUrl: './search-form.component.html',
-    styleUrls: ['./search-form.component.css']
+    styleUrls: ['./search-form.component.css'],
+    changeDetection: ChangeDetectionStrategy.Default
 })
 export class SearchFormComponent {
     submitted = false;
@@ -44,15 +45,15 @@ export class SearchFormComponent {
     currentUser: User;
     types = ['Audio', 'Video', 'Text', 'Image'];
     searchForm: SearchForm;
-    searchResult: MultimediaContent[];
+    searchResult: MultimediaContent[] = [];
     filterbar = true;
     showSidebar = false;
     history: any;
     nOfResults: number;
     bookmarks: Bookmark[];
     userRepositories: UserRepository[];
-    activeRepositories: Filter[];
-    activeType: Filter[];
+    activeRepositories: Filter[] = [];
+    activeType: Filter[] = [];
 
     // init param smd-fab-speed-dial
     open = false;
@@ -111,7 +112,7 @@ export class SearchFormComponent {
     }
 
     change_placeholder(changes: any) {
-        console.log('changes', changes)
+        //console.log('changes', changes)
     }
 
 
@@ -125,7 +126,7 @@ export class SearchFormComponent {
         dialogRef.componentInstance.data = mc;
 
         const sub = dialogRef.componentInstance.mcupdate.subscribe(() => {
-            console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc);
+            //console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc);
             this.UpdateMC(mc);
         });
         dialogRef.afterClosed().subscribe(() => {
@@ -146,7 +147,7 @@ export class SearchFormComponent {
             html.scrollHeight, html.offsetHeight);
         const windowBottom = windowHeight + window.pageYOffset;
         if (windowBottom + 1 >= docHeight) {
-            console.log('bottom reached');
+           // console.log('bottom reached');
         }
 
     }
@@ -162,7 +163,7 @@ export class SearchFormComponent {
     }
 
     clear() {
-        console.log('clear')
+        //console.log('clear')
         localStorage.removeItem('searchForm');
         localStorage.removeItem('lastresearch');
         this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
@@ -243,8 +244,8 @@ export class SearchFormComponent {
     UpdateMC(mc: MultimediaContent) {
         const newSearchResult: MultimediaContent[] = [];
         for (const item of this.searchResult) {
-             const index = this.searchResult.findIndex(obj => obj.uri === mc.uri);
-             this.searchResult[index] = mc;
+            const index = this.searchResult.findIndex(obj => obj.uri === mc.uri);
+            this.searchResult[index] = mc;
         }
         localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
     }
@@ -252,7 +253,7 @@ export class SearchFormComponent {
     saveMC(mc: MultimediaContent) {
 
         const bookmark = new Bookmark(this.currentUser.username, mc);
-        console.log('bookmark:', bookmark);
+        //console.log('bookmark:', bookmark);
 
         this.BookmarkService.create(bookmark)
             .subscribe(
@@ -270,10 +271,10 @@ export class SearchFormComponent {
     }
 
     stateBookmark(mc: MultimediaContent): string {
-       // console.log('mc.bookmark', mc.bookmark);
+        // console.log('mc.bookmark', mc.bookmark);
         if (mc.bookmark) {
             return 'star';
-        }else {
+        } else {
             return 'star_border';
         }
     }
@@ -355,7 +356,7 @@ export class SearchFormComponent {
         }
         return false;
     }
-
+/*
     filter(item: MultimediaContent): any {
         if (this.filterRepository(item)) {
             if (this.activeType) {
@@ -367,7 +368,7 @@ export class SearchFormComponent {
             return false;
         }
     }
-
+*/
     sidebar(size: number): number {
         if (this.showSidebar) {
             return 0;
@@ -380,14 +381,13 @@ export class SearchFormComponent {
         return new Date(date).toLocaleDateString();
     }
 
+    addAnnotationToSearchForm(annotation: string): void {
 
-  addAnnotationToSearchForm(annotation: string): void {
+        (this.searchForm.freeText !== "") ?
+            this.searchForm.freeText += " " + annotation :
+            this.searchForm.freeText += annotation;
 
-      (this.searchForm.freeText !== "") ?
-        this.searchForm.freeText += " " + annotation :
-        this.searchForm.freeText += annotation;
-
-  }
+    }
 
 }
 

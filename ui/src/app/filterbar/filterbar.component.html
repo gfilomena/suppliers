@@ -2,13 +2,13 @@
     <!-- <button [style.right.px]="sidebar(170)" mat-icon-button class="subfilter_button" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar"><mat-icon class="close_icon">tune</mat-icon></button>-->
      <button class="close_button" mat-icon-button (click)="setSidebar()"><mat-icon>close</mat-icon></button>
      <mat-list>
-       <p class="label">Types</p>
+        <span class="label">Types</span><button mat-icon-button [matTooltip]="isAllSelected(activeType) ? 'Deselect all' : 'Select all' " (click)="selectType()"><mat-icon [color]="isAllSelected(activeType) ? 'primary' : 'black' " class="done_all">done_all</mat-icon></button>
        <mat-list-item class="list-item" *ngFor="let elem of activeType">
-          <mat-checkbox [(ngModel)]="elem.enabled" [checked]="elem.enabled">{{elem.name}}<i class="nitem">({{elem.count}})</i></mat-checkbox>
+          <mat-checkbox color="primary" [(ngModel)]="elem.enabled" [checked]="elem.enabled">{{elem.name}}<i class="nitem">({{elem.count}})</i></mat-checkbox>
         </mat-list-item>
-       <p class="label">Repositories</p>
+       <span class="label">Repositories</span><button mat-icon-button [matTooltip]="isAllSelected(activeRepositories) ? 'Deselect all' : 'Select all' " (click)="selectRep()"><mat-icon [color]="isAllSelected(activeRepositories) ? 'primary' : 'black' " class="done_all">done_all</mat-icon></button>
        <mat-list-item class="list-item" *ngFor="let item of activeRepositories">
-         <mat-checkbox [(ngModel)]="item.enabled" [checked]="item.enabled">{{item.name}}<i class="nitem">({{item.count}})</i></mat-checkbox>
+         <mat-checkbox color="primary" [(ngModel)]="item.enabled" [checked]="item.enabled">{{item.name}}<i class="nitem">({{item.count}})</i></mat-checkbox>
        </mat-list-item>
      </mat-list>
 </mat-card>
