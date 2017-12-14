@@ -2,7 +2,7 @@
   <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event)></app-filterbar>
 </div>
 <div fxFlex>
-  <div class="container"> <h3 align="center" *ngIf="nResults == 0">No bookmarks available.</h3></div>
+  <div class="container"> <h3 align="center" *ngIf="!bookmarks || bookmarks.length === 0">No bookmarks available.</h3></div>
   <mat-toolbar class="deletebar" *ngIf="enableDelete()">
       <button mat-icon-button matTooltip="Deselect All" (click)="selecTo(false)"><mat-icon >close</mat-icon></button>
       <span>{{getSelectedCount()}}</span>
@@ -21,7 +21,7 @@
            <!-- <button mat-mini-fab  matTooltip="Delete All Bookmarks" matTooltipPosition="above" (click)="deleteAllByUser()"><mat-icon>delete</mat-icon></button> -->
           </smd-fab-actions>
     </smd-fab-speed-dial>
-    <div class="sub_container-card" *ngFor="let item of bookmarks | filterbookmark: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: p }  ">
+    <div class="sub_container-card" *ngFor="let item of bookmarks | filterbookmark: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: pageEvent }  ">
     <!--  <div *ngIf="filter(item.multimediaContent)"> -->
         <mat-card class="card" [ngClass]="getClassCard(item.id)">
             <mat-icon  [ngClass]="getClassCheckbox(item.id)" class="checkbox" [id]="item.id" (click)="setCheckbox(item.id)">check_circle</mat-icon>
@@ -58,7 +58,15 @@
       <!--</div>-->
     </div>
   </div>
-  <div class="center">
-      <pagination-controls (pageChange)="p = $event"></pagination-controls> 
-    </div>
+  <div class="center" *ngIf="bookmarks && bookmarks.length > 0">
+  <!--  <pagination-controls
+    (pageChange)="p = $event"
+    directionLinks="false"
+    autoHide="true"
+    ></pagination-controls> -->
+    <mat-paginator [length]="bookmarks.length"
+    [pageSize]="pageSize"
+    (page)="pageEvent = $event">
+    </mat-paginator>
+  </div>
 </div>

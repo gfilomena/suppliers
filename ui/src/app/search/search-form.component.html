@@ -72,7 +72,7 @@
 
     <div class="container-card" fxflex>
 
-      <h1 class="mat-h1" *ngIf="nOfResults == 0">No results found!</h1>
+      <h1 class="mat-h1" *ngIf="!searchResult || searchResult.length === 0">No results found!</h1>
 
       <!--<div class="sub_container-card" *ngFor="let sr of searchResult | paginate: { itemsPerPage: 20, currentPage: p }"> -->
           <div class="sub_container-card"  *ngFor="let sr of searchResult | filters: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: p }   ">
@@ -125,7 +125,7 @@
       </div>
 
     </div>
-    <div class="center">
+    <div class="center" *ngIf="searchResult && searchResult.length > 0">
       <pagination-controls (pageChange)="p = $event"></pagination-controls> 
     </div>
   </div>

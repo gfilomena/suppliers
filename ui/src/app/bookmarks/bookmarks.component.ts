@@ -1,4 +1,3 @@
-import { forEach } from '@angular/router/src/utils/collection';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 import { Bookmark } from '../_models/bookmark';
@@ -8,7 +7,7 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
 import { Filter } from '../_models/filter';
-
+import { PageEvent } from '@angular/material';
 
 @Component({
     selector: 'app-bookmarks',
@@ -37,8 +36,13 @@ export class BookmarksComponent implements OnInit {
 
     selected: Selected[] = [];
     selectAll = false;
-
     loading = false;
+    
+    pageSize = 10;
+    pageSizeOptions = [5, 10, 25, 100];
+
+      // MatPaginator Output
+      pageEvent: PageEvent;
 
     constructor(private BookmarkService: BookmarkService,
         private alertService: AlertService,
