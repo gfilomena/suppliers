@@ -1,32 +1,32 @@
-<mat-dialog-content class="dialog-content">
+<mat-card-header>
 
-  <mat-card-header>
+  <mat-form-field class="title">
 
-    <mat-form-field class="title">
+    <input matInput [(ngModel)]="data.name" [disabled]="isDisabled()">
 
-      <input matInput [(ngModel)]="data.name" [disabled]="isDisabled()">
-
-      <mat-icon matSuffix
-                matTooltip="Edit Title"
-                (click)="toggle()"
-                class="edit-title-icon">
-        mode_edit
-      </mat-icon>
-
-    </mat-form-field>
-
-    <mat-icon matTooltip="Save Bookmark"
-              matTooltipPosition="above"
-              (click)="checkSaveBookmark(data)"
-              id="({{data.uri}})"
-              class="bookmark-icon"
-              fxFlexAlign="center">
-      {{stateBookmark(data)}}
+    <mat-icon matSuffix
+              matTooltip="Edit Title"
+              (click)="toggle()"
+              class="edit-title-icon">
+      mode_edit
     </mat-icon>
 
-  </mat-card-header>
+  </mat-form-field>
 
-  <div [ngSwitch]="data.type">
+  <mat-icon matTooltip="Save Bookmark"
+            matTooltipPosition="above"
+            (click)="checkSaveBookmark(data)"
+            id="({{data.uri}})"
+            class="bookmark-icon"
+            fxFlexAlign="center">
+    {{stateBookmark(data)}}
+  </mat-icon>
+
+</mat-card-header>
+
+<mat-dialog-content class="dialog-content">
+
+  <div [ngSwitch]="data.type" class="video-container">
     <div *ngSwitchCase="'video'">
       <div *ngIf="data.source.name == 'InternetArchive'; else defaultvideo">
         <video id="video" width="100%" autoplay controls onerror="alert('first error event')">
@@ -61,18 +61,19 @@
       <div class="description">{{data.description}}</div>
     </mat-card-content>
 
+    <mat-form-field class="newtag">
+      <input #newtag matInput id="newtag" placeholder="Add Tag" value="" (keyup.enter)="saveTag(data, newtag.value)">
+    </mat-form-field>
+
     <mat-chip-list fxLayout="row">
 
-      <mat-chip *ngFor="let tag of data.metadata" class="badge">
+      <mat-chip color="primary" class="badge" *ngFor="let tag of data.metadata">
         {{tag}}
         <mat-icon class="removeTag" (click)="removeTag(data,tag)">clear</mat-icon>
       </mat-chip>
 
     </mat-chip-list>
 
-    <mat-form-field class="newtag">
-      <input #newtag matInput id="newtag" placeholder="insert Tag" value="" (keyup.enter)="saveTag(data, newtag.value)">
-    </mat-form-field>
     <mat-progress-spinner *ngIf="!formats && data.source.name === 'InternetArchive'" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
     <mat-form-field class="formats" *ngIf="formats" floatPlaceholder="never">
       <mat-select placeholder="select format"  [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
@@ -83,12 +84,20 @@
     </mat-form-field >
   </div>
 
+  <div class="extra-info">
+    <span *ngIf="data.date" class="date">
+      {{data.date | date:'EEEE, d MMMM y'}}
+    </span>
+    <span  *ngIf="data.licenseType"class="license">
+      License: {{data.license}}
+    </span>
+  </div>
+
 </mat-dialog-content>
 
 <mat-card-actions align="end">
   <a class="logo" [href]="data.uri"><img src="/assets/images/{{data.source.name}}.png"/></a>
-  <a class="logo" [href]="data.uri"><img src="/assets/images/{{data.source.name}}.png"/></a>
   <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
-  <button mat-button *ngIf="selectedFormat !== ''" (click)="sendMcssr(data)">Send to MCSSR</button>
-  <button mat-button matDialogClose>Close</button>
+  <button mat-raised-button *ngIf="selectedFormat !== ''" (click)="sendMcssr(data)">SEND TO MCSSR</button>
+  <button mat-raised-button matDialogClose>CLOSE</button>
 </mat-card-actions>

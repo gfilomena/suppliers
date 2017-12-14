@@ -1,9 +1,19 @@
 
 <h2 mat-dialog-title>Delete repository registration</h2>
 <mat-dialog-content>
-  <h3>Are you sure to delete the repository registration {{data.name}} ?</h3>
+  Are you sure to delete the repository registration {{data.name}}?
 </mat-dialog-content>
-<mat-dialog-actions>
+<mat-dialog-actions class="confirmation-actions">
   <button mat-button [mat-dialog-close]="true" tabindex="1">Yes</button>
   <button mat-button mat-dialog-close tabindex="-1">No</button>
 </mat-dialog-actions>
+
+<style>
+  mat-dialog-content {
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+  }
+
+  mat-dialog-actions {
+    justify-content: flex-end;
+  }
+</style>

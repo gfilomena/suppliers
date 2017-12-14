@@ -14,7 +14,6 @@ import * as mime from 'mime-types';
 import { CommonModule } from '@angular/common';
 import {CdkTableModule} from "@angular/cdk/table";
 
-
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
   constructor(private sanitizer: DomSanitizer) {}
@@ -336,15 +335,6 @@ export class DialogDetail implements OnInit {
                 this.loaderror = false;
 
             })
-    }
-
-
-
-
-
-
-    getDate(date: string): string {
-        return new Date(date).toString().slice(0, 15);
     }
 
 }
