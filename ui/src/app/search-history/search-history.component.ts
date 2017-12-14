@@ -6,6 +6,7 @@ import { User } from "../_models/user";
 import { SearchForm } from '../_models/search-form';
 import { SearchResult } from '../_models/search-result';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+
 @Component({
   selector: 'app-search-history',
   templateUrl: './search-history.component.html',
@@ -258,49 +259,6 @@ export class SearchHistoryComponent implements OnInit {
 
     return null;
 
-  }
-
-
-
-  public formatDate(date: Date): string {
-
-    let dateString: string = "";
-
-    let months: string[] = [
-      "January",
-      "February",
-      "March",
-      "April",
-      "May",
-      "June",
-      "July",
-      "August",
-      "September",
-      "October",
-      "November",
-      "December"
-    ];
-
-    let days: string[] = [
-      "Monday",
-      "Tuesday",
-      "Wednesday",
-      "Thursday",
-      "Friday",
-      "Saturday",
-      "Sunday"
-    ];
-
-    const today: Date = new Date(Date.now());
-    if (date.getFullYear() == today.getFullYear() &&
-      date.getMonth() == today.getMonth() &&
-      date.getDate() == today.getDate())
-      dateString += "Today - ";
-
-    return dateString + days[date.getDay()] + ', '
-      + date.getDate() + ' '
-      + months[date.getMonth()] + ' '
-      + date.getFullYear();
   }
 
 }

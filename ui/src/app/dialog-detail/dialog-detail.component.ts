@@ -13,7 +13,6 @@ import { mediafile, File } from './../_models/mediafile';
 import * as mime from 'mime-types';
 import { CommonModule } from '@angular/common';
 import {CdkTableModule} from "@angular/cdk/table";
-import { DatePipe} from "@angular/common";
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
