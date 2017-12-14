@@ -1,42 +1,40 @@
-<mat-card>
-  <form name="form" #f="ngForm" novalidate>
-    <mat-card-content>
-      <h3>Register Repository on User</h3>
-      <div fxLayout="column" fxLayoutAlign="start">
-        <div *ngIf="!data.userRepository.id" id="repository">
-        <mat-form-field>
-          <mat-select placeholder="Repository"  [(ngModel)]="data.userRepository.repository"
-            name="repository" required fxflex>
-            <mat-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
-              {{ rep.name }}
-            </mat-option>
-          </mat-select>
-        </mat-form-field> 
-        </div>
-        <div class="repository" *ngIf="data.userRepository.id">
-          <mat-form-field fxFlex>
-            <input matInput placeholder="repository" value=" " id="repository" name="repository" [(ngModel)]="data.userRepository.repository"
-              disabled>
-          </mat-form-field>
-        </div>
+<h2 mat-dialog-title>Register Repository on User</h2>
+<form name="form" #f="ngForm" novalidate>
+  <mat-dialog-content>
+    <div fxLayout="column" fxLayoutAlign="start">
+      <div *ngIf="!data.userRepository.id" id="repository">
+      <mat-form-field>
+        <mat-select placeholder="Repository"  [(ngModel)]="data.userRepository.repository"
+          name="repository" required fxflex>
+          <mat-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
+            {{ rep.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      </div>
+      <div class="repository" *ngIf="data.userRepository.id">
         <mat-form-field fxFlex>
-          <input matInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
-        </mat-form-field>
-        <mat-form-field fxFlex>
-          <input matInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">
-        </mat-form-field>
-        <mat-form-field fxFlex>
-          <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
-        </mat-form-field>
-        <mat-form-field fxFlex>
-          <input matInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token">
+          <input matInput placeholder="repository" value=" " id="repository" name="repository" [(ngModel)]="data.userRepository.repository"
+            disabled>
         </mat-form-field>
       </div>
-    </mat-card-content>
-    <mat-card-actions align="end">
-      <button mat-button (click)="f.form.valid && upsert(data.userRepository)">OK</button>
-      <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
-      <button mat-button (click)="onClose()">Cancel</button>
-    </mat-card-actions>
-  </form>
-</mat-card>
+      <mat-form-field fxFlex>
+        <input matInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
+      </mat-form-field>
+      <mat-form-field fxFlex>
+        <input matInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token">
+      </mat-form-field>
+    </div>
+  </mat-dialog-content>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="f.form.valid && upsert(data.userRepository)">OK</button>
+    <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
+    <button mat-button (click)="onClose()">Cancel</button>
+  </mat-dialog-actions>
+</form>
