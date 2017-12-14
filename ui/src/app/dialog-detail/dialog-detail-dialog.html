@@ -84,6 +84,15 @@
     </mat-form-field >
   </div>
 
+  <div class="extra-info">
+    <span *ngIf="data.date" class="date">
+      {{data.date | date:'EEEE, d MMMM y'}}
+    </span>
+    <span  *ngIf="data.licenseType"class="license">
+      License: {{data.license}}
+    </span>
+  </div>
+
 </mat-dialog-content>
 
 <mat-card-actions align="end">
@@ -92,3 +101,6 @@
   <button mat-raised-button *ngIf="selectedFormat !== ''" (click)="sendMcssr(data)">SEND TO MCSSR</button>
   <button mat-raised-button matDialogClose>CLOSE</button>
 </mat-card-actions>
+
+
+<!-- TODO: add license and date of video -->

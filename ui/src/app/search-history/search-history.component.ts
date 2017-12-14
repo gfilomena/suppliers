@@ -262,7 +262,7 @@ export class SearchHistoryComponent implements OnInit {
 
 
 
-  formatDate(date: Date): string {
+  public formatDate(date: Date): string {
 
     let dateString: string = "";
 

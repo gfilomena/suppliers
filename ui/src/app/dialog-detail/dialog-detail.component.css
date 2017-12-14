@@ -52,6 +52,23 @@ iframe {
   margin-left: 0;
 }
 
+.license, .date {
+  font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: rgba(0, 0, 0, 0.4);
+  font-size: 0.9em;
+}
+
+.license {
+  margin-left: auto;
+  font-style: italic;
+}
+
+.extra-info{
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+}
+
 .image-card {
     height: 60%;
     width: auto;
