@@ -47,3 +47,59 @@ Filters
 - ExampleFilter.java
 
   A simple filter that adds a header to every response.
+
+Semantic Search
+===============
+
+Brief summary of how I setup GATE:
+
+In order for the Semantic Search to work you need:
+
+- GATE Embedded library
+
+- SemanticAnalyzer.java class
+
+- SemanticController.java class
+
+- GATE plugins
+
+- GATE application
+
+- GATE configuration file
+
+Import the GATE Embedded library, see build.sbt.
+
+The class that handles the GATE instance is SemanticAnalyser under
+/app/services/search/semantic/SemanticAnalyzer.java. There you'll find more details on how GATE works, the code is
+commented enough to make a monkey understand it and its main purpose is to communicate with the GATE Embedded library
+and convert the result into json.
+
+The SemanticController class is a very basic interface for the API.
+
+GATE plugins are essential to make GATE Embedded work, they provide things like gazetteers and JAPE syntax files used to
+analyse text; you canNOT import them together with the library, you need to download the GATE application
+(https://gate.ac.uk/download/) and import the plugins you need. After installing GATE you find those under the plugins
+folder of the GATE home directory. Be sure to only import the ones you actually require, since they can be pretty big.
+The ones I included are inside /conf/semantic/plugins/ANNIE. More on GATE plugins here:
+https://gate.ac.uk/gate/doc/plugins.html.
+
+The GATE application (.gapp file) is the file that specifies what plugins GATE will need to use to process text.
+It is basically the glue between the GATE library ad the plugins. This file is what the GATE Developer (the GATE
+software which has the ugly UI) generates when you save an application instance. GATE Developer is included in the GATE
+installation mentioned before, and you need it to generate new applications and edit existing ones.
+Here you can find how to use Gate Developer: https://gate.ac.uk/family/developer.html. The GATE application Semantic
+Search uses is conf/semantic/plugins/ANNIE/ANNIE_with_extras.gapp, which is a modified version of the default one
+(basically I added animals annotations).
+
+The GATE configuration file is conf/semantic/gate.xml, and it sets some GATE initialisation parameters.
+
+This should be enough to include Semantic Search functionality in any Java written application.
+
+For future modifications:
+In order to improve or modify Semantic Search, you need to have a basic knowledge about Information Retrieval, and how
+GATE works. The starting point is usually the default ANNIE application (but you can also use my modified one, as you
+prefer). You use GATE Developer to edit and save the application to a gapp file.
+E.g.: In order for me to add animals annotation to the default ANNIE application I had to add some new gazetteers to the
+ANNIE plugin (animals.lst, animals_cap.lst and animals_lower.lst) containing all the animals I wanted to be recognised
+and some jape rules to the NE transducer (animal.jape) to create the actual annotations. See the GATE documentation for
+more details.

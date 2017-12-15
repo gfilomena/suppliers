@@ -18,8 +18,8 @@ import java.util.*;
  * itself can be modified with the GATE software and reloaded as necessary. Furthermore, the semantic analyzer is
  * compatible with URLs, and is able to analyse the HTM content of web-pages.
  *
- * The ANNIE application used is defined in the "ANNIE_with_extras.gapp" file, and has some additional features like
- * basic animal annotation.
+ * Update: The ANNIE application used is defined in the "ANNIE_with_extras.gapp" file, and has some additional features like
+ * basic animals annotation capabilities.
  *
  * The Class is designed as a Singleton since there needs to be only one initialized Semantic Analyzer.
  */
@@ -137,7 +137,7 @@ public class SemanticAnalyzer {
         try {
             application.execute();
         } catch (ExecutionException e) {
-            throw throwASError("Your document could not be processed; usually that means that no words could " +
+            throw throwAsError("Your document could not be processed; usually that means that no words could " +
                     "be found or that your file is empty.");
         }
 
@@ -178,12 +178,12 @@ public class SemanticAnalyzer {
             params.put("sourceUrl", u);
             doc = (Document) Factory.createResource("gate.corpora.DocumentImpl", params);
         } catch (NullPointerException e) {
-            throw  throwASError("The URL you submitted cannot be reached.");
+            throw  throwAsError("The URL you submitted cannot be reached.");
         } catch (Exception e) {
             if (url.equals(""))
-                throw throwASError("The URL you submitted is empty");
+                throw throwAsError("The URL you submitted is empty");
             else
-                throw throwASError("\""+ url +"\" is not an URL...");
+                throw throwAsError("\""+ url +"\" is not an URL...");
         }
 
         //put the document in the corpus
@@ -197,7 +197,7 @@ public class SemanticAnalyzer {
         try {
             application.execute();
         } catch (ExecutionException e) {
-            throw throwASError("Your document could not be processed; usually that means that no words could " +
+            throw throwAsError("Your document could not be processed; usually that means that no words could " +
                     "be found or that your file is empty.");
         }
 
@@ -375,7 +375,7 @@ public class SemanticAnalyzer {
      * @param message the error type
      * @return String to expose
      */
-    private Exception throwASError(String message) {
+    private Exception throwAsError(String message) {
 
         return new Exception(message);
 
