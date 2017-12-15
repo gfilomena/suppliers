@@ -84,7 +84,7 @@ The ones I included are inside /conf/semantic/plugins/ANNIE. More on GATE plugin
 https://gate.ac.uk/gate/doc/plugins.html.
 
 The GATE application (.gapp file) is the file that specifies what plugins GATE will need to use to process text.
-It is basically the glue between the GATE library ad the plugins. This file is what the GATE Developer (the GATE
+It is basically the glue between the GATE library and the plugins. This file is what the GATE Developer (the GATE
 software which has the ugly UI) generates when you save an application instance. GATE Developer is included in the GATE
 installation mentioned before, and you need it to generate new applications and edit existing ones.
 Here you can find how to use Gate Developer: https://gate.ac.uk/family/developer.html. The GATE application Semantic

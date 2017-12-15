@@ -148,15 +148,15 @@ mat-checkbox {
 .close_icon {
   vertical-align: sub;
 }
-.container{
-  margin-top: 64px;
-}
 
-.container-card {
+.container {
   display: flex;
   flex-flow: row wrap;
   align-content: space-between;
+  align-items: center;
   justify-content: flex-start;
+  margin-top: 64px;
+  padding: 24px;
 }
 
 .sub_container-card {
@@ -259,4 +259,11 @@ h3 {
   margin-top: 84px;
   color: #8b8b8b;
   font-size: 1.4em;
+}
+
+mat-progress-bar {
+  position: fixed;
+  z-index: 2;
+  box-shadow: none;
+  margin-top: -29px;
 }
