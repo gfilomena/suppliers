@@ -49,7 +49,7 @@ export class SearchFormComponent {
     filterbar = true;
     showSidebar = false;
     history: any;
-    nOfResults: number;
+    nOfResults: number = -1;
     bookmarks: Bookmark[];
     userRepositories: UserRepository[];
     activeRepositories: Filter[] = [];
