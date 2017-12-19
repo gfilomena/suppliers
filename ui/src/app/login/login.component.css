@@ -1,3 +1,9 @@
+body {
+  margin: 0;
+  background-color: rgba(255, 168, 117, 0.46);
+
+}
+
 .app-content{
   margin: 100px;
   padding: 50px;
@@ -12,7 +18,11 @@
   font-size: 16px;
 }
 
-.card { width:250px; }
+.card { 
+  margin-top: 50px;
+  width:250px; 
+  background-color: rgba(148, 148, 148, 0.4);
+}
 
 
 .group {
@@ -55,4 +65,11 @@
 }
 #err {
   color : red;
+}
+
+#logo {
+  height: 25px;
+  width: 128px;
+  outline: none;
+  cursor: pointer;
 }

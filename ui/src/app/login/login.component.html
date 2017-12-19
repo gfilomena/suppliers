@@ -1,58 +1,29 @@
-﻿<!--div align="center">
-  <mat-card class="card">
-    <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
-      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-        <h3>Login</h3>
-        <mat-form-field floatPlaceholder="never">
-          <input matInput type="text" placeholder="username" required name="username" [(ngModel)]="model.username" id="username">
-        </mat-form-field>
-        <mat-form-field floatPlaceholder="never">
-          <input matInput type="password" placeholder="password" required name="password" [(ngModel)]="model.password" id="password">
-        </mat-form-field>
-        <button mat-raised-button type="submit" name="login">LOGIN</button>
-        <span id="err"><small>{{errorMsg}}</small></span>
-        <mat-slide-toggle color="primary"><small>Remember me!</small></mat-slide-toggle>
-        <button mat-raised-button [routerLink]="['/register']" name="register">REGISTER</button>
-      </div>
-    </form>
-  </mat-card>
-</div-->
-<div class="div-center">
-  <h1>Welcome to Open Content Discovery Tool!</h1>
-  <mat-card>
-    <mat-card-header>
-      <mat-card-title>Please select the way you want to proceed:</mat-card-title>
-    </mat-card-header>
-    <mat-card-content>
-      <p>
-       You can select the SSO functionality or Username and Password:
-      </p>
-    </mat-card-content>
-    <mat-card-actions>
-      <button (click)="loginSSO()" mat-raised-button type="submit" name="loginSSO">
-        <mat-icon>security</mat-icon>SSO login</button>
-      <button (click)="showForm()" mat-raised-button>
-        <mat-icon>arrow forward</mat-icon>Standard login</button>
-    </mat-card-actions>
-    <div  *ngIf="loginFormEnabled" align="center">
+﻿<div  class="div-center">
+    <div align="center">
         <mat-card class="card">
           <form name="form" (ngSubmit)="f.form.valid && login()" #f="ngForm" novalidate>
             <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-              <h3>Login</h3>
+                <img id="logo" src="/assets/images/logo_producer_511x103.jpg" >
+                <h4>Open Content Discovery Tool</h4>
+                <h5>Login</h5>
+              <!--  <h6>Please select the way you want to proceed: <br> You can select the SSO functionality or Username and Password:</h6> -->
               <mat-form-field floatPlaceholder="never">
                 <input matInput type="text" placeholder="username" required name="username" [(ngModel)]="model.username" id="username">
               </mat-form-field>
               <mat-form-field floatPlaceholder="never">
                 <input matInput type="password" placeholder="password" required name="password" [(ngModel)]="model.password" id="password">
               </mat-form-field>
-              <button mat-raised-button type="submit" name="login">LOGIN</button>
+             
+              <button mat-raised-button color="primary" type="submit" name="login">LOGIN</button>
               <span id="err"><small>{{errorMsg}}</small></span>
               <mat-slide-toggle color="primary"><small>Remember me!</small></mat-slide-toggle>
-              <button mat-raised-button [routerLink]="['/register']" name="register">REGISTER</button>
+              <button mat-raised-button color="accent" [routerLink]="['/register']" name="register">REGISTER</button>
+              
+              <h6>or</h6>
+              <button (click)="loginSSO()" color="warn" mat-raised-button type="submit" name="loginSSO"><mat-icon>security</mat-icon>SSO Login</button>
             </div>
           </form>
         </mat-card>
       </div>
-  </mat-card>
 </div>
 
