@@ -26,8 +26,10 @@
     </smd-fab-speed-dial>
     <div class="sub_container-card" *ngFor="let item of bookmarks | filterbookmark: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: pageEvent }  ">
     <!--  <div *ngIf="filter(item.multimediaContent)"> -->
-        <mat-card class="card" [ngClass]="getClassCard(item.id)">
-            <mat-icon  [ngClass]="getClassCheckbox(item.id)" class="checkbox" [id]="item.id" (click)="setCheckbox(item.id)">check_circle</mat-icon>
+        <mat-card class="card" [ngClass]="getClassCard(item.id)" (mouseenter)="topbarIN($event)" (mouseleave)="topbarOUT($event)">
+          <div class="topbar">
+              <mat-icon  [ngClass]="getClassCheckbox(item.id)" class="checkbox" [id]="item.id" (click)="setCheckbox(item.id)">check_circle</mat-icon>
+          </div>
            <!-- <mat-checkbox class="checkbox" [id]="item.id"  [ngModel]="getCheckboxValue(item.id)" (change)="setCheckbox(item.id)"></mat-checkbox> -->
           <div class="image-card">
             <img mat-card-image [src]="getImage(item.multimediaContent)" (click)="openDialog(item.multimediaContent)">
@@ -50,7 +52,7 @@
               <!--<button class="del" mat-icon-button matTooltip="Delete Bookmark" (click)="removeBookmark(item)"><mat-icon>cancel</mat-icon></button>-->
             </div>
           </div>
-          <mat-card-content class="content-card">
+          <mat-card-content>
             <div class="detail-card" fxLayout="column">
               <div class="description">{{item.multimediaContent.description}}</div>
               <div><img class="logo-card" src="/assets/images/{{item.multimediaContent.source.name}}.png" /></div>

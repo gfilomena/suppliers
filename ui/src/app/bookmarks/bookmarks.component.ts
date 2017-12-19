@@ -1,5 +1,5 @@
 import { MultimediaContent } from './../_models/multimediaContent';
-import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Bookmark } from '../_models/bookmark';
 import { BookmarkService, AlertService } from '../_services/index';
 import { DialogDetail } from '../dialog-detail/dialog-detail.component';
@@ -52,6 +52,23 @@ export class BookmarksComponent implements OnInit {
 
     ngOnInit() {
         this.getAllBookmarks();
+    }
+
+    topbarIN(event){
+        for (let i = 0; i < event.target.childNodes.length; i++) {
+            if (event.target.childNodes[i].className === 'topbar') {
+                event.target.childNodes[i].style.backgroundImage = 'linear-gradient(to top,rgba(0,0,0,0.26),transparent 56px,transparent)';
+            }
+        }
+    }
+
+    topbarOUT(event) {
+        const list = event.target.childNodes;
+        for (let i = 0; i < list.length; i++) {
+            if (list[i].className === 'topbar') {
+                list[i].style.backgroundImage = '';
+            }
+        }
     }
 
     setSidebar(showSidebar) {
@@ -112,6 +129,10 @@ export class BookmarksComponent implements OnInit {
         }else{
             return count + ' items selected';
         }
+    }
+
+    hovercard($event) {
+        console.log("$event",$event);
     }
 
 

@@ -31,6 +31,7 @@
   /* align horizontal */
   align-items: center;
   /* align vertical */
+  cursor: pointer;
 }
 
 .image-card img {
@@ -193,6 +194,23 @@ mat-checkbox {
   bottom: 0;
 }
 
+.topbar {
+  position: absolute;
+  height: 30px;
+  top: 0;
+  left: 0;
+  width: 243px;
+}
+
+
+
+.topbar:hover {
+  
+  /*background-color: rgba(189, 189, 189, 0.50); 
+  background: linear-gradient(to bottom left, rgb(227, 227, 227), rgb(199, 198, 198)); */
+  background-image: linear-gradient(to top,rgba(0,0,0,0.26),transparent 56px,transparent);
+}
+
 .bar {
   position: absolute;
   height: 40px;
@@ -214,11 +232,11 @@ mat-checkbox {
   overflow: hidden;
   text-overflow: ellipsis;
   word-wrap: break-word;
+  cursor: pointer;
 }
 
 .title:hover {
   color: grey;
-  cursor: pointer;
 }
 
 .checkbox {
@@ -227,7 +245,8 @@ mat-checkbox {
   top: 6px;
   font-size: 20px;
   color: white;
-  opacity: 0.5;
+  opacity: 0.7;
+  cursor: pointer;
 }
 
 .checkbox:hover{
