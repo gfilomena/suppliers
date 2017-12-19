@@ -24,7 +24,7 @@
            <!-- <button mat-mini-fab  matTooltip="Delete All Bookmarks" matTooltipPosition="above" (click)="deleteAllByUser()"><mat-icon>delete</mat-icon></button> -->
           </smd-fab-actions>
     </smd-fab-speed-dial>
-    <div class="sub_container-card" *ngFor="let item of bookmarks | filterbookmark: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: pageEvent }  ">
+    <div class="sub_container-card" *ngFor="let item of bookmarks | filterbookmark: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: p }  ">
     <!--  <div *ngIf="filter(item.multimediaContent)"> -->
         <mat-card class="card" [ngClass]="getClassCard(item.id)" (mouseenter)="topbarIN($event)" (mouseleave)="topbarOUT($event)">
           <div class="topbar">
