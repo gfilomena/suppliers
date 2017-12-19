@@ -126,7 +126,11 @@
 
     </div>
     <div class="center" *ngIf="searchResult && searchResult.length > 0">
-      <pagination-controls (pageChange)="p = $event"></pagination-controls>
+      <pagination-controls
+      (pageChange)="p = $event"
+      directionLinks="true"
+      autoHide="true"
+      ></pagination-controls>
     </div>
   </div>
 
