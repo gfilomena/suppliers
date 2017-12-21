@@ -57,6 +57,8 @@ import { ComponentsModule } from './shared/components.module';
 // import { SemanticSearchComponent } from './semantic-search/semantic-search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
+import {NgxOAuthModule} from 'ngx-oauth-client';
+import { Vimeoauth2Component } from './profile/setting/registration-repository/vimeoauth2/vimeoauth2.component't';
 
 @NgModule({
     imports: [
@@ -84,7 +86,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         ComponentsModule,
         NgxPaginationModule,
         MatExpansionModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        NgxOAuthModule
     ],
     declarations: [
         AppComponent,
