@@ -16,7 +16,8 @@ import {
     UserRepositoryService,
     BookmarkService,
     HistorysearchService,
-    McssrService
+    McssrService,
+    VimeoService
     /*PagerService*/
 } from './_services/index';
 import { LoginComponent } from './login/index';
@@ -117,7 +118,8 @@ import {NgxOAuthModule} from 'ngx-oauth-client';
         UserRepositoryService,
         BookmarkService,
         HistorysearchService,
-        McssrService
+        McssrService,
+        VimeoService
     ],
     entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog, BookmarkConfirmationDialog, HistoryConfirmationDialog],
     bootstrap: [AppComponent]

@@ -8,7 +8,7 @@ import { SettingComponent } from './profile/setting/index';
 import { BookmarksComponent } from './bookmarks/index';
 import { SearchHistoryComponent } from './search-history/index';
 import { DialogRepositoryComponent } from './dialog-repository/index';
-import { HashLocationStrategy, Location, LocationStrategy, APP_BASE_HREF } from '@angular/common';
+import { HashLocationStrategy, PathLocationStrategy, Location, LocationStrategy, APP_BASE_HREF } from '@angular/common';
 import { ProfileComponent } from './profile/index';
 const appRoutes: Routes = [
     /*{ path: '',
@@ -44,7 +44,7 @@ const appRoutes: Routes = [
     imports: [RouterModule.forRoot(appRoutes)],
     exports: [RouterModule],
     providers: [
-        { provide: LocationStrategy, useClass: HashLocationStrategy },
+        { provide: LocationStrategy, useClass: PathLocationStrategy },
         { provide: APP_BASE_HREF, useValue: '/' } // <--- this right here
     ]
 })
