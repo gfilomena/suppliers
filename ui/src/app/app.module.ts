@@ -58,7 +58,7 @@ import { ComponentsModule } from './shared/components.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {NgxOAuthModule} from 'ngx-oauth-client';
-import { Vimeoauth2Component } from './profile/setting/registration-repository/vimeoauth2/vimeoauth2.component't';
+
 
 @NgModule({
     imports: [
