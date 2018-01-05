@@ -1,3 +1,5 @@
+import be.objectify.deadbolt.java.cache.HandlerCache;
+import security.MyHandlerCache;
 import services.search.repositories.SearchRepository;
 import services.search.repositories.YoutubeSearchRepository;
 import com.google.inject.AbstractModule;
@@ -33,6 +35,7 @@ public class Module extends AbstractModule {
         bind(Counter.class).to(AtomicCounter.class);
         bind(SearchRepository.class).annotatedWith(Names.named("youtube")).to(YoutubeSearchRepository.class);
         bind(Manager.class).to(SearchManager.class);
+        bind(HandlerCache.class).to(MyHandlerCache.class);
     }
 
 }

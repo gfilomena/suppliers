@@ -17,6 +17,8 @@ export class AuthService {
     scope: 'openid name email'
   });
 
+  userProfile: any;
+
   constructor(public router: Router) {}
 
   public login(): void {
@@ -29,6 +31,7 @@ export class AuthService {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
         this.setSession(authResult);
+        this.getProfile(authResult);
         this.router.navigate(['/home']);
       } else if (err) {
         this.router.navigate(['/home']);
@@ -38,10 +41,16 @@ export class AuthService {
     });
   }
 
+  private getProfile(authResult) {
+    // Use access token to retrieve user's profile and set session
+    this.auth0.client.userInfo(authResult.accessToken, (err, profile) => {
+      this.setProfile(profile);
+    });
+  }
+
   private setSession(authResult): void {
     console.log('Set session');
     const jwtHelper: JwtHelper = new JwtHelper();
-    console.log('Set session');
     // Set the time that the access token will expire at
     const expiresAt = JSON.stringify((authResult.expiresIn * 1000) + new Date().getTime());
     localStorage.setItem('access_token', authResult.accessToken);
@@ -54,11 +63,18 @@ export class AuthService {
     localStorage.setItem('currentUser', params );
   }
 
+  private setProfile(profile){
+    console.log('Set profile');
+    localStorage.setItem('profile', JSON.stringify(profile));
+    this.userProfile = profile;
+  }
+
   public logout(): void {
     // Remove tokens and expiry time from localStorage
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
+    localStorage.removeItem('profile');
     localStorage.removeItem('searchForm');
     localStorage.removeItem('lastresearch');
     localStorage.removeItem('currentUser');
@@ -79,10 +95,10 @@ export class AuthService {
 
   public jwt() {
     // create authorization header with jwt token
-    let access_token = localStorage.getItem("id_token");
+    const access_token = localStorage.getItem('id_token');
     if (access_token) {
-        let headers = new Headers({ "Authorization": "Bearer " + access_token });
-        return new RequestOptions({ headers: headers })
+        const headers = new Headers({ 'Authorization': 'Bearer ' + access_token });
+        return new RequestOptions({ headers: headers });
     }
     return null;
 }

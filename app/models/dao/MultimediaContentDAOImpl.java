@@ -43,5 +43,6 @@ public class MultimediaContentDAOImpl extends BasicDAO<MultimediaContent,ObjectI
     @Override
     public void deleteAll() {
         Query<MultimediaContent> query=MongoDBService.getDatastore().createQuery(MultimediaContent.class);
+        MongoDBService.getDatastore().delete(query);
     }
 }

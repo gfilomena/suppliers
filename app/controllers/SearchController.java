@@ -1,5 +1,9 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
+import be.objectify.deadbolt.java.actions.SubjectNotPresent;
+import be.objectify.deadbolt.java.actions.SubjectPresent;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import models.dao.*;
@@ -52,6 +56,7 @@ public class SearchController extends Controller {
         this.wsclient=wsClient;
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> search() {
         JsonNode jsonRequest = request().body().asJson();

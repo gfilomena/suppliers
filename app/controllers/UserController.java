@@ -13,8 +13,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import common.ConfigObj;
+import models.Role;
 import models.RoleType;
 import models.User;
+import models.dao.RoleDAO;
+import models.dao.RoleDAOImpl;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
 import play.Logger;
@@ -44,6 +47,8 @@ public class UserController extends Controller {
     public static com.typesafe.config.Config CONFIG=ConfigFactory.load();
 
     public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
+
+    public static RoleDAO roleDAO=new RoleDAOImpl(Role.class, MongoDBService.getDatastore());
 
 
 
@@ -111,8 +116,9 @@ public class UserController extends Controller {
             if (userDAO.findByUsername(username) != null) {
                 return badRequest("Username already taken.");
             } else {
-                User user=new User(json.findPath("username").textValue(),json.findPath("password").textValue(),json.findPath("firstName").textValue(),json.findPath("lastName").textValue(),json.findPath("email").textValue(), RoleType.USER );
+                User user=new User(json.findPath("username").textValue(),json.findPath("password").textValue(),json.findPath("firstName").textValue(),json.findPath("lastName").textValue(),json.findPath("email").textValue() );
                 user.setUserId(json.findPath("username").textValue());
+                user.addRole(roleDAO.findByName(RoleType.USER));
                 userDAO.save(user);
                 return created();
             }

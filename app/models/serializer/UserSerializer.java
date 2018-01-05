@@ -33,7 +33,9 @@ public class UserSerializer extends StdSerializer<User> {
         jgen.writeStringField("lastName", value.getLastName());
         jgen.writeStringField("email", value.getEmail());
         jgen.writeStringField("token", value.getToken());
-        jgen.writeStringField("role", value.getRole().name());
+        //jgen.writeStringField("role", value.getRole().name());
+        if(value.getRoles()!=null)   jgen.writeObjectField("roles", value.getRoles());
+        if(value.getRoles()!=null)   jgen.writeObjectField("privileges", value.getPermissions());
         jgen.writeStringField("access_token", value.getAccess_token());
         jgen.writeEndObject();
     }

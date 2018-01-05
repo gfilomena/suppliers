@@ -6,14 +6,21 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTDecodeException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
+import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.typesafe.config.ConfigFactory;
 import common.ConfigObj;
 import exceptions.ValidationJWTException;
+import models.Role;
 import models.RoleType;
 import models.User;
+import models.dao.RoleDAO;
+import models.dao.RoleDAOImpl;
 import models.dao.UserDAO;
 import models.dao.UserDAOImpl;
+import play.Logger;
+import play.libs.Json;
 import play.mvc.Http.Context;
 import play.mvc.Result;
 import play.mvc.Security;
@@ -22,12 +29,15 @@ import utils.SecurityUtils;
 
 import java.io.UnsupportedEncodingException;
 import java.security.interfaces.RSAPublicKey;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 public class Secured extends Security.Authenticator {
 
     public static UserDAO userDAO = new UserDAOImpl(User.class, MongoDBService.getDatastore());
+
+    public static RoleDAO roleDAO = new RoleDAOImpl(Role.class, MongoDBService.getDatastore());
 
     @Override
     public String getUsername(Context ctx) {
@@ -63,9 +73,13 @@ public class Secured extends Security.Authenticator {
                 } else {
                     User newUser = new User();
                     newUser.setUserId(subject);
+                    Map<String, Claim> claims = jwt.getClaims();    //Key is the Claim name
+
                     newUser.setUsername(subject); // TODO set properly the Username of the User if possible. Leave here for testing purpose
                     newUser.setAccess_token(token);
-                    newUser.setRole(RoleType.USER);
+                    newUser.setEmail(claims.get("email").asString());
+                    Role userRole=roleDAO.findByName(RoleType.USER);
+                    newUser.addRole(userRole);
                     userDAO.save(newUser);
                     return newUser;
                 }
