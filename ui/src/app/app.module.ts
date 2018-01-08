@@ -58,7 +58,7 @@ import { ComponentsModule } from './shared/components.module';
 // import { SemanticSearchComponent } from './semantic-search/semantic-search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
-import {NgxOAuthModule} from 'ngx-oauth-client';
+
 
 
 @NgModule({
@@ -87,8 +87,7 @@ import {NgxOAuthModule} from 'ngx-oauth-client';
         ComponentsModule,
         NgxPaginationModule,
         MatExpansionModule,
-        MatCheckboxModule,
-        NgxOAuthModule
+        MatCheckboxModule
     ],
     declarations: [
         AppComponent,
