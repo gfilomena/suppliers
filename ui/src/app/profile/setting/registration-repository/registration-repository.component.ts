@@ -89,7 +89,7 @@ export class RegistrationRepositoryComponent implements OnInit {
         let dialogRef = this.dialog.open(DialogRegistrationRepository, {
             data: { userRepository: this.userRepository },
             height: 'auto',
-            width: '400px',
+            width: 'auto',
         });
 
         const sub = dialogRef.componentInstance.onChange.subscribe(() => {
@@ -132,7 +132,7 @@ export class RegistrationRepositoryComponent implements OnInit {
         const dialogRef = this.dialog.open(DialogRegistrationRepository, {
             data: { userRepository: userRepository },
             height: 'auto',
-            width: '400px'
+            width: 'auto'
         });
 
         const sub = dialogRef.componentInstance.onChange.subscribe(() => {
@@ -188,6 +188,19 @@ export class DialogRegistrationRepository implements OnInit {
 
     ngOnInit() {
         this.getAllRepositories();
+    }
+
+    selectRepository(repository) {
+        this.data.userRepository.repository = repository;
+    }
+
+    showapiKey(repository):boolean {
+        const list: string[] = ['Youtube', 'Pexels', 'Pixabay'];
+        if(list.indexOf(repository) === -1 )  {
+            return false;
+        }
+        return true;
+
     }
 
 
