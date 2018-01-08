@@ -8,7 +8,7 @@ import { User } from '../../../_models/user';
 import { UserRepositoryService, RepositoryService, AlertService, VimeoService } from '../../../_services/index';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute} from "@angular/router";
+import { ActivatedRoute } from "@angular/router";
 
 
 
@@ -30,10 +30,7 @@ export class RegistrationRepositoryComponent implements OnInit {
         public dialog: MatDialog,
         private userRepositoryService: UserRepositoryService,
         private alertService: AlertService,
-        public snackBar: MatSnackBar,
-        private route: ActivatedRoute,
-        private vimeo: VimeoService) {
-        // this.repository=new Repository('Youtube','www.youtube.com','prefix');
+        public snackBar: MatSnackBar) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.userRepository = new UserRepository();
         this.userRepository.user = this.currentUser.username;
@@ -43,8 +40,6 @@ export class RegistrationRepositoryComponent implements OnInit {
     ngOnInit() {
         this.getUserRepositories();
     }
-
-
 
     getUserRepositories() {
         this.userRepositoryService.findByUser()
@@ -61,31 +56,7 @@ export class RegistrationRepositoryComponent implements OnInit {
             })
     }
 
-    getTokenVimeo() {
-        
-            this.route.queryParams.subscribe(params => {
-        
-                        console.log('params[code]', params['code']);
-                        console.log('params[state]', params['state']);
-                        const code = params['code'];
-                        const state = params['state'];
-        
-                        if (code && state === '123') {
-        
-                            this.vimeo.getToken(code).subscribe(
-                                res => {
-                                    console.log('getToken response:', res);
-                                },
-                                error => {
-                                    console.log('getToken error:', error);
-          
-                                }
-                                )
-                        }
-            });
-          }
-        
-
+    
 
 
 
@@ -168,6 +139,8 @@ export class RegistrationRepositoryComponent implements OnInit {
             this.getUserRepositories();
             console.log('onChange.subscribe->run');
         });
+
+
         dialogRef.afterClosed().subscribe(() => {
             // unsubscribe onChange
             console.log('onChange.UNsubscribe->run');
@@ -201,13 +174,17 @@ export class DialogRegistrationRepository implements OnInit {
     loading = false;
     @Output() onChange = new EventEmitter();
 
+    
+
     constructor(
         public dialogRef: MatDialogRef<DialogRegistrationRepository>,
         @Inject(MAT_DIALOG_DATA) public data: any,
         private router: Router,
         private userRepositoryService: UserRepositoryService,
         private RepositoryService: RepositoryService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        private route: ActivatedRoute,
+        public vimeodialog: MatDialog) { }
 
     ngOnInit() {
         this.getAllRepositories();
@@ -275,6 +252,23 @@ export class DialogRegistrationRepository implements OnInit {
 
         }
     }
+
+
+    getTokenVimeo(userRepository: UserRepository) {
+
+               const url = "https://api.vimeo.com/oauth/authorize?client_id=175fc3ce932c67890f60588b6377fbe91ca49e47&response_type=token&redirect_uri= http://localhost:4200/profile&state=123";
+
+               const urlvalue = this.route.fragment['value'];
+               const params = new URLSearchParams(urlvalue);
+               if(params.get('access_token'))  {
+                console.log('params[access_token]', params.get('access_token'));
+                const access_token = params.get('access_token');
+                this.data.userRepository.token = access_token;
+               } else{
+                window.location.href = url;
+               }
+          }
+        
 
     getDate(date: string): string {
         return new Date(date).toString().slice(0, 15);

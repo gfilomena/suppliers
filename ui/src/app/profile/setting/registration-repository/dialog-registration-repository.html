@@ -28,8 +28,7 @@
         <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
       </mat-form-field>
       <mat-form-field fxFlex>
-        <input matInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token">
-        <button mat-button>getToken</button>
+        <input matInput placeholder="token" value="" id="token" name="token"  [(ngModel)]="data.userRepository.token"><button (click)="getTokenVimeo()">get Token</button>
       </mat-form-field>
     </div>
   </mat-dialog-content>
