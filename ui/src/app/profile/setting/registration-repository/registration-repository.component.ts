@@ -5,9 +5,11 @@ import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../../../_models/user';
-import { UserRepositoryService, RepositoryService, AlertService } from '../../../_services/index';
+import { UserRepositoryService, RepositoryService, AlertService, VimeoService } from '../../../_services/index';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
+import { ActivatedRoute} from "@angular/router";
+
 
 
 
@@ -28,7 +30,9 @@ export class RegistrationRepositoryComponent implements OnInit {
         public dialog: MatDialog,
         private userRepositoryService: UserRepositoryService,
         private alertService: AlertService,
-        public snackBar: MatSnackBar) {
+        public snackBar: MatSnackBar,
+        private route: ActivatedRoute,
+        private vimeo: VimeoService) {
         // this.repository=new Repository('Youtube','www.youtube.com','prefix');
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.userRepository = new UserRepository();
@@ -56,6 +60,31 @@ export class RegistrationRepositoryComponent implements OnInit {
                 this.loading = false;
             })
     }
+
+    getTokenVimeo() {
+        
+            this.route.queryParams.subscribe(params => {
+        
+                        console.log('params[code]', params['code']);
+                        console.log('params[state]', params['state']);
+                        const code = params['code'];
+                        const state = params['state'];
+        
+                        if (code && state === '123') {
+        
+                            this.vimeo.getToken(code).subscribe(
+                                res => {
+                                    console.log('getToken response:', res);
+                                },
+                                error => {
+                                    console.log('getToken error:', error);
+          
+                                }
+                                )
+                        }
+            });
+          }
+        
 
 
 
