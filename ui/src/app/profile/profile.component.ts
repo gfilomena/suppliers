@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Repository } from '../_models/repository';
 import { User } from '../_models/user';
-import { UserService, AlertService } from "../_services/index";
+import { UserService, AlertService } from '../_services/index';
 import { MatSnackBar } from '@angular/material';
 import { Validators } from '@angular/forms';
 
@@ -34,8 +34,6 @@ user;
      this.getUser();
   }
 
-
-  
 
   getUser(){
 

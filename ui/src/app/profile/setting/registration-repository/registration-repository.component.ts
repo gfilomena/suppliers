@@ -8,7 +8,7 @@ import { User } from '../../../_models/user';
 import { UserRepositoryService, RepositoryService, AlertService, VimeoService } from '../../../_services/index';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute } from "@angular/router";
+import { ActivatedRoute } from '@angular/router';
 
 
 
@@ -25,12 +25,15 @@ export class RegistrationRepositoryComponent implements OnInit {
     userRepository: UserRepository;
     userRepositories: UserRepository[];
     loading = false;
+    access_token = '';
+    repoid = '';
 
     constructor(
         public dialog: MatDialog,
         private userRepositoryService: UserRepositoryService,
         private alertService: AlertService,
-        public snackBar: MatSnackBar) {
+        public snackBar: MatSnackBar,
+        private route: ActivatedRoute) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
         this.userRepository = new UserRepository();
         this.userRepository.user = this.currentUser.username;
@@ -39,7 +42,41 @@ export class RegistrationRepositoryComponent implements OnInit {
 
     ngOnInit() {
         this.getUserRepositories();
+        
     }
+
+    
+    getToken() {
+        
+                       const url = "https://api.vimeo.com/oauth/authorize?client_id=175fc3ce932c67890f60588b6377fbe91ca49e47&response_type=token&redirect_uri= http://localhost:4200/profile&state="+this.repoid;
+        
+                       const urlvalue = this.route.fragment['value'];
+                       const params = new URLSearchParams(urlvalue);
+                       if(params.get('access_token'))  {
+                        console.log('params[access_token]', params.get('access_token'));
+                        console.log('params.get(state)', params.get('state'));
+                        this.access_token = params.get('access_token');
+                        
+                        if(params.get('state')) {
+                            const id = params.get('state');
+                            let item = this.userRepositories.find(obj => obj.id === id);
+                            if (item) {
+                                item.token = this.access_token;
+                                this.update(item);
+                            }else {
+                                this.create();
+                            }
+                        }
+      
+                        
+                       } else{
+                        this.access_token = '';
+                        //window.location.href = url;
+                       }
+                  }
+    
+    
+      
 
     getUserRepositories() {
         this.userRepositoryService.findByUser()
@@ -47,6 +84,7 @@ export class RegistrationRepositoryComponent implements OnInit {
             data => {
                 console.log('data', data);
                 this.userRepositories = data;
+                this.getToken();
                 localStorage.setItem('repositories', JSON.stringify(this.userRepositories));
                 console.log(' this.userRepositories', this.userRepositories);
             },
@@ -86,8 +124,13 @@ export class RegistrationRepositoryComponent implements OnInit {
 
     create() {
 
+        if(this.access_token) {
+            this.userRepository.token = this.access_token;
+            this.userRepository.repository = 'Vimeo';
+        }
+
         let dialogRef = this.dialog.open(DialogRegistrationRepository, {
-            data: { userRepository: this.userRepository, userRepositories: this.userRepositories },
+            data: { userRepository: this.userRepository, userRepositories: this.userRepositories},
             height: 'auto',
             width: 'auto',
         });
@@ -203,7 +246,9 @@ export class DialogRegistrationRepository implements OnInit {
     }
 
     checkRepository(repository) {
-        if (this.data.userRepositories.findIndex(obj => obj.repository === repository) === -1) {
+        console.log('this.data.userRepositories->',this.data.userRepositories );
+        
+        if (this.data.userRepositories && this.data.userRepositories.findIndex(obj => obj.repository === repository) === -1) {
             return false;
         }
         return true;
@@ -283,8 +328,8 @@ export class DialogRegistrationRepository implements OnInit {
 
 
     getTokenVimeo(userRepository: UserRepository) {
-
-               const url = "https://api.vimeo.com/oauth/authorize?client_id=175fc3ce932c67890f60588b6377fbe91ca49e47&response_type=token&redirect_uri= http://localhost:4200/profile&state=123";
+               console.log('userRepository.id',userRepository.id);
+               let url = "https://api.vimeo.com/oauth/authorize?client_id=175fc3ce932c67890f60588b6377fbe91ca49e47&response_type=token&redirect_uri= http://localhost:4200/profile&state="+userRepository.id;
 
                const urlvalue = this.route.fragment['value'];
                const params = new URLSearchParams(urlvalue);
