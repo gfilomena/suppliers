@@ -32,5 +32,13 @@
     background-color: #ffffff;
     
 }
+
+.disabledrepository{
+    opacity: 0.5;
+}
+
+.message {
+    margin-top:10px;
+}
   
  

@@ -1,5 +1,5 @@
 <h2 mat-dialog-title>Register Repository on User</h2>
-<form name="form" #f="ngForm" novalidate>
+<form name="form" #f="ngForm">
   <mat-dialog-content>
     <div fxLayout="column" fxLayoutAlign="start">
       <div *ngIf="!data.userRepository.id" id="repository">
@@ -12,19 +12,18 @@
           </mat-option>
         </mat-select>
       </mat-form-field>-->
-      <h5>Select Repository:</h5>
+      <h4>Select Repository:</h4>
         <div fxLayout="row" fxLayoutGap="10px" fxFlexAlign="center">
           <div *ngFor="let rep of repositories"> 
-            <button md-raised-button (click)="selectRepository(rep.name)" class="card-repo"><img  src="/assets/images/{{rep.name}}.png"/></button>
+            <button md-raised-button (click)="selectRepository(rep.name)"  [ngClass]="{ 'card-repo': true, 'disabledrepository':  checkRepository(rep.name) }"><img  src="/assets/images/{{rep.name}}.png"/></button>
           </div>
         </div>
       </div>
-      <div class="repository" *ngIf="data.userRepository.id || data.userRepository.repository">
-        <mat-form-field fxFlex>
-          <input matInput placeholder="repository" value=" " id="repository" name="repository" [(ngModel)]="data.userRepository.repository"
-            disabled>
-        </mat-form-field>
-      </div>
+      <div class="message" >
+            <h4 *ngIf="data.userRepository.id || data.userRepository.repository">Selected: {{data.userRepository.repository}}</h4>
+            <h4 *ngIf="message !== ''">{{message}}</h4>
+     </div>
+     
      <!-- <mat-form-field fxFlex>
         <input matInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
       </mat-form-field>
@@ -33,16 +32,24 @@
       </mat-form-field>
     -->
       <mat-form-field fxFlex  *ngIf="showapiKey(data.userRepository.repository)">
-        <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey">
+        <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey" required>
       </mat-form-field>
       <mat-form-field fxFlex *ngIf="data.userRepository.repository === 'Vimeo'">
-        <input matInput placeholder="token" value="" id="token" name="token"  [(ngModel)]="data.userRepository.token"><button (click)="getTokenVimeo()">get Token</button>
+        <input matInput placeholder="token" value="" id="token" name="token"  [(ngModel)]="data.userRepository.token" required><button (click)="getTokenVimeo()">get Token</button>
       </mat-form-field>
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    <button mat-button (click)="f.form.valid && upsert(data.userRepository)">OK</button>
+    <button mat-button (click)="f.form.valid && data.userRepository.repository !== '' && upsert(data.userRepository)">OK</button>
     <mat-progress-spinner *ngIf="loading" class="spinner" mode="indeterminate"></mat-progress-spinner>
     <button mat-button (click)="onClose()">Cancel</button>
   </mat-dialog-actions>
 </form>
+<!--  test form
+<div>
+	<p>Form value: <b> {{ f.form.value | json }} </b></p>
+	<p>Form valid: <b> {{ f.form.valid }} </b></p>
+	<p>Form touched: <b> {{ f.form.touched }} </b></p>
+	<p>Form submitted: <b> {{ f.form.submitted }} </b></p>
+</div>
+-->

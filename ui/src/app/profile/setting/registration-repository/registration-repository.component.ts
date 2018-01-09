@@ -87,7 +87,7 @@ export class RegistrationRepositoryComponent implements OnInit {
     create() {
 
         let dialogRef = this.dialog.open(DialogRegistrationRepository, {
-            data: { userRepository: this.userRepository },
+            data: { userRepository: this.userRepository, userRepositories: this.userRepositories },
             height: 'auto',
             width: 'auto',
         });
@@ -172,6 +172,7 @@ export class DialogRegistrationRepository implements OnInit {
     currentUser: User;
     repositories: Repository[];
     loading = false;
+    message = '';
     @Output() onChange = new EventEmitter();
 
     
@@ -191,7 +192,21 @@ export class DialogRegistrationRepository implements OnInit {
     }
 
     selectRepository(repository) {
-        this.data.userRepository.repository = repository;
+        if (!this.checkRepository(repository)) {
+            this.data.userRepository.repository = repository;
+            this.message = '';
+        }else {
+           this.data.userRepository.repository = '';
+           this.message = 'The Repository ' + repository + ' is already registered!';
+        }
+        
+    }
+
+    checkRepository(repository) {
+        if (this.data.userRepositories.findIndex(obj => obj.repository === repository) === -1) {
+            return false;
+        }
+        return true;
     }
 
     showapiKey(repository):boolean {
@@ -200,9 +215,7 @@ export class DialogRegistrationRepository implements OnInit {
             return false;
         }
         return true;
-
     }
-
 
 
     getAllRepositories() {
@@ -233,9 +246,11 @@ export class DialogRegistrationRepository implements OnInit {
     }
 
 
+
+
     upsert(userRepository: UserRepository) {
         this.loading = true;
-
+        console.log('userRepository:', userRepository);
         if (userRepository.id) {
 
             this.userRepositoryService.update(userRepository)
@@ -281,7 +296,7 @@ export class DialogRegistrationRepository implements OnInit {
                 window.location.href = url;
                }
           }
-        
+
 
     getDate(date: string): string {
         return new Date(date).toString().slice(0, 15);
