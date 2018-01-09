@@ -6,11 +6,10 @@ import java.util.concurrent.CompletableFuture;
 import javax.inject.*;
 
 import models.MultimediaContent;
+import models.Role;
+import models.RoleType;
 import models.SearchResult;
-import models.dao.MultimediaContentDAO;
-import models.dao.MultimediaContentDAOImpl;
-import models.dao.SearchResultDAO;
-import models.dao.SearchResultDAOImpl;
+import models.dao.*;
 import play.Logger;
 import play.inject.ApplicationLifecycle;
 import services.db.MongoDBService;
@@ -45,8 +44,19 @@ public class ApplicationTimer {
         Logger.info("ApplicationTimer demo: Starting application at " + start);
         SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
         searchResultDAO.deleteAll();
+        Logger.info("OCD: Purged Search Results");
         MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class,MongoDBService.getDatastore());
-        multimediaContentDAO.deleteAll();
+        //multimediaContentDAO.deleteAll();
+        Logger.info("OCD: Purged Multimedia Content Results");
+        // Initialize Roles
+        RoleDAO roleDAO=new RoleDAOImpl(Role.class,MongoDBService.getDatastore());
+        if(roleDAO.findByName(RoleType.USER)==null && roleDAO.findByName(RoleType.ADMIN)==null && roleDAO.findAll().size()>2){
+            roleDAO.deleteAll();
+            Role userRole=new Role(RoleType.USER);
+            Role adminRole=new Role(RoleType.ADMIN);
+            roleDAO.save(userRole);
+            roleDAO.save(adminRole);
+        }
         // When the application starts, register a stop hook with the
         // ApplicationLifecycle object. The code inside the stop hook will
         // be run when the application stops.

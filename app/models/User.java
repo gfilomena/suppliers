@@ -1,16 +1,22 @@
 package models;
 
+import be.objectify.deadbolt.java.models.Permission;
+import be.objectify.deadbolt.java.models.Role;
+import be.objectify.deadbolt.java.models.Subject;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import models.serializer.UserSerializer;
 import org.mindrot.jbcrypt.BCrypt;
 import org.mongodb.morphia.annotations.Entity;
+import org.mongodb.morphia.annotations.Reference;
+
+import java.util.*;
 
 /**
  * Created by Pasquale on 03/04/2017.
  */
 @Entity(value="User", noClassnameStored = true)
 @JsonSerialize(using = UserSerializer.class)
-public class User extends BaseEntity{
+public class User extends BaseEntity implements Subject{
 
     private String username;
 
@@ -28,19 +34,22 @@ public class User extends BaseEntity{
 
     private String access_token;
 
-    private RoleType role;
+    @Reference
+    private List<models.Role> roles=new ArrayList<>();
+
+    @Reference
+    private List<Privilege> privileges=new ArrayList<>();
 
     public User(){
 
     }
 
-    public User(String username, String password, String firstName, String lastName, String email, RoleType role) {
+    public User(String username, String password, String firstName, String lastName, String email) {
         this.username = username;
         this.hashPassword = BCrypt.hashpw(password, BCrypt.gensalt());
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
-        this.role=role;
     }
 
     public String getUsername() {
@@ -53,10 +62,6 @@ public class User extends BaseEntity{
 
     public String getHashPassword() {
         return hashPassword;
-    }
-
-    public void setHashPassword(String hashPassword) {
-        this.hashPassword = hashPassword;
     }
 
     public String getFirstName() {
@@ -107,12 +112,8 @@ public class User extends BaseEntity{
         this.access_token = access_token;
     }
 
-    public RoleType getRole() {
-        return role;
-    }
-
-    public void setRole(RoleType role) {
-        this.role = role;
+    public void addRole(models.Role role) {
+        this.roles.add(role);
     }
 
     @Override
@@ -142,4 +143,18 @@ public class User extends BaseEntity{
     }
 
 
+    @Override
+    public List<? extends Role> getRoles() {
+        return roles;
+    }
+
+    @Override
+    public List<? extends Permission> getPermissions() {
+        return privileges;
+    }
+
+    @Override
+    public String getIdentifier() {
+        return getUsername();
+    }
 }
