@@ -50,7 +50,7 @@ public class ApplicationTimer {
         Logger.info("OCD: Purged Multimedia Content Results");
         // Initialize Roles
         RoleDAO roleDAO=new RoleDAOImpl(Role.class,MongoDBService.getDatastore());
-        if(roleDAO.findByName(RoleType.USER)==null && roleDAO.findByName(RoleType.ADMIN)==null && roleDAO.findAll().size()>2){
+        if(roleDAO.findByName(RoleType.USER)==null && roleDAO.findByName(RoleType.ADMIN)==null && roleDAO.findAll().size()<2){
             roleDAO.deleteAll();
             Role userRole=new Role(RoleType.USER);
             Role adminRole=new Role(RoleType.ADMIN);
