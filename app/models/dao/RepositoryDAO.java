@@ -17,4 +17,6 @@ public interface RepositoryDAO extends DAO<Repository, ObjectId> {
 
     List<Repository> findAll();
 
+    void deleteAll();
+
 }

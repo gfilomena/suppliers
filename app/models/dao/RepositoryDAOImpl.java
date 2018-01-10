@@ -6,6 +6,7 @@ import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
 import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
+import org.mongodb.morphia.query.Query;
 import org.mongodb.morphia.query.UpdateOperations;
 import services.db.MongoDBService;
 
@@ -33,6 +34,12 @@ public class RepositoryDAOImpl extends BasicDAO<Repository,ObjectId> implements 
     @Override
     public List<Repository> findAll() {
         return this.find().asList();
+    }
+
+    @Override
+    public void deleteAll() {
+        Query<Repository> query=MongoDBService.getDatastore().createQuery(Repository.class);
+        MongoDBService.getDatastore().delete(query);
     }
 
 
