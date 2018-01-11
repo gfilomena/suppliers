@@ -159,7 +159,7 @@ export class RegistrationRepositoryComponent implements OnInit {
             },
             error => {
                 this.alertService.error(error._body);
-                this.openSnackBar('The Repository ' + name + ' has not been switched to ' + enabled, 'OK');
+                this.openSnackBar('The Repository ' + name + ' has not been switched to ' + enabled, 'ERROR');
             });
 
     }
