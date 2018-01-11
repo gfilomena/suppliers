@@ -21,6 +21,10 @@ public abstract class RepositoryResponseMapping implements  ResponseMapping{
 
     private int nOfResults;
 
+    private int statusCode;
+
+    private String statusMsg;
+
     public List<MultimediaContent> getMultimediaContents() {
         return multimediaContents;
     }
@@ -67,6 +71,22 @@ public abstract class RepositoryResponseMapping implements  ResponseMapping{
 
     public void setnOfResults(int nOfResults) {
         this.nOfResults = nOfResults;
+    }
+
+    public int getStatusCode() {
+        return statusCode;
+    }
+
+    public void setStatusCode(int statusCode) {
+        this.statusCode = statusCode;
+    }
+
+    public String getStatusMsg() {
+        return statusMsg;
+    }
+
+    public void setStatusMsg(String statusMsg) {
+        this.statusMsg = statusMsg;
     }
 
     @Override
