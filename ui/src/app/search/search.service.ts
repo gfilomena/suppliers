@@ -1,6 +1,6 @@
-﻿import { Injectable } from "@angular/core"
-import { Http, Headers, RequestOptions, Response } from "@angular/http"
-import { SearchForm }    from '../_models/search-form';
+﻿import { Injectable } from '@angular/core';
+import { Http, Headers, RequestOptions, Response } from '@angular/http';
+import { SearchForm } from '../_models/search-form';
 import { environment } from '../../environments/environment';
 
 @Injectable()
@@ -8,7 +8,7 @@ export class SearchService {
     constructor(private http: Http) { }
 
     search(search: SearchForm) {
-        return this.http.post(environment.serviceUrl + "/search", search, this.jwt())
+        return this.http.post(environment.serviceUrl + '/search', search, this.jwt());
     }
 
     // private helper methods
