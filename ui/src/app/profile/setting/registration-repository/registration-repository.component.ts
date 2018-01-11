@@ -242,12 +242,12 @@ export class DialogRegistrationRepository implements OnInit {
            this.data.userRepository.repository = '';
            this.message = 'The Repository ' + repository + ' is already registered!';
         }
-        
+
     }
 
     checkRepository(repository) {
-        console.log('this.data.userRepositories->',this.data.userRepositories );
-        
+        //console.log('this.data.userRepositories->',this.data.userRepositories );
+
         if (this.data.userRepositories && this.data.userRepositories.findIndex(obj => obj.repository === repository) === -1) {
             return false;
         }

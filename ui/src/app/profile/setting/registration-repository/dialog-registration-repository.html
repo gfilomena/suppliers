@@ -36,7 +36,7 @@
       </mat-form-field>
       <mat-form-field fxFlex *ngIf="data.userRepository.repository === 'Vimeo'">
         <input matInput placeholder="token" value="" id="token" name="token"  [(ngModel)]="data.userRepository.token" required>
-        <button mat-button color="primary" (click)="getTokenVimeo(data.userRepository)">get Token</button>
+       <span matSuffix><button mat-icon-button (click)="data.userRepository.token = ''" *ngIf="data.userRepository.token !== ''"><mat-icon>clear</mat-icon></button><button *ngIf="data.userRepository.token === ''" mat-button  color="primary" (click)="getTokenVimeo(data.userRepository)">get Token</button></span>
       </mat-form-field>
       
     </div>

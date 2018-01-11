@@ -41,6 +41,7 @@ export class DialogDetail implements OnInit {
     formatImage: String[] = ['jpeg', 'jpg', 'png', 'gif'];
     formatText: String[] = ['text', 'html', 'pdf'];
     selectedFormat = '';
+    othersrep: String[] = ['Youtube','Vimeo','InternetArchive'];
 
     @Input() data: MultimediaContent;
     @Output() mcupdate = new EventEmitter<MultimediaContent>();
@@ -62,8 +63,11 @@ export class DialogDetail implements OnInit {
         // this.uriValidation(this.getVideoSource(this.data.downloadURI));
         if (this.data.source.name === 'InternetArchive') {
             this.getInternetArchiveformat(this.data.uri);
-        }else{
+        }
+        if ( this.othersrep.indexOf(this.data.source.name) === -1 ) {
             this.selectedFormat = this.data.downloadURI;
+        }else{
+            this.selectedFormat = '';
         }
     }
 

@@ -202,8 +202,7 @@ export class SearchFormComponent {
             data => {
                 this.userRepositories = data;
                 this.initRepo(this.userRepositories);
-                this.incRepo(this.searchResult)
-                // console.log(' this.userRepositories', this.userRepositories);
+                this.incRepo(this.searchResult);
                 this.submitted = false;
             },
             error => {
