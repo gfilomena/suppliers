@@ -177,7 +177,7 @@ export class SearchFormComponent {
             .subscribe(
             res => {
                 this.searchResult = res.json().multimediaContents;
-                // console.log(res);
+                 console.log('res.json()',res.json());
                 // console.log('search result:');
                 // console.log(this.searchResult);
                 localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
@@ -230,7 +230,7 @@ export class SearchFormComponent {
                 if (!exist) {
                     this.saveMC(mc);
                 } else {
-                    this.openSnackBar('The Bookmark was already saved', 'error');
+                    this.openSnackBar('The Bookmark was already saved', 'ERROR');
                 }
             },
             error => {
@@ -257,14 +257,16 @@ export class SearchFormComponent {
         this.BookmarkService.create(bookmark)
             .subscribe(
             res => {
-                console.log('saveMC - subscribe OK:', res);
+                //console.log('saveMC OK:', res);
                 //const element = document.getElementById(mc.uri);
                 //element.innerText = 'star';
                 mc.bookmark = true;
                 this.UpdateMC(mc);
+                this.openSnackBar('The Bookmark has been saved', 'OK');
             },
             error => {
-                console.log('saveMC - subscribe - error:', error);
+                this.openSnackBar('The Bookmark has NOT been saved correctly', 'ERROR');
+                console.log('saveMC - error:', error);
             }
             )
     }
@@ -280,8 +282,7 @@ export class SearchFormComponent {
 
     openSnackBar(message: string, action: string) {
         this.snackBar.open(message, action, {
-            duration: 5000,
-            extraClasses: ['success-snackbar']
+            duration: 5000
         });
     }
 

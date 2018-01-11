@@ -65,26 +65,28 @@ public class VimeoSearchRepository implements SearchRepository {
         VimeoRepositoryResponseMapping respMap=new VimeoRepositoryResponseMapping();
         if(clientResponse.get("total")!=null){
             respMap.setnOfResults(clientResponse.get("total").asInt());
+            
+            if(clientResponse.get("paging").get("next_page")!=null){
+                respMap.setNextPage(clientResponse.get("paging").get("next_page").asText());
+            }
+            if(clientResponse.get("paging").get("previous")!=null){
+                respMap.setPreviousPage(clientResponse.get("paging").get("previous").asText());
+            }
         }
-        if(clientResponse.get("paging").get("next_page")!=null){
-            respMap.setNextPage(clientResponse.get("paging").get("next_page").asText());
+        if(clientResponse.get("data")!=null){
+	        ArrayNode itemsArray = (ArrayNode) clientResponse.get("data");
+	        Iterator<JsonNode> itemsIterator = itemsArray.elements();
+	        List<JsonNode> itemsList=new ArrayList<JsonNode>();
+	        while(itemsIterator.hasNext()){
+	            itemsList.add(itemsIterator.next());
+	        }
+	        if(!itemsList.isEmpty()) {
+	            stages = itemsList
+	                    .stream()
+	                    .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
+	                    .collect(Collectors.toList());
+	        }
         }
-        if(clientResponse.get("paging").get("previous")!=null){
-            respMap.setPreviousPage(clientResponse.get("paging").get("previous").asText());
-        }
-        ArrayNode itemsArray = (ArrayNode) clientResponse.get("data");
-        Iterator<JsonNode> itemsIterator = itemsArray.elements();
-        List<JsonNode> itemsList=new ArrayList<JsonNode>();
-        while(itemsIterator.hasNext()){
-            itemsList.add(itemsIterator.next());
-        }
-        if(!itemsList.isEmpty()) {
-            stages = itemsList
-                    .stream()
-                    .map(jsonNode -> getMultimediaContentFromItem(jsonNode))
-                    .collect(Collectors.toList());
-        }
-
         respMap.setMultimediaContents(stages);
         return respMap;
     }
