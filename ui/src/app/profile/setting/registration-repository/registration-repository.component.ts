@@ -9,7 +9,7 @@ import { UserRepositoryService, RepositoryService, AlertService, VimeoService } 
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { ActivatedRoute } from '@angular/router';
-
+import { environment } from '../../../../environments/environment';
 
 
 
@@ -48,7 +48,7 @@ export class RegistrationRepositoryComponent implements OnInit {
     
     getToken() {
         
-                       const url = "https://api.vimeo.com/oauth/authorize?client_id=175fc3ce932c67890f60588b6377fbe91ca49e47&response_type=token&redirect_uri= http://localhost:4200/profile&state="+this.repoid;
+                       const url = "https://api.vimeo.com/oauth/authorize?client_id="+environment.auth_clientID+"&response_type=token&redirect_uri="+environment.auth_callbackURL+"profile&state="+this.repoid;
         
                        const urlvalue = this.route.fragment['value'];
                        const params = new URLSearchParams(urlvalue);
