@@ -27,6 +27,9 @@ export class RegistrationRepositoryComponent implements OnInit {
     loading = false;
     access_token = '';
     repoid = '';
+    vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
+             + environment.vimeo_clientID + '&response_type=token&redirect_uri='
+             + environment.auth_callbackURL + 'profile&state=';
 
     constructor(
         public dialog: MatDialog,
@@ -48,8 +51,7 @@ export class RegistrationRepositoryComponent implements OnInit {
     
     getToken() {
         
-                       const url = "https://api.vimeo.com/oauth/authorize?client_id="+environment.auth_clientID+"&response_type=token&redirect_uri="+environment.auth_callbackURL+"profile&state="+this.repoid;
-        
+                       const url = this.vimeoURL + this.repoid;
                        const urlvalue = this.route.fragment['value'];
                        const params = new URLSearchParams(urlvalue);
                        if(params.get('access_token'))  {
@@ -217,6 +219,9 @@ export class DialogRegistrationRepository implements OnInit {
     loading = false;
     message = '';
     @Output() onChange = new EventEmitter();
+    vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
+             + environment.vimeo_clientID + '&response_type=token&redirect_uri='
+             + environment.auth_callbackURL + 'profile&state=';
 
     
 
@@ -329,8 +334,7 @@ export class DialogRegistrationRepository implements OnInit {
 
     getTokenVimeo(userRepository: UserRepository) {
                console.log('userRepository.id',userRepository.id);
-               let url = "https://api.vimeo.com/oauth/authorize?client_id=175fc3ce932c67890f60588b6377fbe91ca49e47&response_type=token&redirect_uri= http://localhost:4200/profile&state="+userRepository.id;
-
+               const url = this.vimeoURL + userRepository.id;
                const urlvalue = this.route.fragment['value'];
                const params = new URLSearchParams(urlvalue);
                if(params.get('access_token'))  {
