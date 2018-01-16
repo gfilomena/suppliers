@@ -82,10 +82,10 @@ export class McssrService {
         const params: string = '{ '
             + ' "params" : {'
             + ' "type":"' + type + '", '
-            + ' "name":"' + mc.name + '", '
+            + ' "name":"' + this.clean(mc.name) + '", '
             + ' "properties" : {'
-            + ' "dc:title":"' + mc.name + '", '
-            + ' "dc:description":"' + description + '", '
+            + ' "dc:title":"' + this.clean(mc.name) + '", '
+            + ' "dc:description":"' + this.clean(description) + '", '
             + ' "dc:source":"' + mc.source.name + '", '
             + ' "mul:url":"' + mc.downloadURI + '", '
             + ' "mul:encoding":"' + charset + '", '
@@ -139,6 +139,13 @@ export class McssrService {
         }
         return null;
     }
+
+    private clean(item: String): String {
+        return item.replace(/\"/g, '');
+    }
+
+
+
 
 
 }
