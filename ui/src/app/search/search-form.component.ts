@@ -1,3 +1,4 @@
+import { SearchResult } from './../_models/search-result';
 import { Observable } from 'rxjs/Observable';
 import { OnInit, OnDestroy } from '@angular/core';
 import { Repository } from './../_models/repository';
@@ -83,14 +84,14 @@ export class SearchFormComponent {
 
         //initialize
 
-
         if (lastresearch) {
             //progress bar ON
             this.submitted = true;
 
             this.searchResult = lastresearch;
             this.counter(this.searchResult);
-            this.getUserRepositories();
+            this.incRepo(this.searchResult);
+            //this.getUserRepositories();
             this.nOfResults = this.searchResult.length;
         }
 
@@ -134,7 +135,7 @@ export class SearchFormComponent {
         });
     }
 
-
+/*  
     @HostListener('window:scroll', ['$event'])
     onWindowScroll() {
 
@@ -149,9 +150,8 @@ export class SearchFormComponent {
         if (windowBottom + 1 >= docHeight) {
            // console.log('bottom reached');
         }
-
     }
-
+*/
 
     onSubmit() {
 
@@ -169,7 +169,8 @@ export class SearchFormComponent {
         this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
         this.searchResult = [];
         this.counter(this.searchResult);
-        this.getUserRepositories();
+        this.incRepo(this.searchResult);
+        //this.getUserRepositories();
     }
 
     search() {
@@ -183,11 +184,11 @@ export class SearchFormComponent {
                 localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
                 this.counter(this.searchResult);
-                this.getUserRepositories()
+                //this.getUserRepositories();
+                this.incRepo(this.searchResult);
                 // this.validator(this.searchResult)
                 this.nOfResults = this.searchResult.length;
                 // console.log('this.searchResult.length;',this.searchResult.length)
-                this.submitted = false;
             },
             error => {
                 console.log('search - subscribe - error:', error);
@@ -195,13 +196,13 @@ export class SearchFormComponent {
             }
             )
     }
-
+/*
     getUserRepositories() {
         this.userRepositoryService.findByUser()
             .subscribe(
             data => {
                 this.userRepositories = data;
-                this.initRepo(this.userRepositories);
+                console.log('userRepositoryService',data);
                 this.incRepo(this.searchResult);
                 this.submitted = false;
             },
@@ -209,6 +210,7 @@ export class SearchFormComponent {
                 console.log('getUserRepositories -> error:', error);
             })
     }
+    */
 
     checkSaveBookmark(mc: MultimediaContent) {
 
@@ -310,10 +312,21 @@ export class SearchFormComponent {
         this.activeType = activeType;
     }
 
-    incRepo(array) {
+    incRepo(array:MultimediaContent[]) {
         let i: number;
         let repository: string;
-
+        // init Repositories
+        this.activeRepositories = [];
+        const repo: string[] = array.map(obj => obj.source.name);
+        for (i = 0; i < array.length; i++) {
+                const index = this.activeRepositories.findIndex(obj => obj.name === repo[i]);
+                if (index === -1) {
+                this.activeRepositories.push(new Filter(repo[i]));
+            }
+        }
+        console.log(' array', array);
+        console.log(' this.activeRepositories', this.activeRepositories);
+        // count repositories
         for (i = 0; i < array.length; i++) {
 
             repository = array[i].source.name;
@@ -326,24 +339,25 @@ export class SearchFormComponent {
             }
 
         }
-
+        console.log('COUNT this.activeRepositories', this.activeRepositories);
+        this.submitted = false;
     }
-
-    initRepo(array: UserRepository[]) {
+/*
+    initRepo(arr:MultimediaContent[]) {
         let i: number;
         let repository: string;
         this.activeRepositories = [];
+       let array: string[] = arr.map(obj => obj.source.name);
+console.log('repooo',array);
         for (i = 0; i < array.length; i++) {
-            const enabled = array[i].enabled;
-            if (enabled) {
-                repository = array[i].repository;
-                // console.log('repository::',repository);
-                this.activeRepositories.push(new Filter(repository));
-            }
+            //const enabled = array[i].enabled;
+            //if (enabled) {
+                this.activeRepositories.push(new Filter(array[i]));
+            //}
         }
-        // console.log('end initRepo',this.activeRepositories)
-    }
 
+    }
+*/
     filterRepository(item: MultimediaContent): boolean {
         // console.log('this.activeRepositories',this.activeRepositories);
         const repository = item.source.name;
@@ -390,4 +404,8 @@ export class SearchFormComponent {
     }
 
 }
+
+function uniq(a) {
+    return Array.from(new Set(a));
+ }
 

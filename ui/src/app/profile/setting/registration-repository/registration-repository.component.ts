@@ -84,10 +84,8 @@ export class RegistrationRepositoryComponent implements OnInit {
         this.userRepositoryService.findByUser()
             .subscribe(
             data => {
-                console.log('data', data);
                 this.userRepositories = data;
                 this.getToken();
-                localStorage.setItem('repositories', JSON.stringify(this.userRepositories));
                 console.log(' this.userRepositories', this.userRepositories);
             },
             error => {
