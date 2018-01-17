@@ -1,5 +1,7 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Repository;
 import models.dao.RepositoryDAO;
@@ -21,6 +23,7 @@ public class RepositoryController extends Controller {
 
     public static RepositoryDAO repoDAO=new RepositoryDAOImpl(Repository.class, MongoDBService.getDatastore());
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> get(String id){
         if(repoDAO.get(id)!=null) {
@@ -31,11 +34,13 @@ public class RepositoryController extends Controller {
         }
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> getAll(){
         return CompletableFuture.supplyAsync( () -> ok(Json.toJson(repoDAO.findAll())));
     }
 
+    @Restrict({@Group("ADMIN")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> create(){
         JsonNode json = request().body().asJson();
@@ -57,6 +62,7 @@ public class RepositoryController extends Controller {
         }
     }
 
+    @Restrict({@Group("ADMIN")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> update(String id){
         JsonNode json = request().body().asJson();
@@ -73,6 +79,7 @@ public class RepositoryController extends Controller {
         }
     }
 
+    @Restrict({@Group("ADMIN")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String id){
         if(repoDAO.get(id)!=null) {

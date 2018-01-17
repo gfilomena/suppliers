@@ -122,6 +122,7 @@ public class SearchController extends Controller {
         return results;
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String username, String ids){
         if(username==null){

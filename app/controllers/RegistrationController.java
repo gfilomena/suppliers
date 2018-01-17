@@ -1,5 +1,7 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.Registration;
 import models.Repository;
@@ -34,6 +36,7 @@ public class RegistrationController extends Controller{
         }
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> create() {
         JsonNode json = request().body().asJson();
@@ -76,23 +79,27 @@ public class RegistrationController extends Controller{
         }
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> getAll(){
         return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findAll())));
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> findRepositoriesByUser(){
         User user=Secured.getUser(ctx());
         return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findRepositoriesByUser(user))));
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> findByUser(){
         User user=Secured.getUser(ctx());
         return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findRegistrationByUser(user))));
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> update(String id){
         JsonNode json = request().body().asJson();
@@ -112,6 +119,7 @@ public class RegistrationController extends Controller{
     }
 
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String id){
         if(registrationDAO.get(id)!=null) {

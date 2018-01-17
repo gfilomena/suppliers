@@ -1,5 +1,7 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
@@ -90,6 +92,7 @@ public class UserController extends Controller {
         }
     }
 
+    @Restrict({@Group("ADMIN")})
     @BodyParser.Of(BodyParser.Json.class)
     public Result register(){
         JsonNode json = request().body().asJson();
@@ -109,21 +112,25 @@ public class UserController extends Controller {
         }
     }
 
+    @Restrict({@Group("ADMIN")})
     @Security.Authenticated(Secured.class)
     public Result getAll(){
         return ok(Json.toJson(userDAO.findAll()));
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public User getCurrent(){
         return (User)Http.Context.current().args.get("user");
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public Result get(String username){
         return ok(Json.toJson(userDAO.findByUsername(username)));
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     @BodyParser.Of(BodyParser.Json.class)
     public Result update(String username){
@@ -136,6 +143,7 @@ public class UserController extends Controller {
         return ok();
     }
 
+    @Restrict({@Group("ADMIN")})
     @Security.Authenticated(Secured.class)
     public Result delete(String username){
         Logger.debug("delete user with username:"+username);
@@ -143,6 +151,7 @@ public class UserController extends Controller {
         return noContent();
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public Result logout() {
         User u=getCurrent();

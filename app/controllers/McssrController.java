@@ -1,5 +1,7 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.User;
 import models.dao.UserDAO;
@@ -23,6 +25,7 @@ public class McssrController extends Controller {
     public static UserDAO userDAO = new UserDAOImpl(User.class, MongoDBService.getDatastore());
 
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> create() {
         JsonNode json = request().body().asJson();
@@ -49,6 +52,7 @@ public class McssrController extends Controller {
         }
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> updateTags() {
         JsonNode json = request().body().asJson();

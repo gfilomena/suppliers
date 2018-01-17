@@ -1,5 +1,7 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.mvc.*;
 
@@ -15,6 +17,7 @@ import static services.search.semantic.SemanticAnalyzer.getSemanticAnalyzer;
  */
 public class SemanticController extends Controller {
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     @BodyParser.Of(BodyParser.Json.class)
     public Result urlAnnotations() {
@@ -32,6 +35,7 @@ public class SemanticController extends Controller {
         }
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     @BodyParser.Of(BodyParser.MultipartFormData.class)
     public Result fileAnnotations() {

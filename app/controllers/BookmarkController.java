@@ -1,5 +1,7 @@
 package controllers;
 
+import be.objectify.deadbolt.java.actions.Group;
+import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.*;
 import models.dao.*;
@@ -27,6 +29,7 @@ public class BookmarkController extends Controller{
     public static MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class, MongoDBService.getDatastore());
     public static RepositoryDAO repoDAO=new RepositoryDAOImpl(Repository.class, MongoDBService.getDatastore());
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> get(String id){
         if(bookmarkDAO.get(id)!=null) {
@@ -37,18 +40,20 @@ public class BookmarkController extends Controller{
         }
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> findByUser(){
         User user=Secured.getUser(ctx());
         return CompletableFuture.supplyAsync( () -> ok(Json.toJson(bookmarkDAO.findByUser(user))));
     }
 
-
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> getAll(){
         return CompletableFuture.supplyAsync( () -> ok(Json.toJson(bookmarkDAO.findAll())));
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> create() {
         JsonNode json = request().body().asJson();
@@ -118,18 +123,7 @@ public class BookmarkController extends Controller{
 
     }
 
-
-    /*@Security.Authenticated(Secured.class)
-    public CompletionStage<Result> delete(String id){
-        if(bookmarkDAO.get(id)!=null) {
-            // TODO also delete Multimedia Content related
-            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(bookmarkDAO.deleteById(new ObjectId(id)))));
-        }
-        else{
-            return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
-        }
-    }*/
-
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String ids){
         List<String> idsToRemove=Arrays.asList(ids.split(","));
@@ -152,6 +146,7 @@ public class BookmarkController extends Controller{
         }
     }
 
+    @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> deleteAllByUser(){
         User user=Secured.getUser(ctx());
