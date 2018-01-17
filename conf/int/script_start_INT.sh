@@ -15,7 +15,7 @@ function startPlayFramework {
 }
 
 #Global variables
-OCD_HOME="/opt/producer-ocd/open-content-discovery-tool-0.1-SNAPSHOT"		#Path to project folder
+OCD_HOME="/opt/producer-ocd/open-content-discovery-tool-0.6-SNAPSHOT"		#Path to project folder
 SCRIPT_LOG="/opt/producer-ocd/script.log"					#Log file for this script
 
 #START

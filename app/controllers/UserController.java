@@ -1,16 +1,10 @@
 package controllers;
 
-import com.auth0.client.auth.AuthAPI;
-import com.auth0.exception.APIException;
-import com.auth0.exception.Auth0Exception;
-import com.auth0.json.auth.TokenHolder;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.net.AuthRequest;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import com.typesafe.config.Config;
 import com.typesafe.config.ConfigFactory;
 import common.ConfigObj;
 import models.Role;
@@ -24,16 +18,11 @@ import play.Logger;
 import play.libs.Json;
 import play.mvc.*;
 import services.db.MongoDBService;
-import views.html.index;
 
 import java.io.UnsupportedEncodingException;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
-import java.time.temporal.TemporalUnit;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
-import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 
 /**
@@ -51,14 +40,9 @@ public class UserController extends Controller {
     public static RoleDAO roleDAO=new RoleDAOImpl(Role.class, MongoDBService.getDatastore());
 
 
-
-    public Result index() {
-        /**
-         * index()  :    does no ts compilation in advance. the ts files are download by the browser and compiled there to js.
-         */
-        return ok(index.render());
+    public Result matchAll(String path) {
+        return ok(UserController.class.getResourceAsStream("/public/ui/dist/index.html")).as("text/html");
     }
-
 
     @BodyParser.Of(BodyParser.Json.class)
     public Result authenticate(){

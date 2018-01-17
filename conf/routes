@@ -1,18 +1,20 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-
-# An example controller showing a sample home page
+# The following routes redirect to index.htmll in order to be managed by the Angular router
 GET        /             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+GET        /home             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+GET        /search-history             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+GET        /bookmarks             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+GET        /profile             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+GET        /setting-rep             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+GET        /login             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+
+
 # An example controller showing how to use dependency injection
 GET     /count                      controllers.CountController.count
-# An example controller showing how to write asynchronous code
-GET     /message                    controllers.AsyncController.message
-
-GET     /test                       controllers.AsyncController.test
 
 # SEARCH
-GET     /query                      controllers.AsyncController.query
 POST    /api/v1/search                      controllers.SearchController.search
 
 # USER
@@ -60,9 +62,11 @@ DELETE    /api/v1/bookmarks                  controllers.BookmarkController.dele
 POST      /api/v1/mcssr                     controllers.McssrController.create()
 POST      /api/v1/mcssr/tag                 controllers.McssrController.updateTags()
 
-# Map static resources from the /public folder to the /assets URL path
-GET        /*file        controllers.Assets.versioned(path="/public/ui/dist", file: Asset)
-
 # SEMANTIC SEARCH
 POST    /api/v1/annotations/url            controllers.SemanticController.urlAnnotations()
 POST    /api/v1/annotations/file           controllers.SemanticController.fileAnnotations()
+
+# Map static resources from the /public folder to the /assets URL path
+# LEAVE THIS AT BOTTOM OF THIS FILE
+GET        /*file               controllers.Assets.at(path="/public/ui/dist", file)
+#GET        /*path               controllers.UserController.matchAll(path)

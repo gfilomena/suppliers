@@ -75,7 +75,7 @@
       <h3 class="mat-h3" *ngIf="nOfResults === 0">No results found!</h3>
 
       <!--<div class="sub_container-card" *ngFor="let sr of searchResult | paginate: { itemsPerPage: 20, currentPage: p }"> -->
-          <div class="sub_container-card"  *ngFor="let sr of searchResult | filters: activeType : activeRepositories | paginate: { itemsPerPage: 20, currentPage: p }   ">
+          <div class="sub_container-card"  *ngFor="let sr of searchResult | filters: activeType : activeRepositories | paginate: { itemsPerPage: 24, currentPage: p }   ">
         <!-- <div *ngIf="filter(sr)"> -->
 
           <mat-card class="card">

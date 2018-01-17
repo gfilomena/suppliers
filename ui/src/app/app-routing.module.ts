@@ -45,7 +45,7 @@ const appRoutes: Routes = [
     exports: [RouterModule],
     providers: [
         { provide: LocationStrategy, useClass: PathLocationStrategy },
-        { provide: APP_BASE_HREF, useValue: '/' } // <--- this right here
+        { provide: APP_BASE_HREF, useValue: '/' }
     ]
 })
 
