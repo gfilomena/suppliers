@@ -10,10 +10,6 @@ GET        /profile             controllers.Assets.at(path="/public/ui/dist", fi
 GET        /setting-rep             controllers.Assets.at(path="/public/ui/dist", file="index.html")
 GET        /login             controllers.Assets.at(path="/public/ui/dist", file="index.html")
 
-
-# An example controller showing how to use dependency injection
-GET     /count                      controllers.CountController.count
-
 # SEARCH
 POST    /api/v1/search                      controllers.SearchController.search
 

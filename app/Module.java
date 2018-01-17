@@ -33,7 +33,6 @@ public class Module extends AbstractModule {
         bind(ApplicationTimer.class).asEagerSingleton();
         // Set AtomicCounter as the implementation for Counter.
         bind(Counter.class).to(AtomicCounter.class);
-        bind(SearchRepository.class).annotatedWith(Names.named("youtube")).to(YoutubeSearchRepository.class);
         bind(Manager.class).to(SearchManager.class);
         bind(HandlerCache.class).to(MyHandlerCache.class);
     }
