@@ -15,7 +15,7 @@ function startPlayFramework {
 }
 
 #Global variables
-OCD_HOME="/EBSdisk/ocd/open-content-discovery-tool-0.6-SNAPSHOT"		#Path to project folder
+OCD_HOME="/EBSdisk/ocd/open-content-discovery-tool-0.7-SNAPSHOT"		#Path to project folder
 SCRIPT_LOG="/EBSdisk/ocd/script.log"					#Log file for this script
 
 #START

@@ -2,7 +2,7 @@ import scala.language.postfixOps
 
 name := """open-content-discovery-tool"""
 
-version := "0.6-SNAPSHOT"
+version := "0.7-SNAPSHOT"
 
 lazy val root = (project in file(".")).enablePlugins(PlayJava)
 
