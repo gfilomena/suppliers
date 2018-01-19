@@ -15,7 +15,7 @@ export class AuthenticationService {
             .map((response: Response) => {
                 // login successful if there's a jwt token in the response
                 const authResult = response.json();
- 
+
                 if (authResult && authResult.accessToken && authResult.idToken && authResult.expiresAt) {
                     // store user details and jwt token in local storage to keep user logged in between page refreshes
                     // localStorage.setItem('currentUser', JSON.stringify(user));
@@ -35,6 +35,7 @@ export class AuthenticationService {
         localStorage.removeItem('currentUser');
         localStorage.removeItem('bookmarks');
         localStorage.removeItem('repositories');
+  
     }
 
     private setSession(authResult): void {
@@ -46,8 +47,10 @@ export class AuthenticationService {
         localStorage.setItem('access_token', authResult.accessToken);
         localStorage.setItem('id_token', authResult.idToken);
         localStorage.setItem('expires_at', authResult.expiresAt);
+
         const params: string = '{ '
             + ' "username":"' + jwtHelper.decodeToken(authResult.idToken).sub + '" '
+          //  + ' "roles": [' + authResult.roles + '] '
             + '}';
         const obj = JSON.parse(params);
         localStorage.setItem('currentUser', params);

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Headers, RequestOptions } from '@angular/http'
 import * as auth0 from 'auth0-js';
 import {JwtHelper} from 'angular2-jwt';
+import { Globals } from './../global';
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
 
   userProfile: any;
 
-  constructor(public router: Router) {}
+  constructor(public router: Router, private globals: Globals) {}
 
   public login(): void {
     this.auth0.authorize();
@@ -32,6 +33,7 @@ export class AuthService {
         window.location.hash = '';
         this.setSession(authResult);
         this.getProfile(authResult);
+        this.getUser();
         this.router.navigate(['/home']);
       } else if (err) {
         this.router.navigate(['/home']);
@@ -58,6 +60,7 @@ export class AuthService {
     localStorage.setItem('expires_at', expiresAt);
     const params: string = '{ '
     + ' "username":"' + jwtHelper.decodeToken(authResult.idToken).sub + '" '
+    //+ ' "roles":"' + authResult.roles + '" '
     + '}';
     const obj = JSON.parse(params);
     localStorage.setItem('currentUser', params );
@@ -101,6 +104,12 @@ export class AuthService {
         return new RequestOptions({ headers: headers });
     }
     return null;
+}
+
+getUser() {
+  const user = JSON.parse(localStorage.getItem('currentUser'));
+  this.globals.user = user.username;
+  //this.globals.roles = user.roles;
 }
 
 }

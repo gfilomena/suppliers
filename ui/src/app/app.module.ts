@@ -58,7 +58,7 @@ import { ComponentsModule } from './shared/components.module';
 // import { SemanticSearchComponent } from './semantic-search/semantic-search.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
-
+import { Globals } from './global';
 
 
 @NgModule({
@@ -118,7 +118,8 @@ import {MatExpansionModule} from '@angular/material/expansion';
         BookmarkService,
         HistorysearchService,
         McssrService,
-        VimeoService
+        VimeoService,
+        Globals
     ],
     entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog, BookmarkConfirmationDialog, HistoryConfirmationDialog],
     bootstrap: [AppComponent]
