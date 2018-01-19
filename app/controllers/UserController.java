@@ -26,6 +26,8 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * This controller contains an action to handle HTTP requests
@@ -85,6 +87,7 @@ public class UserController extends Controller {
                 authTokenJson.put("accessToken", token);
                 authTokenJson.put("idToken", token);
                 authTokenJson.put("expiresAt", expires_at.getTime());
+                authTokenJson.put("roles",Json.toJson(user.getRoles().stream().map(a->a.getName()).collect(Collectors.toList())));
                 return ok(Json.toJson(authTokenJson));
             } else {
                 return badRequest("No User available with such username.");
