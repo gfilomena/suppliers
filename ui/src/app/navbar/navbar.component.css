@@ -28,3 +28,7 @@ mat-toolbar, mat-toolbar-row {
 .user-menu {
   margin-left: auto;
 }
+
+.user{
+  font-size: 13px;
+}
