@@ -11,12 +11,20 @@ import { AuthService } from "../_services/index";
 export class NavbarComponent implements OnInit {
 
     api:string;
+    user:string;
 
   constructor( public http: Http, public auth:AuthService) {
   }
 
   ngOnInit() {
       this.api = localStorage.getItem('serviceUrl');
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if(user) {
+        this.user = user.username;
+      }else{
+        this.user = 'Anonymus';
+      }
+     
   }
 
 
