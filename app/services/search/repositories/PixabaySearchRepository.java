@@ -96,7 +96,7 @@ public class PixabaySearchRepository implements SearchRepository {
 
         @Override
         public RepositoryResponseMapping transform(JsonNode clientResponse ) {
-            //Logger.info("Pixabay Response: "+clientResponse.toString());
+            Logger.info("Pixabay Response: "+clientResponse.toString());
             List<MultimediaContent> stages=new ArrayList<>();
             //List<JsonNode> items=clientResponse.findValues("items");
             PixabayRepositoryResponseMapping respMap=new PixabayRepositoryResponseMapping();
@@ -153,7 +153,7 @@ public class PixabaySearchRepository implements SearchRepository {
         }
         m.setSource(registration.getRepository());
         m.setThumbnail(i.get("previewURL").asText());
-        m.setMetadata(i.get("tags").asText().split(","));
+        m.setMetadata(i.get("tags").asText().replaceAll("^[,\\s]+", "").split("[,\\s]+"));
         m.setName(i.get("id").asText());
     }
 
@@ -179,7 +179,7 @@ public class PixabaySearchRepository implements SearchRepository {
             }
             m.setSource(registration.getRepository());
             m.setThumbnail("https://i.vimeocdn.com/video/"+i.get("picture_id").asText()+"_295x166.jpg");
-            m.setMetadata(i.get("tags").asText().split(","));
+            m.setMetadata(i.get("tags").asText().replaceAll("^[,\\s]+", "").split("[,\\s]+"));
             m.setName(i.get("id").asText());
 
         }
