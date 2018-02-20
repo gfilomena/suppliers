@@ -6,9 +6,8 @@ import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../../../_models/user';
 import { UserRepositoryService, RepositoryService, AlertService, VimeoService } from '../../../_services/index';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
-import { ActivatedRoute } from '@angular/router';
 import { environment } from '../../../../environments/environment';
 
 

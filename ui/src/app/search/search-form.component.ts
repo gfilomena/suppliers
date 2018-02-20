@@ -40,7 +40,7 @@ import { MY_DATE_FORMATS } from './mydateformats';
     styleUrls: ['./search-form.component.css'],
     changeDetection: ChangeDetectionStrategy.Default
 })
-export class SearchFormComponent {
+export class SearchFormComponent implements OnInit{
     submitted = false;
     savestate = false;
     currentUser: User;
@@ -82,6 +82,8 @@ export class SearchFormComponent {
         const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
         this.dateAdapter.setLocale('ll');
 
+        
+
         //initialize
 
         if (lastresearch) {
@@ -107,6 +109,23 @@ export class SearchFormComponent {
             this.searchForm.endDate = new Date(historyform.endDate);
         }
     }
+
+    ngOnInit () {
+        const keywords = this.route
+        .queryParamMap
+        .map(params => params.get('keywords')).subscribe(
+            res => {
+                if (res != null) {
+                    this.searchForm.freeText = res;
+                }
+                console.log('ok get keywords:', res);
+        },
+            error => {
+                console.log('error get keywords:', error);
+            }
+        )
+    }
+
 
     setSidebar(showSidebar) {
         this.showSidebar = showSidebar;
