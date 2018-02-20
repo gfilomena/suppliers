@@ -96,7 +96,7 @@ public class PixabaySearchRepository implements SearchRepository {
 
         @Override
         public RepositoryResponseMapping transform(JsonNode clientResponse ) {
-            Logger.info("Pixabay Response: "+clientResponse.toString());
+            //Logger.info("Pixabay Response: "+clientResponse.toString());
             List<MultimediaContent> stages=new ArrayList<>();
             //List<JsonNode> items=clientResponse.findValues("items");
             PixabayRepositoryResponseMapping respMap=new PixabayRepositoryResponseMapping();

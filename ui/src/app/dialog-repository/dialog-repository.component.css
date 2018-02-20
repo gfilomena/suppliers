@@ -8,11 +8,6 @@
   margin-top: 64px;
 }
 
-.spinner {
-  height: 36px;
-  width: 36px;
-}
-
 .name {
   cursor: pointer;
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;

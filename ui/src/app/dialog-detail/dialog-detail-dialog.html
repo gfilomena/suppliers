@@ -97,7 +97,7 @@
 
 <mat-card-actions align="end">
   <a class="logo" [href]="data.uri"><img src="/assets/images/{{data.source.name}}.png"/></a>
-  <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
+  <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="48"></mat-progress-spinner>
   <button mat-raised-button *ngIf="selectedFormat !== ''" (click)="sendMcssr(data)">SEND TO MCSSR</button>
   <button mat-raised-button matDialogClose>CLOSE</button>
 </mat-card-actions>
