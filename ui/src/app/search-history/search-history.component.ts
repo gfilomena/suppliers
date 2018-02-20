@@ -217,10 +217,10 @@ export class SearchHistoryComponent implements OnInit {
 
   goToSearchForm(searchForm: SearchForm) {
     console.log(searchForm);
-    localStorage.removeItem("lastresearch");
+
     this.searchResult = [];
-    localStorage.setItem("searchForm", JSON.stringify(searchForm));
-    this.router.navigate(['/']);
+
+    this.router.navigate(['/home'], { queryParams: { keywords: searchForm.freeText, inDate: searchForm.inDate, endDate: searchForm.endDate } });
   }
 
   public getTime(isoDate: string): string {

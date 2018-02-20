@@ -5,7 +5,7 @@ import { Repository } from './../_models/repository';
 import { SearchForm } from './../_models/search-form';
 import { Bookmark } from './../_models/bookmark';
 import { Component, Inject, HostListener, Output, EventEmitter, enableProdMode, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { User } from '../_models/user';
 import { SearchService } from './search.service';
 import { BookmarkService } from '../_services/bookmark.service';
@@ -40,7 +40,7 @@ import { MY_DATE_FORMATS } from './mydateformats';
     styleUrls: ['./search-form.component.css'],
     changeDetection: ChangeDetectionStrategy.Default
 })
-export class SearchFormComponent implements OnInit{
+export class SearchFormComponent {
     submitted = false;
     savestate = false;
     currentUser: User;
@@ -71,18 +71,18 @@ export class SearchFormComponent implements OnInit{
 
 
 
-    constructor(private searchService: SearchService, private route: ActivatedRoute,
-        private router: Router, private BookmarkService: BookmarkService,
+    constructor(
+        private searchService: SearchService, 
+        private route: ActivatedRoute,
+        private BookmarkService: BookmarkService,
         private dateAdapter: DateAdapter<Date>,
         private dialog: MatDialog,
         public snackBar: MatSnackBar,
         private userRepositoryService: UserRepositoryService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
-        const historyform = JSON.parse(localStorage.getItem('searchForm'));
+
         const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
         this.dateAdapter.setLocale('ll');
-
-        
 
         //initialize
 
@@ -97,34 +97,46 @@ export class SearchFormComponent implements OnInit{
             this.nOfResults = this.searchResult.length;
         }
 
-        // console.log('historyform',historyform);
-        if (historyform === undefined || historyform === null) {
-            // console.log('undefined - this.searchForm', this.searchForm)
-            // console.log('NEW searchForm')
-            this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
-        } else {
-            this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
-            this.searchForm.freeText = historyform.freeText;
-            this.searchForm.inDate = new Date(historyform.inDate);
-            this.searchForm.endDate = new Date(historyform.endDate);
-        }
-    }
+        // if there are url parameters, they will insert into the searchform
+        this.searchForm = new SearchForm( '', '', '', new Date(), new Date(), '');
 
-    ngOnInit () {
-        const keywords = this.route
-        .queryParamMap
-        .map(params => params.get('keywords')).subscribe(
+        const params = this.route.queryParamMap;
+
+        params.map( par => par.get('keywords')).subscribe(
             res => {
                 if (res != null) {
                     this.searchForm.freeText = res;
+                    //console.log("OK"+res);
                 }
-                console.log('ok get keywords:', res);
-        },
-            error => {
-                console.log('error get keywords:', error);
-            }
+           }, error => {
+                   console.log("keywords ERROR:" + error);
+           }
         )
+
+        params.map( par => par.get('inDate')).subscribe(
+            res => {
+                if (res != null) {
+                    this.searchForm.inDate = new Date(res);
+                    //console.log("inDate OK"+res);
+                }
+           }, error => {
+                   console.log("inDate ERROR:" + error);
+           }
+        )
+
+        params.map( par => par.get('endDate')).subscribe(
+            res => {
+                if (res != null) {
+                    this.searchForm.endDate = new Date(res);
+                    //console.log("endDate OK"+res);
+                }
+           }, error => {
+                   console.log("endDate ERROR:" + error);
+           }
+        )
+
     }
+
 
 
     setSidebar(showSidebar) {
