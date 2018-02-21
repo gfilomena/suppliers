@@ -1,4 +1,3 @@
-import { Globals } from './../global';
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { Http } from '@angular/http';
 import { AuthService } from '../_services/index';
@@ -15,13 +14,14 @@ export class NavbarComponent implements OnInit{
     currentUser: any;
     username: string;
 
-  constructor( public http: Http, public auth: AuthService, private globals: Globals) {
+  constructor( public http: Http, public auth: AuthService) {
   }
 
   ngOnInit() {
       this.api = localStorage.getItem('serviceUrl');
 
   }
+
 
 
 
@@ -37,21 +37,18 @@ export class NavbarComponent implements OnInit{
   }
 
   getLoggedUser() {
-      let user = JSON.parse(localStorage.getItem('currentUser'));
-      if (user && user.firstName) {
-          return user.firstName;
+      const user = JSON.parse(localStorage.getItem('currentUser'));
+      if (user && user.username) {
+          return user.username;
       }
-      return 'Anonymus';
   }
 
-  checkPage(){
+  checkPage() {
       let url = window.location.href;
       if (url.indexOf('login')!== -1 )  {
           return false;
       }
       return true;
-
-
   }
 
 

@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import { AlertService, AuthenticationService, AuthService } from "../_services/index"
-import { Globals } from './../global';
+
 
 @Component({
     templateUrl: './login.component.html',
@@ -20,8 +20,7 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         public auth: AuthService,
-        private alertService: AlertService,
-        private globals: Globals) { }
+        private alertService: AlertService) { }
 
     ngOnInit() {
         // reset login status
@@ -37,7 +36,6 @@ export class LoginComponent implements OnInit {
         this.authenticationService.login(this.model.username, this.model.password)
             .subscribe(
                 data => {
-                    this.getUser();
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
@@ -56,8 +54,4 @@ export class LoginComponent implements OnInit {
         this.loginFormEnabled = true;
     }
 
-    getUser() {
-        const user = JSON.parse(localStorage.getItem('currentUser'));
-        this.globals.user = user.username;
-    }
 }

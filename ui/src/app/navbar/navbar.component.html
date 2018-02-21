@@ -6,7 +6,7 @@
   <button mat-button routerLinkActive="active" [routerLink]="['/bookmarks']"> Bookmarks </button>
 
   <span class="user-menu">
-    <label class="user">{{globals.user}}</label>
+    <label class="user">{{getLoggedUser()}}</label>
     <button mat-icon-button [matMenuTriggerFor]="appMenu" >
       <mat-icon> account_circle </mat-icon>
     </button>
