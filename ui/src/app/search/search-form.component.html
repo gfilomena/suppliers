@@ -125,7 +125,7 @@
       </div>
 
     </div>
-    <div class="center" *ngIf="searchResult && searchResult.length > 0">
+    <div fxLayoutAlign="center" *ngIf="searchResult && searchResult.length > 0">
       <pagination-controls
       (pageChange)="p = $event"
       directionLinks="true"
