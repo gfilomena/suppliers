@@ -23,13 +23,11 @@
   </mat-icon>
 
 </mat-card-header>
-
 <mat-dialog-content class="dialog-content">
-
   <div [ngSwitch]="data.type" class="video-container">
     <div *ngSwitchCase="'video'">
       <div *ngIf="data.source.name == 'InternetArchive'; else defaultvideo">
-        <video id="video" width="100%" autoplay controls onerror="alert('first error event')">
+        <video id="video" width="100%" *ngIf="data.downloadURI" autoplay controls onerror="alert('first error event')"  poster="/assets/images/loading_icon.gif">
           <source [src]="data.downloadURI" [type]="data.fileExtension">
           <!-- <source [src]="data.downloadUri" [type]="data.fileExtension"> -->
           Your browser does not support the video tag.
@@ -41,14 +39,14 @@
     </div>
     <div *ngSwitchCase="'image'">
       <div *ngIf="data.downloadURI; else defaultimg">
-        <img width="100%" height="250px" [src]="data.downloadURI" class="image-card">
+        <img width="100%" height="250px" [src]="data.downloadURI" class="image-card" poster="/assets/images/loading_icon.gif">
       </div>
       <ng-template #defaultimg>
         <img width="100%" height="250px" src="/assets/images/logo_producer_511x103.jpg" class="image-card">
       </ng-template>
     </div>
     <div *ngSwitchCase="'audio'">
-      <audio id="audio" controls>
+      <audio id="audio" controls poster="/assets/images/loading_icon.gif">
         <source [src]="data.downloadURI" [type]="data.fileExtension"> Your browser does not support the audio element.
       </audio>
     </div>
