@@ -11,7 +11,7 @@
 }
 
 h3 {
-  margin-top: 84px;
+  margin-top: 74px;
   color: #8b8b8b;
   font-size: 1.4em;
 }
@@ -92,3 +92,11 @@ mat-checkbox {
 .spacer {
   flex: 1 1 auto;
 }
+
+mat-progress-bar {
+  /*position: fixed; 
+    margin-top: 62px;
+  */
+  z-index: 3;
+  box-shadow: none;
+} 

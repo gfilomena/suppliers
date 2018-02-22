@@ -1,3 +1,4 @@
+import { Snackbar } from './../snackbar/snackbar.component';
 import { SearchResult } from './../_models/search-result';
 import { Observable } from 'rxjs/Observable';
 import { OnInit, OnDestroy } from '@angular/core';
@@ -77,7 +78,7 @@ export class SearchFormComponent {
         private BookmarkService: BookmarkService,
         private dateAdapter: DateAdapter<Date>,
         private dialog: MatDialog,
-        public snackBar: MatSnackBar,
+        public snackBar: Snackbar,
         private userRepositoryService: UserRepositoryService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
@@ -223,25 +224,11 @@ export class SearchFormComponent {
             },
             error => {
                 console.log('search - subscribe - error:', error);
+                this.snackBar.run('Search action has action has encountered an error. Detail:' + error, false);
                 this.submitted = false;
             }
             )
     }
-/*
-    getUserRepositories() {
-        this.userRepositoryService.findByUser()
-            .subscribe(
-            data => {
-                this.userRepositories = data;
-                console.log('userRepositoryService',data);
-                this.incRepo(this.searchResult);
-                this.submitted = false;
-            },
-            error => {
-                console.log('getUserRepositories -> error:', error);
-            })
-    }
-    */
 
     checkSaveBookmark(mc: MultimediaContent) {
 
@@ -263,10 +250,11 @@ export class SearchFormComponent {
                 if (!exist) {
                     this.saveMC(mc);
                 } else {
-                    this.openSnackBar('The Bookmark was already saved', 'ERROR');
+                    this.snackBar.run('The Bookmark was already saved', false);
                 }
             },
             error => {
+                this.snackBar.run('Create bookmark action has action has encountered an error. Detail:' + error, false);
                 console.log('getBookmarks - subscribe - error:', error);
             }
         )
@@ -290,15 +278,12 @@ export class SearchFormComponent {
         this.BookmarkService.create(bookmark)
             .subscribe(
             res => {
-                //console.log('saveMC OK:', res);
-                //const element = document.getElementById(mc.uri);
-                //element.innerText = 'star';
                 mc.bookmark = true;
                 this.UpdateMC(mc);
-                this.openSnackBar('The Bookmark has been saved', 'OK');
+                this.snackBar.run('The Bookmark has been saved', true);
             },
             error => {
-                this.openSnackBar('The Bookmark has NOT been saved correctly', 'ERROR');
+                this.snackBar.run('Create bookmark action has action has encountered an error. Detail:' + error, false);
                 console.log('saveMC - error:', error);
             }
             )
@@ -313,11 +298,6 @@ export class SearchFormComponent {
         }
     }
 
-    openSnackBar(message: string, action: string) {
-        this.snackBar.open(message, action, {
-            duration: 5000
-        });
-    }
 
     getImage(mc: MultimediaContent): string {
         if (mc.thumbnail) {
@@ -355,8 +335,6 @@ export class SearchFormComponent {
                 this.activeRepositories.push(new Filter(repo[i]));
             }
         }
-        console.log(' array', array);
-        console.log(' this.activeRepositories', this.activeRepositories);
         // count repositories
         for (i = 0; i < array.length; i++) {
 
@@ -370,25 +348,9 @@ export class SearchFormComponent {
             }
 
         }
-        console.log('COUNT this.activeRepositories', this.activeRepositories);
         this.submitted = false;
     }
-/*
-    initRepo(arr:MultimediaContent[]) {
-        let i: number;
-        let repository: string;
-        this.activeRepositories = [];
-       let array: string[] = arr.map(obj => obj.source.name);
-console.log('repooo',array);
-        for (i = 0; i < array.length; i++) {
-            //const enabled = array[i].enabled;
-            //if (enabled) {
-                this.activeRepositories.push(new Filter(array[i]));
-            //}
-        }
 
-    }
-*/
     filterRepository(item: MultimediaContent): boolean {
         // console.log('this.activeRepositories',this.activeRepositories);
         const repository = item.source.name;
@@ -401,19 +363,7 @@ console.log('repooo',array);
         }
         return false;
     }
-/*
-    filter(item: MultimediaContent): any {
-        if (this.filterRepository(item)) {
-            if (this.activeType) {
-                const index = this.activeType.findIndex(obj => obj.name === item.type);
-                if (index !== -1) {
-                    return this.activeType[index].enabled;
-                }
-            }
-            return false;
-        }
-    }
-*/
+
     sidebar(size: number): number {
         if (this.showSidebar) {
             return 0;

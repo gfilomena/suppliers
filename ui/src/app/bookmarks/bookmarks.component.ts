@@ -8,6 +8,7 @@ import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
 import { Filter } from '../_models/filter';
 import { PageEvent } from '@angular/material';
+import { Snackbar } from './../snackbar/snackbar.component';
 
 @Component({
     selector: 'app-bookmarks',
@@ -47,7 +48,8 @@ export class BookmarksComponent implements OnInit {
     constructor(private BookmarkService: BookmarkService,
         private alertService: AlertService,
         private dialog: MatDialog,
-        private userRepositoryService: UserRepositoryService) { }
+        private userRepositoryService: UserRepositoryService,
+        public snackBar: Snackbar) { }
 
 
     ngOnInit() {
@@ -151,7 +153,8 @@ export class BookmarksComponent implements OnInit {
                 //console.log(' this.bookmarks', this.bookmarks);
             },
             error => {
-                this.alertService.error(error._body);
+                this.snackBar.run('Listing of repositories action has encountered an error. Detail:' + error, false);
+                console.log('getUserRepositories -> error:', error);
                 this.submitted = false;
             });
     }
@@ -163,9 +166,9 @@ export class BookmarksComponent implements OnInit {
                 this.userRepositories = data;
                 this.initRepo(this.userRepositories);
                 this.incRepo(this.bookmarks);
-                //console.log(' this.userRepositories', this.userRepositories);
             },
             error => {
+                this.snackBar.run('Listing of repositories action has encountered an error. Detail:' + error, false);
                 console.log('getUserRepositories -> error:', error);
             });
     }
@@ -250,7 +253,8 @@ export class BookmarksComponent implements OnInit {
                 localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
             },
             error => {
-                this.alertService.error(error._body);
+                this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                console.log('bookmarkService.delete -> error:', error);
             });
     }
 
@@ -289,7 +293,8 @@ export class BookmarksComponent implements OnInit {
                         localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
                     },
                     error => {
-                        this.alertService.error(error._body);
+                        this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                        console.log('bookmarkService.delete -> error:', error);
                     });
             }
           });

@@ -59,6 +59,7 @@ import { ComponentsModule } from './shared/components.module';
 import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { Globals } from './global';
+import { Snackbar } from './snackbar/snackbar.component';
 
 
 @NgModule({
@@ -104,7 +105,8 @@ import { Globals } from './global';
         ProfileComponent,
         DialogRegistrationDialog,
         BookmarkConfirmationDialog,
-        HistoryConfirmationDialog
+        HistoryConfirmationDialog,
+        Snackbar
         // SemanticSearchComponent
     ],
     providers: [
@@ -119,7 +121,8 @@ import { Globals } from './global';
         HistorysearchService,
         McssrService,
         VimeoService,
-        Globals
+        Globals,
+        Snackbar
     ],
     entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog, BookmarkConfirmationDialog, HistoryConfirmationDialog],
     bootstrap: [AppComponent]

@@ -13,6 +13,7 @@ import { mediafile, File } from './../_models/mediafile';
 import * as mime from 'mime-types';
 import { CommonModule } from '@angular/common';
 import {CdkTableModule} from "@angular/cdk/table";
+import { Snackbar } from './../snackbar/snackbar.component';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
@@ -52,7 +53,7 @@ export class DialogDetail implements OnInit {
         public http: Http,
         private BookmarkService: BookmarkService,
         private McssrService: McssrService,
-        public snackBar: MatSnackBar,
+        public snackBar: Snackbar,
         private InternetArchiveService: InternetArchiveService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     }
@@ -98,11 +99,11 @@ export class DialogDetail implements OnInit {
                 this.details = res;
                 this.formats = this.filtertype(this.details);
                 this.path = this.details.server + this.details.dir + '/';
-
-                console.log('getInternetArchiveformat - subscribe OK:', this.details);
-                console.log('path', this.path)
+                //console.log('getInternetArchiveformat - subscribe OK:', this.details);
+                //console.log('path', this.path)
             },
             error => {
+                this.snackBar.run('Listing of formats files type action has encountered an error. Detail:' + error, false);
                 console.log('getInternetArchiveformat - subscribe - error:', error);
             }
         )
@@ -204,10 +205,11 @@ export class DialogDetail implements OnInit {
                 if (!exist) {
                     this.saveMC(mc);
                 } else {
-                    this.openSnackBar('The Bookmark was already saved', 'error');
+                    this.snackBar.run('The Bookmark was already saved', false);
                 }
             },
             error => {
+                this.snackBar.run('Checking on the saving bookmark action has encountered an error. Detail:' + error, false);
                 console.log('getBookmarks - subscribe - error:', error);
             }
         )
@@ -226,28 +228,13 @@ export class DialogDetail implements OnInit {
                 //element.innerText = 'star';
                 mc.bookmark = true;
                 this.mcupdate.emit(mc);
+                this.snackBar.run('The bookmark has been saved', true);
             },
             error => {
-                console.log('saveMC - subscribe - error:', error);
+                this.snackBar.run('Saving bookmark action has encountered an error. Detail:' + error, false);
+                 console.log('saveMC - subscribe - error:', error);
             }
             )
-    }
-
-    openSnackBar(message: string, action: string) {
-        let cssclasses;
-        if (action === 'Successful!') {
-            cssclasses = 'success-snackbar';
-        }else {
-            cssclasses = 'errorSnackBar';
-        }
-        console.log('cssclasses',cssclasses);
-
-        this.snackBar.open(message, action, {
-            duration: 30000,
-            verticalPosition: 'bottom',
-            extraClasses: [cssclasses]
-
-        });
     }
 
     stateBookmark(mc: MultimediaContent): string {
@@ -285,20 +272,21 @@ export class DialogDetail implements OnInit {
         this.McssrService.create(mc)
             .subscribe(
             res => {
+                this.snackBar.run('The Multimedia Item has been sent to Mcssr', true);
                 console.log('Send to Mcssr - subscribe OK:', res);
                 let creationResponse = res.json();
                 let uid = creationResponse.uid;
                 this.McssrService.updateTags(mc, uid)
                     .subscribe(
-                    resTag => {
-                        console.log('update Tags to Mcssr - subscribe OK:', resTag);
+                    res => {
+                        console.log('update Tags to Mcssr - subscribe OK:', res);
                         this.loading = false;
-                        this.openSnackBar('The Multimedia Item has been sent correctly to Mcssr', 'Successful!');
+                        this.snackBar.run('The tags have been sent correctly to Mcssr', true);
                     },
-                    errorTag => {
-                        console.log('Send to Mcssr - subscribe - error:', errorTag);
+                    error => {
+                        console.log('Send to Mcssr - subscribe - error:', error);
                         this.loading = false;
-                        this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'Error!');
+                        this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + error, false);
                     }
                     )
             this.loading=false;
@@ -306,7 +294,7 @@ export class DialogDetail implements OnInit {
             error => {
                 console.log('Send to Mcssr - subscribe - error:', error);
                 this.loading = false;
-                this.openSnackBar('The Multimedia Item hasn\'t been sent to Mcssr', 'Error!');
+                this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr', false);
             }
             )
     }
@@ -335,9 +323,9 @@ export class DialogDetail implements OnInit {
                 this.loaderror = true;
             },
             error => {
+                this.snackBar.run('uriValidation check has encountered an error. Detail:' + error, false);
                 console.log('err', error);
                 this.loaderror = false;
-
             })
     }
 

@@ -1,0 +1,18 @@
+// Import all the tools needed to customize the theme and extract parts of it
+@import '~@angular/material/theming';
+
+// Define a mixin that accepts a theme and outputs the color styles for the component.
+@mixin ocd-app-theme($ocd-app-theme) {
+    // Extract whichever individual palettes you need from the theme.
+    $primary: map-get($ocd-app-theme, primary);
+    $accent: map-get($ocd-app-theme, accent);
+  
+    // Use mat-color to extract individual colors from a palette as necessary.
+    snack-bar-container.success-snackbar simple-snack-bar.mat-simple-snackbar button.mat-simple-snackbar-action{ 
+      color: greenyellow;
+    }
+
+    snack-bar-container.errorSnackBar simple-snack-bar.mat-simple-snackbar button.mat-simple-snackbar-action{ 
+        color:red;
+    }
+  }

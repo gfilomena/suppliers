@@ -1,5 +1,7 @@
 @import '~@angular/material/theming';
 
+@import 'custom.scss';
+
 // Common styles for Angular Material.
 // Side note: make sure you include this only ONCE inside the app.
 @include mat-core();
@@ -11,6 +13,9 @@ $ocd-app-accent:  mat-palette($mat-amber, A200, A100, A400);
 
 // Create the theme objects with the defined palettes.
 $ocd-app-theme: mat-light-theme($ocd-app-primary, $ocd-app-accent);
+
+// Using the $theme variable from the pre-built theme you can call the theming function
+@include ocd-app-theme($ocd-app-theme);
 
 // Include the theme.
 @include angular-material-theme($ocd-app-theme);

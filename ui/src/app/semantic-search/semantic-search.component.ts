@@ -1,7 +1,7 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-
 import { SemanticService } from './semantic.service';
+import { Snackbar } from './../snackbar/snackbar.component';
 
 @Component({
   selector: 'semantic-search',
@@ -40,7 +40,8 @@ export class SemanticSearchComponent {
 
 
   constructor(fb: FormBuilder,
-              private semanticService: SemanticService) {
+              private semanticService: SemanticService,
+              public snackBar: Snackbar) {
 
     this._orderedAnnotations = [];
 
@@ -98,6 +99,7 @@ export class SemanticSearchComponent {
     } else {
 
       this._error = "No file nor URL specified";
+      this.snackBar.run( this._error , false);
       this.onGATEResponse.emit()
 
     }
@@ -114,12 +116,13 @@ export class SemanticSearchComponent {
   // a file has been uploaded
   protected onFileSelect($event: File[]): void {
 
-    if ($event === null)
-      this._error = "File type not accepted";
-    else {
+    if ($event === null) {
+      this._error = 'File type not accepted';
+      this.snackBar.run( this._error , false);
+    } else {
       this._error = null;
       this._file = $event[0] || this._file;
-      console.log("file: " + this._file);
+      console.log('file: ' + this._file);
     }
 
   }
@@ -138,6 +141,7 @@ export class SemanticSearchComponent {
 
     console.log('Semantic Search error:', error);
     this._error = "Server error";
+    this.snackBar.run( this._error , false);
     this.onGATEResponse.emit();
 
   }

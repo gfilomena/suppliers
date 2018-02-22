@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from "@angular/core"
 import { Router, ActivatedRoute } from "@angular/router"
 import { AlertService, AuthenticationService, AuthService } from "../_services/index"
-
+import { MatSnackBar } from '@angular/material';
 
 @Component({
     templateUrl: './login.component.html',
@@ -12,7 +12,6 @@ export class LoginComponent implements OnInit {
     model: any = {}
     loading = false
     returnUrl: string
-    errorMsg = '';
     loginFormEnabled=false;
 
     constructor(
@@ -20,7 +19,8 @@ export class LoginComponent implements OnInit {
         private router: Router,
         private authenticationService: AuthenticationService,
         public auth: AuthService,
-        private alertService: AlertService) { }
+        private alertService: AlertService,
+        public snackBar: MatSnackBar) { }
 
     ngOnInit() {
         // reset login status
@@ -39,9 +39,11 @@ export class LoginComponent implements OnInit {
                     this.router.navigate([this.returnUrl]);
                 },
                 error => {
-                    this.alertService.error(error._body);
+                    this.snackBar.open('The login has encountered an error. Detail:' + error, 'Error', {
+                        duration: 5000,
+                        extraClasses: ['errorSnackBar']
+                     });
                     this.loading = false;
-                    this.errorMsg = 'Failed to login';
                 });
     }
 

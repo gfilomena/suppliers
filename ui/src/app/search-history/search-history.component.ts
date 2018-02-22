@@ -6,6 +6,7 @@ import { User } from "../_models/user";
 import { SearchForm } from '../_models/search-form';
 import { SearchResult } from '../_models/search-result';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { Snackbar } from './../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-search-history',
@@ -36,7 +37,8 @@ export class SearchHistoryComponent implements OnInit {
     public router: Router,
     public http: Http,
     public route: ActivatedRoute,
-    private dialog: MatDialog) {
+    private dialog: MatDialog,
+    public snackBar: Snackbar) {
     this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
   }
 
@@ -59,6 +61,7 @@ export class SearchHistoryComponent implements OnInit {
 
       },
       error => {
+        this.snackBar.run('Listing history search results action has action has encountered an error. Detail:' + error, false);
         console.log('get all history - subscribe - error:', error);
         this.loading = false;
       });
@@ -145,8 +148,6 @@ export class SearchHistoryComponent implements OnInit {
                   items.splice(j, 1);
                 }
               });
-              console.log('this.resultsByDate', this.resultsByDate);
-              console.log(' this.dates', this.dates);
             });
             // delete date not used
             let deletedatelist: Date[] = [];
@@ -157,13 +158,13 @@ export class SearchHistoryComponent implements OnInit {
              // for (let j = 0; j < this.resultsByDate.length; j++) {
               let j = 0;
               while(j < this.resultsByDate.length && !found)  {
-                console.log('this.dates[i] '+i, this.dates[i]);
+               // console.log('this.dates[i] '+i, this.dates[i]);
                     for (let k = 0; k < this.resultsByDate[j].length; k++) {
-                      console.log('new Date this.resultsByDate['+j+']['+k+'][date]',new Date(this.resultsByDate[j][k]['date']));
-                      console.log('new Date(this.dates[i])'+i, new Date(this.dates[i]));
+                     // console.log('new Date this.resultsByDate['+j+']['+k+'][date]',new Date(this.resultsByDate[j][k]['date']));
+                     // console.log('new Date(this.dates[i])'+i, new Date(this.dates[i]));
 
                           if(  sameDay(new Date(this.resultsByDate[j][k]['date']), new Date(this.dates[i]))) {
-                            console.log('sameDay in - this.resultsByDate[j][date]', this.resultsByDate[j][k]['date']);
+                       //     console.log('sameDay in - this.resultsByDate[j][date]', this.resultsByDate[j][k]['date']);
                             found = true;
                             break;
                           }
@@ -183,6 +184,7 @@ export class SearchHistoryComponent implements OnInit {
             }
           },
           error => {
+            this.snackBar.run('Delete history search action has action has encountered an error. Detail:' + error, false);
             console.log(error);
           });
       }
@@ -260,6 +262,7 @@ export class SearchHistoryComponent implements OnInit {
     return null;
 
   }
+
 
 }
 

@@ -11,8 +11,11 @@
     <mat-icon (click)="deleteSelected()">delete</mat-icon>
   </button>
 </mat-toolbar>
-<div class="search-history-container" fxLayout="column">
-
+<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<h3 align="center" *ngIf="!dates || dates.length === 0">
+  No history available.
+</h3>
+<div fxLayout="column">
   <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
       <button mat-fab>
@@ -25,9 +28,7 @@
       </button>
     </smd-fab-actions>
   </smd-fab-speed-dial>
-  <h3 class="mat-h3" align="center" *ngIf="!dates || dates.length === 0">
-    No history available.
-  </h3>
+
   <mat-card fxFlex class="container" *ngFor="let date of dates; let i = index" [attr.data-index]="i">
     <mat-list class="list">
       <h1 class="mat-subheader">

@@ -1,4 +1,3 @@
-
 import { Repository } from '../../../_models/repository';
 import { UserRepository } from '../../../_models/user-repository';
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
@@ -27,8 +26,8 @@ export class RegistrationRepositoryComponent implements OnInit {
     access_token = '';
     repoid = '';
     vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
-             + environment.vimeo_clientID + '&response_type=token&redirect_uri='
-             + environment.auth_callbackURL + 'profile&state=';
+        + environment.vimeo_clientID + '&response_type=token&redirect_uri='
+        + environment.auth_callbackURL + 'profile&state=';
 
     constructor(
         public dialog: MatDialog,
@@ -44,57 +43,50 @@ export class RegistrationRepositoryComponent implements OnInit {
 
     ngOnInit() {
         this.getUserRepositories();
-        
+
     }
 
-    
     getToken() {
-        
-                       const url = this.vimeoURL + this.repoid;
-                       const urlvalue = this.route.fragment['value'];
-                       const params = new URLSearchParams(urlvalue);
-                       if(params.get('access_token'))  {
-                        console.log('params[access_token]', params.get('access_token'));
-                        console.log('params.get(state)', params.get('state'));
-                        this.access_token = params.get('access_token');
-                        
-                        if(params.get('state')) {
-                            const id = params.get('state');
-                            let item = this.userRepositories.find(obj => obj.id === id);
-                            if (item) {
-                                item.token = this.access_token;
-                                this.update(item);
-                            }else {
-                                this.create();
-                            }
-                        }
-      
-                        
-                       } else{
-                        this.access_token = '';
-                        //window.location.href = url;
-                       }
-                  }
-    
-    
-      
+
+        const url = this.vimeoURL + this.repoid;
+        const urlvalue = this.route.fragment['value'];
+        const params = new URLSearchParams(urlvalue);
+        if (params.get('access_token')) {
+            console.log('params[access_token]', params.get('access_token'));
+            console.log('params.get(state)', params.get('state'));
+            this.access_token = params.get('access_token');
+            if (params.get('state')) {
+                const id = params.get('state');
+                let item = this.userRepositories.find(obj => obj.id === id);
+                if (item) {
+                    item.token = this.access_token;
+                    this.update(item);
+                } else {
+                    this.create();
+                }
+            }
+        } else {
+            this.access_token = '';
+            //window.location.href = url;
+        }
+    }
 
     getUserRepositories() {
         this.userRepositoryService.findByUser()
             .subscribe(
-            data => {
-                this.userRepositories = data;
-                this.getToken();
-                console.log(' this.userRepositories', this.userRepositories);
-            },
-            error => {
-                this.alertService.error(error._body);
-                this.loading = false;
-            })
+                data => {
+                    this.userRepositories = data;
+                    this.getToken();
+                    console.log('this.userRepositories', this.userRepositories);
+                },
+                error => {
+                    this.snackBar.open('Listing of repositories action has encountered an error. Detail:' + error, 'Error', {
+                        duration: 5000,
+                        extraClasses: ['errorSnackBar']
+                    });
+                    this.loading = false;
+                })
     }
-
-    
-
 
 
     delete(reg: UserRepository) {
@@ -105,31 +97,33 @@ export class RegistrationRepositoryComponent implements OnInit {
         });
 
         dialogc.afterClosed().subscribe(confirm => {
-            console.log("confirm", confirm);
             if (confirm) {
                 this.userRepositoryService.delete(reg.id)
                     .subscribe(
-                    data => {
-                        this.getUserRepositories();
-                    },
-                    error => {
-                        this.alertService.error(error._body);
-                        this.loading = false;
-                    })
-             }  
+                        data => {
+                            this.getUserRepositories();
+                        },
+                        error => {
+                            this.snackBar.open('Delete repository action has encountered an error. Detail:' + error, 'Error', {
+                                duration: 5000,
+                                extraClasses: ['errorSnackBar']
+                            });
+                            this.loading = false;
+                        })
+            }
         })
 
     }
 
     create() {
 
-        if(this.access_token) {
+        if (this.access_token) {
             this.userRepository.token = this.access_token;
             this.userRepository.repository = 'Vimeo';
         }
 
-        let dialogRef = this.dialog.open(DialogRegistrationRepository, {
-            data: { userRepository: this.userRepository, userRepositories: this.userRepositories},
+        const dialogRef = this.dialog.open(DialogRegistrationRepository, {
+            data: { userRepository: this.userRepository, userRepositories: this.userRepositories },
             height: 'auto',
             width: 'auto',
         });
@@ -152,22 +146,22 @@ export class RegistrationRepositoryComponent implements OnInit {
         const name = userRepository.repository;
         this.userRepositoryService.update(userRepository)
             .subscribe(
-            data => {
-                console.log('respose update:', data);
-                this.openSnackBar('The Repository ' + name + ' has been switched to ' + enabled, 'OK');
-            },
-            error => {
-                this.alertService.error(error._body);
-                this.openSnackBar('The Repository ' + name + ' has not been switched to ' + enabled, 'ERROR');
-            });
+                data => {
+                    console.log('respose update:', data);
+                    this.snackBar.open('The Repository ' + name + ' has been switched to ' + enabled, 'Successful', {
+                        duration: 5000,
+                        extraClasses: ['success-snackbar']
+                    });
+                },
+                error => {
+                    this.snackBar.open('The Repository ' + name + ' has not been switched to ' + enabled, 'Error', {
+                        duration: 5000,
+                        extraClasses: ['errorSnackBar']
+                    });
+                });
 
     }
 
-    openSnackBar(message: string, action: string) {
-        this.snackBar.open(message, action, {
-            duration: 2000,
-        });
-    }
 
     update(userRepository: UserRepository) {
 
@@ -198,7 +192,7 @@ export class RegistrationRepositoryComponent implements OnInit {
     templateUrl: 'dialog-confirmation-dialog.html',
 })
 export class DialogRegistrationDialog {
-    constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 }
 
 
@@ -217,10 +211,10 @@ export class DialogRegistrationRepository implements OnInit {
     message = '';
     @Output() onChange = new EventEmitter();
     vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
-             + environment.vimeo_clientID + '&response_type=token&redirect_uri='
-             + environment.auth_callbackURL + 'profile&state=';
+        + environment.vimeo_clientID + '&response_type=token&redirect_uri='
+        + environment.auth_callbackURL + 'profile&state=';
 
-    
+
 
     constructor(
         public dialogRef: MatDialogRef<DialogRegistrationRepository>,
@@ -230,7 +224,8 @@ export class DialogRegistrationRepository implements OnInit {
         private RepositoryService: RepositoryService,
         private alertService: AlertService,
         private route: ActivatedRoute,
-        public vimeodialog: MatDialog) { }
+        public vimeodialog: MatDialog,
+        public snackBar: MatSnackBar) { }
 
     ngOnInit() {
         this.getAllRepositories();
@@ -240,9 +235,9 @@ export class DialogRegistrationRepository implements OnInit {
         if (!this.checkRepository(repository)) {
             this.data.userRepository.repository = repository;
             this.message = '';
-        }else {
-           this.data.userRepository.repository = '';
-           this.message = 'The Repository ' + repository + ' is already registered!';
+        } else {
+            this.data.userRepository.repository = '';
+            this.message = 'The Repository ' + repository + ' is already registered!';
         }
 
     }
@@ -256,9 +251,9 @@ export class DialogRegistrationRepository implements OnInit {
         return true;
     }
 
-    showapiKey(repository):boolean {
+    showapiKey(repository): boolean {
         const list: string[] = ['Youtube', 'Pexels', 'Pixabay'];
-        if(list.indexOf(repository) === -1 )  {
+        if (list.indexOf(repository) === -1) {
             return false;
         }
         return true;
@@ -268,14 +263,17 @@ export class DialogRegistrationRepository implements OnInit {
     getAllRepositories() {
         this.RepositoryService.getAll()
             .subscribe(
-            data => {
-                this.repositories = data;
-                localStorage.setItem('repositories', JSON.stringify(this.repositories));
-            },
-            error => {
-                this.alertService.error(error._body);
-                this.loading = false;
-            });
+                data => {
+                    this.repositories = data;
+                    localStorage.setItem('repositories', JSON.stringify(this.repositories));
+                },
+                error => {
+                    this.snackBar.open('Listing of repositories action has encountered an error. Detail:' + error, 'Error', {
+                        duration: 5000,
+                        extraClasses: ['errorSnackBar']
+                     });
+                    this.loading = false;
+                });
     }
 
     private change(value: any) {
@@ -302,47 +300,52 @@ export class DialogRegistrationRepository implements OnInit {
 
             this.userRepositoryService.update(userRepository)
                 .subscribe(
-                data => {
-                    console.log('respose update:', data);
-                    this.onChange.emit();
-                    this.dialogRef.close();
-                },
-                error => {
-                    this.alertService.error(error._body);
-                    this.loading = false;
-                });
+                    data => {
+                        console.log('respose update:', data);
+                        this.onChange.emit();
+                        this.dialogRef.close();
+                    },
+                    error => {
+                        this.snackBar.open('Update repository action has encountered an error. Detail:' + error, 'Error', {
+                            duration: 5000,
+                            extraClasses: ['errorSnackBar']
+                         });
+                        this.loading = false;
+                    });
 
         } else {
 
             this.userRepositoryService.create(userRepository)
                 .subscribe(
-                data => {
-                    this.onChange.emit();
-                    this.dialogRef.close();
-                },
-                error => {
-                    this.alertService.error(error._body);
-                    this.loading = false;
-                });
+                    data => {
+                        this.onChange.emit();
+                        this.dialogRef.close();
+                    },
+                    error => {
+                        this.snackBar.open('Create repository action has encountered an error. Detail:' + error, 'Error', {
+                            duration: 5000,
+                            extraClasses: ['errorSnackBar']
+                         });
+                        this.loading = false;
+                    });
 
         }
     }
 
 
     getTokenVimeo(userRepository: UserRepository) {
-               console.log('userRepository.id',userRepository.id);
-               const url = this.vimeoURL + userRepository.id;
-               const urlvalue = this.route.fragment['value'];
-               const params = new URLSearchParams(urlvalue);
-               if(params.get('access_token'))  {
-                console.log('params[access_token]', params.get('access_token'));
-                const access_token = params.get('access_token');
-                this.data.userRepository.token = access_token;
-               } else{
-                window.location.href = url;
-               }
-          }
-
+        console.log('userRepository.id', userRepository.id);
+        const url = this.vimeoURL + userRepository.id;
+        const urlvalue = this.route.fragment['value'];
+        const params = new URLSearchParams(urlvalue);
+        if (params.get('access_token')) {
+            console.log('params[access_token]', params.get('access_token'));
+            const access_token = params.get('access_token');
+            this.data.userRepository.token = access_token;
+        } else {
+            window.location.href = url;
+        }
+    }
 
     getDate(date: string): string {
         return new Date(date).toString().slice(0, 15);

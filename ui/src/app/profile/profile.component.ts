@@ -8,36 +8,36 @@ import { Validators } from '@angular/forms';
 
 
 @Component({
-  selector: 'app-profile',
-  templateUrl: './profile.component.html',
-  styleUrls: ['./profile.component.css']
+    selector: 'app-profile',
+    templateUrl: './profile.component.html',
+    styleUrls: ['./profile.component.css']
 })
 export class ProfileComponent implements OnInit {
 
-panelOpenState = false;
-submitted = false;
-user;
+    panelOpenState = false;
+    submitted = false;
+    user;
 
 
-  constructor(
-      private UserService: UserService,
-      private alertService: AlertService,
-      public snackBar: MatSnackBar
-      ) { }
+    constructor(
+        private UserService: UserService,
+        private alertService: AlertService,
+        public snackBar: MatSnackBar
+    ) { }
 
 
 
-  ngOnInit() {
-     //console.log('this.route.url',this.router.url);
-     this.user = JSON.parse(localStorage.getItem('currentUser'));
-     console.log('this.currentUser', this.user);
-     this.getUser();
-  }
+    ngOnInit() {
+        //console.log('this.route.url',this.router.url);
+        this.user = JSON.parse(localStorage.getItem('currentUser'));
+        console.log('this.currentUser', this.user);
+        this.getUser();
+    }
 
 
-  getUser(){
+    getUser() {
 
-    this.UserService.getByUsername(this.user.username)
+        this.UserService.getByUsername(this.user.username)
             .subscribe(
                 data => {
                     console.log('getByUsername', data);
@@ -45,31 +45,42 @@ user;
                     localStorage.setItem('currentUser', JSON.stringify(data));
                 },
                 error => {
-                    this.alertService.error(error._body);
+                    this.openSnackBar('Getting User action has encountered an error. Detail:' + error, 'Error', false);
                 });
-  }
+    }
 
-  update() {
-    this.submitted = true;
-    this.UserService.update(this.user)
+    update() {
+        this.submitted = true;
+        this.UserService.update(this.user)
             .subscribe(
                 data => {
                     console.log('data', data);
-                    this.openSnackBar('The User has been updated!', 'update');
+                    this.openSnackBar('The User has been updated.', 'Succesfull', true);
                     this.submitted = false;
                 },
                 error => {
                     console.log('error:', error);
-                    this.openSnackBar('The User has NOT been updated! ' + error, 'error');
+                    this.openSnackBar('Update User action has encountered an error. Detail:' + error, 'Error', false);
                     this.submitted = false;
                 });
     }
 
-   openSnackBar(message: string, action: string) {
-    this.snackBar.open(message, action, {
-      duration: 5000,
-    });
-   }
-  }
+    openSnackBar(message: string, action: string, status: boolean) {
+        let cssclasses;
+        if (status) {
+            cssclasses = 'success-snackbar';
+        }else {
+            cssclasses = 'errorSnackBar';
+        }
+        console.log('cssclasses',cssclasses);
+
+        this.snackBar.open(message, action, {
+            duration: 3000,
+            verticalPosition: 'bottom',
+            extraClasses: [cssclasses]
+        });
+
+}
 
 
+}

@@ -1,11 +1,11 @@
 import { Repository } from './../_models/repository';
 import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatSnackBar } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { RepositoryService, AlertService } from '../_services/index';
 import { Router } from '@angular/router';
-
+import { Snackbar } from './../snackbar/snackbar.component';
 
 @Component({
   selector: 'app-dialog-repository',
@@ -22,7 +22,8 @@ export class DialogRepositoryComponent implements OnInit {
   constructor(
     public dialog: MatDialog,
     private RepositoryService: RepositoryService,
-    private alertService: AlertService) {
+    private alertService: AlertService,
+    public snackBar: Snackbar) {
     let repository = new Repository();
   }
 
@@ -42,7 +43,7 @@ export class DialogRepositoryComponent implements OnInit {
         console.log(' this.repositories', this.repositories);
       },
       error => {
-        this.alertService.error(error._body)
+        this.snackBar.run('Listing of repositories action has encountered an error. Detail:' + error, false);
         this.loading = false;
       })
   }
@@ -62,9 +63,13 @@ export class DialogRepositoryComponent implements OnInit {
           .subscribe(
           data => {
             this.getAllRepositories();
+
+            this.snackBar.run('The repository ' + rep.name + ' has been deleted!', true);
+
           },
           error => {
-            this.alertService.error(error._body);
+            this.snackBar.run('Delete action of the repository has encountered an error. Detail:' + error, false);
+            console.log('RepositoryService.delete -> error:', error);
             this.loading = false;
           })
       }
@@ -132,7 +137,8 @@ export class DialogRepositoryDetail {
     @Inject(MAT_DIALOG_DATA) public data: any,
     private router: Router,
     private RepositoryService: RepositoryService,
-    private alertService: AlertService) { }
+    private alertService: AlertService,
+    public snackBar: Snackbar) { }
 
   onSubmit() {
     this.submitted = true;
@@ -144,7 +150,6 @@ export class DialogRepositoryDetail {
   }
 
   upsert(repository: Repository) {
-    console.log('repository', repository);
     this.loading = true;
 
     if (repository.id) {
@@ -152,11 +157,13 @@ export class DialogRepositoryDetail {
       this.RepositoryService.update(repository)
         .subscribe(
         data => {
+          this.snackBar.run('The repository ' + repository + ' has been updated!', true);
           this.onChange.emit();
           this.dialogRef.close();
         },
         error => {
-          this.alertService.error(error._body)
+          this.snackBar.run('Update action of the repository ' + repository + ' has encountered an error. Detail:' + error, false);
+          console.log('RepositoryService.update -> error:', error);
           this.loading = false;
         })
 
@@ -165,12 +172,13 @@ export class DialogRepositoryDetail {
       this.RepositoryService.create(repository)
         .subscribe(
         data => {
-          console.log('new repository', repository);
+          this.snackBar.run('The repository ' + repository + ' has been created!', true);
           this.onChange.emit();
           this.dialogRef.close();
         },
         error => {
-          this.alertService.error(error._body)
+          this.snackBar.run('Create action of the repository ' + repository + ' has encountered an error. Detail:' + error, false);
+          console.log('RepositoryService.create -> error:', error);
           this.loading = false;
         })
     }
@@ -179,4 +187,5 @@ export class DialogRepositoryDetail {
   getDate(date: string): string {
     return new Date(date).toString().slice(0, 15);
   }
+
 }

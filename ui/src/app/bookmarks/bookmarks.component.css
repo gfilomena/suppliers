@@ -156,7 +156,7 @@ mat-checkbox {
   align-content: space-between;
   align-items: center;
   justify-content: flex-start;
-  margin-top: 64px;
+  /*margin-top: 64px;*/
   padding: 24px;
 }
 
@@ -275,14 +275,18 @@ mat-checkbox {
 }
 
 h3 {
-  margin-top: 84px;
+  margin-top: 10px;
   color: #8b8b8b;
   font-size: 1.4em;
 }
 
 mat-progress-bar {
-  position: fixed;
+  /*position: fixed; 
+    margin-top: 62px;
+  */
   z-index: 2;
   box-shadow: none;
-  margin-top: -29px;
-}
+  
+  
+} 
+
