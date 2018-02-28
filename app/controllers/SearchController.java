@@ -65,10 +65,10 @@ public class SearchController extends Controller {
         List<String> keywords=getKeyWords(jsonRequest);
 
         // fetch cached data if any
-        List<SearchResult> fetchedResults=fetchCachedSearch(keywords);
-        if(!fetchedResults.isEmpty() && fetchedResults.size()==1){
-            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(fetchedResults.get(0))));
-        }
+        // List<SearchResult> fetchedResults=fetchCachedSearch(keywords);
+        // if(!fetchedResults.isEmpty() && fetchedResults.size()==1){
+        //      return CompletableFuture.supplyAsync(() -> ok(Json.toJson(fetchedResults.get(0))));
+       // }
 
 
         SearchManager searchManager=new SearchManager();
