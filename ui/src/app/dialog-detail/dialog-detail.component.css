@@ -149,7 +149,11 @@ iframe {
 
 .title{
    width:500px;
-  max-width: 80%;
+   max-width: 80%;
+}
+
+.title .mat-input-element:disabled {
+  color: #ff9e80;
 }
 
 .logo {

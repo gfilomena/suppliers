@@ -63,14 +63,7 @@ export class SearchFormComponent {
     spin = false;
     direction = 'up';
     animationMode = 'fling';
-
-
-
-    // _click(event: any) {
-    //    console.log(event);
-    // }
-
-
+    p: number = 1;
 
     constructor(
         private searchService: SearchService, 
@@ -84,8 +77,6 @@ export class SearchFormComponent {
 
         const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
         this.dateAdapter.setLocale('ll');
-
-        //initialize
 
         if (lastresearch) {
             //progress bar ON
@@ -191,7 +182,7 @@ export class SearchFormComponent {
         // console.log('this.searchForm', this.searchForm);
         localStorage.setItem('searchForm', JSON.stringify(this.searchForm));
         this.search();
-
+        
     }
 
     clear() {
@@ -221,6 +212,8 @@ export class SearchFormComponent {
                 // this.validator(this.searchResult)
                 this.nOfResults = this.searchResult.length;
                 // console.log('this.searchResult.length;',this.searchResult.length)
+                // set the pagination to the first
+                this.p = 1;
             },
             error => {
                 console.log('search - subscribe - error:', error);

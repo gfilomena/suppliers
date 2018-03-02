@@ -75,6 +75,7 @@
     <mat-progress-spinner *ngIf="!formats && data.source.name === 'InternetArchive'" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
     <mat-form-field class="formats" *ngIf="formats" floatPlaceholder="never">
       <mat-select placeholder="select format"  [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
+       
         <mat-option *ngFor="let file of formats" [value]="file.name">
           {{getExt(file.name)}} ({{getMB(file.size)}}MB)
         </mat-option>
@@ -94,7 +95,7 @@
 </mat-dialog-content>
 
 <mat-card-actions align="end">
-  <a class="logo" [href]="data.uri"><img src="/assets/images/{{data.source.name}}.png"/></a>
+  <a class="logo" target="_blank" [href]="data.uri"><img src="/assets/images/{{data.source.name}}.png"/></a>
   <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="48"></mat-progress-spinner>
   <button mat-raised-button *ngIf="selectedFormat !== ''" (click)="sendMcssr(data)">SEND TO MCSSR</button>
   <button mat-raised-button matDialogClose>CLOSE</button>

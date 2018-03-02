@@ -90,17 +90,18 @@ export class DialogDetail implements OnInit {
 
 
     getInternetArchiveformat(url: string) {
-        // let url = 'https://archive.org/download/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml';
-        // let url = 'https://ia801600.us.archive.org/26/items/SKODAOCTAVIA336x280/SKODAOCTAVIA336x280_files.xml';
-        url = encodeURI(url)
-        console.log('url', url)
+        url = encodeURI(url);
+        console.log('url', url);
         this.InternetArchiveService.getDetails(url).subscribe(
             res => {
                 this.details = res;
                 this.formats = this.filtertype(this.details);
                 this.path = this.details.server + this.details.dir + '/';
-                //console.log('getInternetArchiveformat - subscribe OK:', this.details);
-                //console.log('path', this.path)
+                // set the first value as default
+                this.selectedFormat = this.formats[0].name;
+                //console.log('formats',this.formats);
+                //console.log('this.selectedFormat',this.selectedFormat);
+                this.onChange(this.formats[0].name);
             },
             error => {
                 this.snackBar.run('Listing of formats files type action has encountered an error. Detail:' + error, false);
@@ -132,7 +133,7 @@ export class DialogDetail implements OnInit {
 
             if (this.acceptedFormat(extension) > -1) {
                 // console.log('ADD array.files[i].name', array.files[i].name)
-                finals.push(array.files[i])
+                finals.push(array.files[i]);
             }
         }
         console.log('finals', finals);
@@ -161,9 +162,9 @@ export class DialogDetail implements OnInit {
     }
 
 
-    onChange(filename) {
+    onChange(name) {
 
-        this.data.downloadURI = 'https:\/\/' + this.path + filename;
+        this.data.downloadURI = 'https:\/\/' + this.path + name;
         console.log('onChange - this.data.downloadURI', this.data.downloadURI);
         this.data.fileExtension = mime.lookup(this.data.downloadURI);
         console.log('this.data.fileExtension', this.data.fileExtension);
