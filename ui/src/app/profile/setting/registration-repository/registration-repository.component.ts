@@ -4,7 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter, Inject } from '@angular
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../../../_models/user';
-import { UserRepositoryService, RepositoryService, AlertService, VimeoService } from '../../../_services/index';
+import { UserRepositoryService, RepositoryService, AlertService, VimeoService, ValidatorService } from '../../../_services/index';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatSnackBar } from '@angular/material';
 import { environment } from '../../../../environments/environment';
@@ -208,6 +208,7 @@ export class DialogRegistrationRepository implements OnInit {
     currentUser: User;
     repositories: Repository[];
     loading = false;
+    validator = '';
     message = '';
     @Output() onChange = new EventEmitter();
     vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
@@ -225,11 +226,67 @@ export class DialogRegistrationRepository implements OnInit {
         private alertService: AlertService,
         private route: ActivatedRoute,
         public vimeodialog: MatDialog,
-        public snackBar: MatSnackBar) { }
+        public snackBar: MatSnackBar,
+        private validatorService: ValidatorService) { }
 
     ngOnInit() {
         this.getAllRepositories();
     }
+
+    validate(userRepository: UserRepository) {
+
+        this.validator = '';
+
+        if(userRepository.repository === 'Pexels') {
+            this.validatorService.pexels(userRepository).subscribe(
+                data => {
+                    console.log(userRepository.repository + '   response', data);
+                    this.checkValidator(data);
+                },
+                error => {
+                    console.log(userRepository.repository + '    error', error);
+                    this.checkValidator(error);
+                })
+        }
+
+        if(userRepository.repository === 'Pixabay') {
+            this.validatorService.pixabay(userRepository).subscribe(
+                data => {
+                    console.log(userRepository.repository + '   response', data);
+                    this.checkValidator(data);
+                },
+                error => {
+                    console.log(userRepository.repository + '    error', error);
+                    this.checkValidator(error);
+                })
+        }
+
+        if(userRepository.repository === 'Youtube') {
+            this.validatorService.youtube(userRepository).subscribe(
+                data => {
+                    console.log(userRepository.repository + '   response', data);
+                    this.checkValidator(data);
+                },
+                error => {
+                    console.log(userRepository.repository + '    error', error);
+                    this.checkValidator(error);
+                })
+        }
+
+ }
+
+ checkValidator(status) {
+
+     if(status === 200) {
+        this.validator = 'done';
+     }else {
+        this.validator =  'error';
+    }
+    console.log("status code"+status);
+    console.log(" this.validator"+ this.validator);
+ }
+
+
 
     selectRepository(repository) {
         if (!this.checkRepository(repository)) {

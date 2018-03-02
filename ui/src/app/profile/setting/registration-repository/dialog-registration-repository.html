@@ -33,6 +33,8 @@
     -->
       <mat-form-field fxFlex  *ngIf="showapiKey(data.userRepository.repository)">
         <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey" required>
+        <span matSuffix><mat-icon class="{{validator}}">{{validator}}</mat-icon> <button *ngIf="showapiKey(data.userRepository.repository)" mat-button (click)="validate(data.userRepository)">Validate</button></span>
+        
       </mat-form-field>
       <mat-form-field fxFlex *ngIf="data.userRepository.repository === 'Vimeo'">
         <input matInput placeholder="token" value="" id="token" name="token"  [(ngModel)]="data.userRepository.token" required>
@@ -42,6 +44,7 @@
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
+    
     <button mat-button (click)="f.form.valid && data.userRepository.repository !== '' && upsert(data.userRepository)">OK</button>
     <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
     <button mat-button (click)="onClose()">Cancel</button>

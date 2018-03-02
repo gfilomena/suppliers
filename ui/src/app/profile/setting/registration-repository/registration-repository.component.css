@@ -40,7 +40,19 @@
 .message {
     margin-top:10px;
 }
+
+.done{
+    color: greenyellow;
+}
+
+.error{
+    color: red;
+}
   
+mat-form-field {
+    width: 100%;
+  }
+
 snack-bar-container.success-snackbar /deep/ button{ color: #21F545;}
 
 snack-bar-container.errorSnackBar /deep/ button{  color: #FF1100;}

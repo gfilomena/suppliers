@@ -17,7 +17,8 @@ import {
     BookmarkService,
     HistorysearchService,
     McssrService,
-    VimeoService
+    VimeoService,
+    ValidatorService
     /*PagerService*/
 } from './_services/index';
 import { LoginComponent } from './login/index';
@@ -122,7 +123,8 @@ import { Snackbar } from './snackbar/snackbar.component';
         McssrService,
         VimeoService,
         Globals,
-        Snackbar
+        Snackbar,
+        ValidatorService
     ],
     entryComponents: [RegistrationRepositoryComponent, DialogRegistrationRepository, DialogRegistrationDialog, BookmarkConfirmationDialog, HistoryConfirmationDialog],
     bootstrap: [AppComponent]
