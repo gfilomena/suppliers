@@ -3,6 +3,8 @@ package services.search.repositories;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.typesafe.config.ConfigFactory;
+
+import models.License;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
@@ -94,7 +96,9 @@ public class PexelsSearchRepository implements SearchRepository {
         m.setDownloadURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
-    
+        License lic = new License();
+        lic.setName("CC0");
+        m.setLicense(lic);
         m.setFileExtension(fileToFileExtension(i.get("src").get("original").asText()));
         m.setSource(registration.getRepository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());

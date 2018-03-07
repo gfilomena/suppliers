@@ -12,6 +12,7 @@ export class MultimediaContent {
         urlPrefix: string;
     }
     uri: string;
+    license: string;
     licenseType: string;
     date: string;
     bookmark: boolean;

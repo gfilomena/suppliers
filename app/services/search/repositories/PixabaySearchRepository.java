@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.*;
 import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
+
+import models.License;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
@@ -181,7 +183,10 @@ public class PixabaySearchRepository implements SearchRepository {
             m.setThumbnail("https://i.vimeocdn.com/video/"+i.get("picture_id").asText()+"_295x166.jpg");
             m.setMetadata(i.get("tags").asText().replaceAll("^[,\\s]+", "").split("[,\\s]+"));
             m.setName(i.get("id").asText());
-
+            License lic = new License();
+            lic.setName("CC0");
+            m.setLicense(lic);
+           	
         }
     }
 

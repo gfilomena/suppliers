@@ -1,5 +1,9 @@
-.container {
-  margin-bottom: 24px;
+.container{
+  margin-top:64px;
+}
+
+.card {
+  margin-bottom: 4px;
   height: 100%;
 }
 
@@ -31,7 +35,7 @@ h3 {
   width: 100%;
 }
 
-.container.mat-card {
+.card.mat-card {
   padding: 0;
 }
 

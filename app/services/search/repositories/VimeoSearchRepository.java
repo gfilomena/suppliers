@@ -110,14 +110,14 @@ public class VimeoSearchRepository implements SearchRepository {
         }
         m.setMetadata(tags);
 
-       /*
+       
         if(i.get("license") != null) {
             License l = new License();
             Logger.info("License::"+i.get("license").asText());
             l.setName(i.get("license").asText());
             m.setLicense(l);
         }
-        */
+        
 
        if( i.get("created_time") != null ) {
            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+00:00");

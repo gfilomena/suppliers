@@ -15,7 +15,7 @@
 <h3 align="center" *ngIf="!dates || dates.length === 0">
   No history available.
 </h3>
-<div fxLayout="column">
+<div fxLayout="column" class="container">
   <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
       <button mat-fab>
@@ -29,7 +29,7 @@
     </smd-fab-actions>
   </smd-fab-speed-dial>
 
-  <mat-card fxFlex class="container" *ngFor="let date of dates; let i = index" [attr.data-index]="i">
+  <mat-card fxFlex class="card" *ngFor="let date of dates; let i = index" [attr.data-index]="i">
     <mat-list class="list">
       <h1 class="mat-subheader">
         {{date | date:'EEEE, d MMMM y'}}
