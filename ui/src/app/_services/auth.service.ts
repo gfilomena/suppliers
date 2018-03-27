@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Headers, RequestOptions } from '@angular/http'
 import * as auth0 from 'auth0-js';
 import {JwtHelper} from 'angular2-jwt';
+import { Observable } from 'rxjs';
 import { Globals } from './../global';
 
 @Injectable()
@@ -19,6 +20,7 @@ export class AuthService {
   });
 
   userProfile: any;
+  refreshSubscription: any;
 
   constructor(public router: Router, private globals: Globals) {}
 
@@ -60,10 +62,12 @@ export class AuthService {
     localStorage.setItem('expires_at', expiresAt);
     const params: string = '{ '
     + ' "username":"' + jwtHelper.decodeToken(authResult.idToken).sub + '" '
-    //+ ' "roles":"' + authResult.roles + '" '
+    // + ' "roles":"' + authResult.roles + '" '
     + '}';
     const obj = JSON.parse(params);
     localStorage.setItem('currentUser', params );
+
+    this.scheduleRenewal();
   }
 
   private setProfile(profile){
@@ -83,8 +87,51 @@ export class AuthService {
     localStorage.removeItem('currentUser');
     localStorage.removeItem('bookmarks');
     localStorage.removeItem('repositories');
+
+    this.unscheduleRenewal();
     // Go back to the home route
-    // this.router.navigate(['/']);
+    this.router.navigate(['/']);
+  }
+
+  public renewToken() {
+    this.auth0.checkSession({}, (err, result) => {
+      if (err) {
+        alert(`Could not get a new token (${err.error}: ${err.error_description}).`);
+      } else {
+        alert(`Successfully renewed auth!`);
+        this.setSession(result);
+      }
+    });
+  }
+
+  public scheduleRenewal() {
+    if(!this.isAuthenticated()) return;
+    this.unscheduleRenewal();
+
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+
+    const source = Observable.of(expiresAt).flatMap(
+      expiresAt => {
+
+        const now = Date.now();
+
+        // Use the delay in a timer to
+        // run the refresh at the proper time
+        return Observable.timer(Math.max(1, expiresAt - now));
+      });
+
+    // Once the delay time from above is
+    // reached, get a new JWT and schedule
+    // additional refreshes
+    this.refreshSubscription = source.subscribe(() => {
+      this.renewToken();
+      this.scheduleRenewal();
+    });
+  }
+
+  public unscheduleRenewal() {
+    if(!this.refreshSubscription) return;
+    this.refreshSubscription.unsubscribe();
   }
 
   public isAuthenticated(): boolean {
@@ -109,7 +156,7 @@ export class AuthService {
 getUser() {
   const user = JSON.parse(localStorage.getItem('currentUser'));
   this.globals.user = user.username;
-  //this.globals.roles = user.roles;
+  // this.globals.roles = user.roles;
 }
 
 }
