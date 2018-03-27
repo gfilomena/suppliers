@@ -36,7 +36,7 @@ public class MultimediaContentSerializer extends StdSerializer<MultimediaContent
         jgen.writeStringField("thumbnail", value.getThumbnail());
         jgen.writeStringField("downloadURI", value.getDownloadURI());
         jgen.writeObjectField("source", value.getSource());
-	    jgen.writeObjectField("license", value.getLicense() != null ? value.getLicense().getName() : null);
+	   // jgen.writeObjectField("license", value.getLicense().getName() != null ? value.getLicense().getName() : "");
         jgen.writeObjectField("date", value.getDate());
         jgen.writeObjectField("metadata", value.getMetadata());
         jgen.writeStringField("uri", value.getURI());

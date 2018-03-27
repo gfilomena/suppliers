@@ -76,7 +76,7 @@
     <mat-form-field class="formats" *ngIf="formats" floatPlaceholder="never">
       <mat-select placeholder="select format"  [(ngModel)]="selectedFormat" (ngModelChange)="onChange($event)">
        
-        <mat-option *ngFor="let file of formats" [value]="file.name">
+        <mat-option *ngFor="let file of formats" [value]="file">
           {{getExt(file.name)}} ({{getMB(file.size)}}MB)
         </mat-option>
       </mat-select>

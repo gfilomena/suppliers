@@ -47,7 +47,7 @@ public class PexelsSearchRepository implements SearchRepository {
     @Override
     public CompletionStage<JsonNode> executeQuery( List<String> keyWords ) {
         String query=String.join(" ", keyWords);
-        //Logger.info("Pexels search: "+query);
+        Logger.info("Pexels search: "+query);
         CompletionStage<JsonNode> jsonPromise;
         jsonPromise = ws.url(registration.getRepository().getURI()).
                 setHeader("Authorization", registration.getApiKey()).
@@ -96,9 +96,11 @@ public class PexelsSearchRepository implements SearchRepository {
         m.setDownloadURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());
+        /*
         License lic = new License();
         lic.setName("CC0");
         m.setLicense(lic);
+        */
         m.setFileExtension(fileToFileExtension(i.get("src").get("original").asText()));
         m.setSource(registration.getRepository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());

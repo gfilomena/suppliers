@@ -2,6 +2,8 @@ package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+
+import models.License;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
@@ -105,6 +107,11 @@ public class YoutubeSearchRepository implements SearchRepository {
             e.printStackTrace();
         }
         m.setSource(reg.getRepository());
+/*
+            License l = new License();
+            l.setName("Youtube Standard");
+            m.setLicense(l);
+  */      
         //Logger.debug("Debug multimedia enum:"+m.toString());
         return m;
     }

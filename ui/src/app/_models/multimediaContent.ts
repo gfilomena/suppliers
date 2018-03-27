@@ -2,7 +2,7 @@ export class MultimediaContent {
     type: string;
     fileExtension: string;
     length: string;
-    metadata: string[]
+    metadata: string[];
     name: string;
     description: string;
     thumbnail: string;
