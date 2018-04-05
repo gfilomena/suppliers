@@ -39,7 +39,7 @@ mat-progress-bar {
   position: fixed;
   z-index: 2;
   box-shadow: none;
-  margin-top: -5px;
+  margin-top: -5px; 
 }
 
 .title-card {

@@ -37,7 +37,7 @@ export class DialogDetail implements OnInit {
     details: mediafile = null;
     formats: File[] = null;
     path = '';
-    formatVideo: String[] = ['ogv', 'ogg', 'mp4', 'flv', 'fla', 'mov', 'mpeg', 'mpg', 'mpe', 'wmv', 'swf'];
+    formatVideo: String[] = ['ogv', 'ogg', 'mp4','WebM'];
     formatAudio: String[] = ['mp3', 'mpga'];
     formatImage: String[] = ['jpeg', 'jpg', 'png', 'gif'];
     formatText: String[] = ['text', 'html', 'pdf'];
@@ -98,10 +98,10 @@ export class DialogDetail implements OnInit {
                 this.formats = this.filtertype(this.details);
                 this.path = this.details.server + this.details.dir + '/';
                 // set the first value as default
-                this.selectedFormat = this.formats[0].name;
-                //console.log('formats',this.formats);
+               // this.selectedFormat = this.formats[0].name;
+                console.log('formats',this.formats);
                 //console.log('this.selectedFormat',this.selectedFormat);
-                this.onChange(this.formats[0].name);
+                this.onChange(this.formats[0]);
             },
             error => {
                 this.snackBar.run('Listing of formats files type action has encountered an error. Detail:' + error, false);
@@ -162,9 +162,8 @@ export class DialogDetail implements OnInit {
     }
 
 
-    onChange(name) {
-
-        this.data.downloadURI = 'https:\/\/' + this.path + name;
+    onChange(file) {
+        this.data.downloadURI = 'https:\/\/' + this.path + file.name;
         console.log('onChange - this.data.downloadURI', this.data.downloadURI);
         this.data.fileExtension = mime.lookup(this.data.downloadURI);
         console.log('this.data.fileExtension', this.data.fileExtension);
@@ -183,8 +182,6 @@ export class DialogDetail implements OnInit {
                 break;
             }
         }
-
-
     }
 
 

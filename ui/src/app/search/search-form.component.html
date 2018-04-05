@@ -18,13 +18,9 @@
   </div>
 
   <div fxFlex>
-
-    <form name="form" #f="ngForm">
-
-      <mat-progress-bar mode="indeterminate" *ngIf="submitted" class="mat-elevation-z6"></mat-progress-bar>
-
+      <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+      <form name="form" #f="ngForm">
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px" class="form-container">
-
         <mat-form-field class="search-bar" fxFlex>
           <button mat-icon-button matPrefix (click)="f.form.valid && onSubmit()">
             <mat-icon>search</mat-icon>

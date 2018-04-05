@@ -12,6 +12,8 @@ mat-toolbar, mat-toolbar-row {
   z-index: 2;
 }
 
+
+
 .active {
   background-color: transparent;
   color: slategrey;
@@ -31,4 +33,8 @@ mat-toolbar, mat-toolbar-row {
 
 .user{
   font-size: 13px;
+}
+
+.mat-elevation-z6 {
+  background-color: dodgerblue;
 }

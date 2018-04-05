@@ -58,6 +58,7 @@ export class SearchHistoryComponent implements OnInit {
         // for (let sr of this.searchResult) sr['checked'] = false;    NOT USED
         this.dates = this.retrieveDates(this.searchResult);
         console.log('this.searchResult', this.searchResult);
+        this.loading = false;
 
       },
       error => {

@@ -27,7 +27,7 @@
   <div [ngSwitch]="data.type" class="video-container">
     <div *ngSwitchCase="'video'">
       <div *ngIf="data.source.name == 'InternetArchive'; else defaultvideo">
-        <video id="video" width="100%" *ngIf="data.downloadURI" autoplay controls onerror="alert('first error event')"  poster="/assets/images/loading_icon.gif">
+        <video id="video" width="100%" *ngIf="data.downloadURI" autoplay controls onerror="alert('first error event')" >
           <source [src]="data.downloadURI" [type]="data.fileExtension">
           <!-- <source [src]="data.downloadUri" [type]="data.fileExtension"> -->
           Your browser does not support the video tag.

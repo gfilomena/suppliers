@@ -11,7 +11,7 @@
     <mat-icon (click)="deleteSelected()">delete</mat-icon>
   </button>
 </mat-toolbar>
-<mat-progress-bar mode="indeterminate"></mat-progress-bar>
+<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 <h3 align="center" *ngIf="!dates || dates.length === 0">
   No history available.
 </h3>
