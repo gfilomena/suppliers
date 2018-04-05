@@ -37,7 +37,7 @@ export class DialogDetail implements OnInit {
     details: mediafile = null;
     formats: File[] = null;
     path = '';
-    formatVideo: String[] = ['ogv', 'ogg', 'mp4','WebM'];
+    formatVideo: String[] = ['ogv', 'ogg', 'mp4','WebM','webm'];
     formatAudio: String[] = ['mp3', 'mpga'];
     formatImage: String[] = ['jpeg', 'jpg', 'png', 'gif'];
     formatText: String[] = ['text', 'html', 'pdf'];
@@ -98,10 +98,10 @@ export class DialogDetail implements OnInit {
                 this.formats = this.filtertype(this.details);
                 this.path = this.details.server + this.details.dir + '/';
                 // set the first value as default
-               // this.selectedFormat = this.formats[0].name;
+                this.selectedFormat = this.formats[0].name;
                 console.log('formats',this.formats);
                 //console.log('this.selectedFormat',this.selectedFormat);
-                this.onChange(this.formats[0]);
+                this.onChange(this.formats[0].name);
             },
             error => {
                 this.snackBar.run('Listing of formats files type action has encountered an error. Detail:' + error, false);
@@ -162,8 +162,9 @@ export class DialogDetail implements OnInit {
     }
 
 
-    onChange(file) {
-        this.data.downloadURI = 'https:\/\/' + this.path + file.name;
+    onChange(name) {
+        this.selectedFormat = name;
+        this.data.downloadURI = 'https:\/\/' + this.path + name;
         console.log('onChange - this.data.downloadURI', this.data.downloadURI);
         this.data.fileExtension = mime.lookup(this.data.downloadURI);
         console.log('this.data.fileExtension', this.data.fileExtension);
@@ -274,6 +275,8 @@ export class DialogDetail implements OnInit {
                 console.log('Send to Mcssr - subscribe OK:', res);
                 let creationResponse = res.json();
                 let uid = creationResponse.uid;
+            // if there are tags , they will be sent to MCSSR
+            if (mc.metadata != null) {
                 this.McssrService.updateTags(mc, uid)
                     .subscribe(
                     res => {
@@ -287,7 +290,8 @@ export class DialogDetail implements OnInit {
                         this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + error, false);
                     }
                     )
-            this.loading=false;
+                }
+            this.loading = false;
                 },
             error => {
                 console.log('Send to Mcssr - subscribe - error:', error);
