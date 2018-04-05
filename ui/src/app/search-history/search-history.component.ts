@@ -39,11 +39,11 @@ export class SearchHistoryComponent implements OnInit {
     public route: ActivatedRoute,
     private dialog: MatDialog,
     public snackBar: Snackbar) {
-    this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
+    this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
   }
 
   ngOnInit() {
-    this.getHistoryResults()
+    this.getHistoryResults();
   }
 
   getHistoryResults() {

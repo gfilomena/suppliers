@@ -42,6 +42,7 @@ import { ProfileComponent } from './profile/profile.component';
 import {
     MatSlideToggleModule,
     MatProgressSpinnerModule,
+    MatProgressBarModule,
     MatMenuModule,
     MatSelectModule,
     MatButtonModule,
@@ -75,6 +76,7 @@ import { Snackbar } from './snackbar/snackbar.component';
         FlexLayoutModule,
         MatSlideToggleModule,
         MatProgressSpinnerModule,
+        MatProgressBarModule,
         MatMenuModule,
         MatSelectModule,
         MatButtonModule,
