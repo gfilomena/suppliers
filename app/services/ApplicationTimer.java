@@ -40,12 +40,12 @@ public class ApplicationTimer {
         // This code is called when the application starts.
         start = clock.instant();
         Logger.info("ApplicationTimer demo: Starting application at " + start);
-        SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
+        /*SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
         searchResultDAO.deleteAll();
         Logger.info("OCD: Purged Search Results");
         MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class,MongoDBService.getDatastore());
         //multimediaContentDAO.deleteAll();
-        Logger.info("OCD: Purged Multimedia Content Results");
+        Logger.info("OCD: Purged Multimedia Content Results");*/
         // Initialize Roles
         Logger.info("OCD Initialization of Roles");
         initializeRoles();
