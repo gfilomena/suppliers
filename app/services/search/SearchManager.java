@@ -3,9 +3,11 @@ package services.search;
 import com.fasterxml.jackson.databind.JsonNode;
 import models.MultimediaContent;
 import models.SearchResult;
+import models.User;
 import models.response.RepositoryResponseMapping;
 import models.response.ResponseMapping;
 import play.libs.concurrent.Futures;
+import play.libs.ws.WSClient;
 import services.search.repositories.SearchRepository;
 
 import java.util.ArrayList;
@@ -19,8 +21,13 @@ import java.util.stream.Collectors;
 public class SearchManager implements Manager{
 
     private List<String> keyWords=new ArrayList<String>();
+    private User user;
+    private WSClient wsclient;
 
-    public SearchManager( ){
+    public SearchManager(User user, List<String> keywords, WSClient wsClient){
+        this.keyWords=keywords;
+        this.user=user;
+        this.wsclient=wsClient;
     }
 
     public List<String> getKeyWords() {
