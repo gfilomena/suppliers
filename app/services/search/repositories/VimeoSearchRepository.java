@@ -115,11 +115,11 @@ public class VimeoSearchRepository implements SearchRepository {
         	String lic = i.get("license").asText();
         	License l = new License();
             
-            if(!lic.contains("null")) {
+            if(lic==null || lic.equals("null")) {
             	 //Logger.info("License:"+lic);
-                 l.setName(lic);
+                 l.setName("");
             }else{
-            	 l.setName("");
+            	 l.setName(lic);
             }
             m.setLicense(l);
             
