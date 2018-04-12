@@ -17,6 +17,7 @@ export class ProfileComponent implements OnInit {
     panelOpenState = false;
     submitted = false;
     user;
+    loading = false;
 
 
     constructor(
@@ -28,6 +29,7 @@ export class ProfileComponent implements OnInit {
 
 
     ngOnInit() {
+        this.loading = true;
         //console.log('this.route.url',this.router.url);
         this.user = JSON.parse(localStorage.getItem('currentUser'));
         console.log('this.currentUser', this.user);
@@ -43,8 +45,10 @@ export class ProfileComponent implements OnInit {
                     console.log('getByUsername', data);
                     this.user = data;
                     localStorage.setItem('currentUser', JSON.stringify(data));
+                    this.loading = false;
                 },
                 error => {
+                    this.loading = false;
                     this.openSnackBar('Getting User action has encountered an error. Detail:' + error, 'Error', false);
                 });
     }
