@@ -5,11 +5,11 @@ import { MultimediaContent } from './../_models/multimediaContent';
 import { mediafile } from './../_models/mediafile';
 
 @Injectable()
-export class InternetArchiveService {
+export class GeneralService {
 
     constructor(private http: Http) { }
 
-    getDetails(url: string) {
+    get(url: string) {
         return this.http.get(url)
             .map((response: Response) => response.json());
 

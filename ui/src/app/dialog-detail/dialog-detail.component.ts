@@ -8,11 +8,11 @@ import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { Bookmark } from './../_models/bookmark';
 import { BookmarkService } from '../_services/bookmark.service';
-import { InternetArchiveService } from '../_services/internetarchive.service';
+import { GeneralService } from '../_services/general.service';
 import { mediafile, File } from './../_models/mediafile';
 import * as mime from 'mime-types';
 import { CommonModule } from '@angular/common';
-import {CdkTableModule} from "@angular/cdk/table";
+import {CdkTableModule} from '@angular/cdk/table';
 import { Snackbar } from './../snackbar/snackbar.component';
 
 @Pipe({ name: 'safe' })
@@ -28,7 +28,7 @@ export class SafePipe implements PipeTransform {
     templateUrl: 'dialog-detail-dialog.html',
     styleUrls: ['./dialog-detail.component.css']
 })
-export class DialogDetail implements OnInit {
+export class DialogDetailComponent implements OnInit {
     loaderror = true;
     currentUser: User;
     tagInsert = false;
@@ -48,13 +48,13 @@ export class DialogDetail implements OnInit {
     @Output() mcupdate = new EventEmitter<MultimediaContent>();
 
     constructor(
-        public dialogRef: MatDialogRef<DialogDetail>,
+        public dialogRef: MatDialogRef<DialogDetailComponent>,
         public sanitizer: DomSanitizer,
         public http: Http,
         private BookmarkService: BookmarkService,
         private McssrService: McssrService,
         public snackBar: Snackbar,
-        private InternetArchiveService: InternetArchiveService) {
+        private GeneralService: GeneralService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'))
     }
 
@@ -64,6 +64,9 @@ export class DialogDetail implements OnInit {
         // this.uriValidation(this.getVideoSource(this.data.downloadURI));
         if (this.data.source.name === 'InternetArchive') {
             this.getInternetArchiveformat(this.data.uri);
+        }
+        if (this.data.source.name === 'Youtube') {
+            this.getYoutubedetails(this.data.detailsURI);
         }
         if ( this.othersrep.indexOf(this.data.source.name) === -1 ) {
             this.selectedFormat = this.data.downloadURI;
@@ -87,12 +90,31 @@ export class DialogDetail implements OnInit {
         this.title = !this.title;
     }
 
+    getYoutubedetails(url: string) {
+        this.loading = true;
+        url = encodeURI(url);
+        console.log('url', url);
+        this.GeneralService.get(url).subscribe(
+            res => {
+               console.log("getYoutubedetails");
+               console.dir(res);
+               this.data.metadata = res.items[0].snippet.tags;
+               this.data.license = res.items[0].status.license;
+               this.loading = false;
+            },
+            error => {
+                this.loading = false;
+                this.snackBar.run('Listing of Youtube details action has encountered an error. Detail:' + error, false);
+                console.log('getYoutubedetails - subscribe - error:', error);
+            }
+        )
 
+    }
 
     getInternetArchiveformat(url: string) {
         url = encodeURI(url);
         console.log('url', url);
-        this.InternetArchiveService.getDetails(url).subscribe(
+        this.GeneralService.get(url).subscribe(
             res => {
                 this.details = res;
                 this.formats = this.filtertype(this.details);

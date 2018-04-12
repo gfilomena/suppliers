@@ -95,12 +95,12 @@ public class PexelsSearchRepository implements SearchRepository {
         m.setURI(i.get("src").get("original").asText());
         m.setDownloadURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
-        m.setThumbnail(i.get("src").get("medium").asText());
-        /*
+        m.setThumbnail(i.get("src").get("medium").asText());   
+        m.setDescription("photographer:"+i.get("photographer").asText());
         License lic = new License();
         lic.setName("CC0");
         m.setLicense(lic);
-        */
+        
         m.setFileExtension(fileToFileExtension(i.get("src").get("original").asText()));
         m.setSource(registration.getRepository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());

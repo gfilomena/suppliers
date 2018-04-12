@@ -7,6 +7,7 @@ export class MultimediaContent {
     description: string;
     thumbnail: string;
     downloadURI: string;
+    detailsURI: string;
     source: {
         name: string;
         urlPrefix: string;
