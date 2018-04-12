@@ -41,11 +41,12 @@ public class YoutubeSearchRepository implements SearchRepository {
         String query=String.join(" ", keyWords);
         Logger.info("Youtube search: "+query);
         CompletionStage<JsonNode> jsonPromise;
-        jsonPromise = ws.url(reg.getRepository().getURI()).
+        jsonPromise = ws.url(reg.getRepository().getURI()+"search").
                 setQueryParameter("part", "snippet").
                 setQueryParameter("q", query).
                 setQueryParameter("key", reg.getApiKey()).
                 setQueryParameter("type", "video").
+                setQueryParameter("maxResults", "50").
                 get().
                 thenApply(WSResponse::asJson);
         return jsonPromise;
@@ -96,6 +97,7 @@ public class YoutubeSearchRepository implements SearchRepository {
         m.setType(MultimediaType.video);
         m.setURI(reg.getRepository().getUrlPrefix() + i.path("id").get("videoId").asText());
         m.setDownloadURI(reg.getRepository().getUrlPrefix() + i.path("id").get("videoId").asText());
+        m.setDetailsURI(reg.getRepository().getURI()+"videos?id=" + i.path("id").get("videoId").asText()+"&key="+reg.getApiKey()+"&part=snippet,contentDetails,statistics,status");
         m.setName(i.get("snippet").get("title").asText());
         m.setDescription(i.get("snippet").get("description").asText());
         m.setThumbnail(i.get("snippet").get("thumbnails").get("default").get("url").asText());
@@ -107,12 +109,11 @@ public class YoutubeSearchRepository implements SearchRepository {
             e.printStackTrace();
         }
         m.setSource(reg.getRepository());
-/*
-            License l = new License();
-            l.setName("Youtube Standard");
-            m.setLicense(l);
-  */      
-        //Logger.debug("Debug multimedia enum:"+m.toString());
+        
+        License l = new License();
+        l.setName("");
+        m.setLicense(l);
+
         return m;
     }
 }

@@ -20,7 +20,7 @@ import {
     MatDatepickerModule,
     MAT_DATE_FORMATS,
 } from '@angular/material';
-import { DialogDetail } from '../dialog-detail/dialog-detail.component';
+import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
 import { CustomDateAdapter } from './custom-date-adapter';
 import { UserRepositoryService, RepositoryService } from '../_services/index';
@@ -126,10 +126,7 @@ export class SearchFormComponent {
                    console.log("endDate ERROR:" + error);
            }
         )
-
     }
-
-
 
     setSidebar(showSidebar) {
         this.showSidebar = showSidebar;
@@ -142,15 +139,12 @@ export class SearchFormComponent {
 
     openDialog(mc) {
 
-
-        const dialogRef = this.dialog.open(DialogDetail, {
-        });
-
+        const dialogRef = this.dialog.open(DialogDetailComponent, {});
 
         dialogRef.componentInstance.data = mc;
 
         const sub = dialogRef.componentInstance.mcupdate.subscribe(() => {
-            //console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc);
+            // console.log('const sub = dialogRef.componentInstance.mcupdate.subscribe:', mc);
             this.UpdateMC(mc);
         });
         dialogRef.afterClosed().subscribe(() => {
@@ -182,7 +176,6 @@ export class SearchFormComponent {
         // console.log('this.searchForm', this.searchForm);
         localStorage.setItem('searchForm', JSON.stringify(this.searchForm));
         this.search();
-        
     }
 
     clear() {
@@ -201,13 +194,13 @@ export class SearchFormComponent {
             .subscribe(
             res => {
                 this.searchResult = res.json().multimediaContents;
-                 console.log('res.json()',res.json());
+                // console.log('res.json()',res.json());
                 // console.log('search result:');
                 // console.log(this.searchResult);
                 localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
                 this.counter(this.searchResult);
-                //this.getUserRepositories();
+                // this.getUserRepositories();
                 this.incRepo(this.searchResult);
                 // this.validator(this.searchResult)
                 this.nOfResults = this.searchResult.length;
@@ -230,13 +223,13 @@ export class SearchFormComponent {
         let exist = false;
         const response = this.BookmarkService.findByUser().subscribe(
             res => {
-                console.log('getBookmarks- subscribe - ok:', res);
+                // console.log('getBookmarks- subscribe - ok:', res);
                 bookmarks = res;
                 for (const item of res) {
 
                     if (mc.uri === item.multimediaContent.uri) {
-                        console.log('mc:', mc.uri);
-                        console.log('item:', item.multimediaContent.uri);
+                        // console.log('mc:', mc.uri);
+                        // console.log('item:', item.multimediaContent.uri);
                         exist = true;
                     }
                 }
@@ -266,7 +259,7 @@ export class SearchFormComponent {
     saveMC(mc: MultimediaContent) {
 
         const bookmark = new Bookmark(this.currentUser.username, mc);
-        //console.log('bookmark:', bookmark);
+        // console.log('bookmark:', bookmark);
 
         this.BookmarkService.create(bookmark)
             .subscribe(
@@ -374,9 +367,8 @@ export class SearchFormComponent {
         (this.searchForm.freeText !== "") ?
             this.searchForm.freeText += " " + annotation :
             this.searchForm.freeText += annotation;
-
     }
-
+    
 }
 
 function uniq(a) {

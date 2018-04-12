@@ -3,7 +3,7 @@ package services.search.repositories;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 
-
+import models.License;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
@@ -119,24 +119,16 @@ public class WikipediaSearchRepository  implements SearchRepository {
     	}
         //CompletionStage<MultimediaContent> multimediaContent=CompletableFuture.supplyAsync( () -> {
         MultimediaContent m = new MultimediaContent();
-        //m.setType(i.path("id").get("kind").asText());
         m.setType(MultimediaType.text);
         m.setURI(link);
         m.setDownloadURI(link);
-        //m.setDownloadURI(reg.getRepository().getUrlPrefix() + i.path("id").get("videoId").asText());
         m.setName(name);
         m.setDescription(description);
         m.setSource(reg.getRepository());
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS");
-//        try {
-//            m.setDate(sdf.parse(i.get("snippet").get("publishedAt").asText()));
-//            //Logger.debug("*********DATE:"+sdf.parse(i.get("snippet").get("publishedAt").asText()));
-//        } catch (ParseException e) {
-//            e.printStackTrace();
-//        }
-        // TODO: Modify to find SearchRepository from DB
-        //m.setSource(reg.getRepository());
-        //Logger.debug("Debug multimedia enum:"+m.toString());
+        License lic = new License();
+        lic.setName("CC0");
+        m.setLicense(lic);
+
         return m;
     }
 }
