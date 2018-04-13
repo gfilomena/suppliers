@@ -10,9 +10,9 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations'
 import 'hammerjs';
 import {
-         MatNativeDateModule,
-         DateAdapter,
-         MatDateFormats,
+        MatNativeDateModule,
+        DateAdapter,
+        MatDateFormats,
         MatProgressBarModule,
         MatDatepickerModule,
         MatTooltipModule,
@@ -48,9 +48,9 @@ import {
                           } from '@angular/material';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { DialogRepositoryComponent, DialogRepositoryDetail, DialogConfirmationDialog } from '../dialog-repository/dialog-repository.component';
-import { DialogDetail, SafePipe } from '../dialog-detail/dialog-detail.component';
+import { DialogDetailComponent, SafePipe } from '../dialog-detail/dialog-detail.component';
 import { BookmarksComponent } from '../bookmarks/bookmarks.component';
-import { InternetArchiveService} from '../_services/internetarchive.service';
+import { GeneralService} from '../_services/general.service';
 import { FilterbarComponent } from '../filterbar/filterbar.component';
 import { ComponentsModule } from '../shared/components.module';
 import { SemanticSearchComponent } from "../semantic-search/semantic-search.component";
@@ -133,7 +133,7 @@ import { FilterBookmarkPipe } from '../bookmarks/filterbookmark.pipe'
     SearchFormComponent,
     DialogRepositoryComponent,
     DialogRepositoryDetail,
-    DialogDetail,
+    DialogDetailComponent,
     BookmarksComponent,
     FilterbarComponent,
     SafePipe,
@@ -144,8 +144,8 @@ import { FilterBookmarkPipe } from '../bookmarks/filterbookmark.pipe'
     DialogConfirmationDialog
   ],
   // entryComponents declare Components created manually
-  entryComponents: [DialogDetail, DialogRepositoryDetail, DialogConfirmationDialog],
-  providers: [ SearchService, McssrService, InternetArchiveService, SemanticService ]
+  entryComponents: [DialogDetailComponent, DialogRepositoryDetail, DialogConfirmationDialog],
+  providers: [ SearchService, McssrService, GeneralService, SemanticService ]
 })
 export class SearchModule {
 

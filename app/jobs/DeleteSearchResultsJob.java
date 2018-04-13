@@ -24,10 +24,10 @@ public class DeleteSearchResultsJob extends AbstractConfigurationJob {
 
     @Override
     public void runInternal() {
-        final String param = getConfiguration().getString("param");
+        /*final String param = getConfiguration().getString("param");
         SearchResultDAO searchResultDAO=new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
         searchResultDAO.deleteAll();
         MultimediaContentDAO multimediaContentDAO=new MultimediaContentDAOImpl(MultimediaContent.class,MongoDBService.getDatastore());
-        multimediaContentDAO.deleteAll();
+        multimediaContentDAO.deleteAll();*/
     }
 }

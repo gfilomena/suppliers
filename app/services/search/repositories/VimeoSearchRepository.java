@@ -110,24 +110,31 @@ public class VimeoSearchRepository implements SearchRepository {
         }
         m.setMetadata(tags);
 
-       /*
+       
         if(i.get("license") != null) {
-            License l = new License();
-            Logger.info("License::"+i.get("license").asText());
-            l.setName(i.get("license").asText());
+        	String lic = i.get("license").asText();
+        	License l = new License();
+            
+            if(lic==null || lic.equals("null")) {
+            	 //Logger.info("License:"+lic);
+                 l.setName("");
+            }else{
+            	 l.setName(lic);
+            }
             m.setLicense(l);
+            
         }
-        */
+        
+        
+        
 
        if( i.get("created_time") != null ) {
            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+00:00");
-           //Logger.info("date:"+i.get("created_time").asText());
            try {
                m.setDate(sdf.parse(i.get("created_time").asText()));
            } catch (ParseException e) {
                e.printStackTrace();
            }
-
        }
 
 

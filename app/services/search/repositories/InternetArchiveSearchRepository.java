@@ -2,13 +2,14 @@ package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.typesafe.config.ConfigFactory;
+
+
+import models.License;
 import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
 import models.response.InternetArchiveRepositoryResponseMapping;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -19,13 +20,15 @@ import javax.inject.Inject;
 import java.io.File;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.CompletionStage;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
+
 
 /**
  * Created by Pasquale on 24/04/2017.
@@ -55,7 +58,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
                 setQueryParameter("xvar", "production").
                 setQueryParameter("total_only", "false").
                 setQueryParameter("count", "100").
-                setQueryParameter("fields", "title,description,downloads,identifier,source,type,mediatype,external-identifier,licenseurl,format,bith,collection").
+                setQueryParameter("fields", "title,description,downloads,identifier,source,type,mediatype,external-identifier,date,licenseurl,format,bith,collection").
                 setQueryParameter("q", query).
                 setQueryParameter("sorts", "downloads desc").
                 get().
@@ -115,12 +118,32 @@ public class InternetArchiveSearchRepository implements SearchRepository {
  	       
  	    else if(mediatype.contains("image")){ m.setType(MultimediaType.image); }
 
-	   //m.setFileExtension("video/mp4");
-	   //m.setDownloadURI("");
 	   m.setURI(registration.getRepository().getUrlPrefix()+i.get("identifier").asText());
 	   m.setSource(registration.getRepository());
 	   m.setName(i.get("title").asText());
-   
+	   
+	   if(i.get("description") != null) {
+		   m.setDescription(i.get("description").asText());
+	   }
+	  /* 2014-09-27T00:00:00Z */
+       if( i.get("date") != null ) {
+           SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss'Z'");
+           try {
+               m.setDate(sdf.parse(i.get("date").asText()));
+           } catch (ParseException e) {
+               e.printStackTrace();
+           }
+       }
+	   
+	   
+	   String lic = "";
+	   if(i.get("licenseurl") !=null){
+		   lic = i.get("licenseurl").asText();
+	   }
+       License l = new License();
+       l.setName(lic);
+       m.setLicense(l);
+	   
 	   return m;
 
     }
@@ -141,6 +164,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
 		}
 		return mimetype;
     }
+    
     
 
 
