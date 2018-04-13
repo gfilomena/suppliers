@@ -1,9 +1,7 @@
 package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
-import models.MultimediaContent;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 
 import java.util.List;
 import java.util.concurrent.CompletionStage;

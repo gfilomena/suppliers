@@ -5,11 +5,11 @@ import be.objectify.deadbolt.java.actions.Restrict;
 import com.fasterxml.jackson.databind.JsonNode;
 import play.mvc.*;
 
-import services.search.semantic.SemanticAnalyzer;
+import services.semantic.SemanticAnalyzer;
 
 import java.io.File;
 
-import static services.search.semantic.SemanticAnalyzer.getSemanticAnalyzer;
+import static services.semantic.SemanticAnalyzer.getSemanticAnalyzer;
 
 /**
  * This controller contains an action to handle HTTP requests

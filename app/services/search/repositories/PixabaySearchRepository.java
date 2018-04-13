@@ -1,10 +1,8 @@
 package services.search.repositories;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.*;
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 
 import models.License;
 import models.MultimediaContent;
@@ -12,7 +10,6 @@ import models.MultimediaType;
 import models.Registration;
 import models.response.PixabayRepositoryResponseMapping;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
@@ -26,7 +23,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;

@@ -1,11 +1,8 @@
 import be.objectify.deadbolt.java.cache.HandlerCache;
 import security.MyHandlerCache;
-import services.search.repositories.SearchRepository;
-import services.search.repositories.YoutubeSearchRepository;
 import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
-import services.search.Manager;
-import services.search.SearchManager;
+import services.SearchService;
+import services.MultimediaSearchService;
 import services.ApplicationTimer;
 import services.AtomicCounter;
 import services.Counter;
@@ -33,7 +30,7 @@ public class Module extends AbstractModule {
         bind(ApplicationTimer.class).asEagerSingleton();
         // Set AtomicCounter as the implementation for Counter.
         bind(Counter.class).to(AtomicCounter.class);
-        bind(Manager.class).to(SearchManager.class);
+        bind(SearchService.class).to(MultimediaSearchService.class);
         bind(HandlerCache.class).to(MyHandlerCache.class);
     }
 

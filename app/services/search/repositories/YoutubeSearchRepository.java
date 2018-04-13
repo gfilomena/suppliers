@@ -8,7 +8,6 @@ import models.MultimediaContent;
 import models.MultimediaType;
 import models.Registration;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 import models.response.YoutubeRepositoryResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;

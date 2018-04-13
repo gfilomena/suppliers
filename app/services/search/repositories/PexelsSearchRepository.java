@@ -2,7 +2,6 @@ package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.typesafe.config.ConfigFactory;
 
 import models.License;
 import models.MultimediaContent;
@@ -10,7 +9,6 @@ import models.MultimediaType;
 import models.Registration;
 import models.response.PexelsRepositoryResponseMapping;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;

@@ -66,7 +66,7 @@ export class SearchFormComponent {
     p: number = 1;
 
     constructor(
-        private searchService: SearchService, 
+        private multimediaSearchService: SearchService,
         private route: ActivatedRoute,
         private BookmarkService: BookmarkService,
         private dateAdapter: DateAdapter<Date>,
@@ -152,7 +152,7 @@ export class SearchFormComponent {
         });
     }
 
-/*  
+/*
     @HostListener('window:scroll', ['$event'])
     onWindowScroll() {
 
@@ -190,7 +190,7 @@ export class SearchFormComponent {
     }
 
     search() {
-        this.searchService.search(this.searchForm)
+        this.multimediaSearchService.search(this.searchForm)
             .subscribe(
             res => {
                 this.searchResult = res.json().multimediaContents;
@@ -368,7 +368,7 @@ export class SearchFormComponent {
             this.searchForm.freeText += " " + annotation :
             this.searchForm.freeText += annotation;
     }
-    
+
 }
 
 function uniq(a) {

@@ -9,7 +9,6 @@ import models.MultimediaType;
 import models.Registration;
 import models.response.RepositoryResponseMapping;
 import models.response.WikipediaRepositoryResponseMapping;
-import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
 
@@ -18,7 +17,7 @@ import java.util.*;
 import java.util.concurrent.CompletionStage;
 import java.util.function.Function;
 import java.util.stream.Collectors;
-import services.nuxeo.NuxeoService;
+
 /**
  * Created by Giuseppe on 29/08/2017.
  */

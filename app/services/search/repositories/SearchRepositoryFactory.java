@@ -1,7 +1,5 @@
 package services.search.repositories;
 
-import play.libs.ws.WSClient;
-
 import java.lang.reflect.Constructor;
 
 /**
