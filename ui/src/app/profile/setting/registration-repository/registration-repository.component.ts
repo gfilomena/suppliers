@@ -28,7 +28,10 @@ export class RegistrationRepositoryComponent implements OnInit {
     vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
         + environment.vimeo_clientID + '&response_type=token&redirect_uri='
         + environment.auth_callbackURL + 'profile&state=';
-
+    dialogDefaultSize = {
+        height: 'auto',
+        width: '500px'
+    }
     constructor(
         public dialog: MatDialog,
         private userRepositoryService: UserRepositoryService,
@@ -93,7 +96,7 @@ export class RegistrationRepositoryComponent implements OnInit {
         this.loading = true;
         const dialogc = this.dialog.open(DialogRegistrationDialog, {
             data: { name: reg.repository },
-            height: 'auto'
+            ...this.dialogDefaultSize
         });
 
         dialogc.afterClosed().subscribe(confirm => {
@@ -124,8 +127,7 @@ export class RegistrationRepositoryComponent implements OnInit {
 
         const dialogRef = this.dialog.open(DialogRegistrationRepository, {
             data: { userRepository: this.userRepository, userRepositories: this.userRepositories },
-            height: 'auto',
-            width: 'auto',
+            ...this.dialogDefaultSize
         });
 
         const sub = dialogRef.componentInstance.onChange.subscribe(() => {
@@ -167,8 +169,7 @@ export class RegistrationRepositoryComponent implements OnInit {
 
         const dialogRef = this.dialog.open(DialogRegistrationRepository, {
             data: { userRepository: userRepository },
-            height: 'auto',
-            width: 'auto'
+            ...this.dialogDefaultSize
         });
 
         const sub = dialogRef.componentInstance.onChange.subscribe(() => {
@@ -237,7 +238,7 @@ export class DialogRegistrationRepository implements OnInit {
 
         this.validator = '';
 
-        if(userRepository.repository === 'Pexels') {
+        if (userRepository.repository === 'Pexels') {
             this.validatorService.pexels(userRepository).subscribe(
                 data => {
                     console.log(userRepository.repository + '   response', data);
@@ -249,7 +250,7 @@ export class DialogRegistrationRepository implements OnInit {
                 })
         }
 
-        if(userRepository.repository === 'Pixabay') {
+        if (userRepository.repository === 'Pixabay') {
             this.validatorService.pixabay(userRepository).subscribe(
                 data => {
                     console.log(userRepository.repository + '   response', data);
@@ -261,7 +262,7 @@ export class DialogRegistrationRepository implements OnInit {
                 })
         }
 
-        if(userRepository.repository === 'Youtube') {
+        if (userRepository.repository === 'Youtube') {
             this.validatorService.youtube(userRepository).subscribe(
                 data => {
                     console.log(userRepository.repository + '   response', data);
@@ -273,18 +274,18 @@ export class DialogRegistrationRepository implements OnInit {
                 })
         }
 
- }
-
- checkValidator(status) {
-
-     if(status === 200) {
-        this.validator = 'done';
-     }else {
-        this.validator =  'error';
     }
-    console.log("status code"+status);
-    console.log(" this.validator"+ this.validator);
- }
+
+    checkValidator(status) {
+
+        if (status === 200) {
+            this.validator = 'done';
+        } else {
+            this.validator = 'error';
+        }
+        console.log("status code" + status);
+        console.log(" this.validator" + this.validator);
+    }
 
 
 
@@ -328,7 +329,7 @@ export class DialogRegistrationRepository implements OnInit {
                     this.snackBar.open('Listing of repositories action has encountered an error. Detail:' + error, 'Error', {
                         duration: 5000,
                         extraClasses: ['errorSnackBar']
-                     });
+                    });
                     this.loading = false;
                 });
     }
@@ -366,7 +367,7 @@ export class DialogRegistrationRepository implements OnInit {
                         this.snackBar.open('Update repository action has encountered an error. Detail:' + error, 'Error', {
                             duration: 5000,
                             extraClasses: ['errorSnackBar']
-                         });
+                        });
                         this.loading = false;
                     });
 
@@ -382,7 +383,7 @@ export class DialogRegistrationRepository implements OnInit {
                         this.snackBar.open('Create repository action has encountered an error. Detail:' + error, 'Error', {
                             duration: 5000,
                             extraClasses: ['errorSnackBar']
-                         });
+                        });
                         this.loading = false;
                     });
 

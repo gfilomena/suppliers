@@ -1,5 +1,5 @@
 .container{
-    margin-top: 64px;
+    width: 500px;
 }
 
 .mat-select {
@@ -15,14 +15,15 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
     z-index: 1;
 }
-
-.example-container {
-    display: flex;
-    flex-direction: column;
-    max-height: 500px;
-    min-width: 300px;
-  }
-
+.name {
+margin: 0 20px;
+}
+.chip-container{
+    background-color: transparent;
+}
+.chip-container.mat-chip:not(.mat-basic-chip):focus{
+    box-shadow: none;
+}
 #repository{
     width:auto;  
 }
@@ -48,7 +49,12 @@
 .error{
     color: red;
 }
-  
+.button-validate{
+    margin: 10px 0;
+}  
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
 mat-form-field {
     width: 100%;
   }

@@ -1,23 +1,23 @@
-<form name="form"  #f="ngForm" novalidate>
+<form name="form" #f="ngForm" novalidate>
 
   <h1 mat-dialog-title>Register Repository</h1>
 
   <mat-dialog-content fxLayout="column">
-    <mat-form-field>
-      <input matInput placeholder="Name" value=" " id="name" name="name" required  [(ngModel)]="data.repository.name">
+    <mat-form-field class="form-field-input">
+      <input matInput placeholder="Name" value=" " id="name" name="name" required [(ngModel)]="data.repository.name">
     </mat-form-field>
-    <mat-form-field>
-      <input matInput placeholder="URI" value=" " id="URI" name="URI"  required [(ngModel)]="data.repository.URI">
+    <mat-form-field class="form-field-input">
+      <input matInput placeholder="URI" value=" " id="URI" name="URI" required [(ngModel)]="data.repository.URI">
     </mat-form-field>
-    <mat-form-field>
+    <mat-form-field class="form-field-input">
       <input matInput placeholder="urlPrefix" value="" id="urlPrefix" name="urlPrefix" [(ngModel)]="data.repository.urlPrefix">
     </mat-form-field>
   </mat-dialog-content>
 
   <mat-dialog-actions align="end">
     <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
-    <button mat-button (click)="f.form.valid && upsert(data.repository)">OK</button>
-    <button mat-button matDialogClose>Cancel</button>
+    <button mat-button (click)="f.form.valid && upsert(data.repository)" color="warn">Ok</button>
+    <button mat-button matDialogClose color="warn">Cancel</button>
   </mat-dialog-actions>
 
 </form>

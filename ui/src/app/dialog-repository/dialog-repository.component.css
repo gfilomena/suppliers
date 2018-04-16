@@ -6,9 +6,22 @@
 
 .container {
   margin-top: 64px;
+  width: 500px;
 }
 
 .name {
   cursor: pointer;
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+.fill-remaining-space {
+  flex: 1 1 auto;
+}
+.repositories-nav-list{
+  position: relative;
+  overflow: hidden;
+  max-height: 390px;
+}
+/* .scrollable-content{
+  width: 100%;
+  position: absolute;
+} */

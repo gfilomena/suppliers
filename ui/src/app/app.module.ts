@@ -62,7 +62,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {MatExpansionModule} from '@angular/material/expansion';
 import { Globals } from './global';
 import { Snackbar } from './snackbar/snackbar.component';
-
+import {MatChipsModule} from '@angular/material/chips';
 
 @NgModule({
     imports: [
@@ -91,7 +91,8 @@ import { Snackbar } from './snackbar/snackbar.component';
         ComponentsModule,
         NgxPaginationModule,
         MatExpansionModule,
-        MatCheckboxModule
+        MatCheckboxModule,
+        MatChipsModule
     ],
     declarations: [
         AppComponent,
