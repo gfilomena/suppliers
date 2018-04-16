@@ -154,9 +154,9 @@ public class PixabaySearchRepository implements SearchRepository {
         m.setMetadata(i.get("tags").asText().replaceAll("^[,\\s]+", "").split("[,\\s]+"));
         m.setName(i.get("id").asText());
         m.setDescription("User:"+i.get("user").asText());
-        License lic = new License();
+        /*License lic = new License();
         lic.setName("CC0");
-        m.setLicense(lic);
+        m.setLicense(lic);*/
     }
 
     private void setVideoItem(JsonNode i, MultimediaContent m){
@@ -186,9 +186,9 @@ public class PixabaySearchRepository implements SearchRepository {
         
             m.setDescription("User:"+i.get("user").asText());
             
-            License lic = new License();
+            /*License lic = new License();
             lic.setName("CC0");
-            m.setLicense(lic);
+            m.setLicense(lic);*/
            	
         }
     }

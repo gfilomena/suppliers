@@ -136,13 +136,13 @@ public class InternetArchiveSearchRepository implements SearchRepository {
        }
 	   
 	   
-	   String lic = "";
+	   /*String lic = "";
 	   if(i.get("licenseurl") !=null){
 		   lic = i.get("licenseurl").asText();
 	   }
        License l = new License();
        l.setName(lic);
-       m.setLicense(l);
+       m.setLicense(l);*/
 	   
 	   return m;
 

@@ -109,7 +109,7 @@ public class VimeoSearchRepository implements SearchRepository {
         m.setMetadata(tags);
 
        
-        if(i.get("license") != null) {
+        /*if(i.get("license") != null) {
         	String lic = i.get("license").asText();
         	License l = new License();
             
@@ -121,7 +121,7 @@ public class VimeoSearchRepository implements SearchRepository {
             }
             m.setLicense(l);
             
-        }
+        }*/
         
         
         

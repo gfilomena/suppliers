@@ -124,9 +124,9 @@ public class WikipediaSearchRepository  implements SearchRepository {
         m.setName(name);
         m.setDescription(description);
         m.setSource(reg.getRepository());
-        License lic = new License();
+        /*License lic = new License();
         lic.setName("CC0");
-        m.setLicense(lic);
+        m.setLicense(lic);*/
 
         return m;
     }
