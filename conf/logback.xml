@@ -32,6 +32,9 @@
   <!-- AKK JOBS -->
   <logger name="com.github.tuxBurner.jobs.JobModule" level="Debug" />
 
+  <!-- MORPHIA MONGO DB -->
+  <logger name="org.mongodb.morphia" level="DEBUG" />
+
   <!-- Off these ones as they are annoying, and anyway we manage configuration ourselves -->
   <logger name="com.avaje.ebean.config.PropertyMapLoader" level="OFF" />
   <logger name="com.avaje.ebeaninternal.server.core.XmlConfigLoader" level="OFF" />

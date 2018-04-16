@@ -37,14 +37,12 @@ public class MultimediaContent extends BaseEntity{
     private Date date;
 
     private String[] metadata;
-    
-    private String detailsURI;
 
     public MultimediaContent(){
 
     }
 
-    public MultimediaContent( MultimediaType type, String fileExtension, String URI, long length, String name, String description, String thumbnail, String downloadURI, Repository source, License license, Date date, String[] metadata,String detailsURI) {
+    public MultimediaContent( MultimediaType type, String fileExtension, String URI, long length, String name, String description, String thumbnail, String downloadURI, Repository source, License license, Date date, String[] metadata) {
         this.type = type;
         this.fileExtension = fileExtension;
         this.URI = URI;
@@ -57,7 +55,6 @@ public class MultimediaContent extends BaseEntity{
         this.license=license;
         this.date=date;
         this.metadata = metadata;
-        this.detailsURI = detailsURI;
     }
 
     public MultimediaType getType() {
@@ -122,14 +119,6 @@ public class MultimediaContent extends BaseEntity{
 
     public void setDownloadURI( String downloadURI ) {
         this.downloadURI = downloadURI;
-    }
-    
-    public String getDetailsURI() {
-        return detailsURI;
-    }
-
-    public void setDetailsURI( String detailsURI ) {
-        this.detailsURI = detailsURI;
     }
 
     public Repository getSource() {
