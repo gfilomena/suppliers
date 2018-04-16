@@ -1,10 +1,13 @@
 
 
 .name,.uri{
-        padding: 0 40px 0;
+  padding: 0 40px 0;
 }
 
 .border{
-        padding:5px;
-        overflow: hidden;
+  padding:5px;
+  overflow: hidden;
+}
+.profile-field{
+  width: 300px;
 }

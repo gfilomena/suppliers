@@ -4,7 +4,8 @@
       Repositories
     </h1>
     <mat-divider></mat-divider>
-    <mat-nav-list role="list">
+    <!-- repositories-nav-list class make this list scrollable -->
+    <mat-nav-list role="list" class="repositories-nav-list">
       <mat-list-item role="listitem" (click)="update(ur)" *ngFor="let ur of userRepositories">
 
         <!-- metto il toggle in un chip per evitare che che al click sul toggle

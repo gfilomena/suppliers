@@ -4,20 +4,16 @@
       Repositories
     </h1>
     <mat-divider></mat-divider>
-    
-    <!-- TODO: make list scrollable -->
-
+    <!-- repositories-nav-list class make this list scrollable -->
     <mat-nav-list role="list" class="repositories-nav-list" ng-attr-id="repositories-nav-list">
-      <!-- <div class="scrollable-content"> -->
-        <mat-list-item role="listitem" (click)="update(rep)" *ngFor="let rep of repositories">
-          <div class="name">{{rep.name}}</div>
-          <!-- This fills the remaining space of the current row -->
-          <span class="fill-remaining-space"></span>
-          <button mat-raised-button color="warn" (click)="delete(rep)">
-            <mat-icon>delete</mat-icon>
-          </button>
-        </mat-list-item>
-      <!-- </div> -->
+      <mat-list-item role="listitem" (click)="update(rep)" *ngFor="let rep of repositories">
+        <div class="name">{{rep.name}}</div>
+        <!-- This fills the remaining space of the current row -->
+        <span class="fill-remaining-space"></span>
+        <button mat-raised-button color="warn" (click)="delete(rep)">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </mat-list-item>
     </mat-nav-list>
     <button class="add" matTooltip="Add new Repository" mat-fab matTooltipPosition="above" (click)="create()">
       <mat-icon>add circle</mat-icon>

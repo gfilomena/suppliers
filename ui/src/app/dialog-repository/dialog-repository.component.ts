@@ -6,7 +6,6 @@ import { User } from '../_models/user';
 import { RepositoryService, AlertService } from '../_services/index';
 import { Router } from '@angular/router';
 import { Snackbar } from './../snackbar/snackbar.component';
-import PerfectScrollbar from 'perfect-scrollbar';
 
 @Component({
   selector: 'app-dialog-repository',
@@ -33,11 +32,6 @@ export class DialogRepositoryComponent implements OnInit {
 
   ngOnInit() {
     this.getAllRepositories();
-    // const ps = new PerfectScrollbar('mat-nav-list',  {
-    //   wheelSpeed: 1,
-    //   wheelPropagation: false,
-    //   minScrollbarLength: 0
-    // });
   }
 
 
