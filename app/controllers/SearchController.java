@@ -51,8 +51,10 @@ public class SearchController extends Controller {
         CompletionStage<JsonNode> jsonResult=searchResults.thenApply(p -> {
             //multimediaSearchService.saveSearchResult(p);
             return p.asJson();});
+        searchResults.thenAccept(p->multimediaSearchService.saveSearchResult(p));
         CompletionStage<Result> promiseOfResult = jsonResult.thenApply(( p ) -> ok(p));
         return promiseOfResult;
+
     }
 
     @Restrict({@Group("ADMIN"), @Group("USER")})

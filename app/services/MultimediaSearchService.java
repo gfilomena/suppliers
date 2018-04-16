@@ -11,6 +11,7 @@ import models.dao.SearchResultDAO;
 import models.dao.SearchResultDAOImpl;
 import models.response.RepositoryResponseMapping;
 import org.bson.types.ObjectId;
+import play.Logger;
 import play.libs.concurrent.Futures;
 import play.libs.ws.WSClient;
 import services.db.MongoDBService;
@@ -120,7 +121,10 @@ public class MultimediaSearchService implements SearchService {
     }
 
     public void saveSearchResult(SearchResult searchResult) {
+
+        Logger.debug("Saving Search Result");
         searchResultDAO.save(searchResult);
+        Logger.debug("Search Results saved");
     }
 
     public CompletionStage<List<SearchResult>> getSearchResultsByUser(User user){
