@@ -63,7 +63,7 @@ import {MatExpansionModule} from '@angular/material/expansion';
 import { Globals } from './global';
 import { Snackbar } from './snackbar/snackbar.component';
 import {MatChipsModule} from '@angular/material/chips';
-
+import {MatGridListModule} from '@angular/material/grid-list';
 @NgModule({
     imports: [
         BrowserModule,
@@ -92,7 +92,8 @@ import {MatChipsModule} from '@angular/material/chips';
         NgxPaginationModule,
         MatExpansionModule,
         MatCheckboxModule,
-        MatChipsModule
+        MatChipsModule,
+        MatGridListModule
     ],
     declarations: [
         AppComponent,

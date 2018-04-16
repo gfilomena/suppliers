@@ -16,8 +16,8 @@
 
   <mat-dialog-actions align="end">
     <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
-    <button mat-button (click)="f.form.valid && upsert(data.repository)" color="warn">Ok</button>
-    <button mat-button matDialogClose color="warn">Cancel</button>
+    <button mat-button (click)="f.form.valid && upsert(data.repository)">Ok</button>
+    <button mat-button matDialogClose >Cancel</button>
   </mat-dialog-actions>
 
 </form>

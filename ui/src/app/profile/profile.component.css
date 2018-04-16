@@ -6,4 +6,5 @@
 
 .border{
         padding:5px;
+        overflow: hidden;
 }

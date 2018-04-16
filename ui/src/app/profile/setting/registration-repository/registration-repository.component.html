@@ -1,13 +1,17 @@
 <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
   <div class="container">
+    <h1 align="center" class="mat-h1">
+      Repositories
+    </h1>
+    <mat-divider></mat-divider>
     <mat-nav-list role="list">
       <mat-list-item role="listitem" (click)="update(ur)" *ngFor="let ur of userRepositories">
-        
+
         <!-- metto il toggle in un chip per evitare che che al click sul toggle
         venga chiamato sia update dell'elemento, sia toggle.
         non ho trovato un modo pulito per farlo  -->
         <mat-chip-list>
-          <mat-chip class="chip-container"(click)="toggle(ur)">
+          <mat-chip class="chip-container" (click)="toggle(ur)">
             <mat-slide-toggle [checked]="ur.enabled"></mat-slide-toggle>
           </mat-chip>
         </mat-chip-list>

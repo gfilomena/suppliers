@@ -1,11 +1,11 @@
 
-<h2 mat-dialog-title>Delete repository registration</h2>
+<h1 mat-dialog-title>Delete repository registration</h1>
 <mat-dialog-content>
   Are you sure to delete the repository registration {{data.name}}?
 </mat-dialog-content>
 <mat-dialog-actions class="confirmation-actions">
-  <button mat-button  color="warn" [mat-dialog-close]="true" tabindex="1">Yes</button>
-  <button mat-button  color="warn" mat-dialog-close tabindex="-1">No</button>
+  <button mat-button [mat-dialog-close]="true" tabindex="1">Yes</button>
+  <button mat-button mat-dialog-close tabindex="-1">No</button>
 </mat-dialog-actions>
 
 <style>

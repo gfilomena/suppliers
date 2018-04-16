@@ -1,9 +1,11 @@
-<h2 mat-dialog-title>Register Repository on User</h2>
+<h1 mat-dialog-title>Register Repository on User</h1>
 <form name="form" #f="ngForm">
   <mat-dialog-content>
     <div fxLayout="column" fxLayoutAlign="start">
       <div *ngIf="!data.userRepository.id" id="repository">
-      <!--<mat-form-field>
+
+        <!-- TODO: can we remove this code?? -->
+        <!--<mat-form-field>
         <mat-select placeholder="Repository"  [(ngModel)]="data.userRepository.repository"
           name="repository" required fxflex>
           <mat-option *ngFor="let rep of repositories" [value]="rep.name" fxflex>
@@ -12,42 +14,77 @@
           </mat-option>
         </mat-select>
       </mat-form-field>-->
-      <h4>Select Repository:</h4>
-        <div fxLayout="row" fxLayoutGap="10px" fxFlexAlign="center">
-          <div *ngFor="let rep of repositories"> 
-            <button md-raised-button (click)="selectRepository(rep.name)"  [ngClass]="{ 'card-repo': true, 'disabledrepository':  checkRepository(rep.name) }"><img  src="/assets/images/{{rep.name}}.png"/></button>
+
+        <!-- ****** grid with available repositories ***** -->
+        <h3 class="subheading-2">Select Repository:</h3>
+        <mat-grid-list cols="3" rowHeight="2:1">
+          <div *ngFor="let rep of repositories">
+            <mat-grid-tile>
+              <button md-raised-button (click)="selectRepository(rep.name)" [ngClass]="{ 'card-repo': true, 'disabledrepository':  checkRepository(rep.name) }">
+                <img src="/assets/images/{{rep.name}}.png" />
+              </button>
+            </mat-grid-tile>
           </div>
-        </div>
+        </mat-grid-list>
       </div>
-      <div class="message" >
-            <h2 *ngIf="data.userRepository.id || data.userRepository.repository">Selected: {{data.userRepository.repository}}</h2>
-            <h2 *ngIf="message !== ''">{{message}}</h2>
-     </div>
-     
-     <!-- <mat-form-field fxFlex>
+      <div class="message">
+        <h3 class="subheading-2" *ngIf="data.userRepository.id || data.userRepository.repository">Selected: {{data.userRepository.repository}}</h3>
+        <h3 class="subheading-2" *ngIf="message !== ''">{{message}}</h3>
+      </div>
+
+      <!-- TODO: can we remove this code?? -->
+      <!-- <mat-form-field fxFlex>
         <input matInput placeholder="username" value=" " id="username" name="username" [(ngModel)]="data.userRepository.username">
       </mat-form-field>
       <mat-form-field fxFlex>
         <input matInput placeholder="password" value="" id="password" name="password" [(ngModel)]="data.userRepository.password">
       </mat-form-field>
     -->
-      <mat-form-field   *ngIf="showapiKey(data.userRepository.repository)">
-        <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey" required/>
-        <span matSuffix><mat-icon class="{{validator}}">{{validator}}</mat-icon> <button mat-raised-button color="accent" class="button-validate"*ngIf="showapiKey(data.userRepository.repository)" mat-button (click)="validate(data.userRepository)">Validate</button></span>
-        
-      </mat-form-field>
-      <mat-form-field fxFlex *ngIf="data.userRepository.repository === 'Vimeo'">
-        <input matInput placeholder="token" value="" id="token" name="token"  [(ngModel)]="data.userRepository.token" required>
-       <span matSuffix><button mat-icon-button (click)="data.userRepository.token = ''" *ngIf="data.userRepository.token !== ''"><mat-icon>clear</mat-icon></button><button *ngIf="data.userRepository.token === ''" mat-button  color="primary" (click)="getTokenVimeo(data.userRepository)">get Token</button></span>
-      </mat-form-field>
-      
+      <!-- ********** input token and validate ********* -->
+      <form *ngIf="showapiKey(data.userRepository.repository)">
+        <mat-grid-list cols='4' rowHeight="1:1">
+          <mat-grid-tile colspan='3'>
+            <mat-form-field>
+              <input matInput placeholder="apiKey" value="" id="apiKey" name="apiKey" [(ngModel)]="data.userRepository.apiKey" required/>
+              <span matSuffix>
+                <mat-icon class="{{validator}}">{{validator}}</mat-icon>
+
+              </span>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan='1'>
+            <button mat-raised-button color="accent" class="button-validate" *ngIf="showapiKey(data.userRepository.repository)" mat-button
+              (click)="validate(data.userRepository)">Validate
+            </button>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+
+      <!-- ********** vimeo token fields ********** -->
+      <form *ngIf="showapiKey(data.userRepository.repository) && data.userRepository.repository === 'Vimeo'">
+        <mat-grid-list cols='4' rowHeight="1:1">
+          <mat-grid-tile colspan='3'>
+            <mat-form-field>
+              <input matInput placeholder="token" value="" id="token" name="token" [(ngModel)]="data.userRepository.token" required>
+            </mat-form-field>
+          </mat-grid-tile>
+          <mat-grid-tile colspan='1'>
+            <span matSuffix>
+              <button mat-icon-button (click)="data.userRepository.token = ''" *ngIf="data.userRepository.token !== ''">
+                <mat-icon>clear</mat-icon>
+              </button>
+              <button *ngIf="data.userRepository.token === ''" mat-button color="primary" (click)="getTokenVimeo(data.userRepository)">get Token</button>
+            </span>
+          </mat-grid-tile>
+        </mat-grid-list>
+      </form>
+
     </div>
   </mat-dialog-content>
   <mat-dialog-actions align="end">
-    
-    <button mat-button  color="warn" (click)="f.form.valid && data.userRepository.repository !== '' && upsert(data.userRepository)">Ok</button>
+    <button mat-button (click)="f.form.valid && data.userRepository.repository !== '' && upsert(data.userRepository)">Ok</button>
     <mat-progress-spinner *ngIf="loading" mode="indeterminate" color="warn" [strokeWidth]="1" [diameter]="32"></mat-progress-spinner>
-    <button mat-button  color="warn" (click)="onClose()">Cancel</button>
+    <button mat-button (click)="onClose()">Cancel</button>
   </mat-dialog-actions>
 </form>
 <!--  test form

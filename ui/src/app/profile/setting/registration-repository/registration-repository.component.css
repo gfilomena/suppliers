@@ -29,9 +29,9 @@ margin: 0 20px;
 }
 
 .card-repo{
-    height: 50px;
+    height: 100%;
+    width: 100%;
     background-color: #ffffff;
-    
 }
 
 .disabledrepository{
