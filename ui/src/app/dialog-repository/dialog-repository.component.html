@@ -4,7 +4,7 @@
       Repositories
     </h1>
     <mat-divider></mat-divider>
-    <!-- repositories-nav-list class make this list scrollable  -->
+    <!-- repositories-nav-list class make this list scrollable -->
     <mat-nav-list role="list" class="repositories-nav-list" ng-attr-id="repositories-nav-list">
       <mat-list-item role="listitem" (click)="update(rep)" *ngFor="let rep of repositories">
         <div class="name">{{rep.name}}</div>
