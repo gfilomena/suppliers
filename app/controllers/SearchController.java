@@ -48,7 +48,9 @@ public class SearchController extends Controller {
         Logger.info("OCD search received: " + jsonRequest.toString());
 
         CompletionStage<SearchResult> searchResults=multimediaSearchService.search(jsonRequest, user);
-        CompletionStage<JsonNode> jsonResult=searchResults.thenApply(p -> p.asJson());
+        CompletionStage<JsonNode> jsonResult=searchResults.thenApply(p -> {
+            //multimediaSearchService.saveSearchResult(p);
+            return p.asJson();});
         CompletionStage<Result> promiseOfResult = jsonResult.thenApply(( p ) -> ok(p));
         return promiseOfResult;
     }

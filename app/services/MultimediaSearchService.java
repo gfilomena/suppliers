@@ -104,7 +104,7 @@ public class MultimediaSearchService implements SearchService {
             }
             return qr;
         });
-        transformedQuery.thenAccept(p -> saveSearchResult(p));
+        //transformedQuery.thenAccept(p -> saveSearchResult(p));
         return transformedQuery;
     }
 
