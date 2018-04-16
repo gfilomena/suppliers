@@ -61,7 +61,7 @@
       </form>
 
       <!-- ********** vimeo token fields ********** -->
-      <form *ngIf="showapiKey(data.userRepository.repository) && data.userRepository.repository === 'Vimeo'">
+      <form *ngIf="data.userRepository.repository === 'Vimeo'">
         <mat-grid-list cols='4' rowHeight="1:1">
           <mat-grid-tile colspan='3'>
             <mat-form-field>
