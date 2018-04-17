@@ -43,10 +43,6 @@ public class MultimediaSearchService implements SearchService {
         this.wsclient = wsClient;
     }
 
-    public MultimediaSearchService(){
-
-    }
-
     @Override
     public List<CompletionStage<RepositoryResponseMapping>> dispatch(List<SearchRepository> repositories, List<String> keyWords) {
         List<CompletionStage<RepositoryResponseMapping>> s;

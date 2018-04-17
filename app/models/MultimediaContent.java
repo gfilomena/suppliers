@@ -31,7 +31,7 @@ public class MultimediaContent extends BaseEntity{
     @Reference
     private Repository source;
 
-    @Reference
+    //@Reference
     private License license;
 
     private Date date;

@@ -186,9 +186,9 @@ public class PixabaySearchRepository implements SearchRepository {
         
             m.setDescription("User:"+i.get("user").asText());
             
-            /*License lic = new License();
+            License lic = new License();
             lic.setName("CC0");
-            m.setLicense(lic);*/
+            m.setLicense(lic);
            	
         }
     }
