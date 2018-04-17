@@ -17,8 +17,11 @@ export class DialogRepositoryComponent implements OnInit {
 
   repositories: Repository[];
   loading = false;
-
-
+  dialogDefaultSize = {
+    height: 'auto',
+    width: '500px'
+  }
+  
   constructor(
     public dialog: MatDialog,
     private RepositoryService: RepositoryService,
@@ -54,7 +57,7 @@ export class DialogRepositoryComponent implements OnInit {
     this.loading = true;
     const dialogc = this.dialog.open(DialogConfirmationDialog, {
       data: { name: rep.name },
-      height: 'auto'
+      ...this.dialogDefaultSize
     });
 
     dialogc.afterClosed().subscribe(confirm => {
@@ -79,7 +82,8 @@ export class DialogRepositoryComponent implements OnInit {
   create() {
     const repository = new Repository();
     const dialogRef = this.dialog.open(DialogRepositoryDetail, {
-      data: { repository: repository }
+      data: { repository: repository },
+      ...this.dialogDefaultSize
     });
 
     const sub = dialogRef.componentInstance.onChange.subscribe(() => {
@@ -97,6 +101,7 @@ export class DialogRepositoryComponent implements OnInit {
 
     const dialogRef = this.dialog.open(DialogRepositoryDetail, {
       data: { repository: repository },
+      ...this.dialogDefaultSize
     });
 
     const sub = dialogRef.componentInstance.onChange.subscribe(() => {
@@ -123,7 +128,8 @@ export class DialogConfirmationDialog {
 
 @Component({
   selector: 'dialog-repository-dialog',
-  templateUrl: 'dialog-repository-dialog.html'
+  templateUrl: 'dialog-repository-dialog.html',
+  styleUrls: ['./dialog-repository-dialog.css']
 })
 export class DialogRepositoryDetail {
   submitted = false;
