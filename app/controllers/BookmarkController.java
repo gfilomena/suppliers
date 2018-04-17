@@ -148,7 +148,9 @@ public class BookmarkController extends Controller {
                 return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
             }
             // TODO also delete Multimedia Content related
-            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(bookmarkService.deleteById(idsToRemove.get(0)))));
+            bookmarkService.deleteById(idsToRemove.get(0));
+            multimediaContentService.delete(b.getMultimediaContent());
+            return CompletableFuture.supplyAsync(() -> ok());
         } else {
             return CompletableFuture.supplyAsync(() -> {
                 idsToRemove.stream()

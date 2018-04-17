@@ -1,5 +1,7 @@
 package services;
 
+import akka.io.Tcp;
+import com.mongodb.WriteResult;
 import models.MultimediaContent;
 import models.dao.MultimediaContentDAO;
 import models.dao.MultimediaContentDAOImpl;
@@ -11,5 +13,9 @@ public class MultimediaContentService {
 
     public void save(MultimediaContent mc){
         multimediaContentDAO.save(mc);
+    }
+
+    public WriteResult delete(MultimediaContent multimediaContent) {
+        return multimediaContentDAO.delete(multimediaContent);
     }
 }
