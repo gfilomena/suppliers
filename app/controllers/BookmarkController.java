@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JsonNode;
 import exceptions.BookmarkNotFoundException;
 import exceptions.UserNotFoundException;
 import models.*;
+import org.bson.types.ObjectId;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -147,7 +148,7 @@ public class BookmarkController extends Controller {
                 return CompletableFuture.supplyAsync(() -> notFound("The Bookmark doesn't exists!"));
             }
             // TODO also delete Multimedia Content related
-            return CompletableFuture.supplyAsync(() -> noContent());
+            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(bookmarkService.deleteById(idsToRemove.get(0)))));
         } else {
             return CompletableFuture.supplyAsync(() -> {
                 idsToRemove.stream()

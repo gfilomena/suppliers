@@ -12,6 +12,9 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
+import services.RegistrationService;
+import services.RepositoryService;
+import services.UserService;
 import services.db.MongoDBService;
 
 import java.util.concurrent.CompletableFuture;
@@ -22,14 +25,15 @@ import java.util.concurrent.CompletionStage;
  */
 public class RegistrationController extends Controller{
 
-    public static RegistrationDAO registrationDAO=new RegistrationDAOImpl(Registration.class, MongoDBService.getDatastore());
-    public static UserDAO userDAO=new UserDAOImpl(User.class, MongoDBService.getDatastore());
-    public static RepositoryDAO repoDAO=new RepositoryDAOImpl(Repository.class, MongoDBService.getDatastore());
+    private RegistrationService registrationService=RegistrationService.getInstance();
+
+    private UserService userService=new UserService();
+    private RepositoryService repositoryService=new RepositoryService();
 
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> get(String id){
-        if(registrationDAO.get(id)!=null) {
-            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(registrationDAO.get(id))));
+        if(registrationService.get(id)!=null) {
+            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(registrationService.get(id))));
         }
         else{
             return CompletableFuture.supplyAsync(() -> notFound("The Registration doesn't exists!"));
@@ -45,16 +49,16 @@ public class RegistrationController extends Controller{
         } else {
             String username = json.findPath("user").textValue();
             String repository = json.findPath("repository").textValue();
-            Repository re = repoDAO.findByName(repository);
-            User us = userDAO.findByUsername(username);
+            Repository re = repositoryService.findByName(repository);
+            User us = userService.findByUsername(username);
             if(re==null || us==null){
                 return CompletableFuture.supplyAsync(() -> badRequest("User or Repository not present!"));
             }
             else {
-                if (!registrationDAO.isPresent(us, re)) {
+                if (!registrationService.isPresent(us, re)) {
                     CompletableFuture<JsonNode> cf = CompletableFuture.supplyAsync(() -> {
-                        Repository r = repoDAO.findByName(repository);
-                        User u = userDAO.findByUsername(username);
+                        Repository r = repositoryService.findByName(repository);
+                        User u = userService.findByUsername(username);
                         Registration registration = new Registration();
                         registration.setRepository(r);
                         registration.setUser(u);
@@ -68,7 +72,7 @@ public class RegistrationController extends Controller{
                             registration.setToken(json.findPath("token").textValue());
                         if (!json.findPath("enabled").isMissingNode())
                             registration.setEnabled(json.findPath("enabled").booleanValue());
-                        registrationDAO.save(registration);
+                        registrationService.save(registration);
                         return registration.asJson();
                     });
                     return cf.thenApply(l -> created());
@@ -82,35 +86,35 @@ public class RegistrationController extends Controller{
     @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> getAll(){
-        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findAll())));
+        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationService.findAll())));
     }
 
     @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> findRepositoriesByUser(){
         User user=Secured.getUser(ctx());
-        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findRepositoriesByUser(user))));
+        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationService.findRepositoriesByUser(user))));
     }
 
     @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> findByUser(){
         User user=Secured.getUser(ctx());
-        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationDAO.findRegistrationByUser(user))));
+        return CompletableFuture.supplyAsync( () -> ok(Json.toJson(registrationService.findRegistrationByUser(user))));
     }
 
     @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> update(String id){
         JsonNode json = request().body().asJson();
-        if(registrationDAO.get(id)!=null) {
-            Registration r=registrationDAO.get(id);
+        if(registrationService.get(id)!=null) {
+            Registration r=registrationService.get(id);
             if(!json.findPath("apiKey").isMissingNode()) r.setApiKey(json.findPath("apiKey").textValue());
             if(!json.findPath("username").isMissingNode()) r.setUsername(json.findPath("username").textValue());
             if(!json.findPath("password").isMissingNode()) r.setPassword(json.findPath("password").textValue());
             if(!json.findPath("token").isMissingNode()) r.setToken(json.findPath("token").textValue());
             if(!json.findPath("enabled").isMissingNode()) r.setEnabled(json.findPath("enabled").booleanValue());
-            registrationDAO.save(r);
+            registrationService.save(r);
             return CompletableFuture.supplyAsync(() -> ok(Json.toJson(r)));
         }
         else{
@@ -122,8 +126,8 @@ public class RegistrationController extends Controller{
     @Restrict({@Group("ADMIN"), @Group("USER")})
     @Security.Authenticated(Secured.class)
     public CompletionStage<Result> delete(String id){
-        if(registrationDAO.get(id)!=null) {
-            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(registrationDAO.deleteById(new ObjectId(id)))));
+        if(registrationService.get(id)!=null) {
+            return CompletableFuture.supplyAsync(() -> ok(Json.toJson(registrationService.deleteById(new ObjectId(id)))));
         }
         else{
             return CompletableFuture.supplyAsync(() -> notFound("The Registration doesn't exists!"));

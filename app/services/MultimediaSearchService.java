@@ -36,7 +36,7 @@ public class MultimediaSearchService implements SearchService {
     private WSClient wsclient;
     private SearchResultDAO searchResultDAO = new SearchResultDAOImpl(SearchResult.class, MongoDBService.getDatastore());
 
-    private RegistrationService registrationService=new RegistrationService();
+    private RegistrationService registrationService=RegistrationService.getInstance();
 
     @Inject
     public MultimediaSearchService(WSClient wsClient) {
