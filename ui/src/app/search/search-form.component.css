@@ -37,9 +37,9 @@
 
 mat-progress-bar {
   position: fixed;
-  z-index: 2;
+  z-index: 3;
   box-shadow: none;
-  margin-top: -5px; 
+  margin-top: 64px;
 }
 
 .title-card {
@@ -169,14 +169,12 @@ mat-checkbox {
 @media (min-width: 0px) and (max-width: 800px) {
   .container-sidebar {
     display: none;
-    margin-top: 64px;
   }
 }
 
 @media (min-width: 800px) and (max-width: 3000px) {
   .container-sidebar {
     display: flex;
-    margin-top: 64px;
   }
 }
 
@@ -234,7 +232,7 @@ mat-checkbox {
 }
 
 form{
-  margin-top: 64px;
+  margin-top: 135px;
 }
 
 .search-bar, .advanced-search {

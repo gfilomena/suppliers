@@ -11,3 +11,8 @@
 .profile-field{
   width: 300px;
 }
+.extension-panel-container{
+  margin-top: 80px;
+  position: absolute;
+  width: 100%;
+}

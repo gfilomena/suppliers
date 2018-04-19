@@ -1,3 +1,6 @@
+.toolbar-container{
+  height: 64px;
+}
 .card {
   margin-bottom: 4px;
   height: 100%;
@@ -59,7 +62,6 @@ mat-checkbox {
 }
 
 .search-history-container {
-  margin-top: 64px;
   padding: 24px;
 }
 
@@ -82,11 +84,9 @@ mat-checkbox {
 }
 
 .historybar{
-  color: white;
-  background-color: #fd9a7a;
-  position: absolute;
-  top:0;
-  z-index: 2;
+  position: fixed;
+  z-index: 3;
+  padding: 0;
 }
 
 .spacer {
@@ -94,9 +94,11 @@ mat-checkbox {
 }
 
 mat-progress-bar {
-  /*position: fixed; 
-    margin-top: 62px;
-  */
-  z-index: 3;
+  position: fixed; 
+  margin-top: 64px;
+  z-index: 4;
   box-shadow: none;
 } 
+.button-deselect {
+  margin-left: 10px;
+}

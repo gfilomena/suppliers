@@ -1,17 +1,20 @@
-<mat-toolbar class="historybar" *ngIf="enableDelete()">
-  <button mat-icon-button matTooltip="Deselect All" (click)="selecTo(false)">
-    <mat-icon>close</mat-icon>
-  </button>
-  <span>{{getSelectedCount()}}</span>
-  <span class="spacer"></span>
-  <button mat-icon-button matTooltip="Select All" (click)="selecTo(true)">
-    <mat-icon>done_all</mat-icon>
-  </button>
-  <button mat-icon-button matTooltip="Delete selected items">
-    <mat-icon (click)="deleteSelected()">delete</mat-icon>
-  </button>
-</mat-toolbar>
-<mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+<div class="toolbar-container">
+  <mat-toolbar class="historybar" *ngIf="enableDelete()">
+      <button mat-icon-button class="button-deselect" matTooltip="Deselect All" (click)="selecTo(false)">
+        <mat-icon>close</mat-icon>
+      </button>
+      <span>{{getSelectedCount()}}</span>
+      <span class="spacer"></span>
+      <button mat-icon-button matTooltip="Select All" (click)="selecTo(true)">
+        <mat-icon>done_all</mat-icon>
+      </button>
+      <button mat-icon-button matTooltip="Delete selected items">
+        <mat-icon (click)="deleteSelected()">delete</mat-icon>
+      </button>
+  </mat-toolbar>
+  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+</div>
+
 <h3 align="center" *ngIf="!dates || dates.length === 0">
   No history available.
 </h3>
