@@ -1,3 +1,6 @@
+.toolbar-container{
+  height: 64px;
+}
 .card {
   /*display:inline-block;
     display: inline-table;*/
@@ -171,14 +174,12 @@ mat-checkbox {
 @media (min-width: 0px) and (max-width: 800px) {
   .container-sidebar {
     display: none;
-    margin-top: 64px;
   }
 }
 
 @media (min-width: 800px) and (max-width: 3000px) {
   .container-sidebar {
     display: flex;
-    margin-top: 64px;
   }
 }
 
@@ -263,11 +264,9 @@ mat-checkbox {
 }
 
 .deletebar{
-  color: white;
-  background-color: #fd9a7a;
-  position: absolute;
-  top:0;
-  z-index: 2;
+  position: fixed;
+  z-index: 3;
+  padding: 0;
 }
 
 .spacer {
@@ -281,12 +280,12 @@ h3 {
 }
 
 mat-progress-bar {
-  /*position: fixed; 
-    margin-top: 62px;
-  */
-  z-index: 2;
+  position: fixed; 
+  margin-top: 62px;
+  z-index: 3;
   box-shadow: none;
-  
-  
 } 
 
+.button-deselect {
+  margin-left: 10px;
+}

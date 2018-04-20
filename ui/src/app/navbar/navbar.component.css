@@ -6,13 +6,11 @@
   cursor: pointer;
 }
 
-mat-toolbar, mat-toolbar-row {
-  display: contents;
+mat-toolbar {
   position: fixed;
   z-index: 2;
+  padding: 0;
 }
-
-
 
 .active {
   background-color: transparent;
