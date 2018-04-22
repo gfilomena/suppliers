@@ -49,6 +49,8 @@ public class ApplicationTimer {
         // Initialize Roles
         Logger.info("OCD Initialization of Roles");
         initializeRoles();
+        Logger.info("OCD Initialize Administrators");
+        initializeAdministrator();
         Logger.info("OCD Initialization of Repositories");
         initializeRepositories();
         /*Logger.info("OCD Initialize Licenses");
