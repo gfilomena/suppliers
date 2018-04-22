@@ -13,6 +13,7 @@ import models.response.RepositoryResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
+import services.LicenseService;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class PixabaySearchRepository implements SearchRepository {
         //private final String url=ConfigFactory.load().getString("multimedia.sources.internetArchive.url");
         private WSClient ws;
         private Registration registration;
+        private LicenseService licenseService;
 
         //private final String internetArchiveURLPrefix="https://archive.org/details/";
 
@@ -46,6 +48,7 @@ public class PixabaySearchRepository implements SearchRepository {
 
             this.ws=ws;
             this.registration=registration;
+            this.licenseService=new LicenseService();
         }
 
         @Override
@@ -157,6 +160,7 @@ public class PixabaySearchRepository implements SearchRepository {
         /*License lic = new License();
         lic.setName("CC0");
         m.setLicense(lic);*/
+        m.setLicense(licenseService.getByNameOrCreate("CC0"));
     }
 
     private void setVideoItem(JsonNode i, MultimediaContent m){
@@ -186,9 +190,9 @@ public class PixabaySearchRepository implements SearchRepository {
         
             m.setDescription("User:"+i.get("user").asText());
             
-            License lic = new License();
-            lic.setName("CC0");
-            m.setLicense(lic);
+            /*License lic = new License();
+            lic.setName("CC0");*/
+            m.setLicense(licenseService.getByNameOrCreate("CC0"));
            	
         }
     }

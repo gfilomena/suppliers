@@ -51,8 +51,9 @@ public class ApplicationTimer {
         initializeRoles();
         Logger.info("OCD Initialization of Repositories");
         initializeRepositories();
-        Logger.info("OCD Initialize Administrator");
-        initializeAdministrator();
+        /*Logger.info("OCD Initialize Licenses");
+        initializeLicenses();*/
+
         // When the application starts, register a stop hook with the
         // ApplicationLifecycle object. The code inside the stop hook will
         // be run when the application stops.
@@ -63,6 +64,31 @@ public class ApplicationTimer {
             return CompletableFuture.completedFuture(null);
         });
     }
+
+    /*private void initializeLicenses() {
+        LicenseService licenseService=new LicenseService();
+        if(licenseService.findByName("CC0")==null){
+            License lic = new License();
+            lic.setName("CC0");
+            lic.setType("CC0");
+            licenseService.save(lic);
+        }
+
+        if(licenseService.findByName("MIT")==null){
+            License lic = new License();
+            lic.setName("MIT");
+            lic.setType("MIT");
+            licenseService.save(lic);
+        }
+
+        if(licenseService.findByName("CC")==null){
+            License lic = new License();
+            lic.setName("CC");
+            lic.setType("CC");
+            licenseService.save(lic);
+        }
+
+    }*/
 
     private void initializeAdministrator() {
         UserDAO userDAO=new UserDAOImpl(User.class,MongoDBService.getDatastore());

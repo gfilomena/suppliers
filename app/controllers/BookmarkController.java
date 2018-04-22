@@ -11,10 +11,7 @@ import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
 import play.mvc.Security;
-import services.BookmarkService;
-import services.MultimediaContentService;
-import services.RepositoryService;
-import services.UserService;
+import services.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,6 +30,7 @@ public class BookmarkController extends Controller {
     private UserService userService = new UserService();
     private RepositoryService repositoryService = new RepositoryService();
     private MultimediaContentService multimediaContentService = new MultimediaContentService();
+    private LicenseService licenseService=new LicenseService();
 
 
     @Restrict({@Group("ADMIN"), @Group("USER")})
@@ -98,7 +96,12 @@ public class BookmarkController extends Controller {
                 Repository r = repositoryService.get(json.findPath("source").findPath("id").textValue());
                 mc.setSource(r);
             }
-            //if(!json.findPath("date").isMissingNode()) mc.setDate(json.findPath("date"));
+            if(!json.findPath("license").isMissingNode()){
+                mc.setLicense(licenseService.getByNameOrCreate(json.findPath("license").textValue()));
+            }
+            if(!json.findPath("detailsURI").isMissingNode()){
+                mc.setDetailsURI(json.findPath("detailsURI").textValue());
+            }
 
             if (!json.findPath("metadata").isMissingNode())
                 mc.setMetadata(JsonNodetoArrayList(json.findPath("metadata")));

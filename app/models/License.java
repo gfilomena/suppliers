@@ -13,7 +13,7 @@ public class License extends BaseEntity{
 
     private String name;
 
-    private LicenseType type;
+    private String type;
 
     private String url;
 
@@ -28,11 +28,11 @@ public class License extends BaseEntity{
         this.name = name;
     }
 
-    public LicenseType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType( LicenseType type ) {
+    public void setType( String type ) {
         this.type = type;
     }
 

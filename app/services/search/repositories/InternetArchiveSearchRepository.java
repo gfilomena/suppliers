@@ -13,6 +13,7 @@ import models.response.RepositoryResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
+import services.LicenseService;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
@@ -38,6 +39,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
     //private final String url=ConfigFactory.load().getString("multimedia.sources.internetArchive.url");
     private WSClient ws;
     private Registration registration;
+    private LicenseService licenseService;
 
     //private final String internetArchiveURLPrefix="https://archive.org/details/";
 
@@ -46,6 +48,7 @@ public class InternetArchiveSearchRepository implements SearchRepository {
 
         this.ws=ws;
         this.registration=registration;
+        this.licenseService=new LicenseService();
     }
 
     @Override
@@ -136,13 +139,14 @@ public class InternetArchiveSearchRepository implements SearchRepository {
        }
 	   
 	   
-	   /*String lic = "";
+	   String lic = "";
 	   if(i.get("licenseurl") !=null){
 		   lic = i.get("licenseurl").asText();
+		   m.setLicense(licenseService.getByNameOrCreate(lic));
 	   }
-       License l = new License();
-       l.setName(lic);
-       m.setLicense(l);*/
+       /*License l = new License();
+       l.setName(lic);*/
+       //m.setLicense(l);
 	   
 	   return m;
 

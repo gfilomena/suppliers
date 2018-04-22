@@ -109,9 +109,9 @@ public class YoutubeSearchRepository implements SearchRepository {
         }
         m.setSource(reg.getRepository());
         
-        License l = new License();
+        /*License l = new License();
         l.setName("");
-        m.setLicense(l);
+        m.setLicense(l);*/
 
         return m;
     }
