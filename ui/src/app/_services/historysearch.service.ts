@@ -20,6 +20,23 @@ export class HistorysearchService {
         return this.http.delete(environment.serviceUrl + '/users/' + username + '/results?ids=' + id,  this.jwt()).map((response: Response) => response);
     }
 
+    // deleteAll(username: string) {
+    //     return this.http.get(environment.serviceUrl + '/users/' + username + '/results', this.jwt()).map(res => {
+    //         const resultSearch = res.json();
+    //         resultSearch.sort((a, b) => a.date < b.date ? -1 : 1);
+    //         console.log(resultSearch);
+
+    //         const ids = [];
+    //         console.log(resultSearch)
+    //         for (let key in resultSearch) {
+    //          ids.push(resultSearch[key].id);
+    //             console.log(resultSearch[key].id);
+    //         }
+    //         console.log(ids.toString())
+    //         return this.http.delete(environment.serviceUrl + '/users/' + username + '/results?ids=' + ids.toString());
+    //     });
+    // }
+
     // private helper methods
 
     private jwt() {

@@ -50,22 +50,22 @@ export class SearchHistoryComponent implements OnInit {
     this.loading = true;
     this.historysearchService.getSearchResults(this.currentUser.username)
       .subscribe(
-      res => {
-        console.log('get all history - subscribe OK:', res);
-        this.searchResult = this.arrToString(res.reverse());
-        this.initCheckbox();
-        this.nResults = this.searchResult.length;
-        // for (let sr of this.searchResult) sr['checked'] = false;    NOT USED
-        this.dates = this.retrieveDates(this.searchResult);
-        console.log('this.searchResult', this.searchResult);
-        this.loading = false;
+        res => {
+          console.log('get all history - subscribe OK:', res);
+          this.searchResult = this.arrToString(res.reverse());
+          this.initCheckbox();
+          this.nResults = this.searchResult.length;
+          // for (let sr of this.searchResult) sr['checked'] = false;    NOT USED
+          this.dates = this.retrieveDates(this.searchResult);
+          console.log('this.searchResult', this.searchResult);
+          this.loading = false;
 
-      },
-      error => {
-        this.snackBar.run('Listing history search results action has action has encountered an error. Detail:' + error, false);
-        console.log('get all history - subscribe - error:', error);
-        this.loading = false;
-      });
+        },
+        error => {
+          this.snackBar.run('Listing history search results action has action has encountered an error. Detail:' + error, false);
+          console.log('get all history - subscribe - error:', error);
+          this.loading = false;
+        });
   }
 
 
@@ -137,79 +137,79 @@ export class SearchHistoryComponent implements OnInit {
 
         this.historysearchService.delete(this.currentUser.username, deleteList)
           .subscribe(
-          data => {
-            checked.forEach(element => {
-              // delete selected
-              const i = this.selected.findIndex(obj => obj.id === element.id);
-              this.selected.splice(i, 1);
-              // delete in histories
-              this.resultsByDate.forEach(items => {
-                const j = items.findIndex(obj => obj.id === element.id);
-                if (j !== -1) {
-                  items.splice(j, 1);
-                }
+            data => {
+              checked.forEach(element => {
+                // delete selected
+                const i = this.selected.findIndex(obj => obj.id === element.id);
+                this.selected.splice(i, 1);
+                // delete in histories
+                this.resultsByDate.forEach(items => {
+                  const j = items.findIndex(obj => obj.id === element.id);
+                  if (j !== -1) {
+                    items.splice(j, 1);
+                  }
+                });
               });
-            });
-            // delete date not used
-            let deletedatelist: Date[] = [];
-            for (let i = 0; i < this.dates.length; i++) {
+              // delete date not used
+              let deletedatelist: Date[] = [];
+              for (let i = 0; i < this.dates.length; i++) {
 
-              let found = false;
-              // search result with current date
-             // for (let j = 0; j < this.resultsByDate.length; j++) {
-              let j = 0;
-              while(j < this.resultsByDate.length && !found)  {
-               // console.log('this.dates[i] '+i, this.dates[i]);
-                    for (let k = 0; k < this.resultsByDate[j].length; k++) {
-                     // console.log('new Date this.resultsByDate['+j+']['+k+'][date]',new Date(this.resultsByDate[j][k]['date']));
-                     // console.log('new Date(this.dates[i])'+i, new Date(this.dates[i]));
+                let found = false;
+                // search result with current date
+                // for (let j = 0; j < this.resultsByDate.length; j++) {
+                let j = 0;
+                while (j < this.resultsByDate.length && !found) {
+                  // console.log('this.dates[i] '+i, this.dates[i]);
+                  for (let k = 0; k < this.resultsByDate[j].length; k++) {
+                    // console.log('new Date this.resultsByDate['+j+']['+k+'][date]',new Date(this.resultsByDate[j][k]['date']));
+                    // console.log('new Date(this.dates[i])'+i, new Date(this.dates[i]));
 
-                          if(  sameDay(new Date(this.resultsByDate[j][k]['date']), new Date(this.dates[i]))) {
-                       //     console.log('sameDay in - this.resultsByDate[j][date]', this.resultsByDate[j][k]['date']);
-                            found = true;
-                            break;
-                          }
+                    if (sameDay(new Date(this.resultsByDate[j][k]['date']), new Date(this.dates[i]))) {
+                      //     console.log('sameDay in - this.resultsByDate[j][date]', this.resultsByDate[j][k]['date']);
+                      found = true;
+                      break;
                     }
-                    j++;
+                  }
+                  j++;
+                }
+                // if not find anydate in the search results, delete the date.
+                if (!found) {
+                  deletedatelist.push(this.dates[i]);
+                }
               }
-              // if not find anydate in the search results, delete the date.
-              if(!found) {
-                deletedatelist.push(this.dates[i]);
+              for (let i = 0; i < deletedatelist.length; i++) {
+                const index = this.dates.findIndex(obj => obj === deletedatelist[i]);
+                if (index !== -1) {
+                  this.dates.splice(index, 1);
+                }
               }
-            }
-            for (let i = 0; i < deletedatelist.length; i++) {
-              const index = this.dates.findIndex(obj => obj === deletedatelist[i]);
-              if(index !== -1) {
-                this.dates.splice(index, 1);
-              }
-            }
-          },
-          error => {
-            this.snackBar.run('Delete history search action has action has encountered an error. Detail:' + error, false);
-            console.log(error);
-          });
+            },
+            error => {
+              this.snackBar.run('Delete history search action has action has encountered an error. Detail:' + error, false);
+              console.log(error);
+            });
       }
     });
   }
 
 
-  /*
-    deleteAll() {
-      this.loading = true;
-      this.historysearchService.deleteAll(this.currentUser.username)
-        .subscribe(
-        res => {
-          console.log('delete all history - subscribe OK:', res);
-          this.searchResult.splice(0, this.searchResult.length);
-          this.nResults = this.searchResult.length;
-          this.loading = false;
-        },
-        error => {
-          console.log('delete all history - subscribe - error:', error);
-          this.loading = false;
-        });
-    }
-  */
+
+  // deleteAll() {
+  //   this.loading = true;
+  //   this.historysearchService.deleteAll(this.currentUser.username)
+  //     .subscribe(
+  //       res => {
+  //         console.log('delete all history - subscribe OK:', res);
+  //         this.searchResult.splice(0, this.searchResult.length);
+  //         this.nResults = this.searchResult.length;
+  //         this.loading = false;
+  //       },
+  //       error => {
+  //         console.log('delete all history - subscribe - error:', error);
+  //         this.loading = false;
+  //       });
+  // }
+
   arrToString(array: any[]) {
     let i: number;
     for (i = 0; i < array.length; i++) {
@@ -241,7 +241,7 @@ export class SearchHistoryComponent implements OnInit {
       let currentDate: Date = new Date(searchResult[0]['date']);
       distinctDates.push(currentDate);
       let dateIndex = 0;
-     // this.resultsByDate.push([]);
+      // this.resultsByDate.push([]);
 
       for (let sr of searchResult) {
         let srDate: Date = new Date(sr['date']);
@@ -279,7 +279,7 @@ export interface Selected {
   templateUrl: 'dialog-confirmation-dialog.html',
 })
 export class HistoryConfirmationDialog {
-  constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
 }
 
 function sameDay(d1, d2): boolean {

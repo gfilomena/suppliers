@@ -1,13 +1,13 @@
 <div class="container">
 
-  <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+  <smd-fab-speed-dial class="filter" *ngIf="!showSidebar && nOfResults > 0" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
       <button mat-fab>
         <mat-icon>apps</mat-icon>
       </button>
     </smd-fab-trigger>
     <smd-fab-actions>
-      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar && nOfResults > 0">
+      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;">
         <mat-icon>tune</mat-icon>
       </button>
     </smd-fab-actions>
@@ -18,7 +18,7 @@
   </div>
 
   <div fxFlex>
-      <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+      <mat-progress-bar color="warn" mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
       <form name="form" #f="ngForm">
       <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="16px" class="form-container">
         <mat-form-field class="search-bar" fxFlex>

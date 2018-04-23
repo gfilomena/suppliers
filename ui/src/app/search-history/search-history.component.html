@@ -1,5 +1,5 @@
 <div class="toolbar-container">
-  <mat-toolbar class="historybar" *ngIf="enableDelete()">
+  <mat-toolbar color="primary" class="historybar" *ngIf="enableDelete()">
       <button mat-icon-button class="button-deselect" matTooltip="Deselect All" (click)="selecTo(false)">
         <mat-icon>close</mat-icon>
       </button>
@@ -12,7 +12,7 @@
         <mat-icon (click)="deleteSelected()">delete</mat-icon>
       </button>
   </mat-toolbar>
-  <mat-progress-bar mode="indeterminate" *ngIf="loading"></mat-progress-bar>
+  <mat-progress-bar color="warn" mode="indeterminate" *ngIf="loading"></mat-progress-bar>
 </div>
 
 <h3 align="center" *ngIf="!dates || dates.length === 0">
@@ -26,9 +26,9 @@
       </button>
     </smd-fab-trigger>
     <smd-fab-actions>
-      <button mat-mini-fab matTooltip="Clear history" matTooltipPosition="above" (click)="deleteAll()">
+      <!-- <button mat-mini-fab matTooltip="Clear history" matTooltipPosition="above" (click)="deleteAll()">
         <mat-icon>delete</mat-icon>
-      </button>
+      </button> -->
     </smd-fab-actions>
   </smd-fab-speed-dial>
 

@@ -63,7 +63,7 @@
       <input #newtag matInput id="newtag" placeholder="Add Tag" value="" (keyup.enter)="saveTag(data, newtag.value)">
     </mat-form-field>
 
-    <mat-chip-list fxLayout="row">
+    <mat-chip-list color="primary" fxLayout="row">
 
       <mat-chip color="primary" class="badge" *ngFor="let tag of data.metadata">
         {{tag}}

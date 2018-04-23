@@ -1,5 +1,5 @@
 <div class="toolbar-container">
-  <mat-toolbar class="deletebar" *ngIf="enableDelete()">
+  <mat-toolbar color="primary" class="deletebar" *ngIf="enableDelete()">
     <button mat-icon-button class="button-deselect" matTooltip="Deselect All" (click)="selecTo(false)">
       <mat-icon>close</mat-icon>
     </button>
@@ -12,7 +12,7 @@
       <mat-icon (click)="deleteSelected()">delete</mat-icon>
     </button>
   </mat-toolbar>
-  <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+  <mat-progress-bar color="warn" mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
 </div>
 
 <!-- search filters -->
@@ -22,14 +22,14 @@
 
 <h3 align="center" *ngIf="!bookmarks || bookmarks.length === 0">No bookmarks available.</h3>
 <div class="container">
-  <smd-fab-speed-dial class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+  <smd-fab-speed-dial *ngIf="!showSidebar" class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
       <button mat-fab>
         <mat-icon>apps</mat-icon>
       </button>
     </smd-fab-trigger>
     <smd-fab-actions>
-      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;" *ngIf="!showSidebar">
+      <button mat-mini-fab matTooltip="Filter" matTooltipPosition="above" (click)="showSidebar = !showSidebar;">
         <mat-icon>tune</mat-icon>
       </button>
       <!-- <button mat-mini-fab  matTooltip="Delete All Bookmarks" matTooltipPosition="above" (click)="deleteAllByUser()"><mat-icon>delete</mat-icon></button> -->

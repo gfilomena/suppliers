@@ -8,8 +8,9 @@
 
 // Custom color palettes: change those to modify the theme
 // Remember to pass new declared palettes to the theme creator at the bottom.
-$ocd-app-primary: mat-palette($mat-deep-orange, A100);
-$ocd-app-accent:  mat-palette($mat-amber, A200, A100, A400);
+$ocd-app-primary: mat-palette($mat-deep-orange, 200);
+$ocd-app-accent:  mat-palette($mat-amber, 300);
+$ocd-app-warn: mat-palette($mat-red, 300);
 
 // Create the theme objects with the defined palettes.
 $ocd-app-theme: mat-light-theme($ocd-app-primary, $ocd-app-accent);

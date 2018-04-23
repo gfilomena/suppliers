@@ -3,7 +3,7 @@ import { McssrService } from './../_services/mcssr.service';
 import { MultimediaContent } from './../_models/multimediaContent';
 import { Http, RequestOptionsArgs, RequestOptions, Headers } from '@angular/http';
 import { Component, OnInit, Input, Inject, Output, EventEmitter, Pipe, PipeTransform } from '@angular/core';
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatChipsModule, MatSnackBar, MatSnackBarModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCheckboxModule} from '@angular/material';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA, MatChipsModule, MatSnackBar, MatSnackBarModule, MatProgressSpinnerModule, MatFormFieldModule, MatInputModule, MatSelectModule, MatButtonModule, MatCheckboxModule } from '@angular/material';
 import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
 import { User } from '../_models/user';
 import { Bookmark } from './../_models/bookmark';
@@ -12,15 +12,15 @@ import { InternetArchiveService } from '../_services/internetarchive.service';
 import { mediafile, File } from './../_models/mediafile';
 import * as mime from 'mime-types';
 import { CommonModule } from '@angular/common';
-import {CdkTableModule} from "@angular/cdk/table";
+import { CdkTableModule } from "@angular/cdk/table";
 import { Snackbar } from './../snackbar/snackbar.component';
 
 @Pipe({ name: 'safe' })
 export class SafePipe implements PipeTransform {
-  constructor(private sanitizer: DomSanitizer) {}
-  transform(url) {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(url);
-  }
+    constructor(private sanitizer: DomSanitizer) { }
+    transform(url) {
+        return this.sanitizer.bypassSecurityTrustResourceUrl(url);
+    }
 }
 
 @Component({
@@ -37,12 +37,12 @@ export class DialogDetail implements OnInit {
     details: mediafile = null;
     formats: File[] = null;
     path = '';
-    formatVideo: String[] = ['ogv', 'ogg', 'mp4','WebM','webm'];
+    formatVideo: String[] = ['ogv', 'ogg', 'mp4', 'WebM', 'webm'];
     formatAudio: String[] = ['mp3', 'mpga'];
     formatImage: String[] = ['jpeg', 'jpg', 'png', 'gif'];
     formatText: String[] = ['text', 'html', 'pdf'];
     selectedFormat = '';
-    othersrep: String[] = ['Youtube','Vimeo','InternetArchive'];
+    othersrep: String[] = ['Youtube', 'Vimeo', 'InternetArchive'];
 
     @Input() data: MultimediaContent;
     @Output() mcupdate = new EventEmitter<MultimediaContent>();
@@ -65,9 +65,9 @@ export class DialogDetail implements OnInit {
         if (this.data.source.name === 'InternetArchive') {
             this.getInternetArchiveformat(this.data.uri);
         }
-        if ( this.othersrep.indexOf(this.data.source.name) === -1 ) {
+        if (this.othersrep.indexOf(this.data.source.name) === -1) {
             this.selectedFormat = this.data.downloadURI;
-        }else{
+        } else {
             this.selectedFormat = '';
         }
     }
@@ -99,7 +99,7 @@ export class DialogDetail implements OnInit {
                 this.path = this.details.server + this.details.dir + '/';
                 // set the first value as default
                 this.selectedFormat = this.formats[0].name;
-                console.log('formats',this.formats);
+                console.log('formats', this.formats);
                 //console.log('this.selectedFormat',this.selectedFormat);
                 this.onChange(this.formats[0].name);
             },
@@ -204,7 +204,7 @@ export class DialogDetail implements OnInit {
                 if (!exist) {
                     this.saveMC(mc);
                 } else {
-                    this.snackBar.run('The Bookmark was already saved', false);
+                    this.deleteMCBookmark(mc);
                 }
             },
             error => {
@@ -214,25 +214,51 @@ export class DialogDetail implements OnInit {
         )
     }
 
+    deleteMCBookmark(mc) {
+        this.BookmarkService.findByUser()
+            .subscribe(
+                data => {
+                    for (const bookmark of data) {
+                        if (mc.source['id'] === bookmark.multimediaContent.source['id']) {
+
+                            this.BookmarkService.delete(bookmark.id)
+                                .subscribe(
+                                    data => {
+                                        mc.bookmark = false;
+                                        this.mcupdate.emit(mc);
+                                        this.snackBar.run('The Bookmark has been removed', true);
+                                    },
+                                    error => {
+                                        this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                                        console.log('bookmarkService.delete -> error:', error);
+                                    });
+
+                            break;
+                        }
+                    }
+                }
+            )
+    }
+
     saveMC(mc: MultimediaContent) {
         const bookmark = new Bookmark(this.currentUser.username, mc);
         console.log('bookmark:', bookmark);
 
         this.BookmarkService.create(bookmark)
             .subscribe(
-            res => {
-                console.log('saveMC - subscribe OK:', res);
-                //const element = document.getElementById('(' + mc.uri + ')');
-                //console.log('element ', element);
-                //element.innerText = 'star';
-                mc.bookmark = true;
-                this.mcupdate.emit(mc);
-                this.snackBar.run('The bookmark has been saved', true);
-            },
-            error => {
-                this.snackBar.run('Saving bookmark action has encountered an error. Detail:' + error, false);
-                 console.log('saveMC - subscribe - error:', error);
-            }
+                res => {
+                    console.log('saveMC - subscribe OK:', res);
+                    //const element = document.getElementById('(' + mc.uri + ')');
+                    //console.log('element ', element);
+                    //element.innerText = 'star';
+                    mc.bookmark = true;
+                    this.mcupdate.emit(mc);
+                    this.snackBar.run('The bookmark has been saved', true);
+                },
+                error => {
+                    this.snackBar.run('Saving bookmark action has encountered an error. Detail:' + error, false);
+                    console.log('saveMC - subscribe - error:', error);
+                }
             )
     }
 
@@ -240,7 +266,7 @@ export class DialogDetail implements OnInit {
         // console.log('mc.bookmark', mc.bookmark);
         if (mc.bookmark) {
             return 'star';
-        }else {
+        } else {
             return 'star_border';
         }
     }
@@ -256,7 +282,7 @@ export class DialogDetail implements OnInit {
             (<HTMLInputElement>document.getElementById('newtag')).value = '';
 
         }
-         this.mcupdate.emit(mc);
+        this.mcupdate.emit(mc);
     }
 
     removeTag(mc: MultimediaContent, tag: string) {
@@ -270,34 +296,34 @@ export class DialogDetail implements OnInit {
         this.loading = true;
         this.McssrService.create(mc)
             .subscribe(
-            res => {
-                this.snackBar.run('The Multimedia Item has been sent to Mcssr', true);
-                console.log('Send to Mcssr - subscribe OK:', res);
-                let creationResponse = res.json();
-                let uid = creationResponse.uid;
-            // if there are tags , they will be sent to MCSSR
-            if (mc.metadata != null) {
-                this.McssrService.updateTags(mc, uid)
-                    .subscribe(
-                    res => {
-                        console.log('update Tags to Mcssr - subscribe OK:', res);
-                        this.loading = false;
-                        this.snackBar.run('The tags have been sent correctly to Mcssr', true);
-                    },
-                    error => {
-                        console.log('Send to Mcssr - subscribe - error:', error);
-                        this.loading = false;
-                        this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + error, false);
+                res => {
+                    this.snackBar.run('The Multimedia Item has been sent to Mcssr', true);
+                    console.log('Send to Mcssr - subscribe OK:', res);
+                    let creationResponse = res.json();
+                    let uid = creationResponse.uid;
+                    // if there are tags , they will be sent to MCSSR
+                    if (mc.metadata != null) {
+                        this.McssrService.updateTags(mc, uid)
+                            .subscribe(
+                                res => {
+                                    console.log('update Tags to Mcssr - subscribe OK:', res);
+                                    this.loading = false;
+                                    this.snackBar.run('The tags have been sent correctly to Mcssr', true);
+                                },
+                                error => {
+                                    console.log('Send to Mcssr - subscribe - error:', error);
+                                    this.loading = false;
+                                    this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + error, false);
+                                }
+                            )
                     }
-                    )
-                }
-            this.loading = false;
+                    this.loading = false;
                 },
-            error => {
-                console.log('Send to Mcssr - subscribe - error:', error);
-                this.loading = false;
-                this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr', false);
-            }
+                error => {
+                    console.log('Send to Mcssr - subscribe - error:', error);
+                    this.loading = false;
+                    this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr', false);
+                }
             )
     }
 

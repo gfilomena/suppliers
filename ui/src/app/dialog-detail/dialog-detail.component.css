@@ -116,13 +116,7 @@ iframe {
 
 .badge{
   margin-left: 8px;
-    /*font-size: 13px;*/
-    /*font-weight: bold;*/
-    /*padding: 4px 6px;*/
-    /*border-radius: 12px;*/
     background-color: #fd9a7a;
-    /*margin-top: 10px;*/
-    /*vertical-align: middle;*/
 }
 
 .badge:hover {

@@ -66,7 +66,7 @@ export class SearchFormComponent {
     p: number = 1;
 
     constructor(
-        private searchService: SearchService, 
+        private searchService: SearchService,
         private route: ActivatedRoute,
         private BookmarkService: BookmarkService,
         private dateAdapter: DateAdapter<Date>,
@@ -90,41 +90,41 @@ export class SearchFormComponent {
         }
 
         // if there are url parameters, they will insert into the searchform
-        this.searchForm = new SearchForm( '', '', '', new Date(), new Date(), '');
+        this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '');
 
         const params = this.route.queryParamMap;
 
-        params.map( par => par.get('keywords')).subscribe(
+        params.map(par => par.get('keywords')).subscribe(
             res => {
                 if (res != null) {
                     this.searchForm.freeText = res;
                     //console.log("OK"+res);
                 }
-           }, error => {
-                   console.log("keywords ERROR:" + error);
-           }
+            }, error => {
+                console.log("keywords ERROR:" + error);
+            }
         )
 
-        params.map( par => par.get('inDate')).subscribe(
+        params.map(par => par.get('inDate')).subscribe(
             res => {
                 if (res != null) {
                     this.searchForm.inDate = new Date(res);
                     //console.log("inDate OK"+res);
                 }
-           }, error => {
-                   console.log("inDate ERROR:" + error);
-           }
+            }, error => {
+                console.log("inDate ERROR:" + error);
+            }
         )
 
-        params.map( par => par.get('endDate')).subscribe(
+        params.map(par => par.get('endDate')).subscribe(
             res => {
                 if (res != null) {
                     this.searchForm.endDate = new Date(res);
                     //console.log("endDate OK"+res);
                 }
-           }, error => {
-                   console.log("endDate ERROR:" + error);
-           }
+            }, error => {
+                console.log("endDate ERROR:" + error);
+            }
         )
 
     }
@@ -158,23 +158,23 @@ export class SearchFormComponent {
         });
     }
 
-/*  
-    @HostListener('window:scroll', ['$event'])
-    onWindowScroll() {
-
-        const status = 'not reached';
-        const windowHeight = 'innerHeight' in window ? window.innerHeight
-            : document.documentElement.offsetHeight;
-        const body = document.body, html = document.documentElement;
-        const docHeight = Math.max(body.scrollHeight,
-            body.offsetHeight, html.clientHeight,
-            html.scrollHeight, html.offsetHeight);
-        const windowBottom = windowHeight + window.pageYOffset;
-        if (windowBottom + 1 >= docHeight) {
-           // console.log('bottom reached');
+    /*  
+        @HostListener('window:scroll', ['$event'])
+        onWindowScroll() {
+    
+            const status = 'not reached';
+            const windowHeight = 'innerHeight' in window ? window.innerHeight
+                : document.documentElement.offsetHeight;
+            const body = document.body, html = document.documentElement;
+            const docHeight = Math.max(body.scrollHeight,
+                body.offsetHeight, html.clientHeight,
+                html.scrollHeight, html.offsetHeight);
+            const windowBottom = windowHeight + window.pageYOffset;
+            if (windowBottom + 1 >= docHeight) {
+               // console.log('bottom reached');
+            }
         }
-    }
-*/
+    */
 
     onSubmit() {
 
@@ -182,7 +182,7 @@ export class SearchFormComponent {
         // console.log('this.searchForm', this.searchForm);
         localStorage.setItem('searchForm', JSON.stringify(this.searchForm));
         this.search();
-        
+
     }
 
     clear() {
@@ -199,32 +199,31 @@ export class SearchFormComponent {
     search() {
         this.searchService.search(this.searchForm)
             .subscribe(
-            res => {
-                this.searchResult = res.json().multimediaContents;
-                 console.log('res.json()',res.json());
-                // console.log('search result:');
-                // console.log(this.searchResult);
-                localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
+                res => {
+                    this.searchResult = res.json().multimediaContents;
+                    console.log('res.json()', res.json());
+                    // console.log('search result:');
+                    // console.log(this.searchResult);
+                    localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
-                this.counter(this.searchResult);
-                //this.getUserRepositories();
-                this.incRepo(this.searchResult);
-                // this.validator(this.searchResult)
-                this.nOfResults = this.searchResult.length;
-                // console.log('this.searchResult.length;',this.searchResult.length)
-                // set the pagination to the first
-                this.p = 1;
-            },
-            error => {
-                console.log('search - subscribe - error:', error);
-                this.snackBar.run('Search action has action has encountered an error. Detail:' + error, false);
-                this.submitted = false;
-            }
+                    this.counter(this.searchResult);
+                    //this.getUserRepositories();
+                    this.incRepo(this.searchResult);
+                    // this.validator(this.searchResult)
+                    this.nOfResults = this.searchResult.length;
+                    // console.log('this.searchResult.length;',this.searchResult.length)
+                    // set the pagination to the first
+                    this.p = 1;
+                },
+                error => {
+                    console.log('search - subscribe - error:', error);
+                    this.snackBar.run('Search action has action has encountered an error. Detail:' + error, false);
+                    this.submitted = false;
+                }
             )
     }
 
     checkSaveBookmark(mc: MultimediaContent) {
-
 
         let bookmarks: Bookmark[];
         let exist = false;
@@ -244,6 +243,10 @@ export class SearchFormComponent {
                     this.saveMC(mc);
                 } else {
                     this.snackBar.run('The Bookmark was already saved', false);
+
+                    //TODO: delete bookmark?
+                    // this.deleteMCBookmark(mc);
+
                 }
             },
             error => {
@@ -253,6 +256,31 @@ export class SearchFormComponent {
         )
     }
 
+    deleteMCBookmark(mc){
+        this.BookmarkService.findByUser()
+        .subscribe(
+            data => {
+                for (const bookmark of data) {
+                    if (mc.source['id'] === bookmark.multimediaContent.source['id']) {
+
+                        this.BookmarkService.delete(bookmark.id)
+                            .subscribe(
+                                data => {
+                                    mc.bookmark = false;
+                                    this.UpdateMC(mc);
+                                    this.snackBar.run('The Bookmark has been removed', true);
+                                },
+                                error => {
+                                    this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                                    console.log('bookmarkService.delete -> error:', error);
+                                });
+
+                        break;
+                    }
+                }
+            }
+        )
+    }
 
     UpdateMC(mc: MultimediaContent) {
         const newSearchResult: MultimediaContent[] = [];
@@ -270,15 +298,15 @@ export class SearchFormComponent {
 
         this.BookmarkService.create(bookmark)
             .subscribe(
-            res => {
-                mc.bookmark = true;
-                this.UpdateMC(mc);
-                this.snackBar.run('The Bookmark has been saved', true);
-            },
-            error => {
-                this.snackBar.run('Create bookmark action has action has encountered an error. Detail:' + error, false);
-                console.log('saveMC - error:', error);
-            }
+                res => {
+                    mc.bookmark = true;
+                    this.UpdateMC(mc);
+                    this.snackBar.run('The Bookmark has been saved', true);
+                },
+                error => {
+                    this.snackBar.run('Create bookmark action has action has encountered an error. Detail:' + error, false);
+                    console.log('saveMC - error:', error);
+                }
             )
     }
 
@@ -316,15 +344,15 @@ export class SearchFormComponent {
         this.activeType = activeType;
     }
 
-    incRepo(array:MultimediaContent[]) {
+    incRepo(array: MultimediaContent[]) {
         let i: number;
         let repository: string;
         // init Repositories
         this.activeRepositories = [];
         const repo: string[] = array.map(obj => obj.source.name);
         for (i = 0; i < array.length; i++) {
-                const index = this.activeRepositories.findIndex(obj => obj.name === repo[i]);
-                if (index === -1) {
+            const index = this.activeRepositories.findIndex(obj => obj.name === repo[i]);
+            if (index === -1) {
                 this.activeRepositories.push(new Filter(repo[i]));
             }
         }
@@ -381,5 +409,5 @@ export class SearchFormComponent {
 
 function uniq(a) {
     return Array.from(new Set(a));
- }
+}
 
