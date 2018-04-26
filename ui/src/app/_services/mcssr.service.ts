@@ -32,7 +32,7 @@ export class McssrService {
 
         mc.licenseType = 'freeware';
         licenseType = mc.licenseType || '';
-        description = mc.description || '';
+        description = mc.description.substring(0, 2000) || '';
         metadata = mc.metadata ? mc.metadata.join() : '';
 
         if (!mc.fileExtension) {
