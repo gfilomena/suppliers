@@ -309,7 +309,8 @@ export class DialogDetailComponent implements OnInit {
                     error => {
                         console.log('Send to Mcssr - subscribe - error:', error);
                         this.loading = false;
-                        this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + error, false);
+                        const message = getMessageError(error);
+                        this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + message, false);
                     }
                     )
                 }
@@ -318,7 +319,8 @@ export class DialogDetailComponent implements OnInit {
             error => {
                 console.log('Send to Mcssr - subscribe - error:', error);
                 this.loading = false;
-                this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr', false);
+                const message = getMessageError(error);
+                this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr. Detail:' + message, false);
             }
             )
     }
@@ -357,4 +359,19 @@ export class DialogDetailComponent implements OnInit {
 
 function isNullOrWhiteSpace(str) {
     return str == null || str.replace(/\s/g, '').length < 1;
+}
+
+function getMessageError(error) {
+    if(error._body) {
+        const body = JSON.parse(error._body);
+        console.dir(body);
+        if (body.exception.cause.message) {
+            return body.exception.cause.message;
+        }else{
+            if (body.message) {
+                return body.message;
+            }
+        }
+    }
+    return '';
 }
