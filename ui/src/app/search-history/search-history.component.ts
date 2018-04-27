@@ -7,7 +7,7 @@ import { SearchForm } from '../_models/search-form';
 import { SearchResult } from '../_models/search-result';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { Snackbar } from './../snackbar/snackbar.component';
-
+import { DatePipe } from '@angular/common';
 @Component({
   selector: 'app-search-history',
   templateUrl: './search-history.component.html',
@@ -264,6 +264,11 @@ export class SearchHistoryComponent implements OnInit {
 
   }
 
+  convertUTCToLocal(date: Date): Date {
+    const newdate = new Date(date);
+    return new Date(newdate.getTime() + (newdate.getTimezoneOffset() * 60000));
+}
+
 
 }
 
@@ -287,4 +292,3 @@ function sameDay(d1, d2): boolean {
     d1.getMonth() === d2.getMonth() &&
     d1.getDate() === d2.getDate();
 }
-
