@@ -83,8 +83,8 @@ export class SearchFormComponent {
             this.submitted = true;
 
             this.searchResult = lastresearch;
-            this.counter(this.searchResult);
-            this.incRepo(this.searchResult);
+            this.initTypeRepo(this.searchResult);
+            //this.incRepo(this.searchResult);
             //this.getUserRepositories();
             this.nOfResults = this.searchResult.length;
         }
@@ -152,6 +152,8 @@ export class SearchFormComponent {
         });
     }
 
+    
+
 /*
     @HostListener('window:scroll', ['$event'])
     onWindowScroll() {
@@ -184,8 +186,8 @@ export class SearchFormComponent {
         localStorage.removeItem('lastresearch');
         this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
         this.searchResult = [];
-        this.counter(this.searchResult);
-        this.incRepo(this.searchResult);
+        this.initTypeRepo(this.searchResult);
+        //this.incRepo(this.searchResult);
         //this.getUserRepositories();
     }
 
@@ -199,9 +201,9 @@ export class SearchFormComponent {
                 // console.log(this.searchResult);
                 localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
-                this.counter(this.searchResult);
+                this.initTypeRepo(this.searchResult);
                 // this.getUserRepositories();
-                this.incRepo(this.searchResult);
+                //this.incRepo(this.searchResult);
                 // this.validator(this.searchResult)
                 this.nOfResults = this.searchResult.length;
                 // console.log('this.searchResult.length;',this.searchResult.length)
@@ -293,7 +295,7 @@ export class SearchFormComponent {
         }
     }
 
-    counter(array) {
+    initTypeRepo(array) {
         // console.log('array',array)
         const activeType: Filter[] = [new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text')];
         //  console.log('  activeType',  activeType)
@@ -307,10 +309,8 @@ export class SearchFormComponent {
             activeType[index].count = activeType[index].count + 1;
         }
         this.activeType = activeType;
-    }
 
-    incRepo(array:MultimediaContent[]) {
-        let i: number;
+
         let repository: string;
         // init Repositories
         this.activeRepositories = [];
@@ -337,6 +337,28 @@ export class SearchFormComponent {
         this.submitted = false;
     }
 
+    counter() {
+
+        // reset counter
+        this.activeType.forEach(obj => obj.count = 0);
+        this.activeRepositories.forEach(obj => obj.count = 0);
+
+        for (let i = 0; i < this.searchResult.length; i++) {
+
+                const t = this.activeType.findIndex(obj => obj.name === this.searchResult[i].type && obj.enabled );
+                const r = this.activeRepositories.findIndex(obj => obj.name === this.searchResult[i].source.name && obj.enabled );
+
+            if(t != -1  && r != -1) {
+                 // increment type counter
+             this.activeType[t].count = this.activeType[t].count + 1;
+
+             // increment repository counter
+             this.activeRepositories[r].count = this.activeRepositories[r].count + 1;
+            }
+        }
+
+    }
+
     filterRepository(item: MultimediaContent): boolean {
         // console.log('this.activeRepositories',this.activeRepositories);
         const repository = item.source.name;
@@ -358,9 +380,9 @@ export class SearchFormComponent {
         }
     }
 
-    getDate(date: string): string {
-        return new Date(date).toLocaleDateString();
-    }
+   // getDate(date: string): string {
+   //     return new Date(date).toLocaleDateString();
+   // }
 
     addAnnotationToSearchForm(annotation: string): void {
 

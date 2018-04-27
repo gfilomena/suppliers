@@ -150,18 +150,22 @@ export class RegistrationRepositoryComponent implements OnInit {
             .subscribe(
                 data => {
                     console.log('respose update:', data);
-                    this.snackBar.open('The Repository ' + name + ' has been switched to ' + enabled, 'Successful', {
+                    this.snackBar.open('The Repository ' + name + ' has been switched to ' + this.getStatus(enabled), 'Successful', {
                         duration: 5000,
                         extraClasses: ['success-snackbar']
                     });
                 },
                 error => {
-                    this.snackBar.open('The Repository ' + name + ' has not been switched to ' + enabled, 'Error', {
+                    this.snackBar.open('The Repository ' + name + ' has not been switched to ' + this.getStatus(enabled), 'Error', {
                         duration: 5000,
                         extraClasses: ['errorSnackBar']
                     });
                 });
 
+    }
+
+    getStatus(status: Boolean): String {
+      return status ? 'On' : 'Off';
     }
 
 
