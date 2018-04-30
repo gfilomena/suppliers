@@ -337,28 +337,6 @@ export class SearchFormComponent {
         this.submitted = false;
     }
 
-    counter() {
-
-        // reset counter
-        this.activeType.forEach(obj => obj.count = 0);
-        this.activeRepositories.forEach(obj => obj.count = 0);
-
-        for (let i = 0; i < this.searchResult.length; i++) {
-
-                const t = this.activeType.findIndex(obj => obj.name === this.searchResult[i].type && obj.enabled );
-                const r = this.activeRepositories.findIndex(obj => obj.name === this.searchResult[i].source.name && obj.enabled );
-
-            if(t != -1  && r != -1) {
-                 // increment type counter
-             this.activeType[t].count = this.activeType[t].count + 1;
-
-             // increment repository counter
-             this.activeRepositories[r].count = this.activeRepositories[r].count + 1;
-            }
-        }
-
-    }
-
     filterRepository(item: MultimediaContent): boolean {
         // console.log('this.activeRepositories',this.activeRepositories);
         const repository = item.source.name;
