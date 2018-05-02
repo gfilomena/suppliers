@@ -245,7 +245,7 @@ export class SearchFormComponent {
                     this.snackBar.run('The Bookmark was already saved', false);
 
                     //TODO: delete bookmark?
-                    // this.deleteMCBookmark(mc);
+                    this.deleteMCBookmark(mc);
 
                 }
             },

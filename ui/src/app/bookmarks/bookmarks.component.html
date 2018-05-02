@@ -22,7 +22,8 @@
 
 <h3 align="center" *ngIf="!bookmarks || bookmarks.length === 0">No bookmarks available.</h3>
 <div class="container">
-  <smd-fab-speed-dial *ngIf="!showSidebar" class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode" [fixed]="fixed">
+  <smd-fab-speed-dial *ngIf="!showSidebar" class="filter" [(open)]="open" [direction]="direction" [animationMode]="animationMode"
+    [fixed]="fixed">
     <smd-fab-trigger [spin]="spin">
       <button mat-fab>
         <mat-icon>apps</mat-icon>
@@ -60,7 +61,9 @@
             </div>
           </div>
           <div (click)="openDialog(item.multimediaContent)" class="title" [matTooltip]="item.multimediaContent.name">{{item.multimediaContent.name}}</div>
-          <!--<button class="del" mat-icon-button matTooltip="Delete Bookmark" (click)="removeBookmark(item)"><mat-icon>cancel</mat-icon></button>-->
+          <!-- <button class="del" mat-icon-button matTooltip="Delete Bookmark" (click)="removeBookmark(item)">
+            <mat-icon>star</mat-icon>
+          </button> -->
         </div>
       </div>
       <mat-card-content>
@@ -69,7 +72,7 @@
           <div>
             <img class="logo-card" src="/assets/images/{{item.multimediaContent.source.name}}.png" />
           </div>
-          <div class="date-card">{{getDate(item.multimediaContent.date)}}</div>
+          <div class="date-card">{{item.multimediaContent.date != null ? getDate(item.multimediaContent.date) : ''}}</div>
         </div>
       </mat-card-content>
     </mat-card>

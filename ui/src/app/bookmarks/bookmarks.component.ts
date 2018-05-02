@@ -83,6 +83,7 @@ export class BookmarksComponent implements OnInit {
             width: '600px',
             // position: {left: '30%', right: '30%' }
         });
+        item.bookmark = true;
         dialogRef.componentInstance.data = item;
     }
 

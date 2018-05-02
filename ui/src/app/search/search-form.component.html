@@ -110,7 +110,7 @@
                 <div>
                   <img class="logo-card" src="/assets/images/{{sr.source.name}}.png" />
                 </div>
-                <div class="date-card">{{getDate(sr.date)}}</div>
+                <div class="date-card">{{sr.date != null ? getDate(sr.date) : ''}}</div>
               </div>
             </mat-card-content>
 
