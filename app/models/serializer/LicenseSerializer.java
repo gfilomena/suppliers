@@ -29,7 +29,7 @@ public class LicenseSerializer extends StdSerializer<License> {
         jgen.writeStartObject();
         jgen.writeStringField("id", value.getId().toHexString());
         jgen.writeStringField("name", value.getName());
-        jgen.writeStringField("type", value.getType().name());
+        jgen.writeStringField("type", value.getType());
         jgen.writeStringField("url", value.getUrl());
         jgen.writeEndObject();
     }

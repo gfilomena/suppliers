@@ -1,4 +1,4 @@
-package services.search.semantic;
+package services.semantic;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;

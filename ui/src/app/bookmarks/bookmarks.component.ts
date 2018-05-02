@@ -2,7 +2,7 @@ import { MultimediaContent } from './../_models/multimediaContent';
 import { Component, OnInit, Inject, ChangeDetectionStrategy, ChangeDetectorRef, ViewChild } from '@angular/core';
 import { Bookmark } from '../_models/bookmark';
 import { BookmarkService, AlertService } from '../_services/index';
-import { DialogDetail } from '../dialog-detail/dialog-detail.component';
+import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 import { UserRepositoryService, RepositoryService } from '../_services/index';
 import { UserRepository } from '../_models/user-repository';
@@ -79,7 +79,7 @@ export class BookmarksComponent implements OnInit {
 
     openDialog(item: MultimediaContent) {
         //console.log('item sr', item);
-        const dialogRef = this.dialog.open(DialogDetail, {
+        const dialogRef = this.dialog.open(DialogDetailComponent, {
             width: '600px',
             // position: {left: '30%', right: '30%' }
         });

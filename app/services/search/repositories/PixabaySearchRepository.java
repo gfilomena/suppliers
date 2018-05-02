@@ -1,10 +1,8 @@
 package services.search.repositories;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.*;
-import com.sun.prism.shader.Solid_TextureYV12_AlphaTest_Loader;
 
 import models.License;
 import models.MultimediaContent;
@@ -12,10 +10,10 @@ import models.MultimediaType;
 import models.Registration;
 import models.response.PixabayRepositoryResponseMapping;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
+import services.LicenseService;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
@@ -26,7 +24,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionStage;
 import java.util.concurrent.ExecutionException;
@@ -42,6 +39,7 @@ public class PixabaySearchRepository implements SearchRepository {
         //private final String url=ConfigFactory.load().getString("multimedia.sources.internetArchive.url");
         private WSClient ws;
         private Registration registration;
+        private LicenseService licenseService;
 
         //private final String internetArchiveURLPrefix="https://archive.org/details/";
 
@@ -50,6 +48,7 @@ public class PixabaySearchRepository implements SearchRepository {
 
             this.ws=ws;
             this.registration=registration;
+            this.licenseService=new LicenseService();
         }
 
         @Override
@@ -157,6 +156,11 @@ public class PixabaySearchRepository implements SearchRepository {
         m.setThumbnail(i.get("previewURL").asText());
         m.setMetadata(i.get("tags").asText().replaceAll("^[,\\s]+", "").split("[,\\s]+"));
         m.setName(i.get("id").asText());
+        m.setDescription("User:"+i.get("user").asText());
+        /*License lic = new License();
+        lic.setName("CC0");
+        m.setLicense(lic);*/
+        m.setLicense(licenseService.getByNameOrCreate("CC0"));
     }
 
     private void setVideoItem(JsonNode i, MultimediaContent m){
@@ -183,12 +187,13 @@ public class PixabaySearchRepository implements SearchRepository {
             m.setThumbnail("https://i.vimeocdn.com/video/"+i.get("picture_id").asText()+"_295x166.jpg");
             m.setMetadata(i.get("tags").asText().replaceAll("^[,\\s]+", "").split("[,\\s]+"));
             m.setName(i.get("id").asText());
-         
-            /*
-            License lic = new License();
-            lic.setName("CC0");
-            m.setLicense(lic);
-           	*/
+        
+            m.setDescription("User:"+i.get("user").asText());
+            
+            /*License lic = new License();
+            lic.setName("CC0");*/
+            m.setLicense(licenseService.getByNameOrCreate("CC0"));
+           	
         }
     }
 

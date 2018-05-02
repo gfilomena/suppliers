@@ -20,7 +20,7 @@ import {
     MatDatepickerModule,
     MAT_DATE_FORMATS,
 } from '@angular/material';
-import { DialogDetail } from '../dialog-detail/dialog-detail.component';
+import { DialogDetailComponent } from '../dialog-detail/dialog-detail.component';
 import { NgSwitch } from '@angular/common';
 import { CustomDateAdapter } from './custom-date-adapter';
 import { UserRepositoryService, RepositoryService } from '../_services/index';
@@ -66,7 +66,7 @@ export class SearchFormComponent {
     p: number = 1;
 
     constructor(
-        private searchService: SearchService,
+        private multimediaSearchService: SearchService,
         private route: ActivatedRoute,
         private BookmarkService: BookmarkService,
         private dateAdapter: DateAdapter<Date>,
@@ -142,10 +142,7 @@ export class SearchFormComponent {
 
     openDialog(mc) {
 
-
-        const dialogRef = this.dialog.open(DialogDetail, {
-        });
-
+        const dialogRef = this.dialog.open(DialogDetailComponent, {});
 
         dialogRef.componentInstance.data = mc;
 
@@ -197,11 +194,11 @@ export class SearchFormComponent {
     }
 
     search() {
-        this.searchService.search(this.searchForm)
+        this.multimediaSearchService.search(this.searchForm)
             .subscribe(
                 res => {
                     this.searchResult = res.json().multimediaContents;
-                    console.log('res.json()', res.json());
+                    // console.log('res.json()',res.json());
                     // console.log('search result:');
                     // console.log(this.searchResult);
                     localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
@@ -229,13 +226,13 @@ export class SearchFormComponent {
         let exist = false;
         const response = this.BookmarkService.findByUser().subscribe(
             res => {
-                console.log('getBookmarks- subscribe - ok:', res);
+                // console.log('getBookmarks- subscribe - ok:', res);
                 bookmarks = res;
                 for (const item of res) {
 
                     if (mc.uri === item.multimediaContent.uri) {
-                        console.log('mc:', mc.uri);
-                        console.log('item:', item.multimediaContent.uri);
+                        // console.log('mc:', mc.uri);
+                        // console.log('item:', item.multimediaContent.uri);
                         exist = true;
                     }
                 }

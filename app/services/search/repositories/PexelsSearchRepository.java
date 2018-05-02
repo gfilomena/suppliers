@@ -2,7 +2,6 @@ package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.typesafe.config.ConfigFactory;
 
 import models.License;
 import models.MultimediaContent;
@@ -10,10 +9,10 @@ import models.MultimediaType;
 import models.Registration;
 import models.response.PexelsRepositoryResponseMapping;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
+import services.LicenseService;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
@@ -36,12 +35,14 @@ public class PexelsSearchRepository implements SearchRepository {
     //private final String url=ConfigFactory.load().getString("multimedia.sources.pexels.url");
     private WSClient ws;
     private Registration registration;
+    private LicenseService licenseService;
 
     @Inject
     public PexelsSearchRepository(WSClient ws, Registration registration){
 
         this.ws=ws;
         this.registration=registration;
+        this.licenseService=new LicenseService();
     }
 
     @Override
@@ -95,12 +96,12 @@ public class PexelsSearchRepository implements SearchRepository {
         m.setURI(i.get("src").get("original").asText());
         m.setDownloadURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
-        m.setThumbnail(i.get("src").get("medium").asText());
-        /*
-        License lic = new License();
-        lic.setName("CC0");
-        m.setLicense(lic);
-        */
+        m.setThumbnail(i.get("src").get("medium").asText());   
+        m.setDescription("photographer:"+i.get("photographer").asText());
+        /*License lic = new License();
+        lic.setName("CC0");*/
+        m.setLicense(licenseService.getByNameOrCreate("CC0"));
+        
         m.setFileExtension(fileToFileExtension(i.get("src").get("original").asText()));
         m.setSource(registration.getRepository());
         //Logger.debug("Debug  pexeòs multimedia enum:"+m.toString());

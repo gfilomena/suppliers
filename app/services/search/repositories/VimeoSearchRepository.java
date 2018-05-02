@@ -2,17 +2,13 @@ package services.search.repositories;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.typesafe.config.ConfigFactory;
-import models.MultimediaContent;
-import models.License;
-import models.MultimediaType;
-import models.Registration;
+import models.*;
 import models.response.VimeoRepositoryResponseMapping;
 import models.response.RepositoryResponseMapping;
-import models.response.ResponseMapping;
 import play.Logger;
 import play.libs.ws.WSClient;
 import play.libs.ws.WSResponse;
+import services.LicenseService;
 
 import javax.activation.MimetypesFileTypeMap;
 import javax.inject.Inject;
@@ -36,12 +32,14 @@ public class VimeoSearchRepository implements SearchRepository {
     //private final String url=ConfigFactory.load().getString("multimedia.sources.pexels.url");
     private WSClient ws;
     private Registration registration;
+    private LicenseService licenseService;
 
     @Inject
     public VimeoSearchRepository(WSClient ws, Registration registration){
 
         this.ws=ws;
         this.registration=registration;
+        this.licenseService=new LicenseService();
     }
 
     @Override
@@ -110,24 +108,26 @@ public class VimeoSearchRepository implements SearchRepository {
         }
         m.setMetadata(tags);
 
-       /*
-        if(i.get("license") != null) {
-            License l = new License();
-            Logger.info("License::"+i.get("license").asText());
-            l.setName(i.get("license").asText());
-            m.setLicense(l);
+       
+       if(i.get("license") != null) {
+            String lic = i.get("license").asText();
+
+            if (lic == null || lic.equals("null")) {
+                //Logger.info("License:"+lic);
+                //l.setName("");
+                m.setLicense(licenseService.getByNameOrCreate(""));
+            } else {
+                m.setLicense(licenseService.getByNameOrCreate(lic));
+            }
         }
-        */
 
        if( i.get("created_time") != null ) {
            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss+00:00");
-           //Logger.info("date:"+i.get("created_time").asText());
            try {
                m.setDate(sdf.parse(i.get("created_time").asText()));
            } catch (ParseException e) {
                e.printStackTrace();
            }
-
        }
 
 

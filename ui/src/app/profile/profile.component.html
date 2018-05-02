@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <mat-accordion class="extension-panel-container">
   <mat-expansion-panel>
     <mat-expansion-panel-header>
@@ -51,3 +52,58 @@
     </div>
   </mat-expansion-panel>
 </mat-accordion>
+=======
+<mat-accordion class="extension-panel-container">
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Profile
+      </mat-panel-title>
+      <mat-panel-description>
+
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="border">
+      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+        <form name="form" (ngSubmit)="f.form.valid && update()" #f="ngForm" novalidate>
+          <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
+            <mat-form-field fxFlex class="profile-field">
+              <input matInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="user.username" #username="ngModel"
+                disabled>
+            </mat-form-field>
+            <mat-form-field fxFlex class="profile-field">
+              <input matInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="user.firstName" #firstName="ngModel"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex class="profile-field">
+              <input matInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="user.lastName" #lastName="ngModel"
+                required>
+            </mat-form-field>
+            <mat-form-field fxFlex class="profile-field">
+              <input matInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="user.email" #email="ngModel"
+                [email]="true" required>
+            </mat-form-field>
+            <div align="end">
+              <button mat-raised-button type="submit">Update</button>
+              <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </mat-expansion-panel>
+  <mat-expansion-panel>
+    <mat-expansion-panel-header>
+      <mat-panel-title>
+        Repositories
+      </mat-panel-title>
+      <mat-panel-description>
+
+      </mat-panel-description>
+    </mat-expansion-panel-header>
+    <div class="border">
+      <app-setting></app-setting>
+    </div>
+  </mat-expansion-panel>
+</mat-accordion>
+>>>>>>> refs/heads/MERGED_BRANCHES

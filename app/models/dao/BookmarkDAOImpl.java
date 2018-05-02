@@ -1,6 +1,7 @@
 package models.dao;
 
 import com.mongodb.MongoClient;
+import exceptions.BookmarkNotFoundException;
 import models.Bookmark;
 import models.MultimediaContent;
 import models.User;
