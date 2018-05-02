@@ -1,27 +1,23 @@
 package models.dao;
 
-import com.google.inject.Inject;
-import com.mongodb.MongoClient;
 import models.SearchResult;
 import models.User;
 import org.bson.types.ObjectId;
 import org.mongodb.morphia.Datastore;
-import org.mongodb.morphia.Morphia;
 import org.mongodb.morphia.dao.BasicDAO;
 import org.mongodb.morphia.query.Query;
 import play.Logger;
 import services.db.MongoDBService;
 
-import javax.jws.soap.SOAPBinding;
 import java.util.List;
 
 /**
  * Created by Pasquale on 11/05/2017.
  */
-public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> implements SearchResultDAO{
+public class SearchResultDAOImpl extends BasicDAO<SearchResult, ObjectId> implements SearchResultDAO {
 
 
-    public SearchResultDAOImpl( Class<SearchResult> entityClass, Datastore ds ) {
+    public SearchResultDAOImpl(Class<SearchResult> entityClass, Datastore ds) {
         super(entityClass, ds);
     }
 
@@ -46,18 +42,18 @@ public class SearchResultDAOImpl extends BasicDAO<SearchResult,ObjectId> impleme
 
     @Override
     public void saveAll(List<SearchResult> searchResults) {
-        searchResults.stream().forEach( l -> MongoDBService.getDatastore().save(l));
+        searchResults.stream().forEach(l -> MongoDBService.getDatastore().save(l));
     }
 
     @Override
     public void deleteAllByUser(User user) {
-        Query<SearchResult> query=MongoDBService.getDatastore().createQuery(SearchResult.class).filter("user = ", user);
+        Query<SearchResult> query = MongoDBService.getDatastore().createQuery(SearchResult.class).filter("user = ", user);
         MongoDBService.getDatastore().delete(query);
     }
 
     @Override
     public void deleteAll() {
-        Query<SearchResult> query=MongoDBService.getDatastore().createQuery(SearchResult.class);
+        Query<SearchResult> query = MongoDBService.getDatastore().createQuery(SearchResult.class);
         MongoDBService.getDatastore().delete(query);
     }
 }

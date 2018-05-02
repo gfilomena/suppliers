@@ -7,6 +7,7 @@ import exceptions.BookmarkNotFoundException;
 import exceptions.UserNotFoundException;
 import models.*;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Key;
 import play.libs.Json;
 import play.mvc.Controller;
 import play.mvc.Result;
@@ -108,15 +109,14 @@ public class BookmarkController extends Controller {
             if (!json.findPath("uri").isMissingNode()) mc.setURI(json.findPath("uri").textValue());
             multimediaContentService.save(mc);
             if (!bookmarkService.bookmarkExists(user, mc)) {
-                CompletableFuture<JsonNode> cf = CompletableFuture.supplyAsync(() -> {
+                CompletableFuture<Key<Bookmark>> cf = CompletableFuture.supplyAsync(() -> {
                     Bookmark b = new Bookmark();
                     b.setUser(user);
                     b.setMultimediaContent(mc);
                     b.setDate(new Date());
-                    bookmarkService.save(b);
-                    return b.asJson();
+                    return bookmarkService.save(b);
                 });
-                return cf.thenApply(l -> created());
+                return cf.thenApply(key -> created(((ObjectId)key.getId()).toHexString()));
             } else {
                 return CompletableFuture.supplyAsync(() -> badRequest("Bookmark already exists!"));
             }

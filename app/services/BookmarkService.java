@@ -8,6 +8,7 @@ import models.User;
 import models.dao.BookmarkDAO;
 import models.dao.BookmarkDAOImpl;
 import org.bson.types.ObjectId;
+import org.mongodb.morphia.Key;
 import play.Logger;
 import services.db.MongoDBService;
 
@@ -43,8 +44,8 @@ public class BookmarkService {
         return bookmarkDAO.isPresent(user,mc);
     }
 
-    public void save(Bookmark b) {
-        bookmarkDAO.save(b);
+    public Key<Bookmark> save(Bookmark b) {
+        return bookmarkDAO.save(b);
     }
 
     public WriteResult deleteById(String id){
