@@ -13,7 +13,7 @@
 
   </mat-form-field>
 
-  <mat-icon matTooltip="Save Bookmark"
+  <mat-icon [matTooltip]="stateBookmark(data) == 'star' ? 'Delete Bookmark' : 'Save bookmark'"
             matTooltipPosition="above"
             (click)="checkSaveBookmark(data)"
             id="({{data.uri}})"
