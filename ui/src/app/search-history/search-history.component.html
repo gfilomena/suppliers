@@ -41,7 +41,7 @@
         <!--<mat-checkbox color="primary" [id]="sr.id" [checked]="getCheckboxValue(sr.id)" (change)="setCheckbox(sr.id)"></mat-checkbox>-->
         <mat-checkbox color="primary" [id]="sr.id" [ngModel]="getCheckboxValue(sr.id)" (change)="setCheckbox(sr.id)"></mat-checkbox>
         <span class="hour">
-          {{getTime(sr.inDate)}}
+          {{convertUTCToLocal(sr.date) | date: 'HH:mm'}}
         </span>
         <span class="query" (click)="goToSearchForm(sr)">
           {{sr.freeText}}

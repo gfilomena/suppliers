@@ -83,8 +83,8 @@ export class SearchFormComponent {
             this.submitted = true;
 
             this.searchResult = lastresearch;
-            this.counter(this.searchResult);
-            this.incRepo(this.searchResult);
+            this.initTypeRepo(this.searchResult);
+            //this.incRepo(this.searchResult);
             //this.getUserRepositories();
             this.nOfResults = this.searchResult.length;
         }
@@ -206,35 +206,35 @@ export class SearchFormComponent {
         localStorage.removeItem('lastresearch');
         this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
         this.searchResult = [];
-        this.counter(this.searchResult);
-        this.incRepo(this.searchResult);
+        this.initTypeRepo(this.searchResult);
+        //this.incRepo(this.searchResult);
         //this.getUserRepositories();
     }
 
     search() {
         this.multimediaSearchService.search(this.searchForm)
             .subscribe(
-                res => {
-                    this.searchResult = res.json().multimediaContents;
-                    // console.log('res.json()',res.json());
-                    // console.log('search result:');
-                    // console.log(this.searchResult);
-                    localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
+            res => {
+                this.searchResult = res.json().multimediaContents;
+                // console.log('res.json()',res.json());
+                // console.log('search result:');
+                // console.log(this.searchResult);
+                localStorage.setItem('lastresearch', JSON.stringify(this.searchResult));
 
-                    this.counter(this.searchResult);
-                    //this.getUserRepositories();
-                    this.incRepo(this.searchResult);
-                    // this.validator(this.searchResult)
-                    this.nOfResults = this.searchResult.length;
-                    // console.log('this.searchResult.length;',this.searchResult.length)
-                    // set the pagination to the first
-                    this.p = 1;
-                },
-                error => {
-                    console.log('search - subscribe - error:', error);
-                    this.snackBar.run('Search action has action has encountered an error. Detail:' + error, false);
-                    this.submitted = false;
-                }
+                this.initTypeRepo(this.searchResult);
+                // this.getUserRepositories();
+                //this.incRepo(this.searchResult);
+                // this.validator(this.searchResult)
+                this.nOfResults = this.searchResult.length;
+                // console.log('this.searchResult.length;',this.searchResult.length)
+                // set the pagination to the first
+                this.p = 1;
+            },
+            error => {
+                console.log('search - subscribe - error:', error);
+                this.snackBar.run('Search action has action has encountered an error. Detail:' + error, false);
+                this.submitted = false;
+            }
             )
     }
 
@@ -348,7 +348,7 @@ export class SearchFormComponent {
         }
     }
 
-    counter(array) {
+    initTypeRepo(array) {
         // console.log('array',array)
         const activeType: Filter[] = [new Filter('video'), new Filter('audio'), new Filter('image'), new Filter('text')];
         //  console.log('  activeType',  activeType)
@@ -362,10 +362,7 @@ export class SearchFormComponent {
             activeType[index].count = activeType[index].count + 1;
         }
         this.activeType = activeType;
-    }
 
-    incRepo(array: MultimediaContent[]) {
-        let i: number;
         let repository: string;
         // init Repositories
         this.activeRepositories = [];
@@ -413,9 +410,9 @@ export class SearchFormComponent {
         }
     }
 
-    getDate(date: string): string {
-        return new Date(date).toLocaleDateString();
-    }
+   // getDate(date: string): string {
+   //     return new Date(date).toLocaleDateString();
+   // }
 
     addAnnotationToSearchForm(annotation: string): void {
 

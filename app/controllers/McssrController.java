@@ -40,8 +40,8 @@ public class McssrController extends Controller {
                             if (isResponseDocumentType(p)) {
                                 return ok(p);
                             } else if (isResponseExceptionType(p)) {
-                                String exceptionRespMessage = getExceptionResponseMessage(p);
-                                return badRequest(exceptionRespMessage);
+                                //String exceptionRespMessage = getExceptionResponseMessage(p);
+                                return badRequest(p);
                             }
                         }
                         return badRequest(p);
@@ -67,8 +67,8 @@ public class McssrController extends Controller {
                             if (isResponseDocumentType(p)) {
                                 return ok(p);
                             } else if (isResponseExceptionType(p)) {
-                                String exceptionRespMessage = getExceptionResponseMessage(p);
-                                return badRequest(exceptionRespMessage);
+                                //String exceptionRespMessage = getExceptionResponseMessage(p);
+                                return badRequest(p);
                             }
                         }
                         return badRequest(p);

@@ -14,7 +14,7 @@
   </smd-fab-speed-dial>
 
   <div class="container-sidebar">
-    <app-filterbar [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event)></app-filterbar>
+    <app-filterbar [searchResult]="searchResult" [activeType]="activeType" [activeRepositories]="activeRepositories" [showSidebar]="showSidebar" (toggle)=setSidebar($event)></app-filterbar>
   </div>
 
   <div fxFlex>

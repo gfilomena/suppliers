@@ -328,34 +328,34 @@ export class DialogDetailComponent implements OnInit {
         this.loading = true;
         this.McssrService.create(mc)
             .subscribe(
-                res => {
-                    this.snackBar.run('The Multimedia Item has been sent to Mcssr', true);
-                    console.log('Send to Mcssr - subscribe OK:', res);
-                    let creationResponse = res.json();
-                    let uid = creationResponse.uid;
-                    // if there are tags , they will be sent to MCSSR
-                    if (mc.metadata != null) {
-                        this.McssrService.updateTags(mc, uid)
-                            .subscribe(
-                                res => {
-                                    console.log('update Tags to Mcssr - subscribe OK:', res);
-                                    this.loading = false;
-                                    this.snackBar.run('The tags have been sent correctly to Mcssr', true);
-                                },
-                                error => {
-                                    console.log('Send to Mcssr - subscribe - error:', error);
-                                    this.loading = false;
-                                    this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + error, false);
-                                }
-                            )
+            res => {
+                this.snackBar.run('The Multimedia Item has been sent to Mcssr', true);
+                console.log('Send to Mcssr - subscribe OK:', res);
+                let creationResponse = res.json();
+                let uid = creationResponse.uid;
+            // if there are tags , they will be sent to MCSSR
+            if (mc.metadata != null) {
+                this.McssrService.updateTags(mc, uid)
+                    .subscribe(
+                    res => {
+                        console.log('update Tags to Mcssr - subscribe OK:', res);
+                        this.loading = false;
+                        this.snackBar.run('The tags have been sent correctly to Mcssr', true);
+                    },
+                    error => {
+                        console.log('Send to Mcssr - subscribe - error:', error);
+                        this.loading = false;
+                        const message = getMessageError(error);
+                        this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + message, false);
                     }
                     this.loading = false;
                 },
-                error => {
-                    console.log('Send to Mcssr - subscribe - error:', error);
-                    this.loading = false;
-                    this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr', false);
-                }
+            error => {
+                console.log('Send to Mcssr - subscribe - error:', error);
+                this.loading = false;
+                const message = getMessageError(error);
+                this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr. Detail:' + message, false);
+            }
             )
     }
 
@@ -393,4 +393,19 @@ export class DialogDetailComponent implements OnInit {
 
 function isNullOrWhiteSpace(str) {
     return str == null || str.replace(/\s/g, '').length < 1;
+}
+
+function getMessageError(error) {
+    if(error._body) {
+        const body = JSON.parse(error._body);
+        console.dir(body);
+        if (body.exception.cause.message) {
+            return body.exception.cause.message;
+        }else{
+            if (body.message) {
+                return body.message;
+            }
+        }
+    }
+    return '';
 }
