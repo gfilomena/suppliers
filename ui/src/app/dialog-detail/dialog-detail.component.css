@@ -40,10 +40,6 @@ iframe {
   max-height: 90vh;
 }
 
-/deep/.mat-dialog-container {
-  padding-bottom: 8px;
-}
-
 .mat-chip-list {
   font-family: Roboto, "Helvetica Neue", Helvetica, Arial, sans-serif;
 }

@@ -12,7 +12,7 @@ import { GeneralService } from '../_services/general.service';
 import { mediafile, File } from './../_models/mediafile';
 import * as mime from 'mime-types';
 import { CommonModule } from '@angular/common';
-import {CdkTableModule} from '@angular/cdk/table';
+import { CdkTableModule } from '@angular/cdk/table';
 import { Snackbar } from './../snackbar/snackbar.component';
 
 @Pipe({ name: 'safe' })
@@ -96,11 +96,11 @@ export class DialogDetailComponent implements OnInit {
         console.log('url', url);
         this.GeneralService.get(url).subscribe(
             res => {
-               console.log("getYoutubedetails");
-               console.dir(res);
-               this.data.metadata = res.items[0].snippet.tags;
-               this.data.license = res.items[0].status.license;
-               this.loading = false;
+                console.log("getYoutubedetails");
+                console.dir(res);
+                this.data.metadata = res.items[0].snippet.tags;
+                this.data.license = res.items[0].status.license;
+                this.loading = false;
             },
             error => {
                 this.loading = false;
@@ -209,6 +209,7 @@ export class DialogDetailComponent implements OnInit {
 
 
     checkSaveBookmark(mc: MultimediaContent) {
+
         let bookmarks: Bookmark[];
         let exist = false;
         const response = this.BookmarkService.findByUser().subscribe(
@@ -218,15 +219,16 @@ export class DialogDetailComponent implements OnInit {
                 for (const item of res) {
 
                     if (mc.uri === item.multimediaContent.uri) {
-                        console.log('mc:', mc.uri);
-                        console.log('item:', item.multimediaContent.uri);
+                        // console.log('mc:', mc.uri);
+                        // console.log('item:', item.multimediaContent.uri);
                         exist = true;
+
+                        this.deleteMCBookmark(mc, item.id);
+                        break;
                     }
                 }
                 if (!exist) {
                     this.saveMC(mc);
-                } else {
-                    this.deleteMCBookmark(mc);
                 }
             },
             error => {
@@ -236,57 +238,65 @@ export class DialogDetailComponent implements OnInit {
         )
     }
 
-    deleteMCBookmark(mc) {
-        this.BookmarkService.findByUser()
+    deleteMCBookmark(mc, bookmarkId) {
+
+        this.BookmarkService.delete(bookmarkId)
             .subscribe(
                 data => {
-                    for (const bookmark of data) {
-                        if (mc.source['id'] === bookmark.multimediaContent.source['id']) {
+                    console.log(mc.uri)
+                    //get bookmark ids stored and convert string of ids to object
+                    let ids = JSON.parse(localStorage.getItem('bookmarksIds'));
 
-                            this.BookmarkService.delete(bookmark.id)
-                                .subscribe(
-                                    data => {
-                                        mc.bookmark = false;
-                                        this.mcupdate.emit(mc);
-                                        this.snackBar.run('The Bookmark has been removed', true);
-                                    },
-                                    error => {
-                                        this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
-                                        console.log('bookmarkService.delete -> error:', error);
-                                    });
+                    //delete the bookmark from object
+                    const uri = mc.uri;
+                    delete ids[uri];
+                    //convert object to string and then store it
+                    console.log(ids)
+                    localStorage.setItem('bookmarksIds', JSON.stringify(ids));
 
-                            break;
-                        }
-                    }
-                }
-            )
+                    // const index = this.bookmarks.findIndex(obj => obj.id === item.id);
+                    // this.bookmarks.splice(index, 1);
+                    
+                    this.snackBar.run('The Bookmark has been removed', true);
+                },
+                error => {
+                    this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                    console.log('bookmarkService.delete -> error:', error);
+                });
+
     }
 
     saveMC(mc: MultimediaContent) {
         const bookmark = new Bookmark(this.currentUser.username, mc);
-        console.log('bookmark:', bookmark);
+        //console.log('bookmark:', bookmark);
 
         this.BookmarkService.create(bookmark)
             .subscribe(
                 res => {
-                    console.log('saveMC - subscribe OK:', res);
-                    //const element = document.getElementById('(' + mc.uri + ')');
-                    //console.log('element ', element);
-                    //element.innerText = 'star';
-                    mc.bookmark = true;
-                    this.mcupdate.emit(mc);
-                    this.snackBar.run('The bookmark has been saved', true);
+                    //get bookmark ids stored
+                    let ids = localStorage.getItem('bookmarksIds');
+                    //convert ids string to object
+                    let newIds = {}
+                    if (ids != null) {
+                        newIds = JSON.parse(ids);
+                    }
+                    //add new id
+                    newIds[mc.uri] = res.text();
+                    //convert ids object to string and store it
+                    localStorage.setItem('bookmarksIds', JSON.stringify(newIds));
+                    this.snackBar.run('The Bookmark has been saved', true);
                 },
                 error => {
-                    this.snackBar.run('Saving bookmark action has encountered an error. Detail:' + error, false);
-                    console.log('saveMC - subscribe - error:', error);
+                    this.snackBar.run('Create bookmark action has action has encountered an error. Detail:' + error, false);
+                    console.log('saveMC - error:', error);
                 }
             )
     }
 
     stateBookmark(mc: MultimediaContent): string {
-        // console.log('mc.bookmark', mc.bookmark);
-        if (mc.bookmark) {
+        // console.log('mc.bookmark', mc);
+        let ids = JSON.parse(localStorage.getItem('bookmarksIds'));
+        if (ids != null && mc.uri in ids && ids[mc.uri] != undefined) {
             return 'star';
         } else {
             return 'star_border';

@@ -128,8 +128,26 @@ export class SearchFormComponent {
         )
 
     }
+    ngOnInit() {
+        
+        this.initializeBookmarksLocalStorage();
+    }
 
-
+/**
+ * clear localStorage and inizialize it with bookmarks get from BookmarkService.
+ * bookmarks in localStorage are useful to know registered bookmarks without calling services and cycling the responses
+ */
+    initializeBookmarksLocalStorage() {
+        localStorage.removeItem('bookmarksIds');
+        this.BookmarkService.findByUser().subscribe(
+            res => {
+                let bookmarksIds = {}
+                for (const bookmark of res) {
+                    bookmarksIds[bookmark.multimediaContent.uri] = bookmark.id;
+                }
+                localStorage.setItem('bookmarksIds', JSON.stringify(bookmarksIds))
+            });
+    }
 
     setSidebar(showSidebar) {
         this.showSidebar = showSidebar;
@@ -226,7 +244,7 @@ export class SearchFormComponent {
         let exist = false;
         const response = this.BookmarkService.findByUser().subscribe(
             res => {
-                // console.log('getBookmarks- subscribe - ok:', res);
+                //console.log('getBookmarks- subscribe - ok:', res);
                 bookmarks = res;
                 for (const item of res) {
 
@@ -234,16 +252,13 @@ export class SearchFormComponent {
                         // console.log('mc:', mc.uri);
                         // console.log('item:', item.multimediaContent.uri);
                         exist = true;
+
+                        this.deleteMCBookmark(mc, item.id);
+                        break;
                     }
                 }
                 if (!exist) {
                     this.saveMC(mc);
-                } else {
-                    this.snackBar.run('The Bookmark was already saved', false);
-
-                    //TODO: delete bookmark?
-                    this.deleteMCBookmark(mc);
-
                 }
             },
             error => {
@@ -253,30 +268,28 @@ export class SearchFormComponent {
         )
     }
 
-    deleteMCBookmark(mc){
-        this.BookmarkService.findByUser()
-        .subscribe(
-            data => {
-                for (const bookmark of data) {
-                    if (mc.source['id'] === bookmark.multimediaContent.source['id']) {
+    deleteMCBookmark(mc, bookmarkId) {
 
-                        this.BookmarkService.delete(bookmark.id)
-                            .subscribe(
-                                data => {
-                                    mc.bookmark = false;
-                                    this.UpdateMC(mc);
-                                    this.snackBar.run('The Bookmark has been removed', true);
-                                },
-                                error => {
-                                    this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
-                                    console.log('bookmarkService.delete -> error:', error);
-                                });
+        this.BookmarkService.delete(bookmarkId)
+            .subscribe(
+                data => {
+                    console.log(mc.uri)
+                    //get bookmark ids stored and convert string of ids to object
+                    let ids = JSON.parse(localStorage.getItem('bookmarksIds'));
 
-                        break;
-                    }
-                }
-            }
-        )
+                    //delete the bookmark from object
+                    const uri = mc.uri;
+                    delete ids[uri];
+                    //convert object to string and then store it
+                    console.log(ids)
+                    localStorage.setItem('bookmarksIds', JSON.stringify(ids));
+                    this.snackBar.run('The Bookmark has been removed', true);
+                },
+                error => {
+                    this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                    console.log('bookmarkService.delete -> error:', error);
+                });
+
     }
 
     UpdateMC(mc: MultimediaContent) {
@@ -296,8 +309,17 @@ export class SearchFormComponent {
         this.BookmarkService.create(bookmark)
             .subscribe(
                 res => {
-                    mc.bookmark = true;
-                    this.UpdateMC(mc);
+                    //get bookmark ids stored
+                    let ids = localStorage.getItem('bookmarksIds');
+                    //convert ids string to object
+                    let newIds = {}
+                    if (ids != null) {
+                        newIds = JSON.parse(ids);
+                    }
+                    //add new id
+                    newIds[mc.uri] = res.text();
+                    //convert ids object to string and store it
+                    localStorage.setItem('bookmarksIds', JSON.stringify(newIds));
                     this.snackBar.run('The Bookmark has been saved', true);
                 },
                 error => {
@@ -308,8 +330,9 @@ export class SearchFormComponent {
     }
 
     stateBookmark(mc: MultimediaContent): string {
-        // console.log('mc.bookmark', mc.bookmark);
-        if (mc.bookmark) {
+        // console.log('mc.bookmark', mc);
+        let ids = JSON.parse(localStorage.getItem('bookmarksIds'));
+        if (ids != null && mc.uri in ids && ids[mc.uri] != undefined) {
             return 'star';
         } else {
             return 'star_border';

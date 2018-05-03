@@ -38,12 +38,12 @@ export class BookmarksComponent implements OnInit {
     selected: Selected[] = [];
     selectAll = false;
     loading = false;
-    
+
     pageSize = 10;
     pageSizeOptions = [5, 10, 25, 100];
 
-      // MatPaginator Output
-      pageEvent: PageEvent;
+    // MatPaginator Output
+    pageEvent: PageEvent;
 
     constructor(private BookmarkService: BookmarkService,
         private alertService: AlertService,
@@ -56,7 +56,7 @@ export class BookmarksComponent implements OnInit {
         this.getAllBookmarks();
     }
 
-    topbarIN(event){
+    topbarIN(event) {
         for (let i = 0; i < event.target.childNodes.length; i++) {
             if (event.target.childNodes[i].className === 'topbar') {
                 event.target.childNodes[i].style.backgroundImage = 'linear-gradient(to top,rgba(0,0,0,0.26),transparent 56px,transparent)';
@@ -79,21 +79,25 @@ export class BookmarksComponent implements OnInit {
 
     openDialog(item: MultimediaContent) {
         //console.log('item sr', item);
+
         const dialogRef = this.dialog.open(DialogDetailComponent, {
             width: '600px',
             // position: {left: '30%', right: '30%' }
         });
         item.bookmark = true;
         dialogRef.componentInstance.data = item;
+        dialogRef.afterClosed().subscribe(result => {
+            this.getAllBookmarks();
+        });
     }
 
     initCheckbox() {
         this.selected = [];
         for (let i = 0; i < this.bookmarks.length; i++) {
-            const item: Selected = { id: this.bookmarks[i].id, checked : false };
+            const item: Selected = { id: this.bookmarks[i].id, checked: false };
             this.selected.push(item);
         }
-       // console.log("this.selected",this.selected);
+        // console.log("this.selected",this.selected);
     }
 
     enableDelete(): boolean {
@@ -101,41 +105,41 @@ export class BookmarksComponent implements OnInit {
         // console.log("enableDelete()", this.selected.find(obj => obj.checked === true));
         if (this.selected.findIndex(obj => obj.checked === true) !== -1) {
             return true;
-        }else {
+        } else {
             return false;
         }
     }
 
     getClassCheckbox(id: string): string {
-        if ( this.selected.find(obj => obj.id === id).checked === true) {
+        if (this.selected.find(obj => obj.id === id).checked === true) {
             return 'checked';
         }
     }
 
     getClassCard(id: string): string {
-        if ( this.selected.find(obj => obj.id === id).checked === true) {
+        if (this.selected.find(obj => obj.id === id).checked === true) {
             return 'card-selected';
         }
     }
 
     setCheckbox(id: string) {
-      const index = this.selected.findIndex(obj => obj.id === id);
-      if (index !== -1) {
-        this.selected[index].checked = !this.selected[index].checked;
-      }
+        const index = this.selected.findIndex(obj => obj.id === id);
+        if (index !== -1) {
+            this.selected[index].checked = !this.selected[index].checked;
+        }
     }
 
     getSelectedCount(): string {
         const count = this.selected.filter(item => item.checked === true).length;
-        if(count === 1) {
+        if (count === 1) {
             return '1 item selected';
-        }else{
+        } else {
             return count + ' items selected';
         }
     }
 
     hovercard($event) {
-        console.log("$event",$event);
+        console.log("$event", $event);
     }
 
 
@@ -143,35 +147,35 @@ export class BookmarksComponent implements OnInit {
         this.submitted = true;
         this.BookmarkService.findByUser()
             .subscribe(
-            data => {
-                this.bookmarks = data.reverse();
-                this.initCheckbox();
-                this.counter(data);
-                this.getUserRepositories();
-                this.submitted = false;
-                this.nResults = data.length;
-                localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
-                //console.log(' this.bookmarks', this.bookmarks);
-            },
-            error => {
-                this.snackBar.run('Listing of repositories action has encountered an error. Detail:' + error, false);
-                console.log('getUserRepositories -> error:', error);
-                this.submitted = false;
-            });
+                data => {
+                    this.bookmarks = data.reverse();
+                    this.initCheckbox();
+                    this.counter(data);
+                    this.getUserRepositories();
+                    this.submitted = false;
+                    this.nResults = data.length;
+                    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
+                    //console.log(' this.bookmarks', this.bookmarks);
+                },
+                error => {
+                    this.snackBar.run('Listing of repositories action has encountered an error. Detail:' + error, false);
+                    console.log('getUserRepositories -> error:', error);
+                    this.submitted = false;
+                });
     }
 
     getUserRepositories() {
         this.userRepositoryService.findByUser()
             .subscribe(
-            data => {
-                this.userRepositories = data;
-                this.initRepo(this.userRepositories);
-                this.incRepo(this.bookmarks);
-            },
-            error => {
-                this.snackBar.run('Listing of repositories action has encountered an error. Detail:' + error, false);
-                console.log('getUserRepositories -> error:', error);
-            });
+                data => {
+                    this.userRepositories = data;
+                    this.initRepo(this.userRepositories);
+                    this.incRepo(this.bookmarks);
+                },
+                error => {
+                    this.snackBar.run('Listing of repositories action has encountered an error. Detail:' + error, false);
+                    console.log('getUserRepositories -> error:', error);
+                });
     }
 
     incRepo(bookmarks: Bookmark[]) {
@@ -247,113 +251,113 @@ export class BookmarksComponent implements OnInit {
     removeBookmark(item: Bookmark) {
         this.BookmarkService.delete(item.id)
             .subscribe(
-            data => {
-                //console.log('data', data);
-                const index = this.bookmarks.findIndex(obj => obj.id === item.id);
-                this.bookmarks.splice(index, 1);
-                localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
-            },
-            error => {
-                this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
-                console.log('bookmarkService.delete -> error:', error);
-            });
+                data => {
+                    //console.log('data', data);
+                    const index = this.bookmarks.findIndex(obj => obj.id === item.id);
+                    this.bookmarks.splice(index, 1);
+                    localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
+                },
+                error => {
+                    this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                    console.log('bookmarkService.delete -> error:', error);
+                });
     }
 
     deleteSelected() {
         const dialogc = this.dialog.open(BookmarkConfirmationDialog, {
             data: { message: this.getSelectedCount() },
             height: 'auto'
-          });
+        });
 
-          dialogc.afterClosed().subscribe(confirm => {
+        dialogc.afterClosed().subscribe(confirm => {
             if (confirm) {
 
                 let deleteList = '';
                 const checked = this.selected.filter(item => item.checked === true);
-                checked.forEach(function(i, idx, array){
-                            deleteList += array[idx].id;
-                        if (idx < array.length - 1) {
-                            deleteList += ',';
-                        }
-                 });
+                checked.forEach(function (i, idx, array) {
+                    deleteList += array[idx].id;
+                    if (idx < array.length - 1) {
+                        deleteList += ',';
+                    }
+                });
 
-                 //console.log('deleteList:', deleteList);
+                //console.log('deleteList:', deleteList);
 
                 this.BookmarkService.delete(deleteList)
                     .subscribe(
-                    data => {
-                        //console.log('data', data);
-                        checked.forEach( items => {
-                            // delete selected
-                            const i = this.selected.findIndex(obj => obj.id === items.id);
-                            this.selected.splice(i, 1);
-                             // delete in bookmarks
-                            const j = this.bookmarks.findIndex(obj => obj.id === items.id);
-                            this.bookmarks.splice(j, 1);
-                         });
-                        localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
-                    },
-                    error => {
-                        this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
-                        console.log('bookmarkService.delete -> error:', error);
-                    });
+                        data => {
+                            //console.log('data', data);
+                            checked.forEach(items => {
+                                // delete selected
+                                const i = this.selected.findIndex(obj => obj.id === items.id);
+                                this.selected.splice(i, 1);
+                                // delete in bookmarks
+                                const j = this.bookmarks.findIndex(obj => obj.id === items.id);
+                                this.bookmarks.splice(j, 1);
+                            });
+                            localStorage.setItem('bookmarks', JSON.stringify(this.bookmarks));
+                        },
+                        error => {
+                            this.snackBar.run('Delete action of the bookmark has encountered an error. Detail:' + error, false);
+                            console.log('bookmarkService.delete -> error:', error);
+                        });
             }
-          });
+        });
     }
-/*
-    deleteAllByUser() {
-        this.submitted = true;
-        this.BookmarkService.deleteAllByUser()
-            .subscribe(
-            res => {
-                console.log('delete all Bookmarks - subscribe OK:', res);
-                this.bookmarks.splice(0, this.bookmarks.length);
-                this.nResults = this.bookmarks.length;
-                this.submitted = false;
-            },
-            error => {
-                console.log('delete all Bookmarks - subscribe - error:', error);
-                this.submitted = false;
-            }
-            );
-    }
-    */
+    /*
+        deleteAllByUser() {
+            this.submitted = true;
+            this.BookmarkService.deleteAllByUser()
+                .subscribe(
+                res => {
+                    console.log('delete all Bookmarks - subscribe OK:', res);
+                    this.bookmarks.splice(0, this.bookmarks.length);
+                    this.nResults = this.bookmarks.length;
+                    this.submitted = false;
+                },
+                error => {
+                    console.log('delete all Bookmarks - subscribe - error:', error);
+                    this.submitted = false;
+                }
+                );
+        }
+        */
 
     selecTo(choose: boolean) {
-        this.selected.forEach(function(element) {
+        this.selected.forEach(function (element) {
             element.checked = choose;
         });
     }
-   /*
-    UpdateBookmarks() {
-        const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
-        for (const item of this.bookmarks) {
-            const index = lastresearch.findIndex(obj => obj.uri === item.multimediaContent.uri);
-            lastresearch[index].bookmark = item.multimediaContent.bookmark;
-        }
-        localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
-    }
-
-    UpdateBookmark(bm: Bookmark) {
-        const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
-        const index = lastresearch.findIndex(obj => obj.uri === bm.multimediaContent.uri);
-        lastresearch[index].bookmark = bm.multimediaContent.bookmark;
-        localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
-    }
-    
-
-    filter(item: MultimediaContent): any {
-        if (this.filterRepository(item)) {
-            if (this.activeType) {
-                const index = this.activeType.findIndex(obj => obj.name === item.type);
-                if (index !== -1) {
-                    return this.activeType[index].enabled;
-                }
-            }
-            return false;
-        }
-    }
-*/
+    /*
+     UpdateBookmarks() {
+         const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
+         for (const item of this.bookmarks) {
+             const index = lastresearch.findIndex(obj => obj.uri === item.multimediaContent.uri);
+             lastresearch[index].bookmark = item.multimediaContent.bookmark;
+         }
+         localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
+     }
+ 
+     UpdateBookmark(bm: Bookmark) {
+         const lastresearch = JSON.parse(localStorage.getItem('lastresearch'));
+         const index = lastresearch.findIndex(obj => obj.uri === bm.multimediaContent.uri);
+         lastresearch[index].bookmark = bm.multimediaContent.bookmark;
+         localStorage.setItem('lastresearch', JSON.stringify(lastresearch));
+     }
+     
+ 
+     filter(item: MultimediaContent): any {
+         if (this.filterRepository(item)) {
+             if (this.activeType) {
+                 const index = this.activeType.findIndex(obj => obj.name === item.type);
+                 if (index !== -1) {
+                     return this.activeType[index].enabled;
+                 }
+             }
+             return false;
+         }
+     }
+ */
 
     sidebar(size: number): number {
         if (this.showSidebar) {
@@ -386,7 +390,7 @@ export interface Selected {
 @Component({
     selector: 'dialog-confirmation-dialog',
     templateUrl: 'dialog-confirmation-dialog.html',
-  })
-  export class BookmarkConfirmationDialog {
-    constructor( @Inject(MAT_DIALOG_DATA) public data: any) { }
-  }
+})
+export class BookmarkConfirmationDialog {
+    constructor(@Inject(MAT_DIALOG_DATA) public data: any) { }
+}
