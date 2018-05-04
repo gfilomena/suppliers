@@ -256,7 +256,7 @@ export class DialogDetailComponent implements OnInit {
 
                     // const index = this.bookmarks.findIndex(obj => obj.id === item.id);
                     // this.bookmarks.splice(index, 1);
-                    
+
                     this.snackBar.run('The Bookmark has been removed', true);
                 },
                 error => {
@@ -328,35 +328,36 @@ export class DialogDetailComponent implements OnInit {
         this.loading = true;
         this.McssrService.create(mc)
             .subscribe(
-            res => {
-                this.snackBar.run('The Multimedia Item has been sent to Mcssr', true);
-                console.log('Send to Mcssr - subscribe OK:', res);
-                let creationResponse = res.json();
-                let uid = creationResponse.uid;
-            // if there are tags , they will be sent to MCSSR
-            if (mc.metadata != null) {
-                this.McssrService.updateTags(mc, uid)
-                    .subscribe(
-                    res => {
-                        console.log('update Tags to Mcssr - subscribe OK:', res);
+                res => {
+                    this.snackBar.run('The Multimedia Item has been sent to Mcssr', true);
+                    console.log('Send to Mcssr - subscribe OK:', res);
+                    let creationResponse = res.json();
+                    let uid = creationResponse.uid;
+                    // if there are tags , they will be sent to MCSSR
+                    if (mc.metadata != null) {
+                        this.McssrService.updateTags(mc, uid)
+                            .subscribe(
+                                res => {
+                                    console.log('update Tags to Mcssr - subscribe OK:', res);
+                                    this.loading = false;
+                                    this.snackBar.run('The tags have been sent correctly to Mcssr', true);
+                                },
+                                error => {
+                                    console.log('Send to Mcssr - subscribe - error:', error);
+                                    this.loading = false;
+                                    const message = getMessageError(error);
+                                    this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + message, false);
+                                });
                         this.loading = false;
-                        this.snackBar.run('The tags have been sent correctly to Mcssr', true);
-                    },
-                    error => {
-                        console.log('Send to Mcssr - subscribe - error:', error);
-                        this.loading = false;
-                        const message = getMessageError(error);
-                        this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + message, false);
                     }
-                    this.loading = false;
                 },
-            error => {
-                console.log('Send to Mcssr - subscribe - error:', error);
-                this.loading = false;
-                const message = getMessageError(error);
-                this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr. Detail:' + message, false);
-            }
-            )
+                error => {
+                    console.log('Send to Mcssr - subscribe - error:', error);
+                    this.loading = false;
+                    const message = getMessageError(error);
+                    this.snackBar.run('The Multimedia Item hasn\'t been sent to Mcssr. Detail:' + message, false);
+                }
+            );
     }
 
     uriValidation(uri: string) {
@@ -386,7 +387,7 @@ export class DialogDetailComponent implements OnInit {
                 this.snackBar.run('uriValidation check has encountered an error. Detail:' + error, false);
                 console.log('err', error);
                 this.loaderror = false;
-            })
+            });
     }
 
 }
@@ -396,12 +397,12 @@ function isNullOrWhiteSpace(str) {
 }
 
 function getMessageError(error) {
-    if(error._body) {
+    if (error._body) {
         const body = JSON.parse(error._body);
         console.dir(body);
         if (body.exception.cause.message) {
             return body.exception.cause.message;
-        }else{
+        } else {
             if (body.message) {
                 return body.message;
             }

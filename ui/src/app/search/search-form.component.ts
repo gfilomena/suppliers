@@ -410,9 +410,9 @@ export class SearchFormComponent {
         }
     }
 
-   // getDate(date: string): string {
-   //     return new Date(date).toLocaleDateString();
-   // }
+    getDate(date: string): string {
+        return new Date(date).toLocaleDateString();
+    }
 
     addAnnotationToSearchForm(annotation: string): void {
 
