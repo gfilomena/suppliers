@@ -16,7 +16,7 @@ export class AuthService {
     responseType: 'token id_token',
     audience: AUTH_CONFIG.apiUrl,
     redirectUri: AUTH_CONFIG.callbackURL,
-    scope: 'openid name email'
+    scope: 'openid name email profile'
   });
 
   userProfile: any;
@@ -105,7 +105,7 @@ export class AuthService {
   }
 
   public scheduleRenewal() {
-    if(!this.isAuthenticated()) return;
+    if(!this.isAuthenticated()) { return; }
     this.unscheduleRenewal();
 
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));

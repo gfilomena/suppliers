@@ -13,5 +13,6 @@ export class AppComponent {
     constructor(public auth: AuthService) {
         // this.currentUser = JSON.parse(localStorage.getItem("currentUser"))
         auth.handleAuthentication();
+        auth.scheduleRenewal();
     }
 }
