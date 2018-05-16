@@ -36,7 +36,7 @@
           <mat-expansion-panel-header>
             <mat-panel-title>Advanced search</mat-panel-title>
           </mat-expansion-panel-header>
-
+<!--
           <div fxLayout="row">
             <mat-form-field fxFlex>
               <input matInput [matDatepicker]="startdate" placeholder="Initial Date" id="InDate" [(ngModel)]="searchForm.inDate" name="inDate"
@@ -54,7 +54,7 @@
 
             <mat-datepicker #enddate></mat-datepicker>
           </div>
-
+-->
           <semantic-search (onAnnotationClicked)="addAnnotationToSearchForm($event)"
                            (onGATESubmit)="this.submitted = true"
                            (onGATEResponse)="this.submitted = false">
