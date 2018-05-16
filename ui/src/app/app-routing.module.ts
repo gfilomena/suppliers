@@ -10,25 +10,8 @@ import { SearchHistoryComponent } from './search-history/index';
 import { DialogRepositoryComponent } from './dialog-repository/index';
 import { HashLocationStrategy, PathLocationStrategy, Location, LocationStrategy, APP_BASE_HREF } from '@angular/common';
 import { ProfileComponent } from './profile/index';
+import {CallbackComponent} from './callback/index';
 const appRoutes: Routes = [
-    /*{ path: '',
-    component: SearchFormComponent,
-    canActivate: [AuthGuard],
-    data: { breadcrumb: 'home' }
-     children: [
-    { path: '', redirectTo: 'bookmarks', pathMatch: 'full' },
-    {
-    path: 'bookmarks',
-    component: BookmarksComponent,
-    data: { breadcrumb: 'bookmarks' }
-    },
-    {
-    path: 'setting',
-    component: SettingComponent,
-    data: { breadcrumb: 'setting' }
-    }
-    ]
-    },*/
     { path: 'home', component: SearchFormComponent, canActivate: [AuthGuard], data: { breadcrumb: 'home' } },
     { path: 'login', component: LoginComponent, data: { breadcrumb: 'login' } },
     { path: 'register', component: RegisterComponent, data: { breadcrumb: 'register' } },
@@ -36,6 +19,7 @@ const appRoutes: Routes = [
     { path: 'search-history', component: SearchHistoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'search history' } },
     { path: 'setting-rep', component: DialogRepositoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'setting repository' } },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { breadcrumb: 'profile' } },
+    { path: 'callback', component: CallbackComponent },
     // otherwise redirect to home
     { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ]

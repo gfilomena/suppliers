@@ -26,7 +26,7 @@ import { RegisterComponent } from './register/index';
 import { NavbarComponent } from './navbar/index';
 import { LoggedinComponent } from './loggedin/index';
 // import { NoopAnimationsModule } from '@angular/platform-browser/animations';
-import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import 'hammerjs';
 import { FlexLayoutModule } from '@angular/flex-layout';
 import { SettingComponent } from './profile/setting/setting.component';
@@ -39,6 +39,7 @@ import {
 } from './profile/setting/registration-repository/registration-repository.component';
 import { BookmarkConfirmationDialog } from './bookmarks/bookmarks.component';
 import { ProfileComponent } from './profile/profile.component';
+import {CallbackComponent} from './callback/index';
 import {
     MatSlideToggleModule,
     MatProgressSpinnerModule,
@@ -108,6 +109,7 @@ import {MatGridListModule} from '@angular/material/grid-list';
         DialogRegistrationRepository,
         RegistrationRepositoryComponent,
         ProfileComponent,
+        CallbackComponent,
         DialogRegistrationDialog,
         BookmarkConfirmationDialog,
         HistoryConfirmationDialog,
