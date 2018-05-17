@@ -32,7 +32,6 @@ export class AuthService {
 
   public handleAuthentication(): void {
     console.log('Handle authentication');
-    //alert('Handle authentication');
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         window.location.hash = '';
@@ -44,7 +43,6 @@ export class AuthService {
         console.log(err);
         alert(err);
         this.router.navigate(['/home']);
-        // alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
   }
@@ -155,28 +153,9 @@ export class AuthService {
     // Check whether the current time is past the
     // access token's expiry time
     console.log('Into is Authenticated method');
-    /*if (environment.production) {
-      this.auth0.checkSession({}, (err, result) => {
-        if (err) {
-          console.log('Is Authenticated: Error on check session');
-          alert('Is Authenticated: Error on check session');
-          return false;
-        } else {
-          console.log(`Is Authenticated: Successfully renewed auth!`);
-          alert(`Is Authenticated: Successfully renewed auth!`);
-          this.setSession(result);
-          return true;
-        }
-      });
-    } else {
-      const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
-      return new Date().getTime() < expiresAt;
-    }*/
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
       return new Date().getTime() < expiresAt;
   }
-
-  // private helper methods
 
   public jwt() {
     // create authorization header with jwt token
