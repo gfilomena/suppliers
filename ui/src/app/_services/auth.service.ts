@@ -6,6 +6,7 @@ import * as auth0 from 'auth0-js';
 import {JwtHelper} from 'angular2-jwt';
 import { Observable } from 'rxjs';
 import { Globals } from './../global';
+import { environment } from '../../environments/environment';
 
 @Injectable()
 export class AuthService {
@@ -90,7 +91,11 @@ export class AuthService {
 
     this.unscheduleRenewal();
     // Go back to the home route
-    this.router.navigate(['/']);
+    this.auth0.logout({
+            returnTo: environment.auth_logoutUrl,
+            clientID: AUTH_CONFIG.clientID
+          });
+      
   }
 
   public renewToken() {
