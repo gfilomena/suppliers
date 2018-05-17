@@ -42,14 +42,14 @@ export class AuthGuard implements CanActivate {
             this.auth.auth0.checkSession({}, (err, result) => {
                 if (err) {
                   console.log('Auth Guard: session not authenticated');
-                  alert('Auth Guard: session not authenticated');
+                  alert('The session is inactive. Please re-login!');
                   this.auth.unscheduleRenewal();
                   // Go back to the home route
                    // redirect to dashboard or login
                     window.location.href = environment.auth_logoutUrl;
                     return false;
                 } else {
-                  alert('Auth Guard: session already authenticated');
+                  //alert('Auth Guard: session already authenticated');
                   console.log('Auth Guard: session already authenticated');
                   this.auth.setSession(result);
                   return true;
@@ -58,11 +58,11 @@ export class AuthGuard implements CanActivate {
         } else {
             if (this.auth.isAuthenticated()) {
                 console.log('Auth Guard: authenticated');
-                alert('Auth Guard: authenticated');
+                //alert('Auth Guard: authenticated');
                 return true;
             } else {
                 console.log('Auth Guard: not authenticated');
-                alert('Auth Guard: not authenticated');
+                alert('The session is inactive. Please re-login!');
                 // not logged in so redirect to login page with the return url
                 this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
                 return false;

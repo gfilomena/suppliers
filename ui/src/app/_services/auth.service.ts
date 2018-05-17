@@ -32,7 +32,7 @@ export class AuthService {
 
   public handleAuthentication(): void {
     console.log('Handle authentication');
-    alert('Handle authentication');
+    //alert('Handle authentication');
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         //window.location.hash = '';
@@ -109,13 +109,12 @@ export class AuthService {
         this.unscheduleRenewal();
         // Go back to the home route
         if (environment.production) { // redirect to dashboard or login
-          //window.location.href = environment.auth_logoutUrl;
-          this.router.navigate(['/login']);
+          window.location.href = environment.auth_logoutUrl;
         } else {
           this.router.navigate(['/login']);
         }
       } else {
-        alert('Renew Token: Successfully renewed auth!');
+        // alert('Renew Token: Successfully renewed auth!');
         console.log('Renew Token: Successfully renewed auth!');
         this.setSession(result);
       }
