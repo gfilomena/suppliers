@@ -9,7 +9,17 @@ export class AuthGuard implements CanActivate {
     constructor(private router: Router, public auth: AuthService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
-        if (environment.production) {
+        console.log('inside can activate');
+        if (this.auth.isAuthenticated()) {
+            console.log('authenticated');
+            return true;
+        } else {
+            // not logged in so redirect to login page with the return url
+            console.log('not authenticated');
+            this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
+            return false;
+        }
+        /*if (environment.production) {
             this.auth.auth0.checkSession({}, (err, result) => {
                 if (err) {
                   console.log('Auth Guard: session not authenticated');
@@ -36,6 +46,6 @@ export class AuthGuard implements CanActivate {
                 this.router.navigate(['/login'], { queryParams: { returnUrl: state.url } });
                 return false;
             }
-        }
+        }*/
     }
 }
