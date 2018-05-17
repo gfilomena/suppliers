@@ -43,14 +43,6 @@ export class NavbarComponent implements OnInit{
       }
   }
 
-  checkPage() {
-      let url = window.location.href;
-      if (url.indexOf('login')!== -1 )  {
-          return false;
-      }
-      return true;
-  }
-
   logout(){
       this.auth.logout();
   }

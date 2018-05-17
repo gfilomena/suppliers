@@ -17,7 +17,8 @@ export class AuthService {
     responseType: 'token id_token',
     audience: AUTH_CONFIG.apiUrl,
     redirectUri: AUTH_CONFIG.callbackURL,
-    scope: 'openid name email profile'
+    scope: 'openid name email profile',
+    prompt: 'none'
   });
 
   userProfile: any;
@@ -31,6 +32,7 @@ export class AuthService {
 
   public handleAuthentication(): void {
     console.log('Handle authentication');
+    alert('Handle authentication');
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
         //window.location.hash = '';
@@ -39,8 +41,9 @@ export class AuthService {
         this.getUser();
         this.router.navigate(['/home']);
       } else if (err) {
-        this.router.navigate(['/login']);
         console.log(err);
+        alert(err);
+        this.router.navigate(['/home']);
         // alert(`Error: ${err.error}. Check the console for further details.`);
       }
     });
@@ -53,7 +56,7 @@ export class AuthService {
     });
   }
 
-  private setSession(authResult): void {
+  public setSession(authResult): void {
     console.log('Set session');
     const jwtHelper: JwtHelper = new JwtHelper();
     // Set the time that the access token will expire at
@@ -92,20 +95,27 @@ export class AuthService {
 
     this.unscheduleRenewal();
     // Go back to the home route
-      this.auth0.logout({
-        returnTo: environment.auth_logoutUrl,
-        clientID: AUTH_CONFIG.clientID
-      });
+    this.auth0.logout({
+      returnTo: environment.auth_logoutUrl,
+      clientID: AUTH_CONFIG.clientID
+    });
   }
 
   public renewToken() {
     this.auth0.checkSession({}, (err, result) => {
       if (err) {
         console.log('Renew Token: Could not get a new token (${err.error}: ${err.error_description}).');
+        alert('Renew Token: Could not get a new token (${err.error}: ${err.error_description}).');
         this.unscheduleRenewal();
         // Go back to the home route
-        window.location.href = environment.auth_logoutUrl;
+        if (environment.production) { // redirect to dashboard or login
+          //window.location.href = environment.auth_logoutUrl;
+          this.router.navigate(['/login']);
+        } else {
+          this.router.navigate(['/login']);
+        }
       } else {
+        alert('Renew Token: Successfully renewed auth!');
         console.log('Renew Token: Successfully renewed auth!');
         this.setSession(result);
       }
@@ -145,13 +155,16 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // access token's expiry time
-    if (environment.production) {
+    console.log('Into is Authenticated method');
+    /*if (environment.production) {
       this.auth0.checkSession({}, (err, result) => {
         if (err) {
           console.log('Is Authenticated: Error on check session');
+          alert('Is Authenticated: Error on check session');
           return false;
         } else {
           console.log(`Is Authenticated: Successfully renewed auth!`);
+          alert(`Is Authenticated: Successfully renewed auth!`);
           this.setSession(result);
           return true;
         }
@@ -159,7 +172,9 @@ export class AuthService {
     } else {
       const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
       return new Date().getTime() < expiresAt;
-    }
+    }*/
+    const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
+      return new Date().getTime() < expiresAt;
   }
 
   // private helper methods
