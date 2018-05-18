@@ -21,16 +21,12 @@ const appRoutes: Routes = [
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { breadcrumb: 'profile' } },
     { path: 'callback', component: CallbackComponent },
     // otherwise redirect to home
-    { path: '', redirectTo: 'home', pathMatch: 'full' }
+    { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ]
 
 @NgModule({
     imports: [RouterModule.forRoot(appRoutes)],
-    exports: [RouterModule],
-    providers: [
-        { provide: LocationStrategy, useClass: PathLocationStrategy },
-        { provide: APP_BASE_HREF, useValue: '/' }
-    ]
+    exports: [RouterModule]
 })
 
 export class AppRoutingModule { }
