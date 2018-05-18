@@ -45,10 +45,11 @@ public class UserController extends Controller {
 
 
     public Result matchAll(String path) {
+
         if(UserController.class.getResourceAsStream("/public/ui/dist/"+path) != null) {
             return ok(UserController.class.getResourceAsStream("/public/ui/dist/"+path));
         }else{
-            return ok(UserController.class.getResourceAsStream("/public/ui/dist/index.html")).as("text/html");
+            return ok(UserController.class.getResourceAsStream("/public/ui/dist/index.html"));
         }
     }
 
