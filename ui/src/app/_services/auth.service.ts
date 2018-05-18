@@ -152,7 +152,7 @@ export class AuthService {
   public isAuthenticated(): boolean {
     // Check whether the current time is past the
     // access token's expiry time
-    console.log('Into is Authenticated method');
+    //console.log('Into is Authenticated method');
     const expiresAt = JSON.parse(localStorage.getItem('expires_at'));
       return new Date().getTime() < expiresAt;
   }
