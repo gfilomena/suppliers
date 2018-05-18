@@ -223,7 +223,7 @@ export class SearchHistoryComponent implements OnInit {
 
     this.searchResult = [];
 
-    this.router.navigate(['/home'], { queryParams: { keywords: searchForm.freeText, inDate: searchForm.inDate, endDate: searchForm.endDate } });
+    this.router.navigate(['/home'], { queryParams: { keywords: searchForm.freeText } });
   }
 
   public getTime(isoDate: string): string {

@@ -1,15 +1,14 @@
 # Routes
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
-# The following routes redirect to index.htmll in order to be managed by the Angular router
+# The following routes redirect to index.htmll in order to be managed by the Angular router   
 GET        /             controllers.Assets.at(path="/public/ui/dist", file="index.html")
-GET        /home             controllers.Assets.at(path="/public/ui/dist", file="index.html")
-GET        /search-history             controllers.Assets.at(path="/public/ui/dist", file="index.html")
-GET        /bookmarks             controllers.Assets.at(path="/public/ui/dist", file="index.html")
-GET        /profile             controllers.Assets.at(path="/public/ui/dist", file="index.html")
-GET        /setting-rep             controllers.Assets.at(path="/public/ui/dist", file="index.html")
-GET        /login             controllers.Assets.at(path="/public/ui/dist", file="index.html")
-GET        /callback             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+#GET        /home             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+#GET        /search-history             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+#GET        /bookmarks             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+#GET        /profile             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+#GET        /setting-rep             controllers.Assets.at(path="/public/ui/dist", file="index.html")
+#GET        /login             controllers.Assets.at(path="/public/ui/dist", file="index.html")
 
 # SEARCH
 POST    /api/v1/search                      controllers.SearchController.search
@@ -65,5 +64,6 @@ POST    /api/v1/annotations/file           controllers.SemanticController.fileAn
 
 # Map static resources from the /public folder to the /assets URL path
 # LEAVE THIS AT BOTTOM OF THIS FILE
-GET        /*file               controllers.Assets.at(path="/public/ui/dist", file)
-#GET        /*path               controllers.UserController.matchAll(path)
+#GET        /*file               controllers.Assets.at(path="/public/ui/dist", file)
+GET        /*path               controllers.UserController.matchAll(path)
+

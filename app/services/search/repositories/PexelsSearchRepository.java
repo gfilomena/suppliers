@@ -97,7 +97,7 @@ public class PexelsSearchRepository implements SearchRepository {
         m.setDownloadURI(i.get("src").get("original").asText());
         m.setName(i.get("id").asText());
         m.setThumbnail(i.get("src").get("medium").asText());   
-        m.setDescription("photographer:"+i.get("photographer").asText());
+        //m.setDescription("photographer:"+i.get("photographer").asText());
         /*License lic = new License();
         lic.setName("CC0");*/
         m.setLicense(licenseService.getByNameOrCreate("CC0"));

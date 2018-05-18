@@ -90,7 +90,7 @@ export class SearchFormComponent {
         }
 
         // if there are url parameters, they will insert into the searchform
-        this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '');
+        this.searchForm = new SearchForm('', '', '');
 
         const params = this.route.queryParamMap;
 
@@ -104,7 +104,7 @@ export class SearchFormComponent {
                 console.log("keywords ERROR:" + error);
             }
         )
-
+        /*
         params.map(par => par.get('inDate')).subscribe(
             res => {
                 if (res != null) {
@@ -126,6 +126,7 @@ export class SearchFormComponent {
                 console.log("endDate ERROR:" + error);
             }
         )
+        */
 
     }
     ngOnInit() {
@@ -204,7 +205,7 @@ export class SearchFormComponent {
         //console.log('clear')
         localStorage.removeItem('searchForm');
         localStorage.removeItem('lastresearch');
-        this.searchForm = new SearchForm('', '', '', new Date(), new Date(), '')
+        this.searchForm = new SearchForm( '', '', '');
         this.searchResult = [];
         this.initTypeRepo(this.searchResult);
         //this.incRepo(this.searchResult);
