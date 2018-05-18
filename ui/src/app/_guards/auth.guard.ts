@@ -31,7 +31,7 @@ export class AuthGuard implements CanActivate {
                     return false;
                 } else {
                   console.log('Auth Guard: session already authenticated');
-                  this.auth.setSession(result);
+                  //this.auth.setSession(result);
                   return true;
                 }
               });
