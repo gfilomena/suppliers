@@ -19,7 +19,7 @@ const appRoutes: Routes = [
     { path: 'search-history', component: SearchHistoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'search history' } },
     { path: 'setting-rep', component: DialogRepositoryComponent, canActivate: [AuthGuard], data: { breadcrumb: 'setting repository' } },
     { path: 'profile', component: ProfileComponent, canActivate: [AuthGuard], data: { breadcrumb: 'profile' } },
-    { path: 'callback', component: CallbackComponent, data: {breadcrumb: 'callback' } },
+    { path: 'callback', component: CallbackComponent },
     // otherwise redirect to home
     { path: '**', redirectTo: 'home', pathMatch: 'full' }
 ]

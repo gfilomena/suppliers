@@ -17,7 +17,8 @@ export class AuthService {
     responseType: 'token id_token',
     audience: AUTH_CONFIG.apiUrl,
     redirectUri: AUTH_CONFIG.callbackURL,
-    scope: 'openid name email profile'
+    scope: 'openid name email profile',
+    prompt: 'none'
   });
 
   userProfile: any;
