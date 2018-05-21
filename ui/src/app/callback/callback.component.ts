@@ -9,11 +9,10 @@ import {AuthService} from '../_services/index';
 export class CallbackComponent implements OnInit {
 
   constructor(public auth: AuthService) {
-    auth.handleAuthentication();
   }
 
   ngOnInit() {
-
+    this.auth.handleAuthentication();
   }
 
 }

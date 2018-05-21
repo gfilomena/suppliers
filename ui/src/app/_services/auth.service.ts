@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Headers, RequestOptions } from '@angular/http';
 import * as auth0 from 'auth0-js';
 import { JwtHelper } from 'angular2-jwt';
-import { Observable } from 'rxjs/Rx';
+import { Observable, Observer } from 'rxjs/Rx';
 import { Globals } from './../global';
 import { environment } from '../../environments/environment';
 
@@ -23,6 +23,10 @@ export class AuthService {
 
   userProfile: any;
   refreshSubscription: any;
+  observer: Observer<boolean>;
+  ssoAuthComplete$: Observable<boolean> = new Observable(
+    obs => (this.observer = obs)
+  );
 
   constructor(public router: Router, private globals: Globals) { }
 
@@ -34,17 +38,38 @@ export class AuthService {
     console.log('Handle authentication');
     this.auth0.parseHash((err, authResult) => {
       if (authResult && authResult.accessToken && authResult.idToken) {
-        //window.location.hash = '';
+        // window.location.hash = '';
         this.setSession(authResult);
         this.getProfile(authResult);
         this.getUser();
         this.router.navigate(['/home']);
       } else if (err) {
         console.log(err);
-        alert(err);
+        // alert(err);
         this.router.navigate(['/home']);
       }
     });
+  }
+
+  public isAlreadyAuthenticated(): boolean {
+    let authenticated = false;
+    console.log('Is already authenticated?');
+    this.auth0.checkSession({}, (err, result) => {
+      if (err) {
+          console.log('Auth Guard: session not authenticated');
+          alert('The session is inactive. Please re-login!');
+          this.unscheduleRenewal();
+          // Go back to the home route
+          // redirect to dashboard or login
+          window.location.href = environment.auth_logoutUrl;
+          authenticated = false;
+      } else {
+          console.log('Auth Guard: session already authenticated');
+          //this.auth.setSession(result);
+          authenticated = true;
+      }
+  });
+  return authenticated;
   }
 
   private getProfile(authResult) {
@@ -102,8 +127,8 @@ export class AuthService {
   public renewToken() {
     this.auth0.checkSession({}, (err, result) => {
       if (err) {
-        console.log('Renew Token: Could not get a new token (${err.error}: ${err.error_description}).');
-        alert('Renew Token: Could not get a new token (${err.error}: ${err.error_description}).');
+        console.log('The session is inactive, please re-login!');
+        alert('The session is inactive, please re-login!');
         this.unscheduleRenewal();
         // Go back to the home route
         if (environment.production) { // redirect to dashboard or login
@@ -115,6 +140,7 @@ export class AuthService {
         // alert('Renew Token: Successfully renewed auth!');
         console.log('Renew Token: Successfully renewed auth!');
         this.setSession(result);
+        this.observer.next(true);
       }
     });
   }
