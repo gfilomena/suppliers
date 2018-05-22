@@ -34,8 +34,8 @@ public class SearchResultSerializer extends StdSerializer<SearchResult> {
         jgen.writeObjectField("freeText", value.getKeyWords());
         if(value.getMultimediaContents()!=null)   jgen.writeObjectField("multimediaContents", value.getMultimediaContents());
         jgen.writeObjectField("date", FORMATTER.format(value.getDate()));
-        jgen.writeObjectField("inDate", FORMATTER.format(value.getInDate()));
-        jgen.writeObjectField("endDate", FORMATTER.format(value.getEndDate()));
+        /*jgen.writeObjectField("inDate", FORMATTER.format(value.getInDate()));
+        jgen.writeObjectField("endDate", FORMATTER.format(value.getEndDate()));*/
         jgen.writeNumberField("nOfResults", value.getnOfResults());
         //jgen.writeObjectField("multimediaContents", value.getMultimediaContents());
         jgen.writeEndObject();

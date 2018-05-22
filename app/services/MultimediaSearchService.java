@@ -92,13 +92,13 @@ public class MultimediaSearchService implements SearchService {
             qr.setMultimediaContents(l);
             qr.setUser(user);
             qr.setnOfResults(l.size());
-            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
+            /*SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'");
             try {
                 qr.setInDate(sdf.parse(jsonRequest.get("inDate").textValue()));
                 qr.setEndDate(sdf.parse(jsonRequest.get("endDate").textValue()));
             } catch (ParseException e) {
                 e.printStackTrace();
-            }
+            }*/
             return qr;
         });
         //transformedQuery.thenAccept(p -> saveSearchResult(p));
@@ -107,8 +107,8 @@ public class MultimediaSearchService implements SearchService {
 
     private List<String> getKeyWords(JsonNode jsonRequest) {
         List<String> keyWords = new ArrayList<String>();
-        if (jsonRequest.get("keyWords").textValue() != null && !jsonRequest.get("keyWords").textValue().isEmpty())
-            keyWords.addAll(Stream.of(jsonRequest.get("keyWords").textValue().split(" ")).collect(Collectors.toList()));
+       /* if (jsonRequest.get("keyWords").textValue() != null && !jsonRequest.get("keyWords").textValue().isEmpty())
+            keyWords.addAll(Stream.of(jsonRequest.get("keyWords").textValue().split(" ")).collect(Collectors.toList())); */
         if (jsonRequest.get("freeText").textValue() != null && !jsonRequest.get("freeText").textValue().isEmpty())
             keyWords.addAll(Stream.of(jsonRequest.get("freeText").textValue().split(" ")).collect(Collectors.toList()));
         if (jsonRequest.get("semanticSearch").textValue() != null && !jsonRequest.get("semanticSearch").textValue().isEmpty())
