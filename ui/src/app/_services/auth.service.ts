@@ -117,6 +117,7 @@ export class AuthService {
     localStorage.removeItem('bookmarksIds');
 
     this.unscheduleRenewal();
+    this.observer.next(false);
     // Go back to the home route
     this.auth0.logout({
       returnTo: environment.auth_logoutUrl,
@@ -130,6 +131,7 @@ export class AuthService {
         console.log('The session is inactive, please re-login!');
         alert('The session is inactive, please re-login!');
         this.unscheduleRenewal();
+        this.observer.next(false);
         // Go back to the home route
         if (environment.production) { // redirect to dashboard or login
           window.location.href = environment.auth_logoutUrl;
