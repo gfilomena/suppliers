@@ -27,7 +27,7 @@ export class RegistrationRepositoryComponent implements OnInit {
     repoid = '';
     vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
         + environment.vimeo_clientID + '&response_type=token&redirect_uri='
-        + environment.auth_callbackURL + 'profile&state=';
+        + environment.vimeo_callbackURL + 'profile&state=';
     dialogDefaultSize = {
         height: 'auto',
         width: '500px'
@@ -218,7 +218,7 @@ export class DialogRegistrationRepository implements OnInit {
     @Output() onChange = new EventEmitter();
     vimeoURL = 'https://api.vimeo.com/oauth/authorize?client_id='
         + environment.vimeo_clientID + '&response_type=token&redirect_uri='
-        + environment.auth_callbackURL + 'profile&state=';
+        + environment.vimeo_callbackURL + 'profile&state=';
 
 
 

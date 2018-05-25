@@ -12,7 +12,7 @@ export class VimeoService {
         const body = JSON.stringify(
             {
                 'grant_type': 'authorization_code',
-                'redirect_uri': environment.auth_callbackURL + 'profile',
+                'redirect_uri': environment.vimeo_callbackURL + 'profile',
                 'code': code
             });
         console.log('body', body);

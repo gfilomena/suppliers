@@ -8,5 +8,6 @@ export const environment = {
   auth_callbackURL: 'http://ocd.producer-toolkit.eu/callback',
   vimeo_clientID: '81300b8b6457c4c8da7935e2cbee238f2a756cd5',
   vimeo_client_secret: 'T7olulWMgGe0C73zPL63ALBckCsQ6ZoEreNcwoLcCPU0HyQjFEiEtLhvE2pi9iqpNFwjRwr7+wZGiT1QtoBIHBBoqHe/LevVt1PByXZYiOydM5CzmSkmkRMu+MWIcb1o',
+  vimeo_callbackURL: 'http://ocd.producer-toolkit.eu/',
   auth_logoutUrl: 'http://producer-toolkit.eu'
 };
