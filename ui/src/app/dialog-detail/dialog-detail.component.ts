@@ -339,17 +339,15 @@ export class DialogDetailComponent implements OnInit {
                             .subscribe(
                                 res => {
                                     console.log('update Tags to Mcssr - subscribe OK:', res);
-                                    this.loading = false;
                                     this.snackBar.run('The tags have been sent correctly to Mcssr', true);
                                 },
                                 error => {
                                     console.log('Send to Mcssr - subscribe - error:', error);
-                                    this.loading = false;
                                     const message = getMessageError(error);
                                     this.snackBar.run('The tags have\'t been sent to Mcssr. Detail:' + message, false);
                                 });
-                        this.loading = false;
                     }
+                    this.loading = false;
                 },
                 error => {
                     console.log('Send to Mcssr - subscribe - error:', error);
