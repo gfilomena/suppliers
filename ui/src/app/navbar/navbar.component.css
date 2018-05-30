@@ -36,3 +36,8 @@ mat-toolbar {
 .mat-elevation-z6 {
   background-color: dodgerblue;
 }
+
+.image_profile{
+  height:30px;
+  border-radius: 50%;
+}

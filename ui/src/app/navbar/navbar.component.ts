@@ -10,19 +10,23 @@ import { AuthService } from '../_services/index';
 })
 export class NavbarComponent implements OnInit{
 
-    api: string;
-    currentUser: any;
-    username: string;
+    profile: any;
 
   constructor( public http: Http, public auth: AuthService) {
   }
 
   ngOnInit() {
-      this.api = localStorage.getItem('serviceUrl');
-
   }
 
+  getPicture() {
 
+    if(this.profile && this.profile.picture) {
+        return this.profile.picture;
+    }else{
+        return "/assets/images/account.png";
+    }
+
+  }
 
 
   isLoggedIn() {
@@ -37,9 +41,9 @@ export class NavbarComponent implements OnInit{
   }
 
   getLoggedUser() {
-      const user = JSON.parse(localStorage.getItem('currentUser'));
-      if (user && user.username) {
-          return user.username;
+      this.profile = JSON.parse(localStorage.getItem('profile'));
+      if (this.profile && this.profile.nickname) {
+          return this.profile.nickname;
       }
   }
 
