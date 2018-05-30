@@ -16,7 +16,8 @@ export class ProfileComponent implements OnInit {
 
     panelOpenState = false;
     submitted = false;
-    user;
+    user: any;
+    profile: any;
     loading = false;
 
 
@@ -30,13 +31,26 @@ export class ProfileComponent implements OnInit {
 
     ngOnInit() {
         this.loading = true;
+       // this.user = JSON.parse(localStorage.getItem('currentUser'));
         //console.log('this.route.url',this.router.url);
-        this.user = JSON.parse(localStorage.getItem('currentUser'));
-        console.log('this.currentUser', this.user);
-        this.getUser();
+        this.profile = JSON.parse(localStorage.getItem('profile'));
+        this.user = JSON.parse(this.profile['https://producer.eu/user_metadata'].user);
+        console.log('this.user', this.user);
+        console.log('this.profile', this.profile);
+        //this.getUser();
     }
 
+ getPicture() {
 
+    if(this.profile && this.profile.picture) {
+        return this.profile.picture;
+    }else{
+        return "/assets/images/account.png";
+    }
+
+  }
+
+/*
     getUser() {
 
         this.UserService.getByUsername(this.user.username)
@@ -53,6 +67,7 @@ export class ProfileComponent implements OnInit {
                 });
     }
 
+
     update() {
         this.submitted = true;
         this.UserService.update(this.user)
@@ -68,6 +83,7 @@ export class ProfileComponent implements OnInit {
                     this.submitted = false;
                 });
     }
+*/
 
     openSnackBar(message: string, action: string, status: boolean) {
         let cssclasses;
@@ -83,8 +99,6 @@ export class ProfileComponent implements OnInit {
             verticalPosition: 'bottom',
             extraClasses: [cssclasses]
         });
-
 }
-
 
 }

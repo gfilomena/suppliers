@@ -9,31 +9,106 @@
       </mat-panel-description>
     </mat-expansion-panel-header>
     <div class="border">
-      <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-        <form name="form" (ngSubmit)="f.form.valid && update()" #f="ngForm" novalidate>
-          <div fxLayout="column" fxLayoutAlign="center center" fxLayoutGap="5px">
-            <mat-form-field fxFlex class="profile-field">
-              <input matInput placeholder="Username" value="" id="username" name="username" [(ngModel)]="user.username" #username="ngModel"
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px">
+          <img class="image_profile" [src]="getPicture()">
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
+            <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>account_circle</mat-icon>
+             </span>
+              <input matInput placeholder="userType" value="" id="userType" name="userType" [(ngModel)]="user.userType" #userType="ngModel"
                 disabled>
             </mat-form-field>
-            <mat-form-field fxFlex class="profile-field">
-              <input matInput placeholder="First Name" value="" id="firstname" name="firstname" [(ngModel)]="user.firstName" #firstName="ngModel"
-                required>
+
+             <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>account_circle</mat-icon>
+             </span>
+              <input matInput placeholder="firstName" value="" id="firstName" name="firstName" [(ngModel)]="user.firstName" #firstName="ngModel"
+                disabled>
             </mat-form-field>
-            <mat-form-field fxFlex class="profile-field">
-              <input matInput placeholder="Last Name" value="" id="lastname" name="lastname" [(ngModel)]="user.lastName" #lastName="ngModel"
-                required>
+
+             <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>account_circle</mat-icon>
+             </span>
+              <input matInput placeholder="lastName" value="" id="lastName" name="lastName" [(ngModel)]="user.lastName" #lastName="ngModel"
+                disabled>
             </mat-form-field>
-            <mat-form-field fxFlex class="profile-field">
-              <input matInput placeholder="email" type="email" value="" id="email" name="email" [(ngModel)]="user.email" #email="ngModel"
-                [email]="true" required>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
+            <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>school</mat-icon>
+             </span>
+              <input matInput placeholder="education" value="" id="education" name="education" [(ngModel)]="user.education" #education="ngModel"
+                disabled>
             </mat-form-field>
-            <div align="end">
-              <button mat-raised-button type="submit">Update</button>
-              <mat-progress-bar mode="indeterminate" *ngIf="submitted"></mat-progress-bar>
-            </div>
-          </div>
-        </form>
+
+             <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>work</mat-icon>
+             </span>
+              <input matInput placeholder="jobTitle" value="" id="jobTitle" name="jobTitle" [(ngModel)]="user.jobTitle" #jobTitle="ngModel"
+                disabled>
+            </mat-form-field>
+
+             <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>work</mat-icon>
+             </span>
+              <input matInput placeholder="occupation" value="" id="occupation" name="occupation" [(ngModel)]="user.occupation" #occupation="ngModel"
+                disabled>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="80px">
+            <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>location_city</mat-icon>
+             </span>
+              <input matInput placeholder="town" value="" id="town" name="town" [(ngModel)]="user.town" #town="ngModel"
+                disabled>
+            </mat-form-field>
+
+             <mat-form-field fxFlex>
+             <span matPrefix>
+                   <mat-icon>flag</mat-icon>
+             </span>
+              <input matInput placeholder="country" value="" id="country" name="country" [(ngModel)]="user.country" #country="ngModel"
+                disabled>
+            </mat-form-field>
+
+             <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>flag</mat-icon>
+             </span>
+              <input matInput placeholder="nationality" value="" id="nationality" name="nationality" [(ngModel)]="user.nationality" #nationality="ngModel"
+                disabled>
+            </mat-form-field>
+        </div>
+
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="100px">
+            <mat-form-field fxFlex>
+             <span matPrefix>
+                  <mat-icon>group</mat-icon>
+             </span>
+              <input matInput placeholder="ageGroup" value="" id="ageGroup" name="ageGroup" [(ngModel)]="user.ageGroup" #ageGroup="ngModel"
+                disabled>
+            </mat-form-field>
+
+             <mat-form-field fxFlex>
+            <span matPrefix>
+                   <mat-icon>phone</mat-icon>
+            </span>
+            <input matInput placeholder="phoneNumber" value="" id="phoneNumber" name="phoneNumber" [(ngModel)]="user.phoneNumber" #phoneNumber="ngModel"
+                disabled>
+            </mat-form-field>
+
       </div>
     </div>
   </mat-expansion-panel>
