@@ -99,7 +99,7 @@ export class AuthService {
 
   private setProfile(profile) {
     console.log('Set profile');
-    localStorage.setItem('profile', JSON.stringify(profile));
+    localStorage.setItem('auth0_profile', JSON.stringify(profile));
     this.userProfile = profile;
   }
 
@@ -108,7 +108,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    localStorage.removeItem('profile');
+    localStorage.removeItem('auth0_profile');
     localStorage.removeItem('searchForm');
     localStorage.removeItem('lastresearch');
     localStorage.removeItem('currentUser');
