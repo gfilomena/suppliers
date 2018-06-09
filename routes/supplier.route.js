@@ -6,7 +6,6 @@ const supplierRoutes = express.Router();
 
 // Require Supplier, Group model in our routes module
 let Supplier = require('../models/Supplier');
-let Group = require('../models/Group');
 
 // Defined store route
 supplierRoutes.route('/add').post(function (req, res) {

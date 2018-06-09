@@ -3,7 +3,7 @@
       <form [formGroup]="angForm" novalidate>
         <div class="form-group">
           <label class="col-md-4">Name</label>
-          <input type="text" class="form-control" formControlName="name" #name />
+          <input type="text" class="form-control" placeholder="Enter name" formControlName="name" #name />
         </div>
         <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
           <div *ngIf="angForm.controls['name'].errors.required">
@@ -12,7 +12,7 @@
         </div>
         <div class="form-group">
           <label class="col-md-4">Address</label>
-          <input type="text" class="form-control" formControlName="address" #address/>
+          <input type="text" class="form-control" placeholder="Enter address" formControlName="address" #address/>
         </div>
         <div *ngIf="angForm.controls['address'].invalid && (angForm.controls['address'].dirty || angForm.controls['address'].touched)" class="alert alert-danger">
           <div *ngIf="angForm.controls['address'].errors.required">
@@ -21,7 +21,7 @@
         </div>
         <div class="form-group">
           <label class="col-md-4">Email</label>
-          <input type="email" class="form-control" formControlName="email" #email/>
+          <input type="email" class="form-control" placeholder="Enter address email" formControlName="email" #email/>
         </div>
         <div *ngIf="angForm.controls['email'].invalid && angForm.controls['email'].dirty" class="alert alert-danger">
           <div *ngIf="angForm.controls['email'].errors.required">
@@ -29,14 +29,23 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-md-4">Telephone</label>
-          <input type="text" class="form-control" formControlName="telephone" #telephone/>
-        </div>
-        <div *ngIf="angForm.controls['telephone'].invalid && angForm.controls['telephone'].dirty" class="alert alert-danger">
-          <div *ngIf="angForm.controls['telephone'].errors.required">
-            Telephone is required.
+          <label class="col-md-4">Phone</label>
+          <div class="input-group mb-3">
+            <div class="input-group-prepend">
+              <select>
+                <option  *ngFor="let country of countries" style="background-image:url(./assets/countries/es.svg);"> <img src='./assets/countries/es.svg'> {{country.code}} - {{country.name}}</option>
+              </select>
+              <span class="input-group-text" id="codeselected">+21</span>
+            </div>
+            <input type="text" class="form-control" placeholder="Enter phone number" formControlName="phone" #phone/>
+          </div>
+          <div *ngIf="angForm.controls['phone'].invalid && angForm.controls['phone'].dirty" class="alert alert-danger">
+            <div *ngIf="angForm.controls['phone'].errors.required">
+              Phone is required.
+            </div>
           </div>
         </div>
+
       </form>
         <div class="form-group">
             <label for="exampleSelect2">Choose the groups</label>
@@ -48,7 +57,7 @@
             </div>
         </div>
         <div class="form-group">
-            <button (click)="addSupplier(name.value, address.value, email.value, telephone.value)" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
+            <button (click)="addSupplier(name.value, address.value, email.value, phone.value)" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
         </div>
       
     </div>

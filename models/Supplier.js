@@ -12,7 +12,7 @@ let supplier = new Schema({
   email: {
     type: String
   },
-  telephone: {
+  phone: {
     type: String
   },
   groups: {

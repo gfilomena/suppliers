@@ -18,6 +18,16 @@ export class EditComponent implements OnInit {
 		{_id: 3, name: 'Telephone service', enabled: false },
 		{_id: 4, name: 'Security', enabled: false }
 	  ];
+
+	  countries: any = [
+		{id: 'au', code: '+21', name: 'Australia'},
+		{id: 'es', code: '+22', name: 'Spain'},
+		{id: 'gb', code: '+13', name: 'UK'},
+		{id: 'za', code: '+27', name: 'South Africa'},
+		{id: 'zm', code: '+23', name: 'Zambia'},
+		{id: 'jp', code: '+81', name: 'Japan'}
+	  ];
+	  
 	  groups: Array<Number> = [];
 
 
@@ -43,7 +53,7 @@ export class EditComponent implements OnInit {
 			name: ['', Validators.required],
 			address: ['', Validators.required],
 			email: ['', Validators.required],
-			telephone: ['', Validators.required]
+			phone: ['', Validators.required]
 		});
 	}
 
@@ -67,11 +77,11 @@ export class EditComponent implements OnInit {
 		 return filtered;
 	}
 
-	updateSupplier(name, address, email, telephone) {
+	updateSupplier(name, address, email, phone) {
 		const groups = this.getGroups();
 		console.log('groups', groups);
 		this.route.params.subscribe(params => {
-			this.service.updateSupplier(name, address, email, telephone, groups, params['id']).subscribe(
+			this.service.updateSupplier(name, address, email, phone, groups, params['id']).subscribe(
 				data => {
 					this.router.navigate(['index']);
 				},
@@ -88,7 +98,7 @@ export class EditComponent implements OnInit {
 				this.angForm.get('name').setValue(this.supplier.name);
 				this.angForm.get('address').setValue(this.supplier.address);
 				this.angForm.get('email').setValue(this.supplier.email);
-				this.angForm.get('telephone').setValue(this.supplier.telephone);
+				this.angForm.get('phone').setValue(this.supplier.phone);
 				this.setGroups();
 			});
 			

@@ -1,9 +1,18 @@
-<label for="exampleSelect2">List Suppliers by Group</label>
-<select class="custom-select" (change)="getbyGroup($event)">
-        <option  value="-1">Show All Suppliers</option>
-        <option  [value]="group._id" *ngFor="let group of grouplist" >{{group.name}}</option>
-</select>
 
+<div class="col-md-4 mb-3">
+    <label for="exampleSelect2">List Suppliers by Group</label>
+    <select class="custom-select" (change)="getbyGroup($event)">
+            <option  value="-1">Show All Suppliers</option>
+            <option  [value]="group._id" *ngFor="let group of grouplist" >{{group.name}}</option>
+    </select>
+</div>
+<div class="col-md-4 mb-3">
+     <label for="exampleSelect2">List Suppliers by Name</label>
+     <div class="form-inline my-2 my-lg-0">
+           <input class="form-control mr-sm-2" type="search" (keydown)="onKeydown($event)" placeholder="Search Supplier" [(ngModel)]="inputsearch" aria-label="Search">
+           <button class="btn btn-outline-success my-2 my-sm-0" (click)="searchbyName()" type="submit">Search</button>
+     </div>
+</div>
 
 <table class="table table-hover">
   <thead>
@@ -11,7 +20,7 @@
       <td>Supplier Name</td>
       <td>Supplier Address</td>
       <td>Supplier Email</td>
-      <td>Supplier Telephone</td>
+      <td>Supplier Phone</td>
       <td>Supplier Groups</td>
       <td colspan="2">Actions</td>
   </tr>
@@ -22,7 +31,7 @@
           <td>{{ supplier.name }}</td>
           <td>{{ supplier.address }}</td>
           <td>{{ supplier.email }}</td>
-          <td>{{ supplier.telephone }}</td>
+          <td>{{ supplier.phone }}</td>
           <td><ul><li *ngFor="let group of supplier.groups">{{getNameGroup(group)}}</li></ul></td>          
           <td><a [routerLink]="['/edit', supplier._id]" class="btn btn-primary">Edit</a></td>
           <td><button (click)="deleteSupplier(supplier._id)"  class="btn btn-danger">Delete</button></td>

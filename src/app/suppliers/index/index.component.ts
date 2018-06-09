@@ -12,12 +12,22 @@ export class IndexComponent implements OnInit {
 
   suppliers: Supplier[];
   origin: Supplier[];
+  inputsearch: string;
 
   grouplist: any = [
     {_id: 1, name: 'Cleaners', enabled: false },
     {_id: 2, name: 'Office supply (paper, envelopes, etc)', enabled: false },
     {_id: 3, name: 'Telephone service', enabled: false },
     {_id: 4, name: 'Security', enabled: false }
+  ];
+
+  countries: any = [
+    {id: 'au', code: '+21', name: 'Australia'},
+    {id: 'es', code: '+22', name: 'Spain'},
+    {id: 'gb', code: '+13', name: 'UK'},
+    {id: 'za', code: '+27', name: 'South Africa'},
+    {id: 'zm', code: '+23', name: 'Zambia'},
+    {id: 'jp', code: '+81', name: 'Japan'}
   ];
 
   constructor(private supplierservice: SupplierService, private route: ActivatedRoute, private router: Router) { }
@@ -47,7 +57,7 @@ export class IndexComponent implements OnInit {
     const id = parseInt($event.target.value);
 
    if (id === -1) {
-    this.suppliers = this.origin;;
+    this.suppliers = this.origin;
    } else {
 
       let tmp: any = [];
@@ -60,11 +70,19 @@ export class IndexComponent implements OnInit {
 
       this.suppliers = tmp;
    }
-
-
-
-
     console.log('this.suppliers', this.suppliers);
+  }
+
+  onKeydown(event) {
+    console.log(' event', event);
+    if (event.key === 'Enter') {
+      console.log(event);
+      this.searchbyName();
+    }
+  }
+
+  searchbyName() {
+    this.suppliers = this.origin.filter(item => item.name.search(this.inputsearch) > -1);
   }
 
   getAll() {

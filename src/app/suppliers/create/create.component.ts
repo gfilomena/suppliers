@@ -17,6 +17,16 @@ export class CreateComponent implements OnChanges {
     {_id: 3, name: 'Telephone service', enabled: false },
     {_id: 4, name: 'Security', enabled: false }
   ];
+
+  countries: any = [
+    {id: 'au', code: '+21', name: 'Australia'},
+    {id: 'es', code: '+22', name: 'Spain'},
+    {id: 'gb', code: '+13', name: 'UK'},
+    {id: 'za', code: '+27', name: 'South Africa'},
+    {id: 'zm', code: '+23', name: 'Zambia'},
+    {id: 'jp', code: '+81', name: 'Japan'}
+  ];
+
   groups: Array<Number> = [];
   title = 'Add Supplier';
   angForm: FormGroup;
@@ -33,7 +43,7 @@ export class CreateComponent implements OnChanges {
       name: ['', Validators.required ],
       address: ['', Validators.required ],
       email: ['', Validators.required ],
-      telephone: ['', Validators.required ]
+      phone: ['', Validators.required ]
    });
   }
 

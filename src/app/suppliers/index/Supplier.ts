@@ -3,6 +3,6 @@ export interface Supplier {
     name: String;
     address: String;
     email: String;
-    telephone: String;
+    phone: String;
     groups: Array<Number>;
   }
