@@ -48,7 +48,8 @@ supplierRoutes.route('/update/:id').post(function (req, res) {
       supplier.name = req.body.name;
       supplier.address = req.body.address;
       supplier.email = req.body.email;
-      supplier.telephone = req.body.telephone;
+      supplier.prefix = req.body.prefix;
+      supplier.phone = req.body.phone;
       supplier.groups = req.body.groups;
 
       supplier.save().then(supplier => {

@@ -10,6 +10,8 @@ import { EditComponent } from './suppliers/edit/edit.component';
 import { IndexComponent } from './suppliers/index/index.component';
 
 import { SupplierService } from './supplier.service';
+import { SelectModule } from 'ng2-select';
+
 
 const routes: Routes = [
   {
@@ -38,7 +40,8 @@ const routes: Routes = [
     RouterModule.forRoot(routes),
     HttpClientModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    SelectModule
   ],
   providers: [ SupplierService ],
   bootstrap: [AppComponent]

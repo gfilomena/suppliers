@@ -3,12 +3,15 @@
       <form [formGroup]="angForm" novalidate>
         <div class="form-group">
           <label class="col-md-4">Name</label>
-          <input type="text" class="form-control" placeholder="Enter name" formControlName="name" #name />
+          <input type="text" minlength="5" maxlength="50" class="form-control" placeholder="Enter name" formControlName="name" #name />
         </div>
         <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
           <div *ngIf="angForm.controls['name'].errors.required">
             Name is required.
           </div>
+          <div *ngIf="angForm.controls['name'].errors.minlength">
+            Name must be at least 5 characters long.
+         </div> 
         </div>
         <div class="form-group">
           <label class="col-md-4">Address</label>
@@ -31,11 +34,24 @@
         <div class="form-group">
           <label class="col-md-4">Phone</label>
           <div class="input-group mb-3">
+            <!--<select  class="my-select" #prefix (change)="setCountry(prefix.value)">
+              <option [value]="country.code"  *ngFor="let country of countries">{{country.name}}</option>
+            </select>
+          -->
+          <div class="btn-group">
+            <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+              <img class="flag" src="/assets/countries/{{selectedCountry}}.svg">
+              <span class="glyphicon glyphicon-chevron-down"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li  *ngFor="let country of countries">
+                <a title="Select this card"  (click)="setFlag(country)"><img class="flag" src="/assets/countries/{{country.id}}.svg">{{country.id}} - {{country.name}}</a>
+              </li>
+            </ul>
+          </div>
+
             <div class="input-group-prepend">
-              <select>
-                <option  *ngFor="let country of countries" style="background-image:url(./assets/countries/es.svg);"> <img src='./assets/countries/es.svg'> {{country.code}} - {{country.name}}</option>
-              </select>
-              <span class="input-group-text" id="codeselected">+21</span>
+              <span class="input-group-text" id="codeselected">{{prefix}}</span>
             </div>
             <input type="text" class="form-control" placeholder="Enter phone number" formControlName="phone" #phone/>
           </div>
@@ -45,7 +61,6 @@
             </div>
           </div>
         </div>
-
       </form>
         <div class="form-group">
             <label for="exampleSelect2">Choose the groups</label>
@@ -57,8 +72,10 @@
             </div>
         </div>
         <div class="form-group">
-            <button (click)="addSupplier(name.value, address.value, email.value, phone.value)" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
+            <button (click)="addSupplier(name.value, address.value, email.value, prefix, phone.value)" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
         </div>
       
     </div>
   </div>
+
+

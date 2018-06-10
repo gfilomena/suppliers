@@ -17,11 +17,11 @@
 <table class="table table-hover">
   <thead>
   <tr>
-      <td>Supplier Name</td>
-      <td>Supplier Address</td>
-      <td>Supplier Email</td>
-      <td>Supplier Phone</td>
-      <td>Supplier Groups</td>
+      <td>Name</td>
+      <td>Address</td>
+      <td>Email</td>
+      <td>Phone</td>
+      <td>Groups</td>
       <td colspan="2">Actions</td>
   </tr>
   </thead>
@@ -31,7 +31,7 @@
           <td>{{ supplier.name }}</td>
           <td>{{ supplier.address }}</td>
           <td>{{ supplier.email }}</td>
-          <td>{{ supplier.phone }}</td>
+          <td>{{ supplier.prefix }} {{ supplier.phone }}</td>
           <td><ul><li *ngFor="let group of supplier.groups">{{getNameGroup(group)}}</li></ul></td>          
           <td><a [routerLink]="['/edit', supplier._id]" class="btn btn-primary">Edit</a></td>
           <td><button (click)="deleteSupplier(supplier._id)"  class="btn btn-danger">Delete</button></td>

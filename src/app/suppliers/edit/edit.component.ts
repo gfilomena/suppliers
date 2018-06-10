@@ -28,11 +28,14 @@ export class EditComponent implements OnInit {
 		{id: 'jp', code: '+81', name: 'Japan'}
 	  ];
 	  
-	  groups: Array<Number> = [];
-
-
+	groups: Array<Number> = [];
+   
+   
 	supplier: any = {};
+	prefix = this.countries[0].code;
+	selectedCountry = this.countries[0].id;
 	angForm: FormGroup;
+
 	constructor(private route: ActivatedRoute,
 		private router: Router,
 		private service: SupplierService,
@@ -57,6 +60,18 @@ export class EditComponent implements OnInit {
 		});
 	}
 
+	setFlag(country) {
+		this.selectedCountry = country.id;
+		this.supplier.prefix = country.code;
+		console.log('this.prefix',   this.prefix);
+		console.log(' this.selectedCountry',    this.selectedCountry);
+	  }
+
+   setCountry(event) {
+	 this.supplier.prefix =  event.target.value;
+	console.log('event', event);
+   }
+
 	setGroups() {
 		this.supplier.groups.forEach(id => {
 			// Retrieve item and assign ref to updatedItem
@@ -65,6 +80,16 @@ export class EditComponent implements OnInit {
 			// Modify object property
 			updatedItem.enabled = true;
 		});
+	}
+
+	getSelected(country) {
+
+		if (this.supplier.prefix && this.supplier.prefix === country.code ) {
+			return true;
+		}
+		
+		return false;
+
 	}
 
 	getGroups() {
@@ -77,11 +102,11 @@ export class EditComponent implements OnInit {
 		 return filtered;
 	}
 
-	updateSupplier(name, address, email, phone) {
+	updateSupplier(name, address, email, prefix,  phone) {
 		const groups = this.getGroups();
 		console.log('groups', groups);
 		this.route.params.subscribe(params => {
-			this.service.updateSupplier(name, address, email, phone, groups, params['id']).subscribe(
+			this.service.updateSupplier(name, address, email, prefix, phone, groups, params['id']).subscribe(
 				data => {
 					this.router.navigate(['index']);
 				},
@@ -89,6 +114,13 @@ export class EditComponent implements OnInit {
 					console.log('error', error);
 				});
 		});
+	}
+
+	getidbyprefix(prefix) {
+		const index = this.countries.findIndex(item => item.code === prefix);
+		if (index !== -1) {
+           return this.countries[index].id;
+		}
 	}
 
 	ngOnInit() {
@@ -100,6 +132,8 @@ export class EditComponent implements OnInit {
 				this.angForm.get('email').setValue(this.supplier.email);
 				this.angForm.get('phone').setValue(this.supplier.phone);
 				this.setGroups();
+				this.prefix = this.supplier.prefix;
+	            this.selectedCountry = this.getidbyprefix(this.supplier.prefix);
 			});
 			
 		});

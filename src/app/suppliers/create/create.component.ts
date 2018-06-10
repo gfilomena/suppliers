@@ -1,15 +1,17 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input } from '@angular/core';
+import { Component, OnInit, OnChanges, SimpleChanges, Input, ViewEncapsulation  } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { SupplierService } from '../../supplier.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import * as $ from 'jquery/dist/jquery';
 
 @Component({
   selector: 'app-create',
   templateUrl: './create.component.html',
-  styleUrls: ['./create.component.css']
+  styleUrls: ['./create.component.css'],
+  encapsulation: ViewEncapsulation.None  // Enable dynamic HTML styles
 })
-export class CreateComponent implements OnChanges {
+export class CreateComponent implements OnChanges, OnInit  {
 
   grouplist: any = [
     {_id: 1, name: 'Cleaners', enabled: false },
@@ -27,16 +29,27 @@ export class CreateComponent implements OnChanges {
     {id: 'jp', code: '+81', name: 'Japan'}
   ];
 
+  prefix = this.countries[0].code;
+  private items: Array<any> = [];
+  selectedCountry = this.countries[0].id;
   groups: Array<Number> = [];
   title = 'Add Supplier';
   angForm: FormGroup;
 
 
-
-
   constructor(private supplierservice: SupplierService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
     this.createForm();
    }
+
+   public ngOnInit(): any {
+
+   $(document).ready(function() {
+
+     console.log('jquery ready!');
+
+   });
+
+  }
 
    createForm() {
     this.angForm = this.fb.group({
@@ -52,8 +65,15 @@ export class CreateComponent implements OnChanges {
     console.log('changes', changes);
   }
 
-  change(event) {
+  setCountry(value) {
+    console.log('setCountry value', value);
+  }
 
+  setFlag(country) {
+    this.selectedCountry = country.id;
+    this.prefix = country.code;
+    console.log('this.prefix',   this.prefix);
+    console.log(' this.selectedCountry',    this.selectedCountry);
   }
 
   getGroups() {
@@ -66,11 +86,12 @@ export class CreateComponent implements OnChanges {
    return filtered;
   }
 
-  addSupplier(name, address, email, telephone) {
+  addSupplier(name, address, email, prefix, phone) {
     const groups = this.getGroups();
     console.log('groups', groups);
+    console.log('prefix', prefix);
 
-      this.supplierservice.addSupplier(name, address, email, telephone, groups).subscribe(
+      this.supplierservice.addSupplier(name, address, email, prefix, phone, groups).subscribe(
 				data => {
           console.log('Added', data);
 					this.router.navigate(['index']);

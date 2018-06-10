@@ -10,12 +10,13 @@ export class SupplierService {
 
 	constructor(private http: HttpClient) { }
 
-	addSupplier(name, address, email, telephone, groups) {
+	addSupplier(name, address, email, prefix, phone, groups) {
 		const obj = {
 			name: name,
 			address: address,
 			email: email,
-			telephone: telephone,
+			prefix: prefix,
+			phone: phone,
 			groups: groups
 		};
 		return this
@@ -36,13 +37,14 @@ export class SupplierService {
 			.get(`${this.uri}/edit/${id}`);
 	}
 
-	updateSupplier(name, address, email, telephone, groups, id) {
+	updateSupplier(name, address, email, prefix, phone, groups, id) {
 
 		const obj = {
 			name: name,
 			address: address,
 			email: email,
-			telephone: telephone,
+			prefix: prefix,
+			phone: phone,
 			groups: groups
 		};
 		return this

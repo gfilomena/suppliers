@@ -12,6 +12,9 @@ let supplier = new Schema({
   email: {
     type: String
   },
+  prefix: {
+    type: String
+  },
   phone: {
     type: String
   },
