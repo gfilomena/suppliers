@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit {
         this.loading = true;
        // this.user = JSON.parse(localStorage.getItem('currentUser'));
         //console.log('this.route.url',this.router.url);
-        this.profile = JSON.parse(localStorage.getItem('auth0_profile'));
+        this.profile = JSON.parse(localStorage.getItem('profile'));
         this.user = JSON.parse(this.profile['https://producer.eu/user_metadata'].user);
         console.log('this.user', this.user);
         console.log('this.profile', this.profile);

@@ -93,13 +93,12 @@ export class AuthService {
       + '}';
     const obj = JSON.parse(params);
     localStorage.setItem('currentUser', params);
-
     this.scheduleRenewal();
   }
 
   private setProfile(profile) {
     console.log('Set profile');
-    localStorage.setItem('auth0_profile', JSON.stringify(profile));
+    localStorage.setItem('profile', JSON.stringify(profile));
     this.userProfile = profile;
   }
 
@@ -108,7 +107,7 @@ export class AuthService {
     localStorage.removeItem('access_token');
     localStorage.removeItem('id_token');
     localStorage.removeItem('expires_at');
-    localStorage.removeItem('auth0_profile');
+    localStorage.removeItem('profile');
     localStorage.removeItem('searchForm');
     localStorage.removeItem('lastresearch');
     localStorage.removeItem('currentUser');
@@ -142,6 +141,7 @@ export class AuthService {
         // alert('Renew Token: Successfully renewed auth!');
         console.log('Renew Token: Successfully renewed auth!');
         this.setSession(result);
+        this.getProfile(result);
         this.observer.next(true);
       }
     });

@@ -41,7 +41,7 @@ export class NavbarComponent implements OnInit{
   }
 
   getLoggedUser() {
-      this.profile = JSON.parse(localStorage.getItem('auth0_profile'));
+      this.profile = JSON.parse(localStorage.getItem('profile'));
       if (this.profile && this.profile.nickname) {
           return this.profile.nickname;
       }
