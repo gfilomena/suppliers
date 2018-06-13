@@ -18,7 +18,10 @@ const supplierRoutes = require('./routes/supplier.route');
 const app = express();
 	app.use(bodyParser.json());
 	app.use(cors());
-	app.use('/suppliers', supplierRoutes);
+	//app.use('/suppliers', supplierRoutes);
+	app.use(express.static(__dirname + '/dist'));
+
+
 
 const port = process.env.PORT || 4000;
 
