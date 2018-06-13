@@ -21,15 +21,6 @@ export class IndexComponent implements OnInit {
     {_id: 4, name: 'Security', enabled: false }
   ];
 
-  countries: any = [
-    {id: 'au', code: '+21', name: 'Australia'},
-    {id: 'es', code: '+22', name: 'Spain'},
-    {id: 'gb', code: '+13', name: 'UK'},
-    {id: 'za', code: '+27', name: 'South Africa'},
-    {id: 'zm', code: '+23', name: 'Zambia'},
-    {id: 'jp', code: '+81', name: 'Japan'}
-  ];
-
   constructor(private supplierservice: SupplierService, private route: ActivatedRoute, private router: Router) { }
 
   ngOnInit() {
@@ -97,12 +88,4 @@ export class IndexComponent implements OnInit {
 
   }
 
-
-
-}
-
-function clearArray<T>(array: T[]) {
-  while (array.length) {
-    array.pop();
-  }
 }

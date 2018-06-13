@@ -31,36 +31,47 @@
             Email is required.
           </div>
         </div>
-        <div class="form-group">
+
+        <!--  
+
+
+ <div class="form-group">
           <label class="col-md-4">Phone</label>
           <div class="input-group mb-3">
             <!--<select  class="my-select" #prefix (change)="setCountry(prefix.value)">
               <option [value]="country.code"  *ngFor="let country of countries">{{country.name}}</option>
             </select>
-          -->
+          <!--
           <div class="btn-group">
-            <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
-              <img class="flag" src="/assets/countries/{{selectedCountry}}.svg">
-              <span class="glyphicon glyphicon-chevron-down"></span>
-            </button>
-            <ul class="dropdown-menu">
-              <li  *ngFor="let country of countries">
-                <a title="Select this card"  (click)="setFlag(country)"><img class="flag" src="/assets/countries/{{country.id}}.svg">{{country.id}} - {{country.name}}</a>
-              </li>
-            </ul>
+              <button type="button" class="btn btn-default dropdown-toggle"  data-toggle="dropdown"aria-haspopup="true" aria-expanded="false">
+                <img class="flag" src="/assets/countries/{{selectedCountry}}.svg">
+                <span class="glyphicon glyphicon-chevron-down"></span>
+              </button>
+              <ul class="dropdown-menu">
+                  <li>
+                      <input type="text" class="SearchText" placeholder="Search" (keyup)="updateSearchText($event)" />
+                        
+                    </li>
+                <li  *ngFor="let country of countries | filter : searchText">
+                  <a title="Select this card"  (click)="setFlag(country)"><img class="flag" src="/assets/countries/{{country.id}}.svg">{{country.id}} - {{country.name}}</a>
+                </li>
+              </ul>
+            </div>
+  
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="codeselected">{{prefix}}</span>
+              </div>
+              <input type="text" class="form-control" placeholder="Enter phone number" formControlName="phone" #phone/>
+            </div>
+            <div *ngIf="angForm.controls['phone'].invalid && angForm.controls['phone'].dirty" class="alert alert-danger">
+              <div *ngIf="angForm.controls['phone'].errors.required">
+                Phone is required.
+              </div>
+            </div>
           </div>
 
-            <div class="input-group-prepend">
-              <span class="input-group-text" id="codeselected">{{prefix}}</span>
-            </div>
-            <input type="text" class="form-control" placeholder="Enter phone number" formControlName="phone" #phone/>
-          </div>
-          <div *ngIf="angForm.controls['phone'].invalid && angForm.controls['phone'].dirty" class="alert alert-danger">
-            <div *ngIf="angForm.controls['phone'].errors.required">
-              Phone is required.
-            </div>
-          </div>
-        </div>
+        -->
+       <app-phone [prefix]="prefix" [phone]="phone" (eventphone)=setphone($event) (eventprefix)=setprefix($event)></app-phone>
       </form>
         <div class="form-group">
             <label for="exampleSelect2">Choose the groups</label>
@@ -72,7 +83,7 @@
             </div>
         </div>
         <div class="form-group">
-            <button (click)="addSupplier(name.value, address.value, email.value, prefix, phone.value)" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
+            <button (click)="addSupplier(name.value, address.value, email.value, prefix, phone)" [disabled]="angForm.pristine || angForm.invalid" class="btn btn-primary">Add</button>
         </div>
       
     </div>

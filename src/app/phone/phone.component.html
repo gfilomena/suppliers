@@ -1,0 +1,28 @@
+<form [formGroup]="angForm" validate>
+
+  <div class="form-group">
+    <label class="col-md-4">Phone Number</label>
+    <div class="input-group mb-3">
+      <div class="btn-group">
+        <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <img class="flag" src="/assets/countries/{{selectedCountry}}.svg">
+          <span class="glyphicon glyphicon-chevron-down"></span>
+        </button>
+        <ul class="dropdown-menu">
+          <li>
+            <input type="text" class="SearchText" placeholder="Search" (keyup)="updateSearchText($event)" />
+          </li>
+          <li *ngFor="let country of countries | filter : searchText">
+            <a title="Select this card" (click)="setFlag(country)">
+              <img class="flag" src="/assets/countries/{{country.id}}.svg">{{country.id}} - {{country.name}}</a>
+          </li>
+        </ul>
+      </div>
+      <div class="input-group-prepend">
+        <span class="input-group-text" id="codeselected">{{prefix}}</span>
+      </div>
+      <input type="text" class="form-control" placeholder="Enter phone number" (keyup)="updatephone($event)" formControlName="phone"
+        #phone/>
+    </div>
+  </div>
+</form>

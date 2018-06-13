@@ -11,6 +11,8 @@ import { IndexComponent } from './suppliers/index/index.component';
 
 import { SupplierService } from './supplier.service';
 import { SelectModule } from 'ng2-select';
+import { FilterPipe } from './suppliers/filters/filter.pipe';
+import { PhoneComponent } from './phone/phone.component';
 
 
 const routes: Routes = [
@@ -23,7 +25,7 @@ const routes: Routes = [
     component: EditComponent
   },
   {
-    path: 'index',
+    path: '',
     component: IndexComponent
   }
 ];
@@ -33,7 +35,9 @@ const routes: Routes = [
     AppComponent,
     CreateComponent,
     EditComponent,
-    IndexComponent
+    IndexComponent,
+    FilterPipe,
+    PhoneComponent
   ],
   imports: [
     BrowserModule,

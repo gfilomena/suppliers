@@ -1,9 +1,10 @@
-import { Component, OnInit, OnChanges, SimpleChanges, Input, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { SupplierService } from '../../supplier.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import * as $ from 'jquery/dist/jquery';
+import { FilterPipe } from '../filters/filter.pipe';
 
 @Component({
   selector: 'app-create',
@@ -11,7 +12,7 @@ import * as $ from 'jquery/dist/jquery';
   styleUrls: ['./create.component.css'],
   encapsulation: ViewEncapsulation.None  // Enable dynamic HTML styles
 })
-export class CreateComponent implements OnChanges, OnInit  {
+export class CreateComponent {
 
   grouplist: any = [
     {_id: 1, name: 'Cleaners', enabled: false },
@@ -20,18 +21,11 @@ export class CreateComponent implements OnChanges, OnInit  {
     {_id: 4, name: 'Security', enabled: false }
   ];
 
-  countries: any = [
-    {id: 'au', code: '+21', name: 'Australia'},
-    {id: 'es', code: '+22', name: 'Spain'},
-    {id: 'gb', code: '+13', name: 'UK'},
-    {id: 'za', code: '+27', name: 'South Africa'},
-    {id: 'zm', code: '+23', name: 'Zambia'},
-    {id: 'jp', code: '+81', name: 'Japan'}
-  ];
 
-  prefix = this.countries[0].code;
-  private items: Array<any> = [];
-  selectedCountry = this.countries[0].id;
+
+  prefix;
+  phone;
+  searchText = '';
   groups: Array<Number> = [];
   title = 'Add Supplier';
   angForm: FormGroup;
@@ -41,39 +35,26 @@ export class CreateComponent implements OnChanges, OnInit  {
     this.createForm();
    }
 
-   public ngOnInit(): any {
-
-   $(document).ready(function() {
-
-     console.log('jquery ready!');
-
-   });
-
-  }
-
    createForm() {
     this.angForm = this.fb.group({
       name: ['', Validators.required ],
       address: ['', Validators.required ],
-      email: ['', Validators.required ],
-      phone: ['', Validators.required ]
+      email: ['', Validators.required ]
    });
   }
 
-  ngOnChanges(changes: SimpleChanges) {
-    // changes.prop contains the old and the new value...
-    console.log('changes', changes);
+  setphone(phone) {
+    this.phone = phone;
+    console.log('setphone event', event);
+  }
+
+  setprefix(prefix) {
+    this.prefix = prefix;
+    console.log('setprefix event', event);
   }
 
   setCountry(value) {
     console.log('setCountry value', value);
-  }
-
-  setFlag(country) {
-    this.selectedCountry = country.id;
-    this.prefix = country.code;
-    console.log('this.prefix',   this.prefix);
-    console.log(' this.selectedCountry',    this.selectedCountry);
   }
 
   getGroups() {
@@ -88,13 +69,14 @@ export class CreateComponent implements OnChanges, OnInit  {
 
   addSupplier(name, address, email, prefix, phone) {
     const groups = this.getGroups();
-    console.log('groups', groups);
-    console.log('prefix', prefix);
+    // console.log('groups', groups);
+    console.log('addSupplier prefix', prefix);
+    console.log('addSupplier phone', phone);
 
       this.supplierservice.addSupplier(name, address, email, prefix, phone, groups).subscribe(
 				data => {
           console.log('Added', data);
-					this.router.navigate(['index']);
+					this.router.navigate(['']);
 				},
 				error => {
 					console.log('error', error);
