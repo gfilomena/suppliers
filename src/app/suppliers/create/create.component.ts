@@ -3,7 +3,6 @@ import { NgForOf } from '@angular/common';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { SupplierService } from '../../supplier.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import * as $ from 'jquery/dist/jquery';
 import { FilterPipe } from '../filters/filter.pipe';
 
 @Component({
