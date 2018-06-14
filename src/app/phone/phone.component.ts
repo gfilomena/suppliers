@@ -22,7 +22,7 @@ export class PhoneComponent implements OnInit, OnChanges {
   selectedCountry = '';
   searchText = '';
   angForm: FormGroup;
-  charcounter: number;
+ 
 
   @Input() prefix: string;
   @Input() phone: string;
@@ -77,7 +77,7 @@ export class PhoneComponent implements OnInit, OnChanges {
 
   createForm() {
     this.angForm = this.fb.group({
-      phone: []
+      phone: ['', Validators.required ]
     });
   }
 

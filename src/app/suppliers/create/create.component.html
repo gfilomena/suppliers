@@ -3,7 +3,12 @@
       <form [formGroup]="angForm" novalidate>
         <div class="form-group">
           <label class="col-md-4">Name</label>
-          <input type="text" minlength="5" maxlength="50" class="form-control" placeholder="Enter name" formControlName="name" #name />
+          <div class="input-group mb-3">
+          <input type="text" minlength="5" maxlength="50" (keyup)="changeName()" class="form-control" placeholder="Enter name" formControlName="name" #name />
+          <div class="input-group-prepend">
+            <span class="input-group-text" id="codeselected">{{charcounter}}</span>
+          </div>
+         </div>
         </div>
         <div *ngIf="angForm.controls['name'].invalid && (angForm.controls['name'].dirty || angForm.controls['name'].touched)" class="alert alert-danger">
           <div *ngIf="angForm.controls['name'].errors.required">

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation  } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
 import { NgForOf } from '@angular/common';
 import { FormGroup,  FormBuilder,  Validators } from '@angular/forms';
 import { SupplierService } from '../../supplier.service';
@@ -28,6 +28,7 @@ export class CreateComponent {
   groups: Array<Number> = [];
   title = 'Add Supplier';
   angForm: FormGroup;
+  charcounter = 50;
 
 
   constructor(private supplierservice: SupplierService, private fb: FormBuilder, private route: ActivatedRoute, private router: Router) {
@@ -42,14 +43,20 @@ export class CreateComponent {
    });
   }
 
+  changeName() {
+    this.charcounter = 50 - this.angForm.get('name').value.length;
+  }
+
   setphone(phone) {
     this.phone = phone;
-    console.log('setphone event', event);
+    console.log('setphone event', phone);
   }
 
   setprefix(prefix) {
-    this.prefix = prefix;
-    console.log('setprefix event', event);
+    if (prefix) {
+      console.log('setprefix prefix', prefix);
+      this.prefix = prefix;
+    }
   }
 
   setCountry(value) {
