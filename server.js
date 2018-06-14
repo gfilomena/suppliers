@@ -19,24 +19,14 @@ const app = express();
 	app.use(bodyParser.json());
 	app.use(cors());
 	app.use('/suppliers', supplierRoutes);
+	// Serve only the static files form the dist directory
 	app.use(express.static(__dirname + '/dist'));
 
 
 	// Catch all other routes and return the index file
-   app.get('*', (req, res) => {
+    app.get('*', (req, res) => {
 	res.sendFile(path.join(__dirname, 'dist/index.html'));
-  });
-
-
-  // Serve only the static files form the dist directory
-app.use(express.static(__dirname + '/dist'));
-
-app.get('/*', function(req,res) {
-    
-res.sendFile(path.join(__dirname+'/dist/index.html'));
-});
-
-
+	});
 
 const port = process.env.PORT || 4000;
 
