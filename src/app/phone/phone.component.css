@@ -1,4 +1,4 @@
-.dropdown-toggle, .dropdown-menu { width: 70px }
+.dropdown-toggle, .dropdown-menu { width: 70px; cursor: pointer; }
 .btn-group img { margin-right: 10px }
 .dropdown-toggle { padding-right: 10px }
 .dropdown-toggle .glyphicon { margin-left: 50px; margin-right: -50px }
