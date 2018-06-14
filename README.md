@@ -6,16 +6,24 @@ This tool allow to store Suppliers information and associate to groups
 
 ### Prerequisites
 
-You need to install MongoDB, NodeJs, Angular 6, ExpressJs
+STACK used: MongoDB, NodeJs, Angular 6, ExpressJs
+
+npm install express --save
+
+npm install cors --save
+
+npm install mongoose --save
+
+npm install body-parser --save
 
 
 ### Installing
 
 Run MongoDB
 
-node server.js 
+Go in the dist folder and run: node server.js 
 
-ng serve
+go to http://localhost:4000
 
 ## Authors
 
