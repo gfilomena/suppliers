@@ -22,7 +22,7 @@ export class PhoneComponent implements OnInit, OnChanges {
   selectedCountry = '';
   searchText = '';
   angForm: FormGroup;
-
+  charcounter: number;
 
   @Input() prefix: string;
   @Input() phone: string;
@@ -39,11 +39,17 @@ export class PhoneComponent implements OnInit, OnChanges {
     // init prefix & selectedCountry
     this.prefix = this.countries[0].code;
     this.selectedCountry = this.countries[0].id;
+    console.log('ngOnInit this.selectedCountry', this.selectedCountry);
+    console.log('ngOnInit this.prefix', this.prefix);
+    this.eventprefix.emit(this.prefix);
+
   }
 
   ngOnChanges(changes: SimpleChanges) {
     if (changes.prefix && changes.prefix.currentValue) {
       this.selectedCountry = this.getidbyprefix(changes.prefix.currentValue);
+      console.log('ngOnChanges this.selectedCountry', this.selectedCountry);
+      console.log('ngOnChanges this.prefix', this.prefix);
     }
 
     if (changes.phone && changes.phone.currentValue) {
